@@ -130,3 +130,8 @@ text.eg-tag { font-size: 9px; stroke: none; }
 .eg-kind { scroll-margin-top:80px; }
 .eg-exb { min-width:0; }
 button,input { font-family:inherit; }
+
+.eg-tabs { position:static; }
+.eg-read { direction:rtl; line-height:1.6; padding-bottom:10px; }
+.eg-read b { width:100%; }
+.eg-p3 span { line-height:1.5; }
