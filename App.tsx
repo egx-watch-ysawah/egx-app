@@ -245,6 +245,7 @@ function About() {
     </div>;
 }
 
+const ENCRYPTED_PORTFOLIO:any = {"v":1,"iterations":600000,"salt":"6jBGNSywX+dVc+wR+J/ISg==","iv":"Sh6VlX091arDkDaa","data":"zIsn8VQI+2P9ftB3hbBUB/WtRs/ENpHilsxeYo7QNaT50hwp20kmlk18T7Sn80LG17jxC2s3QmEcjVDO0Q/vtwIpyulKOfV49RN2MXczoFirDVMR+5KhO+8wMVF+og8B7cZSB7481+7s8G3tJrMKmA=="}; // ENCRYPTED_BLOB
 const PORTFOLIO_KEY = 'egx-private-portfolio-v1';
 function parsePortfolio(x:any) {
     if(x.version!==1||!Array.isArray(x.holdings)||!x.holdings.length||x.holdings.length>100)throw Error('صيغة الملف مش مدعومة.');
@@ -258,7 +259,8 @@ function parsePortfolio(x:any) {
     return rows;
 }
 // Fragment setup never uses a query string or a network request.
-const setupMessage = (() => {
+let setupMessage = '';
+function consumeSetupFragment() {
     const hash=window.location.hash;
     if(!hash.startsWith('#/portfolio?setup='))return '';
     const encoded=hash.slice('#/portfolio?setup='.length);
@@ -269,12 +271,18 @@ const setupMessage = (() => {
         const rows=parsePortfolio(JSON.parse(raw));
         localStorage.setItem(PORTFOLIO_KEY,JSON.stringify({version:1,holdings:rows}));
         return 'تم إعداد المحفظة على المتصفح ده من الرابط. الرابط الأصلي فيه بياناتك، متشاركوش.';
-    } catch { return 'مقدرناش نحفظ بيانات رابط الإعداد. ممكن المتصفح مانع التخزين أو الرابط ناقص. ملف الاستيراد بديل متاح.'; }
-})();
+    } catch { return 'مقدرناش نحفظ بيانات رابط الإعداد. ممكن المتصفح مانع التخزين أو الرابط ناقص. جرّب لصق رابط الإعداد كاملًا في الخانة اللي تحت.'; }
+}
+setupMessage=consumeSetupFragment() || '';
+window.addEventListener('hashchange',()=>{const result=consumeSetupFragment();if(result){setupMessage=result;window.dispatchEvent(new Event('egx-portfolio-imported'));}});
 function Portfolio() {
     const [holdings,setHoldings] = useState<any[]>(()=>{try {const v=localStorage.getItem(PORTFOLIO_KEY);return v?parsePortfolio(JSON.parse(v)):[];}catch{return [];}});
     const [err,setErr] = useState(setupMessage);
+    const [setupCode,setSetupCode] = useState('');
+    const [passphrase,setPassphrase] = useState('');
+    const [unlocking,setUnlocking] = useState(false);
     const [saved,setSaved] = useState(()=>{try{return !!localStorage.getItem(PORTFOLIO_KEY);}catch{return false;}});
+    useEffect(()=>{const update=()=>{try{const v=localStorage.getItem(PORTFOLIO_KEY);setHoldings(v?parsePortfolio(JSON.parse(v)):[]);setSaved(!!v);setErr(setupMessage);}catch{setErr('تعذر قراءة البيانات المحفوظة.');}};window.addEventListener('egx-portfolio-imported',update);return()=>window.removeEventListener('egx-portfolio-imported',update);},[]);
     async function load(e: React.ChangeEvent<HTMLInputElement>) {
         try {
             const f=e.target.files?.[0]; if(!f)return;
@@ -285,10 +293,27 @@ function Portfolio() {
         }catch(ex){setErr(ex instanceof SyntaxError?'الملف مش JSON سليم. اختار ملف المحفظة المجهز لك.':ex instanceof Error?ex.message:'مقدرتش أقرأ الملف.');}
         e.target.value='';
     }
+    async function unlock(){
+        setUnlocking(true);setErr('');
+        try{
+            const blob=ENCRYPTED_PORTFOLIO;
+            if(!blob||blob.v!==1||blob.iterations!==600000)throw Error();
+            const bytes=(v:string)=>Uint8Array.from(atob(v),c=>c.charCodeAt(0));
+            const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(passphrase),'PBKDF2',false,['deriveKey']);
+            const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:bytes(blob.salt),iterations:blob.iterations,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);
+            const raw=await crypto.subtle.decrypt({name:'AES-GCM',iv:bytes(blob.iv)},key,bytes(blob.data));
+            const rows=parsePortfolio(JSON.parse(new TextDecoder().decode(raw)));
+            localStorage.setItem(PORTFOLIO_KEY,JSON.stringify({version:1,holdings:rows}));
+            setHoldings(rows);setSaved(true);setPassphrase('');setErr('تم فتح المحفظة وحفظها على المتصفح ده.');
+        }catch{setErr('كلمة الفتح مش صحيحة، أو المتصفح منع الحفظ. جرّب تاني في نفس المتصفح العادي.');}
+        finally{setUnlocking(false);}
+    }
     function remove(){try{localStorage.removeItem(PORTFOLIO_KEY);setHoldings([]);setSaved(false);setErr('');}catch{setErr('المتصفح منع حذف التخزين. امسح بيانات الموقع من إعداداته.');}}
     return <div className="eg-pad"><h2 className="eg-h">محفظتي</h2>
-        <p className="eg-note">استيراد مرة واحدة على جهازك، وبعدها المحفظة بتظهر تلقائيًا هنا في نفس المتصفح. الأرقام محفوظة محليًا، مش مرفوعة للموقع ولا في الرابط. مفيش مزامنة بين الأجهزة.</p>
+        <p className="eg-note">إعداد مرة واحدة على جهازك، وبعدها المحفظة بتظهر تلقائيًا هنا في نفس المتصفح. الأرقام محفوظة محليًا، مش مرفوعة للموقع. رابط الإعداد الخاص نفسه فيه بياناتك، متشاركوش. مفيش مزامنة بين الأجهزة.</p>
+        {!holdings.length&&ENCRYPTED_PORTFOLIO&&<section className="portfolio-import"><h3>افتح محفظتك</h3><p className="eg-note">اكتب كلمة الفتح مرة واحدة. بعدها البيانات هتفتح تلقائيًا على المتصفح ده من غير ملف.</p><form onSubmit={e=>{e.preventDefault();unlock();}}><input type="password" aria-label="كلمة فتح المحفظة" autoComplete="off" value={passphrase} onChange={e=>setPassphrase(e.target.value)} style={{width:'100%',padding:12,boxSizing:'border-box'}}/><button className="eg-chip" type="submit" disabled={unlocking||!passphrase}>{unlocking?'جاري الفتح...':'افتح واحفظ محفظتي'}</button></form><p className="eg-note">الموقع فيه نسخة مشفرة قابلة للتحميل. حد يقدر يجرب كلمات عليها خارج الموقع من غير حد، فعبارة الفتح لازم تكون طويلة وصعبة. مسح النسخة المحلية لا يمسح النسخة المشفرة من الموقع أو تاريخه.</p></section>}
         {!holdings.length ? <label className="portfolio-import">إعداد المحفظة مرة واحدة <input type="file" accept="application/json,.json" onChange={load}/></label> : <Det title="تحديث ملف المحفظة"><label className="portfolio-import">اختار الملف الجديد <input type="file" accept="application/json,.json" onChange={load}/></label></Det>}
+        <Det title="الإعداد من غير اختيار ملف"><p className="eg-note">لو الرابط مفتحش البيانات تلقائيًا، انسخ رابط الإعداد الخاص من الرسالة والصقه هنا. اللصق والاستيراد بيحصلوا على جهازك من غير رفع.</p><textarea aria-label="رابط الإعداد الخاص" value={setupCode} onChange={e=>setSetupCode(e.target.value)} style={{width:'100%',minHeight:80,boxSizing:'border-box'}}/><button type="button" className="eg-chip" onClick={()=>{try{const text=setupCode.trim();const code=text.includes('setup=')?text.split('setup=')[1].split(/[\s&#]/)[0]:text;if(!code||code.length>15000)throw Error();const rows=parsePortfolio(JSON.parse(atob(code.replace(/-/g,'+').replace(/_/g,'/'))));localStorage.setItem(PORTFOLIO_KEY,JSON.stringify({version:1,holdings:rows}));setHoldings(rows);setSaved(true);setSetupCode('');setErr('تم إعداد المحفظة وحفظها على المتصفح ده.');}catch{setErr('الرابط ناقص أو المتصفح منع الحفظ. انسخ رسالة الرابط كاملة وحاول تاني.');}}}>احفظ المحفظة من الرابط</button></Det>
         <p className="eg-note">الحفظ مش مشفّر ولا محمي بحساب. اللي يستخدم نفس المتصفح يقدر يشوفه. مسح بيانات الموقع يضيّعه. الملف الأصلي كمان فيه بياناتك، احتفظ بيه بأمان.</p>
         {err&&<p role="alert" className="eg-note eg-warn">{err}</p>}
         {!!holdings.length&&<>
