@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
 
 const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
 const sgn = (v: number, d = 2) => (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v).toFixed(d);
 const money = (v: number) => Math.round(v).toLocaleString('en-US');
+
+const PRICES_URL = 'https://raw.githubusercontent.com/egx-watch-ysawah/egx-app/main/prices.json';
+type Live = { at: string; stocks: Record<string, { close: number; prev: number }> } | null;
+
+function useLive(): Live {
+  const [live, setLive] = useState<Live>(null);
+  useEffect(() => {
+    let dead = false;
+    const go = async () => {
+      try {
+        const r = await fetch(PRICES_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        if (!r.ok) throw 0;
+        const j = await r.json();
+        const out: Record<string, { close: number; prev: number }> = {};
+        for (const k of Object.keys(j.stocks || {})) {
+          const x = j.stocks[k];
+          if (x && Number.isFinite(x.close) && x.close > 0 && Number.isFinite(x.prev_close) && x.prev_close > 0) out[k] = { close: x.close, prev: x.prev_close };
+        }
+        if (!dead && Object.keys(out).length) setLive({ at: j.fetched_at_utc || '', stocks: out });
+      } catch { /* keep the daily data */ }
+    };
+    go();
+    const id = setInterval(go, 60000);
+    return () => { dead = true; clearInterval(id); };
+  }, []);
+  return live;
+}
 
 function prevClose(s: any): number | null {
   const b = s && s.bars;
@@ -14,8 +41,8 @@ function prevClose(s: any): number | null {
   return a;
 }
 
-function stamp(): string {
-  const g = (DATA as any).generated_at;
+function stamp(at?: string): string {
+  const g = at || (DATA as any).generated_at;
   const d = g ? new Date(g) : null;
   if (!d || isNaN(+d)) return (DATA as any).asof || '';
   const o: any = { timeZone: 'Africa/Cairo' };
@@ -25,9 +52,12 @@ function stamp(): string {
 }
 
 export function HomeBoard({ holdings }: { holdings: any[] }) {
+  const live = useLive();
   const rows = [...holdings].sort((a, b) => b.weight - a.weight).map(h => {
-    const s = DATA.stocks[h.symbol];
-    const p = prevClose(s);
+    const base = DATA.stocks[h.symbol];
+    const L = live && live.stocks[h.symbol];
+    const s = L ? { ...base, close: L.close } : base;
+    const p = L ? L.prev : prevClose(base);
     const d = p ? s.close - p : null;
     const dp = p ? 100 * (s.close / p - 1) : null;
     return { h, s, d, dp };
@@ -55,7 +85,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
           </div>
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
-        <small className="hb-stamp">آخر تحديث {stamp()} · إقفال يومي، مش أسعار لحظية</small>
+        <small className="hb-stamp">{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر ~15 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
       </div>
       <div className="hb-tiles">
         <div><small>صاعد اليوم</small><b className="hb-up">{up}</b></div>
