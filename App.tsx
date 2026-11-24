@@ -17,13 +17,13 @@ const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(1) + '%';
 const L = ({ children }: { children: React.ReactNode }) => <bdi dir="ltr">{children}</bdi>;
 
 function verdict(s: any) {
-    if (!s.ok) return { t: 'بيانات ناقصة', c: 'na', col: '#8b97ad' };
+    if (!s.ok) return { t: s.partial?'تاريخ جزئي':'بيانات ناقصة', c: 'na', col: '#8b97ad' };
     if (s.votes.trend && s.votes.mid) return { t: 'فوق المتوسطين', c: 'go', col: '#99b9df' };
     if (!s.votes.trend && !s.votes.mid) return { t: 'تحت المتوسطين', c: 'wait', col: '#99b9df' };
     return { t: 'بين المتوسطين', c: 'watch', col: '#99b9df' };
 }
 function reason(s: any): string {
-    if (!s.ok) return 'تاريخ السهم ناقص في المصدر المجاني.';
+    if (!s.ok) return s.partial?'نافذة متاحة جزئيًا؛ كل مؤشر حسب عدد جلساته.':'تاريخ السهم ناقص في المصدر المجاني.';
     const v = s.votes, p = s.plan;
     if (verdict(s).c === 'go') return 'الإقفال فوق متوسط 50 و200 جلسة. وصف للاتجاه، مش توقع ربح.';
     if (p.ext > 4) return 'طالع بسرعة. الدخول دلوقتي متأخر.';
@@ -118,7 +118,8 @@ function Stock({ k }: { k: string }) {
         <Link className="eg-back" to="/">← كل الأسهم</Link>
         <div className="eg-in">
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2>
-            {!s.ok ? <p className="eg-note">المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم. السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
+            <PartialHistory s={s}/>
+            {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
                 <div className={'eg-verdict eg-v-' + v.c}><div><b>{v.t}</b><p>{reason(s)}</p></div></div>
                 <Evidence s={s} />
@@ -288,20 +289,24 @@ function DataAge({date}:{date:any}) {
     return <p className="data-age" role="note">{age===null?'تاريخ الإقفال غير متاح؛ حداثة البيانات غير معروفة.':age<0?'تاريخ الإقفال بعد تاريخ جهازك؛ راجع ساعة الجهاز والمصدر.':<>عمر الإقفال <L>{age}</L> يوم تقويمي حسب توقيت القاهرة. {age>3?'البيانات أقدم من 3 أيام؛ قارن التاريخ بالمصدر قبل الاعتماد عليها.':'مش سعر مباشر، ومش تأكيد إنه أحدث جلسة.'}</>} أيام تقويمية، مش جلسات فائتة. العطلات غير متحققة.</p>;
 }
 function averagePosition(s:any,n:number) {
-    if(!s.ok||!Array.isArray(s.bars)||s.bars.length<n)return 'غير متاح';
+    if(!Array.isArray(s.bars)||s.bars.length<n)return s.partial?'المتاح أقل من '+n:'غير متاح';
     const closes=s.bars.slice(-n).map((r:any)=>r[4]);
     if(!Number.isFinite(s.close)||closes.some((v:any)=>!Number.isFinite(v)||v<=0))return 'غير متاح';
     const avg=closes.reduce((a:number,b:number)=>a+b,0)/n;
     return Math.abs(s.close-avg)<1e-8?'يساوي':s.close>avg?'فوق':'تحت';
 }
 function HoldingComparison({holdings}:{holdings:any[]}) {
-    return <section className="portfolio-overview" aria-label="مقارنة الاتجاه" id="holding-comparison" tabIndex={-1}><h3>الاتجاه في نظرة</h3><p className="eg-note">السعر فين من متوسطه؟ مقارنة وصفية، مش ترتيب أفضلية. مرتبة بالرمز. اضغط الرمز لفتح تفاصيله.</p><table className="holding-compare"><thead><tr><th>السهم / الإقفال</th><th>متوسط<br/>50 جلسة</th><th>متوسط<br/>200 جلسة</th><th>الحجم<br/>× المعتاد</th></tr></thead><tbody>{[...holdings].sort((a,b)=>a.symbol.localeCompare(b.symbol)).map(h=>{const s=DATA.stocks[h.symbol];const age=calendarAge(s.date);return <tr key={h.symbol}><th scope="row"><button type="button" onClick={()=>{const el=document.getElementById('held-'+h.symbol);el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}><L>{h.symbol}</L></button><small><L>{s.date||'غير متاح'}</L></small>{(age===null||age<0||age>3)&&<small>راجع التاريخ</small>}</th><td>{averagePosition(s,50)}</td><td>{averagePosition(s,200)}</td><td>{s.ok&&s.bars?.length>=21&&Number.isFinite(s.volx)?<L>{s.volx.toFixed(1)}×</L>:'غير متاح'}</td></tr>;})}</tbody></table><p className="eg-note">كل سهم مقارن بمتوسطاته هو، مش بسهم تاني. الحجم مقارنة بمتوسط 20 جلسة سابقة للسهم نفسه. فوق أو تحت مش تقييم لجودة الشركة، والصفوف مش أدلة مستقلة. الناقص ظاهر كغير متاح.</p></section>;
+    return <section className="portfolio-overview" aria-label="مقارنة الاتجاه" id="holding-comparison" tabIndex={-1}><h3>الاتجاه في نظرة</h3><p className="eg-note">السعر فين من متوسطه؟ مقارنة وصفية، مش ترتيب أفضلية. مرتبة بالرمز. اضغط الرمز لفتح تفاصيله.</p><table className="holding-compare"><thead><tr><th>السهم / الإقفال</th><th>متوسط<br/>50 جلسة</th><th>متوسط<br/>200 جلسة</th><th>الحجم<br/>× المعتاد</th></tr></thead><tbody>{[...holdings].sort((a,b)=>a.symbol.localeCompare(b.symbol)).map(h=>{const s=DATA.stocks[h.symbol];const age=calendarAge(s.date);return <tr key={h.symbol}><th scope="row"><button type="button" onClick={()=>{const el=document.getElementById('held-'+h.symbol);el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}><L>{h.symbol}</L></button><small><L>{s.date||'غير متاح'}</L></small>{(age===null||age<0||age>3)&&<small>راجع التاريخ</small>}</th><td>{averagePosition(s,50)}</td><td>{averagePosition(s,200)}</td><td>{(s.ok||s.partial)&&s.bars?.length>=21&&Number.isFinite(s.volx)?<L>{s.volx.toFixed(1)}×</L>:'غير متاح'}</td></tr>;})}</tbody></table><p className="eg-note">كل سهم مقارن بمتوسطاته هو، مش بسهم تاني. الحجم مقارنة بمتوسط 20 جلسة سابقة للسهم نفسه. فوق أو تحت مش تقييم لجودة الشركة، والصفوف مش أدلة مستقلة. الناقص ظاهر كغير متاح.</p></section>;
+}
+function PartialHistory({s}:{s:any}) {
+    if(!s.partial)return null;
+    return <section className="holding-context" aria-label="تاريخ بنيان المتاح"><h3>بنيان · قراءة على قد التاريخ المتاح</h3><p>بدأ التداول <L>{s.listed}</L>. المصدر هنا موفر <L>{s.historyCount}</L> جلسة لحد <L>{s.date}</L>، مش كل تاريخ السهم. قِصر النافذة مش عيب في السهم ولا دليل إنه ماكملش 200 جلسة فعلًا.</p><div className="holding-signals"><div><small>السعر / متوسط 50</small><b>{averagePosition(s,50)}</b></div><div><small>السعر / متوسط 200</small><b>المتاح أقل من 200 جلسة</b></div><div><small>حجم آخر جلسة / السابق 20</small><b><L>{s.volx}×</L></b></div><div><small>تغيّر آخر 5 جلسات</small><b><L>{pc(s.chg5)}</L></b></div></div><p className="eg-note">متوسط 50 مدعوم بعدد الجلسات المتاحة. متوسط 200 غير محسوب، ومش بنستبدله بمتوسط أقصر. لا قراءة MACD أو اختبار تاريخي من النافذة دي. <a href={s.source} target="_blank" rel="noreferrer">مصدر البيانات: {s.sourceName}</a>. تحقق من اختلافات التسوية قبل مقارنة التكلفة.</p></section>;
 }
 function HoldingContext({h,s,maxWeight}:{h:any;s:any;maxWeight:number}) {
     const distance=Number.isFinite(h.averageCost)&&h.averageCost>0&&Number.isFinite(s.close)&&s.close>0?100*(s.close/h.averageCost-1):null;
     return <section className="holding-context" aria-label="قراءة مركزك">
         <div className="evidence-head"><b>قراءة مركزك</b><small>إقفال <bdi dir="ltr">{s.date}</bdi></small></div>
-        <DataAge date={s.date}/>
+        <DataAge date={s.date}/><PartialHistory s={s}/>
         <p>{distance===null?'متوسط التكلفة مش متاح.':<>الإقفال {distance<0?'أقل':'أعلى'} من متوسطك بـ <L>{Math.abs(distance).toFixed(1)}%</L>. </>}{s.ok?<>حالة الاتجاه: <b>{verdict(s).t}</b>. التكلفة بتشرح فرق السعر، مش بتغيّر قراءة الاتجاه.</>:'التاريخ المجاني مش كافي لقراءة الاتجاه.'}</p>
         {s.ok&&<><div className="holding-signals"><div><small>اتجاه 50 جلسة</small><b>{s.votes.mid?'السعر فوقه':'السعر تحته'}</b></div><div><small>اتجاه 200 جلسة</small><b>{s.votes.trend?'السعر فوقه':'السعر تحته'}</b></div><div><small>الزخم MACD</small><b>{s.votes.macd?'فوق خط الإشارة':'تحت خط الإشارة'}</b></div><div><small>حجم التداول</small><b><L>{s.volx}×</L> المعتاد</b></div></div>
         <p className="holding-take">الخلاصة: {s.votes.mid&&s.votes.trend?'الاتجاه فوق المتوسطين':!s.votes.mid&&!s.votes.trend?'الاتجاه تحت المتوسطين':'الاتجاه مختلف بين الأجلين'}، والزخم {s.votes.macd?'فوق':'تحت'} خطه؛ {s.votes.vol?'الحجم أعلى من المعتاد مع إقفال صاعد.':'الحجم لا يحقق شرط تأكيد الصعود.'} دي قراءة الوضع، مش توصية تتصرف في مركزك.</p></>}
@@ -361,7 +366,7 @@ function Portfolio() {
             <p className="portfolio-saved">{saved?'محفوظ على المتصفح ده · هيفتح تلقائيًا المرة الجاية':'مفتوح للجلسة فقط، الحفظ غير متاح'}</p>
             <button type="button" className="eg-chip" onClick={remove}>احذف محفظتي من المتصفح</button>
             <p className="eg-note">الأوزان لقطة ملفك، مش أوزان لحظية ولا رصيد متصل بالوسيط. ملف 24 نوفمبر: الأوزان الساعة 07:58، والمتوسطات والكميات الساعة 15:18. بنستخدم إقفال <L>{DATA.stocks.MASR.date}</L>، مش آخر تداول في الصور الأحدث. فرق سعر قبل الرسوم والتوزيعات، مش ربح محقق.</p>
-            {orderedHoldings.map(h=>{const s=DATA.stocks[h.symbol];const pnl=Number.isFinite(h.averageCost)&&h.averageCost>0&&Number.isFinite(s.close)&&s.close>0?100*(s.close/h.averageCost-1):null;return <section className="portfolio-holding" key={h.symbol} id={'held-'+h.symbol} tabIndex={-1}><h3><bdi dir="ltr">{h.symbol}</bdi><span>{h.weight.toFixed(2)}% من الأسهم في الملف</span></h3><div className="portfolio-values"><div><small>متوسطك · لقطة 24/11 15:18</small><b dir="ltr">{h.averageCost===null?'غير متاح':h.averageCost.toFixed(5)}</b></div><div><small>إقفال <L>{s.date}</L></small><b dir="ltr">{fmt(s.close)}</b></div><div><small>فرق سعر فقط، مش عائد المحفظة</small><b dir="ltr">{pnl===null?'غير محسوب':pc(pnl)}</b></div></div><p className="eg-note">{h.quantity!==null&&<>الكمية <L>{h.quantity.toLocaleString('en-US')}</L> سهم. </>}أساس تسوية السعر والتكلفة ممكن يختلف بعد تقسيم أو توزيع. فرق السعر لا يشمل التوزيعات النقدية أو الأسهم المجانية أو الرسوم، ولا يطابق بالضرورة إجمالي الربح في تطبيق الوسيط.</p><button type="button" className="eg-chip" onClick={()=>{const el=document.getElementById('holding-comparison');el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}>ارجع لمقارنة الاتجاه</button><HoldingContext h={h} s={s} maxWeight={Math.max(...holdings.map(h=>h.weight))}/>{s.ok?<Det title="افهم قراءة السهم في سياق مركزك"><Evidence s={s}/></Det>:<p className="eg-note">التاريخ المجاني ناقص، فمفيش قراءة فنية كافية.</p>}</section>})}
+            {orderedHoldings.map(h=>{const s=DATA.stocks[h.symbol];const pnl=Number.isFinite(h.averageCost)&&h.averageCost>0&&Number.isFinite(s.close)&&s.close>0?100*(s.close/h.averageCost-1):null;return <section className="portfolio-holding" key={h.symbol} id={'held-'+h.symbol} tabIndex={-1}><h3><bdi dir="ltr">{h.symbol}</bdi><span>{h.weight.toFixed(2)}% من الأسهم في الملف</span></h3><div className="portfolio-values"><div><small>متوسطك · لقطة 24/11 15:18</small><b dir="ltr">{h.averageCost===null?'غير متاح':h.averageCost.toFixed(5)}</b></div><div><small>إقفال <L>{s.date}</L></small><b dir="ltr">{fmt(s.close)}</b></div><div><small>فرق سعر فقط، مش عائد المحفظة</small><b dir="ltr">{pnl===null?'غير محسوب':pc(pnl)}</b></div></div><p className="eg-note">{h.quantity!==null&&<>الكمية <L>{h.quantity.toLocaleString('en-US')}</L> سهم. </>}أساس تسوية السعر والتكلفة ممكن يختلف بعد تقسيم أو توزيع. فرق السعر لا يشمل التوزيعات النقدية أو الأسهم المجانية أو الرسوم، ولا يطابق بالضرورة إجمالي الربح في تطبيق الوسيط.</p><button type="button" className="eg-chip" onClick={()=>{const el=document.getElementById('holding-comparison');el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}>ارجع لمقارنة الاتجاه</button><HoldingContext h={h} s={s} maxWeight={Math.max(...holdings.map(h=>h.weight))}/>{s.ok?<Det title="افهم قراءة السهم في سياق مركزك"><Evidence s={s}/></Det>:<p className="eg-note">{s.partial?'القراءة الجزئية موضحة فوق، من غير افتراض اتجاه طويل غير محسوب.':'التاريخ المجاني ناقص، فمفيش قراءة فنية كافية.'}</p>}</section>})}
             <p className="eg-note">أكبر وزن في الملف <L>{Math.max(...holdings.map(h=>h.weight)).toFixed(2)}%</L>. لو سهم وزنه 20% اتحرك 10%، أثره التقريبي على جزء الأسهم 2% مع ثبات الباقي. ده شرح للحساسية، مش توقع.</p>
             <p className="eg-note">المتوسط المعروض 5 منازل عشرية، فضربه في الكمية ممكن يختلف قروش عن إجمالي تكلفة الوسيط بسبب التقريب. متوسط الشراء مرجع حسابي، مش سعر لازم السهم يرجع له ولا سبب كافي للاحتفاظ أو البيع. التطبيق لا ينفذ أوامر ولا يتصل بحساب الوسيط.</p>
         </>}
