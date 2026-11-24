@@ -146,7 +146,7 @@ function Stock({ k }: { k: string }) {
 
                 
                 </Det>
-                <Det title="التجربة على الماضي">
+                <Det title="اختياري: التجربة على الماضي (اضغط للإظهار)">
                     <p className="eg-note">ندخل تاني يوم ونستنى 10 أيام، بعد خصم 1% تكلفة. متوسط أي يوم عشوائي <L>{pc(s.base)}</L>.</p>
                 <table className="eg-tbl"><thead><tr><th>القاعدة</th><th>مرات</th><th>كسب</th><th>متوسط</th></tr></thead><tbody>
                     {Object.keys(s.bt).map(r => <tr key={r}><td>{RULE_AR[r]}</td><td>{s.bt[r].n}</td><td>{s.bt[r].win == null ? '-' : s.bt[r].win + '%'}</td><td dir="ltr">{s.bt[r].avg == null ? '-' : pc(s.bt[r].avg)}</td></tr>)}
@@ -214,7 +214,7 @@ function About() {
 function Info() {
     return <div className="eg-pad eg-in">
         <Det title="حركة السوق (أسهم بس)"><Market /></Det>
-        <Det title="عن التطبيق وحدوده" open><About /></Det>
+        <Det title="عن التطبيق وحدوده"><About /></Det>
     </div>;
 }
 export function App() {
