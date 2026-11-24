@@ -105,7 +105,8 @@ function build() {
 html[data-theme=light] .eg-chart canvas{filter:invert(1) hue-rotate(180deg)}
 html[data-theme=light] .set-theme{color:#334155}
 html[data-theme=light] .gd-tab.on{color:#fff!important;background:#0f766e!important}
-html[data-theme=light] .set-inst{color:#fff!important}`;
+html[data-theme=light] .set-inst{color:#fff!important}
+html[data-theme=light] .hc-tabs button.on{color:#fff!important;background:#0f766e!important}`;
   let el = document.getElementById(ID) as HTMLStyleElement | null;
   if (!el) { el = document.createElement('style'); el.id = ID; document.head.appendChild(el); }
   if (el.textContent !== css) el.textContent = css;
