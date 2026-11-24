@@ -1,0 +1,13 @@
+/* round 10: bolder stock page */
+.eg-title,.eg-pad>h1,.eg-top2 h1{font-size:30px!important;line-height:1.25;font-weight:900;background:linear-gradient(90deg,#fff,#5eead4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tv{margin:18px 0 14px;padding:22px 18px 18px;padding-inline-start:96px;border-radius:30px;border:0;
+ background:radial-gradient(130% 150% at 100% 0%,color-mix(in srgb,var(--c) 55%,transparent),transparent 65%),linear-gradient(160deg,color-mix(in srgb,var(--c) 22%,#0b1220),#0a0f1b 80%);
+ box-shadow:0 26px 50px -22px color-mix(in srgb,var(--c) 70%,#000),0 0 0 1.5px color-mix(in srgb,var(--c) 60%,transparent) inset}
+.tv::before{inset-inline-start:18px;inset-block-start:20px;inline-size:64px;block-size:64px;border-radius:20px;background-size:38px;background-color:color-mix(in srgb,var(--c) 30%,transparent);box-shadow:0 10px 24px -8px var(--c)}
+.tv-t{font-size:30px;font-weight:900;letter-spacing:-.3px;text-shadow:0 4px 22px color-mix(in srgb,var(--c) 70%,transparent)}
+.tv-f{font-size:16px;color:#fff}
+.eg-why{border-radius:26px;border:0;background:linear-gradient(165deg,#15233b,#0b1322);box-shadow:0 18px 40px -22px #000e,0 0 0 1px #ffffff18 inset}
+.eg-why>*{border-radius:18px}
+.gd-tabs{position:sticky;top:8px;z-index:20;backdrop-filter:none;box-shadow:0 14px 30px -12px #000e}
+.gd-tab.on{box-shadow:0 10px 26px -6px #06b6d4cc}
+@media (prefers-reduced-motion:no-preference){.tv{animation:tvIn .5s cubic-bezier(.2,.8,.2,1) both}@keyframes tvIn{from{opacity:0;transform:translateY(14px) scale(.97)}}}
