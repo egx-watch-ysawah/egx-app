@@ -89,7 +89,7 @@ for k,s in SYM.items():
         plan['bbpos']=round(float((P-df.bl.iloc[-1])/(df.bu.iloc[-1]-df.bl.iloc[-1])*100))
         t=df.tail(150)
         rows=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume),None if pd.isna(r.sma50) else round(r.sma50,4),None if pd.isna(r.sma200) else round(r.sma200,4),round(r.rsi,1),round(r.macd,4),round(r.sig,4),None if pd.isna(r.bu) else round(r.bu,4),None if pd.isna(r.bl) else round(r.bl,4)] for i,r in t.iterrows()]
-        bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(1300).iterrows()]
+        bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(900).iterrows()]
         chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
         out['stocks'][k]=dict(name=NAMES[k],ok=True,close=round(float(last.close),3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),
           rsi=round(float(last.rsi),0),score=int(last.score),votes={a:int(b) for a,b in lv.items()},volx=round(float(last.volume/last.vavg),1),
