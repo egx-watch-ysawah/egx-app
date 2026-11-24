@@ -1,0 +1,1 @@
+{"name":"egx-app","private":true,"type":"module","scripts":{"build":"node build.mjs"},"dependencies":{"esbuild":"^0.25.0","react":"^18.3.1","react-dom":"^18.3.1","react-router-dom":"^6.28.0"}}
