@@ -1,0 +1,34 @@
+/* Portfolio layout pass: tiles, cards, spacing. Styling only. */
+.pv-board{margin:18px 0 22px}
+.pv-title h3{font-size:19px}
+.pv-card{background:linear-gradient(160deg,#16243b,#0f1827);border-radius:20px;border:1px solid #243651;padding:14px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.pv-top>b{font-size:15px;letter-spacing:.4px}
+.pv-price>b{font-size:21px;letter-spacing:-.4px}
+.pv-up,.pv-down{border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700}
+.pv-up{background:#2ee59d1f;color:#4cf0b0}.pv-down{background:#ff6b7d1f;color:#ff8d9b}
+.pv-foot{border-top:1px solid #1f2d44;padding-top:8px;margin-top:2px}
+.pv-foot span{background:#1b2a43;color:#b9c9e0;border-radius:999px;padding:3px 9px;font-size:10.5px}
+
+.portfolio-overview,.holding-context{border-radius:20px;background:linear-gradient(160deg,#121f33,#0d1625);border-color:#223048;padding:16px}
+.portfolio-map{height:12px;border-radius:999px}
+.portfolio-legend span{border:1px solid #223048;border-radius:999px;padding:6px 10px;background:#0b1320}
+
+/* Each holding as a card */
+.portfolio-holding{background:linear-gradient(160deg,#111b2d,#0c1422);border:1px solid #223048;border-radius:22px;padding:16px;margin:16px 0;box-shadow:0 8px 26px #00000045;display:flex;flex-direction:column;gap:12px}
+.portfolio-holding h3{margin:0;font-size:22px;letter-spacing:.5px;align-items:center}
+.portfolio-holding h3 span{font-size:11px;color:#a9bad2;background:#1a2940;border-radius:999px;padding:5px 11px;font-weight:600;letter-spacing:0}
+.portfolio-values{gap:8px}
+.portfolio-values>div{border:1px solid #223048;border-radius:16px;padding:12px 8px;background:#0a111d;text-align:center;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+.portfolio-values small{font-size:10px;line-height:1.7;color:#8fa4c2;margin:0;order:0}
+.portfolio-values b{margin:0;font-size:16px;font-variant-numeric:tabular-nums;color:#fff}
+.portfolio-holding .eg-note{margin:0;font-size:12.5px;line-height:1.85;color:#8fa1b9}
+.portfolio-holding>.eg-chip{align-self:stretch;justify-content:center;border-radius:12px}
+.portfolio-holding .eg-ex{margin:0}
+.portfolio-holding .evidence{margin:0}
+
+/* Section headings and expanders on home */
+.holding-compare{border-radius:14px}
+.eg-ex summary{padding:12px 14px}
+.portfolio-saved{border-radius:14px;padding:12px 14px}
+.portfolio-sort select{min-height:44px;border-radius:12px}
+.data-age{border-radius:14px}
