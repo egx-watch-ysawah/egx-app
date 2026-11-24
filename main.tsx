@@ -16,6 +16,7 @@ import './ui8.css';
 import './ui9.css';
 import './ui10.css';
 import './ui11.css';
+import './ui12.css';
 import { Ticker } from './ticker';
 import { AppBar } from './appbar';
 import { SettingsGear } from './settings';
