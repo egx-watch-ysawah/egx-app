@@ -160,13 +160,14 @@ function fairCard(s: any, k: string, r: any) {
   const rows = mult.map(([n, x, t]) => ({ n, t, v: eps * x }));
   const pe = s.close / eps;
   const pos = s.close < rows[0].v ? 'أقل من' : s.close > rows[2].v ? 'أعلى من' : 'جوه';
-  return <div className="gd-fv"><h4>نطاق السعر العادل · مبدئي، لسه هيتم التحديث</h4>
+  return <div className="gd-fv"><h4>الدراسة النهائية · نطاق السعر العادل على قوائم 9 شهور 2026</h4>
     <p className="gd-lead">ربح السهم الحسابي <bdi dir="ltr">{eps.toFixed(eps < 0.1 ? 4 : 2)}</bdi> (ربح الأم 9 شهور <bdi dir="ltr">{n1(m.profit)}</bdi> مليون ÷ <bdi dir="ltr">{n1(m.shares)}</bdi> مليون سهم، مضروب في 4/3 لسنة كاملة). السعر الحالي <bdi dir="ltr">{f(s.close)}</bdi> يساوي {pe.toFixed(1)} مرة الربح.</p>
     <div className="gd-rng">{rows.map(r => <div key={r.n}><small>{r.n} · {r.t}</small><b dir="ltr">{f(r.v)}</b></div>)}</div>
     <p className="gd-lead">السعر الحالي {pos} النطاق المبدئي. النطاق واسع لأن فايدة الإيداع 20% بتدي مضاعف صغير، ومضاعف السوق بيدي مضاعف أكبر.</p>
+    <div className="gd-it ok"><div className="gd-h"><span>القراءة النهائية</span></div><p>الوسط (10×) = <bdi dir="ltr">{f(rows[1].v)}</bdi>. السعر الحالي {s.close > rows[1].v ? 'فوق' : 'تحت'} الوسط بحوالي {Math.abs((s.close / rows[1].v - 1) * 100).toFixed(0)}%، و{s.close > rows[0].v ? 'فوق' : 'تحت'} الحد المحافظ بحوالي {Math.abs((s.close / rows[0].v - 1) * 100).toFixed(0)}%. الحد المحافظ هو الأقرب للواقع لأن فايدة الإيداع 20%. دي قراءة تقييم بالربح، مش توقع سعر ولا أمر بيع أو شراء، وأي رقم من القايمة تحت لو اتغير بيحرك النطاق.</p></div>
     <div className="gd-it mid"><div className="gd-h"><span>الطريقة</span></div><p>ربح السهم السنوي × مضاعف ربح. المحافظ = 1 ÷ (فايدة الإيداع 20% + علاوة مخاطرة 7% − نمو بحجم التضخم 12%). المتوسط والمتفائل = مضاعف سوق البورصة المصرية: 10 في أغسطس و17.4 في أكتوبر.</p></div>
     <div className="gd-it mid"><div className="gd-h"><span>الافتراضات (علاوة المخاطرة 7% افتراضنا)</span></div><p>ضرب 9 شهور في 4/3 بيفترض ربع رابع مثل المتوسط، وده مش مضمون. المضاعف محتاج مراجعة لكل قطاع.</p></div>
-    <div className="gd-it no"><div className="gd-h"><span>لسه هيتم التحديث</span></div>{m.todo.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
+    <div className="gd-it no"><div className="gd-h"><span>حدود الدراسة: مش متاح من مصادر مجانية، هيتحدث لما يتنشر</span></div>{m.todo.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
     {m.extra && <div className="gd-it mid"><div className="gd-h"><span>تقاطع آخر</span></div><p>{m.extra}</p></div>}
     <p className="gd-foot">مصادر: <a href="https://sis.gov.eg/en/media-center/news/egypt-s-central-bank-raises-key-interest-rates-by-1/" target="_blank" rel="noreferrer">فايدة البنك المركزي 20%</a> · <a href="https://economymiddleeast.com/news/egypts-october-inflation-eases-to-12-percent-as-monthly-rate-falls-to-0-6-percent-after-march-peak/" target="_blank" rel="noreferrer">تضخم أكتوبر 12%</a> · <a href="https://enterpriseam.com/egypt/2026/11/05/egx30-sheds-4-43-in-october-to-post-its-first-back-to-back-monthly-loss-of-2026/" target="_blank" rel="noreferrer">مضاعف السوق 17.36</a> · <a href="https://www.agbi.com/analysis/markets/2026/08/foreign-investors-return-as-egypt-stocks-hit-record-highs/" target="_blank" rel="noreferrer">مضاعف 10 في أغسطس</a> · {m.src}. مش نصيحة استثمار ولا سعر مستهدف.</p></div>;
 }
@@ -222,7 +223,7 @@ function DecSum({ s, k }: { s: any; k: string }) {
   const d = DEC[k];
   let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
   if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.63 / 7.33 / 8.03 (مبدئي).';
-  else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق مبدئي ' + f(e * 6.67) + ' / ' + f(e * 10) + ' / ' + f(e * 17.36) + ' (لسه هيتم التحديث).'; } }
+  else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق الدراسة (محافظ / متوسط / متفائل) ' + f(e * 6.67) + ' / ' + f(e * 10) + ' / ' + f(e * 17.36) + ' (حدود الدراسة في تبويب السعر العادل).'; } }
   return <section className="dec-sum" aria-label="ملخص للقرار">
     <div className="dec-row"><b>اللي بيحركه</b><span>{d.up[0]}{d.down[0] ? ' · ' + d.down[0] : ''}</span></div>
     <div className="dec-row"><b>اللي يغير القراءة</b><span>{d.flip}</span></div>
