@@ -1,0 +1,14 @@
+/* App-like shell: styling and navigation only */
+html,body{overscroll-behavior-y:none;-webkit-touch-callout:none}
+body{-webkit-user-select:none;user-select:none}
+p,li,td,h1,h2,h3,.eg-note,.gd-it,.fin-study,input{-webkit-user-select:text;user-select:text}
+.eg-card-root{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.ab{position:fixed;inset-inline:0;bottom:0;z-index:30;display:flex;gap:2px;max-width:560px;margin:0 auto;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(11,17,28,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid #223048;box-shadow:0 -8px 28px #0009;overflow-x:auto;scrollbar-width:none}
+.ab::-webkit-scrollbar{display:none}
+.ab-i{flex:1 1 0;min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 1px;border-radius:12px;color:#8fa1bb;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0;transition:background .2s,color .2s}
+.ab-home{flex:1.5 1 0;font-weight:600}
+.ab-i span{font-size:11px}
+.ab-i.on{background:linear-gradient(135deg,#1e4378,#17606a);color:#fff;box-shadow:inset 0 0 0 1px #ffffff1a}
+.ab-i:active{transform:scale(.95)}
+.eg-back{display:none}
+@media (display-mode:standalone){body{background-attachment:scroll}.eg-card-root{padding-top:calc(18px + env(safe-area-inset-top))}}
