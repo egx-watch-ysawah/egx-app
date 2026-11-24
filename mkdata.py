@@ -1,0 +1,54 @@
+import json,numpy as np,pandas as pd,datetime
+from egx import *
+NAMES={'MASR':'مدينة مصر','BONY':'بنيان','HRHO':'إي إف جي هيرميس','UNIP':'يونيفرسال للورق','PHAR':'إيبيكو (فارما)','ORHD':'أوراسكوم للتنمية'}
+def votes(d):
+    v=pd.DataFrame(index=d.index)
+    v['trend']=(d.close>d.sma200).astype(int)
+    v['mid']=(d.close>d.sma50).astype(int)
+    v['macd']=(d.macd>d.sig).astype(int)
+    v['rsi']=((d.rsi>=40)&(d.rsi<=70)).astype(int)
+    v['vol']=((d.volume>d.vavg)&(d.close>d.close.shift())).astype(int)
+    return v
+out={'asof':str(datetime.date.today()),'stocks':{}}
+for k,s in SYM.items():
+    raw=load(s);df,q=quality(raw)
+    if len(df)<250:
+        out['stocks'][k]=dict(name=NAMES[k],ok=False,close=float(df.close.iloc[-1]) if len(df) else None);continue
+    df=ind(df.copy());v=votes(df);df['score']=v.sum(axis=1)
+    last=df.iloc[-1];lv=v.iloc[-1]
+    # score buckets forward 10d
+    fwd=df.close.shift(-H)/df.close.shift(-1)*0+df.close.shift(-H)/df.open.shift(-1)-1-COST
+    bk={}
+    for lo,hi,name in [(0,1,'0-1'),(2,3,'2-3'),(4,5,'4-5')]:
+        m=df.score.between(lo,hi)&fwd.notna();x=fwd[m]
+        bk[name]=dict(days=int(m.sum()),win=round(float((x>0).mean())*100),avg=round(float(x.mean())*100,1))
+    bt={}
+    for r in RULES:
+        x=backtest(df,r);bt[r]=dict(n=len(x),win=round(float(np.mean([a>0 for a in x]))*100) if x else None,avg=round(float(np.mean(x))*100,1) if x else None)
+    pc_=df.close.shift();tr=pd.concat([df.high-df.low,(df.high-pc_).abs(),(df.low-pc_).abs()],axis=1).max(axis=1);atr=float(tr.ewm(alpha=1/14,adjust=False).mean().iloc[-1])
+    ema20=float(df.close.ewm(span=20,adjust=False).mean().iloc[-1]);P=float(last.close)
+    res=float(df.high.tail(20).max());sup=float(df.low.tail(20).min())
+    w={'trend':25,'mid':20,'macd':20,'rsi':15,'vol':10}
+    strength=int(sum(w[a]*int(b) for a,b in lv.items())+(10 if any(bool(RULES[r](df).iloc[-1]) for r in RULES) else 0))
+    if P>ema20*1.005: mode='pullback';entry=ema20
+    else: mode='breakout';entry=res
+    stop=entry-2*atr;target=entry+3*atr
+    plan=dict(mode=mode,entry=round(entry,4),stop=round(stop,4),target=round(target,4),atr=round(atr,4),atrpct=round(atr/P*100,1),
+      entry_pct=round((entry/P-1)*100,1),stop_pct=round((stop/entry-1)*100,1),target_pct=round((target/entry-1)*100,1),res=round(res,4),sup=round(sup,4),ema20=round(ema20,4),strength=strength)
+    m20=df.close.rolling(20).mean();sd=df.close.rolling(20).std();df['bu']=m20+2*sd;df['bl']=m20-2*sd
+    up_=df.high.diff();dn_=-df.low.diff();pdm=np.where((up_>dn_)&(up_>0),up_,0.0);mdm=np.where((dn_>up_)&(dn_>0),dn_,0.0)
+    atrs=tr.ewm(alpha=1/14,adjust=False).mean();pdi=100*pd.Series(pdm,index=df.index).ewm(alpha=1/14,adjust=False).mean()/atrs;mdi=100*pd.Series(mdm,index=df.index).ewm(alpha=1/14,adjust=False).mean()/atrs
+    adx=float((100*(pdi-mdi).abs()/(pdi+mdi)).ewm(alpha=1/14,adjust=False).mean().iloc[-1]);plan['adx']=round(adx,0);plan['pdi_gt']=bool(pdi.iloc[-1]>mdi.iloc[-1])
+    plan['bbpos']=round(float((P-df.bl.iloc[-1])/(df.bu.iloc[-1]-df.bl.iloc[-1])*100))
+    t=df.tail(150)
+    rows=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume),None if pd.isna(r.sma50) else round(r.sma50,4),None if pd.isna(r.sma200) else round(r.sma200,4),round(r.rsi,1),round(r.macd,4),round(r.sig,4),None if pd.isna(r.bu) else round(r.bu,4),None if pd.isna(r.bl) else round(r.bl,4)] for i,r in t.iterrows()]
+    bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(1300).iterrows()]
+    chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
+    out['stocks'][k]=dict(name=NAMES[k],ok=True,close=round(float(last.close),3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),
+      rsi=round(float(last.rsi),0),score=int(last.score),votes={a:int(b) for a,b in lv.items()},volx=round(float(last.volume/last.vavg),1),
+      fire=[r for r in RULES if bool(RULES[r](df).iloc[-1])],bt=bt,buckets=bk,plan=plan,bars=bars,base=round(float((df.close.shift(-H)/df.open.shift(-1)-1).mean())*100-COST*100,1),
+      hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),jumps=q['jumps'],dropped=q['dropped'])
+    print(k,out['stocks'][k]['score'],bk)
+out['flows']=flows()
+json.dump(out,open('data.json','w'),ensure_ascii=False,separators=(',',':'))
+import os;print(os.path.getsize('data.json'))
