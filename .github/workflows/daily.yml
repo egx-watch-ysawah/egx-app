@@ -1,0 +1,52 @@
+name: daily-build
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "30 13 * * 0-4"
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Refresh data (keeps old data if the free source fails)
+        run: |
+          pip install pandas numpy
+          touch data.old.json; [ -f data.json ] && cp data.json data.old.json || true
+          if python mkdata.py && python -c "import json;d=json.load(open('data.json'));assert d['flows'] and sum(1 for s in d['stocks'].values() if s['ok'])>=4"; then echo refreshed; else [ -s data.old.json ] && cp data.old.json data.json; echo kept-old; fi
+          rm data.old.json
+      - name: Save refreshed data
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "egx-bot"
+          git config user.email "egx-bot@users.noreply.github.com"
+          git add data.json
+          git diff --cached --quiet || (git commit -m "daily data refresh" && git push)
+      - run: pip install pillow && python make_icons.py
+      - run: npm install && npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.d.outputs.page_url }}
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
