@@ -129,7 +129,7 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         </div>
         <div className="eg-read">
             <b>{r[0]}</b><span>فتح {r[1]}</span><span>أعلى {r[2]}</span><span>أقل {r[3]}</span><span>إقفال {r[4]}</span>
-            <span className={chgp >= 0 ? 'u' : 'd'}>{chgp >= 0 ? '+' : ''}{chgp.toFixed(1)}%</span>
+            <span dir="ltr" className={chgp >= 0 ? 'u' : 'd'}>{chgp >= 0 ? '+' : ''}{chgp.toFixed(1)}%</span>
             <span>حجم {(r[5] / 1000).toFixed(0)} ألف سهم</span><span>زخم RSI {r[8]}</span>
             {sel != null && <button type="button" className="eg-x" onClick={() => setSel(null)}>×</button>}
         </div>
