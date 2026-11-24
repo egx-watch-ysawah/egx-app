@@ -4,5 +4,7 @@ import { FileRouter } from './shim';
 import { App } from './App';
 import './style.css';
 import './polish.css';
+import './native.css';
+import { AppBar } from './appbar';
 
-createRoot(document.getElementById('root')!).render(<FileRouter><App /></FileRouter>);
+createRoot(document.getElementById('root')!).render(<FileRouter><App /><AppBar /></FileRouter>);
