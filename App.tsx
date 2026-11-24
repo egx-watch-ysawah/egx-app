@@ -131,6 +131,7 @@ function Stock({ k }: { k: string }) {
         <Link className="eg-back" to="/">← محفظتي</Link>
         <div className="eg-in">
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2>
+            {s.qualityChecked&&<p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer">{s.sourceName}</a>. المصدر اتغير بعد اكتشاف عيوب شموع المصدر السابق، والمؤشرات اتعادت على نفس التاريخ المتسق. المقارنة مش تحقق مستقل من كل صفقة.</p>}
             <PartialHistory s={s}/>
             {s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
             <Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det>
@@ -413,4 +414,4 @@ export function App() {
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">محفظتي · بيانات يومية</span></div>
         <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<Stock key={k} k={k}/>}/>)}<Route path="*" element={<Portfolio/>}/></Routes>
     </FileCard>;
-}
+        }
