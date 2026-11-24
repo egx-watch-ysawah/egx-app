@@ -1,0 +1,4450 @@
+{
+ "fetched_at_utc": "2026-11-24T23:04:28Z",
+ "not_found": [],
+ "note": "بيانات آلية غير مراجَعة من القوائم الأصلية، قد تكون متأخرة",
+ "source": "https://scanner.tradingview.com/egypt/scan",
+ "stocks": {
+  "ABUK": {
+   "derived": {
+    "bvps": 25.56,
+    "pb": 2.88,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fq": 2958086732,
+    "net_income_fy": 4657100493,
+    "total_equity_fq": 32256268027,
+    "total_revenue_fq": 7963517611,
+    "total_revenue_fy": 13131643463
+   },
+   "industry": "Chemicals: Agricultural",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 93896177871,
+   "name": "Abou Kir Fertilizers & Chemical Industries Co.",
+   "period": "2026-Q3",
+   "price": 73.71,
+   "release_date": 1793275200,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 1261880000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ACTF": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش قيمة دفترية متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Investment Banks/Brokers",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2353696790,
+   "name": "Act Financial",
+   "period": "2026-H1",
+   "price": 2.18,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1142571300,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "ADIB": {
+   "derived": {
+    "bvps": 31.61,
+    "pb": 1.46,
+    "pe": 4.21,
+    "roe_ttm_pct": 31.0
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     25.29,
+     34.77,
+     47.41
+    ],
+    "multiples": [
+     0.8,
+     1.1,
+     1.5
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 31.6094,
+    "cash_f_operating_activities_ttm": 2886205827,
+    "earnings_per_share_basic_ttm": 10.9528,
+    "free_cash_flow_ttm": 2068790830,
+    "net_income_fq": 4033997000,
+    "net_income_fy": 12588572000,
+    "net_income_ttm": 14726563000,
+    "net_margin_ttm": 50.314,
+    "operating_margin_ttm": 71.7801,
+    "total_debt_fq": 18942708000,
+    "total_equity_fq": 47484968000,
+    "total_revenue_fq": 17623449000,
+    "total_revenue_fy": 53391359000,
+    "total_revenue_ttm": 63623360000
+   },
+   "industry": "Regional Banks",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 69645000458,
+   "name": "Abu Dhabi Islamic Bank-Egypt",
+   "period": "2026-Q3",
+   "price": 46.15,
+   "release_date": 1793707200,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1500000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "bank"
+  },
+  "AIFI": {
+   "derived": {
+    "bvps": 0.14,
+    "pb": 17.29,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.1422,
+    "net_income_fq": 311590,
+    "total_debt_fq": 129562715,
+    "total_equity_fq": 121167691,
+    "total_revenue_fq": 8797944
+   },
+   "industry": "Agricultural Commodities/Milling",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2820649286,
+   "name": "Atlas for Investment & Food Industries SAE",
+   "period": "2026-Q1",
+   "price": 2.46,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 1151290000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "AIH": {
+   "derived": {
+    "bvps": 0.13,
+    "pb": 6.23,
+    "pe": null,
+    "roe_ttm_pct": -75.6
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     0.08,
+     0.12,
+     0.16
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.1308,
+    "earnings_per_share_basic_ttm": -0.155,
+    "net_income_fq": -43387723,
+    "net_income_fy": -214436987,
+    "net_income_ttm": -199271486,
+    "total_debt_fq": 1453468876,
+    "total_equity_fq": 263515523.0,
+    "total_revenue_fq": 49050017,
+    "total_revenue_fy": 460291260,
+    "total_revenue_ttm": -98658303
+   },
+   "industry": "Financial Conglomerates",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1254293682,
+   "name": "Arabia Investments Holding SAE",
+   "period": "2026-Q2",
+   "price": 0.81,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1558130000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "ALCN": {
+   "derived": {
+    "bvps": 2.72,
+    "pb": 11.59,
+    "pe": 14.57,
+    "roe_ttm_pct": 79.5
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     10.82,
+     15.14,
+     19.47
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.7196,
+    "cash_f_operating_activities_ttm": 6397748000,
+    "earnings_per_share_basic_ttm": 2.1633,
+    "free_cash_flow_ttm": 6306322000,
+    "gross_margin_ttm": 76.6108,
+    "net_income_fq": 1658349000,
+    "net_income_fy": 5920821000,
+    "net_income_ttm": 6445518000,
+    "net_margin_ttm": 71.5058,
+    "operating_margin_ttm": 74.4343,
+    "total_debt_fq": 32836000,
+    "total_equity_fq": 8103158000,
+    "total_revenue_fq": 2428996000,
+    "total_revenue_fy": 8369310000.0,
+    "total_revenue_ttm": 9013977000
+   },
+   "industry": "Other Transportation",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 93854465332,
+   "name": "Alexandria Containers & Goods",
+   "period": "2026-Q2",
+   "price": 31.53,
+   "release_date": 1779710400,
+   "reviewed": false,
+   "sector": "Transportation",
+   "shares": 2979510000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "AMER": {
+   "derived": {
+    "bvps": 2.15,
+    "pb": 1.69,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     1.29,
+     1.94,
+     2.8
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.1506,
+    "net_income_fq": 3653109,
+    "total_debt_fq": 1780228230,
+    "total_equity_fq": 2340534216,
+    "total_revenue_fq": 266307523
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 3403517510,
+   "name": "Amer Group Holding",
+   "period": "2026-Q2",
+   "price": 3.64,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 902790000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "AMIA": {
+   "derived": {
+    "bvps": 3.4,
+    "pb": 4.63,
+    "pe": 19.2,
+    "roe_ttm_pct": 19.1
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     4.1,
+     5.74,
+     7.38
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 3.4032,
+    "cash_f_operating_activities_ttm": -767314608,
+    "earnings_per_share_basic_ttm": 0.8196,
+    "free_cash_flow_ttm": -799640720,
+    "gross_margin_ttm": 73.1746,
+    "net_income_fq": 85289752,
+    "net_income_fy": 268534835,
+    "net_income_ttm": 418434377,
+    "net_margin_ttm": 16.2857,
+    "operating_margin_ttm": 62.1311,
+    "total_debt_fq": 7120807950,
+    "total_equity_fq": 2190065864,
+    "total_revenue_fq": 540795402,
+    "total_revenue_fy": 2439048137,
+    "total_revenue_ttm": 2569339872
+   },
+   "industry": "Finance/Rental/Leasing",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 8245714295,
+   "name": "Arab Moltaqa Investments Company",
+   "period": "2026-Q2",
+   "price": 15.74,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 510571000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "AMOC": {
+   "derived": {
+    "bvps": 3.72,
+    "pb": 3.3,
+    "pe": 10.81,
+    "roe_ttm_pct": 30.1
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     5.67,
+     7.94,
+     10.2
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 3.7173,
+    "cash_f_operating_activities_ttm": 949379660,
+    "earnings_per_share_basic_ttm": 1.1336,
+    "free_cash_flow_ttm": 593419900,
+    "gross_margin_ttm": 7.1179,
+    "net_income_fq": 547892405,
+    "net_income_fy": 1329375065,
+    "net_income_ttm": 1464068536,
+    "net_margin_ttm": 3.7305,
+    "operating_margin_ttm": 4.1367,
+    "total_debt_fq": 23378575,
+    "total_equity_fq": 4857587218,
+    "total_revenue_fq": 10510779160,
+    "total_revenue_fy": 37622609782,
+    "total_revenue_ttm": 39246284300
+   },
+   "industry": "Oil Refining/Marketing",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 16156665296,
+   "name": "Alexandria Mineral Oils Co.",
+   "period": "2026-Q1",
+   "price": 12.25,
+   "release_date": 1786881600,
+   "reviewed": false,
+   "sector": "Energy Minerals",
+   "shares": 1291500000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ARAB": {
+   "derived": {
+    "bvps": 0.13,
+    "pb": 2.01,
+    "pe": 27.39,
+    "roe_ttm_pct": 7.3
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     0.08,
+     0.11,
+     0.16
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.1253,
+    "cash_f_operating_activities_ttm": -966095380,
+    "earnings_per_share_basic_ttm": 0.0092,
+    "free_cash_flow_ttm": -1013056700,
+    "gross_margin_ttm": 42.2072,
+    "net_income_fq": 39105055,
+    "net_income_fy": 96907802,
+    "net_income_ttm": 164933936,
+    "net_margin_ttm": 8.8819,
+    "operating_margin_ttm": 17.7144,
+    "total_debt_fq": 2717860084,
+    "total_equity_fq": 2270278724,
+    "total_revenue_fq": 268177513.0,
+    "total_revenue_fy": 1923752287,
+    "total_revenue_ttm": 1856977057
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 5975741211,
+   "name": "Arab Developers Holding",
+   "period": "2026-Q1",
+   "price": 0.25,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 23903000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "ARCC": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 3580711862,
+    "total_revenue_fy": 12447320081
+   },
+   "industry": "Construction Materials",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 24774987184,
+   "name": "Arabian Cement Company",
+   "period": "2026-Q2",
+   "price": 67.03,
+   "release_date": 1748433600,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 374867000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ASCM": {
+   "derived": {
+    "bvps": 56.02,
+    "pb": 0.79,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 56.024,
+    "net_income_fq": 124158821,
+    "total_debt_fq": 5977093656,
+    "total_equity_fq": 2571277595,
+    "total_revenue_fq": 1288049698
+   },
+   "industry": "Construction Materials",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2403500042,
+   "name": "ASEC Co. for Mining",
+   "period": "2026-Q2",
+   "price": 44.28,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 55000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ASPI": {
+   "derived": {
+    "bvps": 0.37,
+    "pb": 0.85,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     0.22,
+     0.33,
+     0.44
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.3706,
+    "net_income_fq": 53415832,
+    "total_debt_fq": 1809837084,
+    "total_equity_fq": 741107918,
+    "total_revenue_fq": 254504669
+   },
+   "industry": "Investment Banks/Brokers",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1209000009,
+   "name": "Aspire Capital Holding for Financial Investments",
+   "period": "2026-Q2",
+   "price": 0.32,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 3900000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "ATLC": {
+   "derived": {
+    "bvps": 3.35,
+    "pb": 1.55,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     2.01,
+     3.01,
+     4.35
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 3.3492,
+    "net_income_fq": 39030988,
+    "net_income_fy": 226758357,
+    "total_debt_fq": 7101111704,
+    "total_equity_fq": 1339687292,
+    "total_revenue_fq": 491170120,
+    "total_revenue_fy": 2073500248.0
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2076000023,
+   "name": "Al Tawfeek Leasing Company-A.T.LEASE",
+   "period": "2026-Q2",
+   "price": 5.2,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 400000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "ATQA": {
+   "derived": {
+    "bvps": 2.06,
+    "pb": 4.82,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.057,
+    "net_income_fq": 83705624,
+    "total_debt_fq": 1194608732,
+    "total_equity_fq": 2468417270,
+    "total_revenue_fq": 583536506
+   },
+   "industry": "Metal Fabrication",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 12060000229,
+   "name": "Misr National Steel",
+   "period": "2026-Q2",
+   "price": 9.91,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Producer Manufacturing",
+   "shares": 1200000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "BONY": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "net_income_fy": 2001363173,
+    "total_revenue_fy": 856266823
+   },
+   "industry": "Real Estate Development",
+   "label": "مراجَع",
+   "market_cap": 7743103894,
+   "name": "Bonyan for Development and Trade",
+   "period": "2026-Q2",
+   "price": 4.11,
+   "release_date": null,
+   "reviewed": true,
+   "sector": "Finance",
+   "shares": 1874843500,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "BTFH": {
+   "derived": {
+    "bvps": 2.22,
+    "pb": 0.97,
+    "pe": 33.54,
+    "roe_ttm_pct": 2.8
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     1.33,
+     2.0,
+     2.66
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.2204,
+    "cash_f_operating_activities_ttm": -7336108000,
+    "earnings_per_share_basic_ttm": 0.0644,
+    "free_cash_flow_ttm": -8018398000,
+    "gross_margin_ttm": 96.1108,
+    "net_income_fq": -47826000,
+    "net_income_fy": 1347050000,
+    "net_income_ttm": 689605000,
+    "net_margin_ttm": 3.3929,
+    "operating_margin_ttm": 46.2357,
+    "total_debt_fq": 64377357000,
+    "total_equity_fq": 24495796000,
+    "total_revenue_fq": 7120394000,
+    "total_revenue_fy": 12378939000,
+    "total_revenue_ttm": 20325135000
+   },
+   "industry": "Investment Banks/Brokers",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 22829570035,
+   "name": "Beltone Holding",
+   "period": "2026-Q2",
+   "price": 2.16,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 10718100000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "CCAP": {
+   "derived": {
+    "bvps": -1.43,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": -1.4314,
+    "net_income_fq": 2036987000,
+    "net_income_fy": -1249248000,
+    "total_debt_fq": 77659051000,
+    "total_equity_fq": 82359780000,
+    "total_revenue_fq": 54549492000,
+    "total_revenue_fy": 135483193000
+   },
+   "industry": "Investment Managers",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 18655542020,
+   "name": "QALA For Financial Investments",
+   "period": "2026-Q2",
+   "price": 5.68,
+   "release_date": 1770120000,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 3216470000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "CIEB": {
+   "derived": {
+    "bvps": 19.28,
+    "pb": 1.2,
+    "pe": 4.54,
+    "roe_ttm_pct": 26.5
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     15.42,
+     21.21,
+     28.92
+    ],
+    "multiples": [
+     0.8,
+     1.1,
+     1.5
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 19.2797,
+    "cash_f_operating_activities_ttm": 7554246000,
+    "earnings_per_share_basic_ttm": 5.1124,
+    "free_cash_flow_ttm": 7334463000,
+    "net_income_fq": 1580516000,
+    "net_income_fy": 6196836000,
+    "net_income_ttm": 6390556000,
+    "net_margin_ttm": 41.7951,
+    "operating_margin_ttm": 62.6267,
+    "total_debt_fq": 4033429000,
+    "total_equity_fq": 24099636000,
+    "total_revenue_fq": 6093180000,
+    "total_revenue_fy": 22050788000,
+    "total_revenue_ttm": 23357820000
+   },
+   "industry": "Major Banks",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 29062500000,
+   "name": "Credit Agricole Egypt",
+   "period": "2026-Q3",
+   "price": 23.2,
+   "release_date": 1793188800,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1250000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "bank"
+  },
+  "CLHO": {
+   "derived": {
+    "bvps": 2.59,
+    "pb": 5.52,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.5919,
+    "net_income_fq": 118094800,
+    "net_income_fy": 669824828,
+    "total_debt_fq": 3913657887,
+    "total_equity_fq": 4209623882,
+    "total_revenue_fq": 1972518001,
+    "total_revenue_fy": 7227264460
+   },
+   "industry": "Hospital/Nursing Management",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 20740211491,
+   "name": "Cleopatra Hospital Company",
+   "period": "2026-Q1",
+   "price": 14.3,
+   "release_date": 1788177600,
+   "reviewed": false,
+   "sector": "Health Services",
+   "shares": 1467810000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "CNFN": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 345095303,
+    "total_revenue_fy": 8564348534.0
+   },
+   "industry": "Finance/Rental/Leasing",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 4572440596,
+   "name": "Contact Financial Holding SAE",
+   "period": "2026-Q2",
+   "price": 3.83,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1196970000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "COMI": {
+   "derived": {
+    "bvps": 75.89,
+    "pb": 1.67,
+    "pe": 6.29,
+    "roe_ttm_pct": 26.4
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.8,
+     1.1,
+     1.5
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "book_value_per_share_fq": 75.8876,
+    "cash_f_operating_activities_ttm": 74265463000,
+    "earnings_per_share_basic_ttm": 20.1156,
+    "free_cash_flow_ttm": 66352722000.0,
+    "net_income_fq": 23763601000,
+    "net_income_fy": 61634295000,
+    "net_income_ttm": 68146035000,
+    "net_margin_ttm": 46.1551,
+    "operating_margin_ttm": 77.8744,
+    "total_debt_fq": 55711620000,
+    "total_equity_fq": 258448384000,
+    "total_revenue_fq": 71495064000,
+    "total_revenue_fy": 230151557000,
+    "total_revenue_ttm": 253671544000
+   },
+   "industry": "Regional Banks",
+   "label": "مراجَع",
+   "market_cap": 430750011108,
+   "name": "Commercial International Bank - Egypt (CIB) S.A.E.",
+   "period": "2026-Q3",
+   "price": 126.47,
+   "release_date": 1794294000,
+   "reviewed": true,
+   "sector": "Finance",
+   "shares": 3405140000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "bank"
+  },
+  "COSG": {
+   "derived": {
+    "bvps": 0.73,
+    "pb": 1.82,
+    "pe": null,
+    "roe_ttm_pct": -9.4
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.7317,
+    "cash_f_operating_activities_ttm": 5014842.0,
+    "earnings_per_share_basic_ttm": -0.0638,
+    "free_cash_flow_ttm": 4476200,
+    "gross_margin_ttm": 7.7272,
+    "net_income_fq": -5750620,
+    "net_income_fy": -75412763,
+    "net_income_ttm": -42915619,
+    "net_margin_ttm": -5.2335,
+    "operating_margin_ttm": 1.6804,
+    "total_debt_fq": 255464875,
+    "total_equity_fq": 456573044,
+    "total_revenue_fq": 207720963,
+    "total_revenue_fy": 769447193,
+    "total_revenue_ttm": 820009968
+   },
+   "industry": "Household/Personal Care",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 829920027,
+   "name": "Cairo Oils & Soap",
+   "period": "2026-Q2",
+   "price": 1.33,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Consumer Non-Durables",
+   "shares": 624000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "CSAG": {
+   "derived": {
+    "bvps": 7.4,
+    "pb": 5.15,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 7.4016,
+    "net_income_fy": 1118259853.2,
+    "total_debt_fq": 0,
+    "total_equity_fq": 2220475929.01,
+    "total_revenue_fy": 168616407.26
+   },
+   "industry": "Other Transportation",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 11402999496,
+   "name": "Canal Shipping Agencies Co.",
+   "period": "2026-Q4",
+   "price": 38.11,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Transportation",
+   "shares": 300000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "DAPH": {
+   "derived": {
+    "bvps": 27.58,
+    "pb": 3.01,
+    "pe": null,
+    "roe_ttm_pct": -8.9
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     16.55,
+     24.82,
+     35.86
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 27.5813,
+    "cash_f_operating_activities_ttm": -418428932,
+    "earnings_per_share_basic_ttm": -3.1608,
+    "gross_margin_ttm": -7.9904,
+    "net_income_fq": -26168103,
+    "net_income_fy": -138401362,
+    "net_income_ttm": -76305589,
+    "net_margin_ttm": -15.5967,
+    "operating_margin_ttm": -28.5456,
+    "total_debt_fq": 1214368114,
+    "total_equity_fq": 854769584,
+    "total_revenue_fq": 39817504,
+    "total_revenue_fy": 542912257,
+    "total_revenue_ttm": 489241941
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1949536439,
+   "name": "Development & Engineering Consultants",
+   "period": "2026-Q2",
+   "price": 82.99,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 23522400,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "DSCW": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Apparel/Footwear",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 3859153044,
+   "name": "Dice Sports & Casual Wear Manufacturers SAE",
+   "period": "2026-Q2",
+   "price": 1.44,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Consumer Non-Durables",
+   "shares": 2679970000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EAST": {
+   "derived": {
+    "bvps": 4.83,
+    "pb": 6.99,
+    "pe": 11.42,
+    "roe_ttm_pct": 61.2
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     14.8,
+     20.72,
+     26.64
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 4.834,
+    "cash_f_operating_activities_ttm": -6559747000,
+    "earnings_per_share_basic_ttm": 2.9598,
+    "free_cash_flow_ttm": -6509771000,
+    "gross_margin_ttm": 35.8879,
+    "net_income_fq": 983744000,
+    "net_income_fy": 8662101000,
+    "net_income_ttm": 8879441000,
+    "net_margin_ttm": 21.5926,
+    "operating_margin_ttm": 28.3299,
+    "total_debt_fq": 7942462000,
+    "total_equity_fq": 14502056000,
+    "total_revenue_fq": 8525894000,
+    "total_revenue_fy": 37381841000,
+    "total_revenue_ttm": 41122667000
+   },
+   "industry": "Tobacco",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 99629997253,
+   "name": "Eastern Company",
+   "period": "2026-Q3",
+   "price": 33.8,
+   "release_date": 1787918400,
+   "reviewed": false,
+   "sector": "Consumer Non-Durables",
+   "shares": 3000000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EFID": {
+   "derived": {
+    "bvps": 3.32,
+    "pb": 6.32,
+    "pe": 12.63,
+    "roe_ttm_pct": 47.5
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     8.31,
+     11.63,
+     14.96
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 3.3222,
+    "cash_f_operating_activities_ttm": 3608048009,
+    "earnings_per_share_basic_ttm": 1.6617,
+    "free_cash_flow_ttm": 1954852840,
+    "gross_margin_ttm": 33.751,
+    "net_income_fq": 971731104,
+    "net_income_fy": 2520915183,
+    "net_income_ttm": 3454604014,
+    "net_margin_ttm": 13.4293,
+    "operating_margin_ttm": 17.4264,
+    "total_debt_fq": 6325565309,
+    "total_equity_fq": 7271737716,
+    "total_revenue_fq": 7299508449,
+    "total_revenue_fy": 20915072432,
+    "total_revenue_ttm": 25724422651
+   },
+   "industry": "Food: Specialty/Candy",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 42728571174,
+   "name": "Edita Food Industries SAE",
+   "period": "2026-Q3",
+   "price": 20.98,
+   "release_date": 1794830400,
+   "reviewed": false,
+   "sector": "Consumer Non-Durables",
+   "shares": 2094540000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EFIH": {
+   "derived": {
+    "bvps": 2.88,
+    "pb": 8.8,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.8754,
+    "net_income_fq": 745202167,
+    "net_income_fy": 1942878186,
+    "total_debt_fq": 207392771,
+    "total_equity_fq": 10098759607,
+    "total_revenue_fq": 1927437331,
+    "total_revenue_fy": 6773084743
+   },
+   "industry": "Packaged Software",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 85973332707,
+   "name": "e-finance for Digital and Financial Investments S.A.E.",
+   "period": "2026-Q2",
+   "price": 25.29,
+   "release_date": 1723723200,
+   "reviewed": false,
+   "sector": "Technology Services",
+   "shares": 3466666700,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EGAL": {
+   "derived": {
+    "bvps": 82.16,
+    "pb": 3.63,
+    "pe": 7.94,
+    "roe_ttm_pct": 45.7
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     187.77,
+     262.88,
+     337.99
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 82.1635,
+    "cash_f_operating_activities_ttm": 17568663840,
+    "earnings_per_share_basic_ttm": 37.5545,
+    "free_cash_flow_ttm": 16297381190,
+    "gross_margin_ttm": 38.6204,
+    "net_income_fq": 5043918924,
+    "net_income_fy": 15491225321,
+    "net_income_ttm": 15491225321,
+    "net_margin_ttm": 29.1533,
+    "operating_margin_ttm": 36.7353,
+    "total_debt_fq": 212628106,
+    "total_equity_fq": 33892451666,
+    "total_revenue_fq": 16405920645.0,
+    "total_revenue_fy": 53137105253,
+    "total_revenue_ttm": 53137105253
+   },
+   "industry": "Aluminum",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 124575000000,
+   "name": "Egypt Aluminum",
+   "period": "2026-Q4",
+   "price": 298,
+   "release_date": 1716465600,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 412500000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EGCH": {
+   "derived": {
+    "bvps": 21.64,
+    "pb": 0.46,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 21.6402,
+    "net_income_fy": 1794373000,
+    "total_debt_fq": 13536433000,
+    "total_equity_fq": 42989909000,
+    "total_revenue_fy": 11230989000
+   },
+   "industry": "Chemicals: Agricultural",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 19667131139,
+   "name": "Egyptian Chemical Industries",
+   "period": "2026-Q4",
+   "price": 9.93,
+   "release_date": 1720008000,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 1986580000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EGTS": {
+   "derived": {
+    "bvps": 0.47,
+    "pb": 26.23,
+    "pe": null,
+    "roe_ttm_pct": -21.0
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.4731,
+    "cash_f_operating_activities_ttm": 801128685,
+    "earnings_per_share_basic_ttm": -0.1144,
+    "free_cash_flow_ttm": 564314740,
+    "gross_margin_ttm": 63.7808,
+    "net_income_fq": 11445002,
+    "net_income_fy": -119025700,
+    "net_income_ttm": -120084030,
+    "net_margin_ttm": -11.2095,
+    "operating_margin_ttm": -36.4729,
+    "total_debt_fq": 0,
+    "total_equity_fq": 572028341,
+    "total_revenue_fq": 74526842,
+    "total_revenue_fy": 1046341204.0,
+    "total_revenue_ttm": 1071265864
+   },
+   "industry": "Electric Utilities",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 12925500441,
+   "name": "Egyptian for Tourism Resorts",
+   "period": "2026-Q1",
+   "price": 12.41,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Utilities",
+   "shares": 1050000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EHDR": {
+   "derived": {
+    "bvps": 1.04,
+    "pb": 1.98,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     0.62,
+     0.94,
+     1.35
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 1.0406,
+    "net_income_fq": 31995514,
+    "total_debt_fq": 11698676,
+    "total_equity_fq": 699259483,
+    "total_revenue_fq": 70424717
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1370879974,
+   "name": "Egyptians Housing Development & Reconstruction",
+   "period": "2026-Q3",
+   "price": 2.06,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 672000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "ELEC": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Electrical Products",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 5135987281,
+   "name": "Electro Cable Egypt",
+   "period": "2026-Q2",
+   "price": 1.54,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Producer Manufacturing",
+   "shares": 3313540000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ELKA": {
+   "derived": {
+    "bvps": 3.34,
+    "pb": 0.42,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     2.0,
+     3.01,
+     4.34
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 3.3414,
+    "net_income_fq": 48621456,
+    "total_debt_fq": 855336105,
+    "total_equity_fq": 6204223350,
+    "total_revenue_fq": 106860421
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2692308652,
+   "name": "El Kahera Housing",
+   "period": "2026-Q2",
+   "price": 1.42,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1856760000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "ELSH": {
+   "derived": {
+    "bvps": 5.93,
+    "pb": 1.77,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     3.56,
+     5.34,
+     7.71
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 5.929,
+    "net_income_fq": 40095024,
+    "total_debt_fq": 130928040.0,
+    "total_equity_fq": 1345142908,
+    "total_revenue_fq": 88768309
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2350424922,
+   "name": "El-Shams Housing & Development SA",
+   "period": "2026-Q2",
+   "price": 10.47,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 226875000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "EMFD": {
+   "derived": {
+    "bvps": 13.59,
+    "pb": 0.9,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     8.16,
+     12.23,
+     17.67
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 13.5943,
+    "net_income_fq": 7768859504,
+    "total_debt_fq": 18295348780,
+    "total_equity_fq": 74047383934,
+    "total_revenue_fq": 6802931872
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 64818461203,
+   "name": "Emaar Misr for Development SAE",
+   "period": "2026-Q1",
+   "price": 12.2,
+   "release_date": 1723636800,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 5446930000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "ENGC": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 728595767,
+    "total_revenue_fy": 7346786484
+   },
+   "industry": "Building Products",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 5530454756,
+   "name": "Industrial Engineering Co. for Construction & Development",
+   "period": "2026-Q2",
+   "price": 38.48,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Producer Manufacturing",
+   "shares": 145500000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ETEL": {
+   "derived": {
+    "bvps": 48.45,
+    "pb": 2.91,
+    "pe": 8.03,
+    "roe_ttm_pct": 36.2
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     87.78,
+     122.89,
+     158.0
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 48.4541,
+    "cash_f_operating_activities_ttm": 63651645000,
+    "earnings_per_share_basic_ttm": 17.5558,
+    "free_cash_flow_ttm": 30031061000,
+    "gross_margin_ttm": 42.8761,
+    "net_income_fq": 8980944000,
+    "net_income_fy": 20370815000,
+    "net_income_ttm": 29969001000,
+    "net_margin_ttm": 24.4078,
+    "operating_margin_ttm": 28.9066,
+    "total_debt_fq": 58127211000,
+    "total_equity_fq": 82750904000,
+    "total_revenue_fq": 34153901000.0,
+    "total_revenue_fy": 106672946000,
+    "total_revenue_ttm": 121979990000
+   },
+   "industry": "Major Telecommunications",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 238955883012,
+   "name": "Telecom Egypt",
+   "period": "2026-Q3",
+   "price": 141,
+   "release_date": 1794484800,
+   "reviewed": false,
+   "sector": "Communications",
+   "shares": 1707070000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ETRS": {
+   "derived": {
+    "bvps": 4.89,
+    "pb": 2.26,
+    "pe": 11.18,
+    "roe_ttm_pct": 18.0
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     4.94,
+     6.91,
+     8.89
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 4.8938,
+    "cash_f_operating_activities_ttm": 156852017,
+    "earnings_per_share_basic_ttm": 0.9878,
+    "free_cash_flow_ttm": 38243480,
+    "gross_margin_ttm": 29.0749,
+    "net_income_fq": 14632663,
+    "net_income_fy": 129799417,
+    "net_income_ttm": 197895240,
+    "net_margin_ttm": 13.7139,
+    "operating_margin_ttm": 13.184,
+    "total_debt_fq": 153302473,
+    "total_equity_fq": 1101542773,
+    "total_revenue_fq": 433531810,
+    "total_revenue_fy": 1228391710,
+    "total_revenue_ttm": 1443022568
+   },
+   "industry": "Other Transportation",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2496943019,
+   "name": "Egyptian Transport And Commercial Services Co. (Egytrans Nosco)",
+   "period": "2026-Q2",
+   "price": 11.04,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Transportation",
+   "shares": 224950000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "EXPA": {
+   "derived": {
+    "bvps": 15.82,
+    "pb": 0.91,
+    "pe": 3.96,
+    "roe_ttm_pct": 23.0
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     12.65,
+     17.4,
+     23.73
+    ],
+    "multiples": [
+     0.8,
+     1.1,
+     1.5
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 15.817,
+    "earnings_per_share_basic_ttm": 3.6422,
+    "net_income_fq": 933711000,
+    "net_income_fy": 6032606000,
+    "net_income_ttm": 6555892000,
+    "net_margin_ttm": 36.847,
+    "operating_margin_ttm": 56.4147,
+    "total_debt_fq": 29744873000,
+    "total_equity_fq": 28510462000,
+    "total_revenue_fq": 9121770000,
+    "total_revenue_fy": 32986947000,
+    "total_revenue_ttm": 37529304000
+   },
+   "industry": "Regional Banks",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 25793999863,
+   "name": "Export Development Bank of Egypt",
+   "period": "2026-Q3",
+   "price": 14.43,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1800000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "bank"
+  },
+  "FWRY": {
+   "derived": {
+    "bvps": 2.98,
+    "pb": 5.86,
+    "pe": 16.76,
+    "roe_ttm_pct": 33.7
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     5.2,
+     7.28,
+     9.36
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.9773,
+    "cash_f_operating_activities_ttm": 3870513958,
+    "earnings_per_share_basic_ttm": 1.0403,
+    "free_cash_flow_ttm": 3464933310,
+    "gross_margin_ttm": 66.5978,
+    "net_income_fq": 1070332847.0,
+    "net_income_fy": 2889189159,
+    "net_income_ttm": 3543797947,
+    "net_margin_ttm": 32.3821,
+    "operating_margin_ttm": 34.1646,
+    "total_debt_fq": 4497539093,
+    "total_equity_fq": 10525210273,
+    "total_revenue_fq": 3129475912,
+    "total_revenue_fy": 8651478402,
+    "total_revenue_ttm": 10943693036
+   },
+   "industry": "Packaged Software",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 58762525085,
+   "name": "Fawry For Banking Technology And Electronic Payment",
+   "period": "2026-Q3",
+   "price": 17.44,
+   "release_date": 1794830400,
+   "reviewed": false,
+   "sector": "Technology Services",
+   "shares": 3406520000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "GBCO": {
+   "derived": {
+    "bvps": 27.57,
+    "pb": 0.8,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 27.5704,
+    "net_income_fq": 435747000,
+    "net_income_fy": 2860576000,
+    "total_debt_fq": 42434833000,
+    "total_equity_fq": 31724248000,
+    "total_revenue_fq": 21570778000,
+    "total_revenue_fy": 80229809000
+   },
+   "industry": "Wholesale Distributors",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 23511929834,
+   "name": "GB Corp",
+   "period": "2026-Q1",
+   "price": 22.1,
+   "release_date": 1786568400,
+   "reviewed": false,
+   "sector": "Distribution Services",
+   "shares": 1085500000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "GDWA": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 411261467,
+    "total_revenue_fy": 15773741306
+   },
+   "industry": "Industrial Machinery",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2740612880,
+   "name": "Gadwa For Industrial Development",
+   "period": "2026-Q2",
+   "price": 0.51,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Producer Manufacturing",
+   "shares": 5352760000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "GOUR": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 189741427,
+    "total_revenue_fy": 2877655973
+   },
+   "industry": "Food Retail",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 5640000000,
+   "name": "Gourmet Egypt.Com Foods",
+   "period": null,
+   "price": 13.78,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Retail Trade",
+   "shares": 400000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "GPIM": {
+   "derived": {
+    "bvps": 0.12,
+    "pb": 13.67,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     0.07,
+     0.1,
+     0.15
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.1156,
+    "net_income_fq": 913917,
+    "total_debt_fq": 0,
+    "total_equity_fq": 189111660,
+    "total_revenue_fq": 3875705
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2618181875,
+   "name": "GPI For Urban Growth",
+   "period": "2026-Q3",
+   "price": 1.58,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1636360000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "HDBK": {
+   "derived": {
+    "bvps": 43.91,
+    "pb": 2.36,
+    "pe": 5.54,
+    "roe_ttm_pct": 42.4
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     35.13,
+     48.3,
+     65.86
+    ],
+    "multiples": [
+     0.8,
+     1.1,
+     1.5
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 43.9097,
+    "cash_f_operating_activities_ttm": 18028476524,
+    "earnings_per_share_basic_ttm": 18.7266,
+    "free_cash_flow_ttm": 17460926570,
+    "net_income_fq": 5146632215,
+    "net_income_fy": 18680766637,
+    "net_income_ttm": 19898923750,
+    "net_margin_ttm": 57.763,
+    "operating_margin_ttm": 73.2267,
+    "total_debt_fq": 1203627782,
+    "total_equity_fq": 46878266127,
+    "total_revenue_fq": 12312043364,
+    "total_revenue_fy": 44744730144,
+    "total_revenue_ttm": 47479623762
+   },
+   "industry": "Regional Banks",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 112114925694,
+   "name": "Housing & Development Bank",
+   "period": "2026-Q2",
+   "price": 103.82,
+   "release_date": 1771156800,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1062599999.9999999,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "bank"
+  },
+  "HELI": {
+   "derived": {
+    "bvps": 2.42,
+    "pb": 2.63,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     1.45,
+     2.17,
+     3.14
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.4157,
+    "net_income_fq": 1183686875,
+    "total_debt_fq": 8169337581,
+    "total_equity_fq": 9675412129,
+    "total_revenue_fq": 1817587424
+   },
+   "industry": "Homebuilding",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 25233111140,
+   "name": "Heliopolis Housing",
+   "period": "2026-Q2",
+   "price": 6.35,
+   "release_date": 1792411200,
+   "reviewed": false,
+   "sector": "Consumer Durables",
+   "shares": 4005260000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "HRHO": {
+   "derived": {
+    "bvps": 25.16,
+    "pb": 1.04,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "book_value_per_share_fq": 25.1567,
+    "net_income_fq": 775587000,
+    "net_income_fy": 4058309000,
+    "total_debt_fq": 58962515000,
+    "total_equity_fq": 46223906000,
+    "total_revenue_fq": 13101770000,
+    "total_revenue_fy": 46727493000
+   },
+   "industry": "Investment Banks/Brokers",
+   "label": "مراجَع",
+   "market_cap": 36873731249,
+   "name": "EFG Holding S.A.E.",
+   "period": "2026-Q2",
+   "price": 26.2,
+   "release_date": 1679486400,
+   "reviewed": true,
+   "sector": "Finance",
+   "shares": 1435890000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "ICFC": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 205103796,
+    "total_revenue_fy": 3686669262
+   },
+   "industry": "Chemicals: Agricultural",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 3047827584,
+   "name": "International Co. for Fertilizers & Chemicals",
+   "period": "2026-Q2",
+   "price": 26.54,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 116775000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "IDRE": {
+   "derived": {
+    "bvps": 4.14,
+    "pb": 9.65,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     2.48,
+     3.72,
+     5.38
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 4.1357,
+    "net_income_fq": -360497,
+    "total_debt_fq": 0,
+    "total_equity_fq": 152351320,
+    "total_revenue_fq": 636425
+   },
+   "industry": "Homebuilding",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1474634918,
+   "name": "Ismailia Development & Real Estate Co.",
+   "period": "2026-Q1",
+   "price": 39.91,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Consumer Durables",
+   "shares": 36838300,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "IEEC": {
+   "derived": {
+    "bvps": 0.25,
+    "pb": 2.54,
+    "pe": 44.08,
+    "roe_ttm_pct": 5.8
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     0.07,
+     0.1,
+     0.13
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.2462,
+    "cash_f_operating_activities_ttm": -10286235,
+    "earnings_per_share_basic_ttm": 0.0142,
+    "free_cash_flow_ttm": -10347250,
+    "gross_margin_ttm": 4.957,
+    "net_income_fq": 4822387,
+    "net_income_fy": 26357293,
+    "net_income_ttm": 20655167,
+    "net_margin_ttm": 1.9219,
+    "operating_margin_ttm": 2.8591,
+    "total_debt_fq": 10643719,
+    "total_equity_fq": 359030865,
+    "total_revenue_fq": 430456672,
+    "total_revenue_fy": 719752847,
+    "total_revenue_ttm": 1074719684
+   },
+   "industry": "Engineering & Construction",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 931662000,
+   "name": "Industrial & Engineering Enterprises Co.",
+   "period": "2026-Q3",
+   "price": 0.63,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Industrial Services",
+   "shares": 1458000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ISMA": {
+   "derived": {
+    "bvps": 2.33,
+    "pb": 8.39,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.3342,
+    "net_income_fq": 11653952,
+    "total_debt_fq": 0,
+    "total_equity_fq": 209744894,
+    "total_revenue_fq": 14771922
+   },
+   "industry": "Agricultural Commodities/Milling",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1767477187,
+   "name": "Ismailia Misr Poultry",
+   "period": "2026-Q2",
+   "price": 19.59,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 89856499,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ISMQ": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Steel",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 6427819353,
+   "name": "Iron & Steel for Mines & Quarries",
+   "period": "2026-Q4",
+   "price": 6.5,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 976872250,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ISPH": {
+   "derived": {
+    "bvps": 3.11,
+    "pb": 3.21,
+    "pe": 11.56,
+    "roe_ttm_pct": 27.7
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     4.32,
+     6.04,
+     7.77
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 3.1124,
+    "cash_f_operating_activities_ttm": 659553261,
+    "earnings_per_share_basic_ttm": 0.8634,
+    "free_cash_flow_ttm": -540853080,
+    "gross_margin_ttm": 8.1082,
+    "net_income_fq": 206844041,
+    "net_income_fy": 771106510,
+    "net_income_ttm": 870324729,
+    "net_margin_ttm": 1.048,
+    "operating_margin_ttm": 4.1391,
+    "total_debt_fq": 27635670776,
+    "total_equity_fq": 3137279411,
+    "total_revenue_fq": 20991071720,
+    "total_revenue_fy": 76597057544,
+    "total_revenue_ttm": 83043804058
+   },
+   "industry": "Medical Distributors",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 11390400085,
+   "name": "Ibnsina Pharma",
+   "period": "2026-Q2",
+   "price": 9.98,
+   "release_date": 1786536000,
+   "reviewed": false,
+   "sector": "Distribution Services",
+   "shares": 1120000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "JUFO": {
+   "derived": {
+    "bvps": 5.94,
+    "pb": 3.73,
+    "pe": 14.62,
+    "roe_ttm_pct": 25.5
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     7.59,
+     10.63,
+     13.66
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 5.9422,
+    "cash_f_operating_activities_ttm": 1154613980,
+    "earnings_per_share_basic_ttm": 1.518,
+    "free_cash_flow_ttm": -1635381580,
+    "gross_margin_ttm": 23.6105,
+    "net_income_fq": 712914293,
+    "net_income_fy": 1632090117,
+    "net_income_ttm": 2232894424,
+    "net_margin_ttm": 6.6659,
+    "operating_margin_ttm": 12.84,
+    "total_debt_fq": 8490607329,
+    "total_equity_fq": 8742048020,
+    "total_revenue_fq": 9078222716,
+    "total_revenue_fy": 29984446222,
+    "total_revenue_ttm": 33497294096.0
+   },
+   "industry": "Food: Meat/Fish/Dairy",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 32360802246,
+   "name": "Juhayna Food Industries",
+   "period": "2026-Q2",
+   "price": 22.19,
+   "release_date": 1785931200,
+   "reviewed": false,
+   "sector": "Consumer Non-Durables",
+   "shares": 1470950000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "KABO": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Apparel/Footwear",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 4178734075.0000005,
+   "name": "El Nasr Clothing & Textiles Co.",
+   "period": "2026-Q4",
+   "price": 7.75,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Consumer Non-Durables",
+   "shares": 564694000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "LCSW": {
+   "derived": {
+    "bvps": 50.9,
+    "pb": 0.81,
+    "pe": 22.56,
+    "roe_ttm_pct": 3.5
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     9.17,
+     12.84,
+     16.5
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 50.8984,
+    "cash_f_operating_activities_ttm": -125262778,
+    "earnings_per_share_basic_ttm": 1.8338,
+    "free_cash_flow_ttm": -483915430,
+    "gross_margin_ttm": 19.803,
+    "net_income_fq": 47639956,
+    "net_income_fy": 244075897,
+    "net_income_ttm": 146706206,
+    "net_margin_ttm": 1.7009,
+    "operating_margin_ttm": 9.3864,
+    "total_debt_fq": 3033886647,
+    "total_equity_fq": 4209551265,
+    "total_revenue_fq": 2433070954,
+    "total_revenue_fy": 7803673428,
+    "total_revenue_ttm": 8625435954
+   },
+   "industry": "Building Products",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 3369999988,
+   "name": "Lecico Egypt SAE",
+   "period": "2026-Q2",
+   "price": 41.37,
+   "release_date": 1716724800,
+   "reviewed": false,
+   "sector": "Producer Manufacturing",
+   "shares": 83333300,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MASR": {
+   "derived": {
+    "bvps": 6.26,
+    "pb": 1.02,
+    "pe": 4.42,
+    "roe_ttm_pct": 22.9
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "cash_f_operating_activities_ttm": 904180413,
+    "earnings_per_share_basic_ttm": 1.438,
+    "free_cash_flow_ttm": 471767340,
+    "gross_margin_ttm": 59.6957,
+    "net_income_fq": 790365400,
+    "net_income_fy": 3157409001,
+    "net_income_ttm": 3065745111,
+    "net_margin_ttm": 23.6074,
+    "operating_margin_ttm": 40.9297,
+    "total_debt_fq": 7868961700,
+    "total_equity_fq": 13368462400,
+    "total_revenue_fq": 3357311000,
+    "total_revenue_fy": 12739155352,
+    "total_revenue_ttm": 12986384824
+   },
+   "industry": "Real Estate Development",
+   "label": "مراجَع",
+   "market_cap": 13386449959,
+   "name": "Madinet Masr for Housing & Development",
+   "period": "2026-Q3",
+   "price": 6.36,
+   "release_date": 1794225600,
+   "reviewed": true,
+   "sector": "Finance",
+   "shares": 2135000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "MBSC": {
+   "derived": {
+    "bvps": 90.96,
+    "pb": 3.73,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 90.9606,
+    "net_income_fq": 691515681,
+    "total_debt_fq": 85675171,
+    "total_equity_fq": 5254732375,
+    "total_revenue_fq": 1747208184
+   },
+   "industry": "Construction Materials",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 18015602557,
+   "name": "Misr Beni Suef Cement Co. SAE",
+   "period": "2026-Q3",
+   "price": 339,
+   "release_date": 1794398400,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 52565000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MCQE": {
+   "derived": {
+    "bvps": 44.38,
+    "pb": 3.96,
+    "pe": 6.61,
+    "roe_ttm_pct": 47.7
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     133.04,
+     186.26,
+     239.47
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 44.3801,
+    "cash_f_operating_activities_ttm": 2499312770,
+    "earnings_per_share_basic_ttm": 26.6079,
+    "free_cash_flow_ttm": 2208829750,
+    "gross_margin_ttm": 39.6619,
+    "net_income_fq": 682722689,
+    "net_income_fy": 2033242637,
+    "net_income_ttm": 2554355767,
+    "net_margin_ttm": 23.9083,
+    "operating_margin_ttm": 35.1553,
+    "total_debt_fq": 399870625,
+    "total_equity_fq": 5356500625,
+    "total_revenue_fq": 2964531749,
+    "total_revenue_fy": 9545381277,
+    "total_revenue_ttm": 10683980094
+   },
+   "industry": "Construction Materials",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 16893120116.999998,
+   "name": "Misr Cement Co. (Qena)",
+   "period": "2026-Q3",
+   "price": 175.9,
+   "release_date": 1794484800,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 96000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MCRO": {
+   "derived": {
+    "bvps": 0.24,
+    "pb": 5.33,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.2401,
+    "net_income_fq": 50981571,
+    "total_debt_fq": 50030653,
+    "total_equity_fq": 821815927,
+    "total_revenue_fq": 302947553
+   },
+   "industry": "Pharmaceuticals: Major",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 4402948757,
+   "name": "Macro Group Pharmaceutical S.A.E.",
+   "period": "2026-Q2",
+   "price": 1.28,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Health Technology",
+   "shares": 3421240000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MEPA": {
+   "derived": {
+    "bvps": 0.34,
+    "pb": 3.8,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.3421,
+    "net_income_fq": 6103101,
+    "total_debt_fq": 39588793,
+    "total_equity_fq": 224052595,
+    "total_revenue_fq": 31464919
+   },
+   "industry": "Containers/Packaging",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 851499969,
+   "name": "Medical Packaging Company",
+   "period": "2026-Q2",
+   "price": 1.3,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 655000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MFPC": {
+   "derived": {
+    "bvps": 16.48,
+    "pb": 2.23,
+    "pe": 6.74,
+    "roe_ttm_pct": 33.1
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     27.29,
+     38.2,
+     49.11
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 16.4756,
+    "cash_f_operating_activities_ttm": 14627433684,
+    "earnings_per_share_basic_ttm": 5.4571,
+    "free_cash_flow_ttm": 10236549880,
+    "gross_margin_ttm": 50.9255,
+    "net_income_fq": 2236002168,
+    "net_income_fy": 11296540287,
+    "net_income_ttm": 15651882325,
+    "net_margin_ttm": 43.9176,
+    "operating_margin_ttm": 45.5894,
+    "total_debt_fq": 138432363,
+    "total_equity_fq": 47254364169,
+    "total_revenue_fq": 7181489491,
+    "total_revenue_fy": 26844075576,
+    "total_revenue_ttm": 35639212961
+   },
+   "industry": "Chemicals: Agricultural",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 104973924627,
+   "name": "Misr Fertilizers Production Company MOPCO",
+   "period": "2026-Q3",
+   "price": 36.8,
+   "release_date": 1794830400,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 2868140000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MOED": {
+   "derived": {
+    "bvps": 0.12,
+    "pb": 3.94,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.122,
+    "net_income_fq": 2481292,
+    "total_debt_fq": 80387,
+    "total_equity_fq": 122587916,
+    "total_revenue_fq": 15272783
+   },
+   "industry": "Miscellaneous Commercial Services",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 468329991,
+   "name": "Egyptian Modern Education Systems",
+   "period": "2026-Q3",
+   "price": 0.48,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Commercial Services",
+   "shares": 1005000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MPCI": {
+   "derived": {
+    "bvps": 35.9,
+    "pb": 9.44,
+    "pe": 14.87,
+    "roe_ttm_pct": 63.5
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     113.91,
+     159.47,
+     205.03
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 35.8986,
+    "cash_f_operating_activities_ttm": 183543370,
+    "earnings_per_share_basic_ttm": 22.7816,
+    "free_cash_flow_ttm": 155719110,
+    "gross_margin_ttm": 39.7153,
+    "net_income_fq": 106980426,
+    "net_income_fy": 505279620,
+    "net_income_ttm": 518281539.0,
+    "net_margin_ttm": 28.7386,
+    "operating_margin_ttm": 34.0205,
+    "total_debt_fq": 66627143.0,
+    "total_equity_fq": 816692379,
+    "total_revenue_fq": 437384430,
+    "total_revenue_fy": 1507801749,
+    "total_revenue_ttm": 1803432820
+   },
+   "industry": "Pharmaceuticals: Major",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 7644000000,
+   "name": "Memphis Pharmaceutical & Chemical Industries",
+   "period": "2026-Q3",
+   "price": 338.82,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Health Technology",
+   "shares": 22750000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MPCO": {
+   "derived": {
+    "bvps": 0.23,
+    "pb": 8.29,
+    "pe": null,
+    "roe_ttm_pct": -72.8
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.234,
+    "cash_f_operating_activities_ttm": -78517965,
+    "earnings_per_share_basic_ttm": -0.173,
+    "free_cash_flow_ttm": -116597010,
+    "gross_margin_ttm": -18.5254,
+    "net_income_fq": -61508243,
+    "net_income_fy": 2050271,
+    "net_income_ttm": -172957857,
+    "net_margin_ttm": -26.5522,
+    "operating_margin_ttm": -30.1278,
+    "total_debt_fq": 141326708,
+    "total_equity_fq": 237726829,
+    "total_revenue_fq": 169347985,
+    "total_revenue_fy": 856989479,
+    "total_revenue_ttm": 651387427
+   },
+   "industry": "Agricultural Commodities/Milling",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1920000076,
+   "name": "Mansourah Poultry Co.",
+   "period": "2026-Q2",
+   "price": 1.94,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 1000000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MPRC": {
+   "derived": {
+    "bvps": 21.75,
+    "pb": 1.71,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 21.7545,
+    "net_income_fq": 195787989,
+    "net_income_fy": 698452335,
+    "total_debt_fq": 20244129,
+    "total_equity_fq": 4922645358,
+    "total_revenue_fq": 291461356,
+    "total_revenue_fy": 1268147178
+   },
+   "industry": "Movies/Entertainment",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 7016310181,
+   "name": "Egyptian Media Production City",
+   "period": "2026-Q3",
+   "price": 37.13,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Consumer Services",
+   "shares": 189630000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "MTIE": {
+   "derived": {
+    "bvps": 2.23,
+    "pb": 2.96,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.2326,
+    "net_income_fq": 250861754,
+    "net_income_fy": 1262042529,
+    "total_debt_fq": 289410623,
+    "total_equity_fq": 5279756135,
+    "total_revenue_fq": 5997143842,
+    "total_revenue_fy": 21163171343
+   },
+   "industry": "Electronics Distributors",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 14230041979,
+   "name": "MM Group for Industry & International Trade",
+   "period": "2026-Q2",
+   "price": 6.6,
+   "release_date": 1774526400,
+   "reviewed": false,
+   "sector": "Distribution Services",
+   "shares": 2265930000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "NCCW": {
+   "derived": {
+    "bvps": 1.27,
+    "pb": 4.17,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 1.2706,
+    "net_income_fq": -7429934,
+    "total_debt_fq": 933444,
+    "total_equity_fq": 320192786,
+    "total_revenue_fq": 76828781
+   },
+   "industry": "Engineering & Construction",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1330560053,
+   "name": "Nasr Co. for Civil Works",
+   "period": "2026-Q2",
+   "price": 5.3,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Industrial Services",
+   "shares": 252000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "NIPH": {
+   "derived": {
+    "bvps": 22.07,
+    "pb": 13.09,
+    "pe": 46.42,
+    "roe_ttm_pct": 21.8
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     31.13,
+     43.58,
+     56.03
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 22.0712,
+    "cash_f_operating_activities_ttm": -294342839,
+    "earnings_per_share_basic_ttm": 6.2253,
+    "free_cash_flow_ttm": -717510720,
+    "gross_margin_ttm": 31.2047,
+    "net_income_fq": 68992348,
+    "net_income_fy": 125727463,
+    "net_income_ttm": 240133758,
+    "net_margin_ttm": 10.7243,
+    "operating_margin_ttm": 26.7988,
+    "total_debt_fq": 1353617883,
+    "total_equity_fq": 1103560848,
+    "total_revenue_fq": 638142740,
+    "total_revenue_fy": 1289577704,
+    "total_revenue_ttm": 2239153713
+   },
+   "industry": "Pharmaceuticals: Major",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 14725500488,
+   "name": "El-Nile Co. for Pharmaceuticals & Chemical Industries",
+   "period": "2026-Q3",
+   "price": 289,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Health Technology",
+   "shares": 50000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "OBRI": {
+   "derived": {
+    "bvps": 8.47,
+    "pb": 2.56,
+    "pe": 10.56,
+    "roe_ttm_pct": 24.3
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     5.08,
+     7.63,
+     11.01
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 8.4726,
+    "cash_f_operating_activities_ttm": 80282859,
+    "earnings_per_share_basic_ttm": 2.0553,
+    "free_cash_flow_ttm": 30343960,
+    "gross_margin_ttm": 10.3762,
+    "net_income_fq": 30217998,
+    "net_income_fy": 49317233,
+    "net_income_ttm": 82213427,
+    "net_margin_ttm": 4.2535,
+    "operating_margin_ttm": 4.1232,
+    "total_debt_fq": 45510142,
+    "total_equity_fq": 338906017,
+    "total_revenue_fq": 600475570,
+    "total_revenue_fy": 1304225190,
+    "total_revenue_ttm": 1932848208
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 871999969,
+   "name": "El Obour Real Estate Investment",
+   "period": "2026-Q2",
+   "price": 21.7,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 40000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "OCDI": {
+   "derived": {
+    "bvps": 12.93,
+    "pb": 1.84,
+    "pe": 7.63,
+    "roe_ttm_pct": 24.0
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     7.76,
+     11.64,
+     16.81
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 12.9299,
+    "earnings_per_share_basic_ttm": 3.1148,
+    "gross_margin_ttm": 32.3702,
+    "net_income_fq": 536591569.0,
+    "net_income_fy": 4479519259,
+    "net_income_ttm": 4015895653,
+    "net_margin_ttm": 17.206,
+    "operating_margin_ttm": 19.7997,
+    "total_debt_fq": 32435728984,
+    "total_equity_fq": 16738041735.0,
+    "total_revenue_fq": 4107997632.0,
+    "total_revenue_fy": 21536965597,
+    "total_revenue_ttm": 23340037007
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 30066325871,
+   "name": "Six of October Development & Investment (SODIC)",
+   "period": "2026-Q2",
+   "price": 23.78,
+   "release_date": 1675944000,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1289290000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "OFH": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش قيمة دفترية متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 26841000,
+    "total_revenue_fy": 0
+   },
+   "industry": "Financial Conglomerates",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 3193135727,
+   "name": "O B Financial Holding",
+   "period": "2026-Q2",
+   "price": 0.71,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 4626699000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "OIH": {
+   "derived": {
+    "bvps": 0.22,
+    "pb": 6.93,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.225,
+    "net_income_fq": -388243000,
+    "total_debt_fq": 8628198000,
+    "total_equity_fq": 1305546000,
+    "total_revenue_fq": 845056000
+   },
+   "industry": "Wireless Telecommunications",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 8602932230,
+   "name": "Orascom Investment Holding SAE",
+   "period": "2026-Q3",
+   "price": 1.56,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Communications",
+   "shares": 5245690000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ORAS": {
+   "derived": {
+    "bvps": 447.88,
+    "pb": 1.75,
+    "pe": 7.6,
+    "roe_ttm_pct": 22.2
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     516.34,
+     722.87,
+     929.41
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 447.8826,
+    "cash_f_operating_activities_ttm": 20003399200.7375,
+    "earnings_per_share_basic_ttm": 103.2676,
+    "free_cash_flow_ttm": 16242215409.2481,
+    "gross_margin_ttm": 9.0318,
+    "net_income_fq": 3098057081.4903,
+    "net_income_fy": 9461434713.2779,
+    "net_income_ttm": 11381348643.7532,
+    "net_margin_ttm": 3.7451,
+    "operating_margin_ttm": 5.0841,
+    "total_debt_fq": 26675035971.8045,
+    "total_equity_fq": 51178033367.2932,
+    "total_revenue_fq": 75554555253.9225,
+    "total_revenue_fy": 245268752644.3065,
+    "total_revenue_ttm": 303898198334.5909
+   },
+   "industry": "Engineering & Construction",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 94384396498.26053,
+   "name": "Orascom Construction Plc",
+   "period": "2026-Q2",
+   "price": 785.01,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Industrial Services",
+   "shares": 116761375,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ORHD": {
+   "derived": {
+    "bvps": 5.21,
+    "pb": 2.01,
+    "pe": 7.11,
+    "roe_ttm_pct": 26.2
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "book_value_per_share_fq": 5.2062,
+    "earnings_per_share_basic_ttm": 1.4677,
+    "gross_margin_ttm": 30.4947,
+    "net_income_fq": 1235313574,
+    "net_income_fy": 5549671395,
+    "net_income_ttm": 5352027398,
+    "net_margin_ttm": 18.9565,
+    "operating_margin_ttm": 26.8582,
+    "total_debt_fq": 11886525133,
+    "total_equity_fq": 20395706576,
+    "total_revenue_fq": 8357998643.0,
+    "total_revenue_fy": 24945058673,
+    "total_revenue_ttm": 28233261964
+   },
+   "industry": "Homebuilding",
+   "label": "مراجَع",
+   "market_cap": 36428301869,
+   "name": "Orascom Development Egypt (S.A.E)",
+   "period": "2026-Q2",
+   "price": 10.44,
+   "release_date": 1731326400,
+   "reviewed": true,
+   "sector": "Consumer Durables",
+   "shares": 3650130000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "ORWE": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 2189343558,
+    "total_revenue_fy": 26622797999
+   },
+   "industry": "Home Furnishings",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 16428149304.999998,
+   "name": "Oriental Weavers Carpet",
+   "period": "2026-Q2",
+   "price": 24.7,
+   "release_date": 1723636800,
+   "reviewed": false,
+   "sector": "Consumer Durables",
+   "shares": 665107000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "PHAR": {
+   "derived": {
+    "bvps": 37.15,
+    "pb": 2.72,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "book_value_per_share_fq": 37.1548,
+    "net_income_fq": 166938934,
+    "net_income_fy": 1441657700,
+    "total_debt_fq": 10446002098,
+    "total_equity_fq": 6274624963,
+    "total_revenue_fq": 2335777604,
+    "total_revenue_fy": 9441379305
+   },
+   "industry": "Pharmaceuticals: Other",
+   "label": "مراجَع",
+   "market_cap": 17128708885,
+   "name": "Egyptian International Pharmaceutical Industries Co.",
+   "period": "2026-Q3",
+   "price": 100.99,
+   "release_date": 1794744000,
+   "reviewed": true,
+   "sector": "Health Technology",
+   "shares": 168756000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "PHDC": {
+   "derived": {
+    "bvps": 7.1,
+    "pb": 1.62,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     4.26,
+     6.39,
+     9.22
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 7.0959,
+    "net_income_fq": 1109282742,
+    "net_income_fy": 4216657655,
+    "total_debt_fq": 38240612082,
+    "total_equity_fq": 22085631911,
+    "total_revenue_fq": 12199045314,
+    "total_revenue_fy": 35198605851
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 33032010787,
+   "name": "Palm Hills Development Co.",
+   "period": "2026-Q3",
+   "price": 11.5,
+   "release_date": 1794830400,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 2859910000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "POUL": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Agricultural Commodities/Milling",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 12704394190,
+   "name": "Cairo Poultry Co.",
+   "period": "2026-Q2",
+   "price": 6.86,
+   "release_date": 1723636800,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 1789350000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "PRCL": {
+   "derived": {
+    "bvps": -5.32,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": -5.3184,
+    "net_income_fq": -36750082,
+    "total_debt_fq": 46393404,
+    "total_equity_fq": -267867017.0,
+    "total_revenue_fq": 26921115
+   },
+   "industry": "Specialty Stores",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 916155714,
+   "name": "General Co. for Ceramic & Porcelain Products",
+   "period": "2026-Q3",
+   "price": 17.59,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Retail Trade",
+   "shares": 50365900,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "PRDC": {
+   "derived": {
+    "bvps": 7.1,
+    "pb": 0.88,
+    "pe": 9.77,
+    "roe_ttm_pct": 4.6
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     4.26,
+     6.39,
+     9.23
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 7.1007,
+    "cash_f_operating_activities_ttm": 2641302913,
+    "earnings_per_share_basic_ttm": 0.6385,
+    "free_cash_flow_ttm": 2464801430,
+    "gross_margin_ttm": 38.8863,
+    "net_income_fq": 191240780,
+    "net_income_fy": 361774994,
+    "net_income_ttm": 658719471,
+    "net_margin_ttm": 8.8292,
+    "operating_margin_ttm": 18.536,
+    "total_debt_fq": 12497024967,
+    "total_equity_fq": 14378334770,
+    "total_revenue_fq": 2075103330,
+    "total_revenue_fy": 6768510714,
+    "total_revenue_ttm": 7460689207
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 6269964929,
+   "name": "Pioneers Properties for Urban Development",
+   "period": "2026-Q2",
+   "price": 6.24,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1017677100,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "RAYA": {
+   "derived": {
+    "bvps": 1.55,
+    "pb": 3.89,
+    "pe": 10.55,
+    "roe_ttm_pct": 25.7
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     2.85,
+     3.99,
+     5.12
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 1.5469,
+    "cash_f_operating_activities_ttm": -1868786598,
+    "earnings_per_share_basic_ttm": 0.5694,
+    "free_cash_flow_ttm": -2967768020,
+    "gross_margin_ttm": 19.6419,
+    "net_income_fq": 355092840,
+    "net_income_fy": 2588357394,
+    "net_income_ttm": 2435415492,
+    "net_margin_ttm": 3.4871,
+    "operating_margin_ttm": 8.1321,
+    "total_debt_fq": 28189158901,
+    "total_equity_fq": 9475868595,
+    "total_revenue_fq": 17972396843,
+    "total_revenue_fy": 63829420695,
+    "total_revenue_ttm": 69839719255
+   },
+   "industry": "Information Technology Services",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 24874340273,
+   "name": "Raya Holding for Financial Investments SAE",
+   "period": "2026-Q2",
+   "price": 6.01,
+   "release_date": 1786622400,
+   "reviewed": false,
+   "sector": "Technology Services",
+   "shares": 4281300000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "RMDA": {
+   "derived": {
+    "bvps": 1.24,
+    "pb": 4.11,
+    "pe": 27.39,
+    "roe_ttm_pct": 14.5
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     0.93,
+     1.31,
+     1.68
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 1.2445,
+    "cash_f_operating_activities_ttm": 270211101,
+    "earnings_per_share_basic_ttm": 0.1869,
+    "free_cash_flow_ttm": 93933400,
+    "gross_margin_ttm": 50.2211,
+    "net_income_fq": 132986254,
+    "net_income_fy": 268614697,
+    "net_income_ttm": 366246897,
+    "net_margin_ttm": 8.3184,
+    "operating_margin_ttm": 22.7882,
+    "total_debt_fq": 2432655497,
+    "total_equity_fq": 2518397016,
+    "total_revenue_fq": 1149750640,
+    "total_revenue_fy": 4096012746.0,
+    "total_revenue_ttm": 4402862482
+   },
+   "industry": "Pharmaceuticals: Major",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 10265728171,
+   "name": "Tenth of Ramadan Pharmaceutical Industries & Diagnostic-Rameda",
+   "period": "2026-Q3",
+   "price": 5.12,
+   "release_date": 1794744000,
+   "reviewed": false,
+   "sector": "Health Technology",
+   "shares": 2032820000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "SCEM": {
+   "derived": {
+    "bvps": 29.01,
+    "pb": 3.4,
+    "pe": 8.33,
+    "roe_ttm_pct": 40.8
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     59.19,
+     82.86,
+     106.54
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 29.0065,
+    "cash_f_operating_activities_ttm": 3199691764,
+    "earnings_per_share_basic_ttm": 11.8374,
+    "free_cash_flow_ttm": 2590906820,
+    "gross_margin_ttm": 48.5348,
+    "net_income_fq": 444599088,
+    "net_income_fy": 2284539004,
+    "net_income_ttm": 3087338755,
+    "net_margin_ttm": 31.4479,
+    "operating_margin_ttm": 39.2977,
+    "total_debt_fq": 156129703,
+    "total_equity_fq": 7565259895,
+    "total_revenue_fq": 2611239152,
+    "total_revenue_fy": 9089149688,
+    "total_revenue_ttm": 9817311665
+   },
+   "industry": "Construction Materials",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 25723933149,
+   "name": "Sinai Cement Co.",
+   "period": "2026-Q2",
+   "price": 98.66,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 260812000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "SDTI": {
+   "derived": {
+    "bvps": 9.63,
+    "pb": 8.83,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 9.629,
+    "net_income_fq": 231924000,
+    "total_debt_fq": 1677375000,
+    "total_equity_fq": 510198000,
+    "total_revenue_fq": 97469000
+   },
+   "industry": "Hotels/Resorts/Cruise lines",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 4450778824,
+   "name": "Sharm Dreams Co. for Tourism Investment",
+   "period": "2026-Q2",
+   "price": 85.01,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Consumer Services",
+   "shares": 52985500,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "SIPC": {
+   "derived": {
+    "bvps": 0.43,
+    "pb": 11.38,
+    "pe": null,
+    "roe_ttm_pct": -3.7
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.4279,
+    "cash_f_operating_activities_ttm": 18062258,
+    "earnings_per_share_basic_ttm": -0.0156,
+    "free_cash_flow_ttm": 9487620,
+    "gross_margin_ttm": 31.1754,
+    "net_income_fq": 2665846,
+    "net_income_fy": 10084513,
+    "net_income_ttm": -3981656,
+    "net_margin_ttm": -9.7908,
+    "operating_margin_ttm": 8.3692,
+    "total_debt_fq": 21282223,
+    "total_equity_fq": 106967872,
+    "total_revenue_fq": 11994336,
+    "total_revenue_fy": 54883730,
+    "total_revenue_ttm": 40667342
+   },
+   "industry": "Pharmaceuticals: Major",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1235000014,
+   "name": "Sabaa International Company for Pharmaceutial and Chemical Industry",
+   "period": "2026-Q3",
+   "price": 4.87,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Health Technology",
+   "shares": 250000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "SKPC": {
+   "derived": {
+    "bvps": 5.7,
+    "pb": 2.62,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 5.7047,
+    "net_income_fq": 159426000,
+    "net_income_fy": 1000865311,
+    "total_debt_fq": 2647642958,
+    "total_equity_fq": 6469180296,
+    "total_revenue_fq": 3787504046,
+    "total_revenue_fy": 14412587014
+   },
+   "industry": "Chemicals: Specialty",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 16080120346,
+   "name": "Sidi Kerir Petrochemicals",
+   "period": "2026-Q1",
+   "price": 14.94,
+   "release_date": 1788350400,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 1134000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "SVCE": {
+   "derived": {
+    "bvps": 15.66,
+    "pb": 0.55,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "book_value_per_share_fq": 15.6635,
+    "net_income_fq": 13357013,
+    "total_debt_fq": 486235409,
+    "total_equity_fq": 7553767312,
+    "total_revenue_fq": 653406508
+   },
+   "industry": "Construction Materials",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 8420203914,
+   "name": "South Valley Cement Co.",
+   "period": "2026-Q2",
+   "price": 8.58,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Non-Energy Minerals",
+   "shares": 964514000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "SWDY": {
+   "derived": {
+    "bvps": 32.88,
+    "pb": 3.6,
+    "pe": 15.56,
+    "roe_ttm_pct": 21.4
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": [
+     38.09,
+     53.33,
+     68.56
+    ],
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 32.8825,
+    "cash_f_operating_activities_ttm": 9895879836,
+    "earnings_per_share_basic_ttm": 7.6181,
+    "free_cash_flow_ttm": -3265269610,
+    "gross_margin_ttm": 14.3437,
+    "net_income_fq": 4375841292,
+    "net_income_fy": 15257140146,
+    "net_income_ttm": 16297829954,
+    "net_margin_ttm": 5.0841,
+    "operating_margin_ttm": 8.7777,
+    "total_debt_fq": 84450423905,
+    "total_equity_fq": 76024598402,
+    "total_revenue_fq": 88017270775,
+    "total_revenue_fy": 281049081719,
+    "total_revenue_ttm": 320564248060
+   },
+   "industry": "Electrical Products",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 250283220281,
+   "name": "El Sewedy Electric Company",
+   "period": "2026-Q2",
+   "price": 118.51,
+   "release_date": 1794484800,
+   "reviewed": false,
+   "sector": "Producer Manufacturing",
+   "shares": 2139360000.0000002,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "TAQA": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Electric Utilities",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 18392011649,
+   "name": "TAQA Arabia",
+   "period": "2026-Q2",
+   "price": 13.73,
+   "release_date": 1762948800,
+   "reviewed": false,
+   "sector": "Utilities",
+   "shares": 1352353800,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "TMGH": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": 9.78,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": null,
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش قيمة دفترية متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "earnings_per_share_basic_ttm": 7.9781,
+    "net_income_fq": 5062000000,
+    "net_income_fy": 14383890306,
+    "net_income_ttm": 16440081587,
+    "net_margin_ttm": 22.1253,
+    "operating_margin_ttm": 30.558,
+    "total_revenue_fq": 17361200000,
+    "total_revenue_fy": 64328270752,
+    "total_revenue_ttm": 74304439407
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 163821977783,
+   "name": "Talaat Moustafa Group Holding",
+   "period": "2026-Q3",
+   "price": 78.06,
+   "release_date": 1786622400,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 2060650000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  },
+  "UEGC": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Engineering & Construction",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 1058595350,
+   "name": "El-Saeed Contracting & Real Estate Investment Co. SCCD",
+   "period": "2026-Q2",
+   "price": 1.42,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Industrial Services",
+   "shares": 730066000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "UNIP": {
+   "derived": {
+    "bvps": 0.22,
+    "pb": 1.39,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "الدراسة المراجَعة هي المرجع",
+    "status": "راجع الدراسة المراجَعة"
+   },
+   "fields": {
+    "book_value_per_share_fq": 0.2158,
+    "net_income_fq": 11614565,
+    "total_debt_fq": 596511159,
+    "total_equity_fq": 494517584,
+    "total_revenue_fq": 417975509
+   },
+   "industry": "Pulp & Paper",
+   "label": "مراجَع",
+   "market_cap": 687432742,
+   "name": "Universal Co. for Paper & Packaging Materials-Unipack",
+   "period": "2026-Q2",
+   "price": 0.3,
+   "release_date": null,
+   "reviewed": true,
+   "sector": "Process Industries",
+   "shares": 2291440000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "VALU": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {
+    "net_income_fy": 764390494,
+    "total_revenue_fy": 5161179378
+   },
+   "industry": "Finance/Rental/Leasing",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 19378478895,
+   "name": "U Consumer Finance S.A.E",
+   "period": "2026-Q2",
+   "price": 9.25,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 2106356400.0000002,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "VLMR": {
+   "derived": {
+    "bvps": 26.9,
+    "pb": 0.02,
+    "pe": 0.12,
+    "roe_ttm_pct": 20.0
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     16.14,
+     24.21,
+     32.28
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 26.8979,
+    "cash_f_operating_activities_ttm": 11985879993.9569,
+    "earnings_per_share_basic_ttm": 5.2091,
+    "free_cash_flow_ttm": 9879418778.375,
+    "gross_margin_ttm": 36.2194,
+    "net_income_fq": 253822307.1113,
+    "net_income_fy": 6223002831.8149,
+    "net_income_ttm": 6060898561.0811,
+    "net_margin_ttm": 19.4805,
+    "operating_margin_ttm": 33.0939,
+    "total_debt_fq": 19975861704.6229,
+    "total_equity_fq": 30311067540.4354,
+    "total_revenue_fq": 625627212.3503,
+    "total_revenue_fy": 33313737686.5626,
+    "total_revenue_ttm": 29497558232.4266
+   },
+   "industry": "Financial Conglomerates",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 29705765120.85125,
+   "name": "Valmore Holding",
+   "period": "2026-Q1",
+   "price": 0.65,
+   "release_date": 1787054400,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 830840000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "VLMRA": {
+   "derived": {
+    "bvps": 26.9,
+    "pb": 0.94,
+    "pe": 4.87,
+    "roe_ttm_pct": 20.0
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     16.14,
+     24.21,
+     32.28
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.2
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 26.8979,
+    "cash_f_operating_activities_ttm": 11985880082.1729,
+    "earnings_per_share_basic_ttm": 5.2091,
+    "free_cash_flow_ttm": 9879418851.0876,
+    "gross_margin_ttm": 36.2194,
+    "net_income_fq": 253822308.9794,
+    "net_income_fy": 6223002869.6507,
+    "net_income_ttm": 6060898605.6893,
+    "net_margin_ttm": 19.4805,
+    "operating_margin_ttm": 33.0939,
+    "total_debt_fq": 19975861851.6453,
+    "total_equity_fq": 30311067763.5248,
+    "total_revenue_fq": 625627216.9549,
+    "total_revenue_fy": 33313737889.1101,
+    "total_revenue_ttm": 29497558449.5287
+   },
+   "industry": "Financial Conglomerates",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 29705764855.875828,
+   "name": "Valmore Holding",
+   "period": "2026-Q1",
+   "price": 25.37,
+   "release_date": 1787054400,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 830840000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "holding"
+  },
+  "ZEOT": {
+   "derived": {
+    "bvps": null,
+    "pb": null,
+    "pe": null,
+    "roe_ttm_pct": null
+   },
+   "fair_value": {
+    "basis": "P/E",
+    "low_base_high": null,
+    "multiples": [
+     5,
+     7,
+     9
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": "مفيش ربحية سنوية موجبة متاحة",
+    "status": "مفيش بيانات كفاية"
+   },
+   "fields": {},
+   "industry": "Agricultural Commodities/Milling",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 2471999931,
+   "name": "Extracted Oils & Derivatives Co.",
+   "period": "2026-Q4",
+   "price": 12.59,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Process Industries",
+   "shares": 200000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "standard"
+  },
+  "ZMID": {
+   "derived": {
+    "bvps": 2.64,
+    "pb": 2.36,
+    "pe": 9.04,
+    "roe_ttm_pct": 26.1
+   },
+   "fair_value": {
+    "basis": "P/B",
+    "low_base_high": [
+     1.58,
+     2.37,
+     3.43
+    ],
+    "multiples": [
+     0.6,
+     0.9,
+     1.3
+    ],
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
+    "reason": null,
+    "status": "تقدير آلي"
+   },
+   "fields": {
+    "book_value_per_share_fq": 2.6361,
+    "cash_f_operating_activities_ttm": -107252135,
+    "earnings_per_share_basic_ttm": 0.6891,
+    "free_cash_flow_ttm": -108442380,
+    "gross_margin_ttm": 91.0798,
+    "net_income_fq": 261601077.0,
+    "net_income_fy": 585497606,
+    "net_income_ttm": 689101096,
+    "net_margin_ttm": 60.7409,
+    "operating_margin_ttm": 79.2576,
+    "total_debt_fq": 0,
+    "total_equity_fq": 2636137662,
+    "total_revenue_fq": 437364420,
+    "total_revenue_fy": 834237490,
+    "total_revenue_ttm": 1134493540
+   },
+   "industry": "Real Estate Development",
+   "label": "آلي، غير مراجَع",
+   "market_cap": 6329999924,
+   "name": "Zahraa Maadi Investment & Development",
+   "period": "2026-Q2",
+   "price": 6.23,
+   "release_date": null,
+   "reviewed": false,
+   "sector": "Finance",
+   "shares": 1000000000,
+   "source": "TradingView scanner (غير رسمي)",
+   "template": "real_estate"
+  }
+ }
+}
