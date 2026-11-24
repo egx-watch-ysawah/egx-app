@@ -1,5 +1,8 @@
 import { build } from 'esbuild';
 import fs from 'fs';
+import { gunzipSync } from 'node:zlib';
+import snapshot from './snapshot.mjs';
+if (!fs.existsSync('data.json')) fs.writeFileSync('data.json', gunzipSync(Buffer.from(snapshot, 'base64')));
 fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('data.ts', 'export const DATA: any = ' + fs.readFileSync('data.json', 'utf8') + ';\n');
 await build({ entryPoints: ['main.tsx'], bundle: true, minify: true, outfile: 'dist/app.js', loader: { '.css': 'css' }, define: { 'process.env.NODE_ENV': '"production"' }, target: 'es2019' });
