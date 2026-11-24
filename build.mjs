@@ -3,6 +3,7 @@ import fs from 'fs';
 import { gunzipSync } from 'node:zlib';
 import snapshot from './snapshot.mjs';
 if (!fs.existsSync('data.json')) fs.writeFileSync('data.json', gunzipSync(Buffer.from(snapshot, 'base64')));
+const freshData=JSON.parse(fs.readFileSync('data.json','utf8'));const fallbackData=JSON.parse(gunzipSync(Buffer.from(snapshot,'base64')).toString());if(!freshData.stocks.BONY?.partial&&!freshData.stocks.BONY?.ok){freshData.stocks.BONY=fallbackData.stocks.BONY;fs.writeFileSync('data.json',JSON.stringify(freshData));}
 fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('data.ts', 'export const DATA: any = ' + fs.readFileSync('data.json', 'utf8') + ';\n');
 await build({ entryPoints: ['main.tsx'], bundle: true, minify: true, outfile: 'dist/app.js', loader: { '.css': 'css' }, define: { 'process.env.NODE_ENV': '"production"' }, target: 'es2019' });
