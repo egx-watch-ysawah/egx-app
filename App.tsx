@@ -245,6 +245,41 @@ function About() {
     </div>;
 }
 
+function Portfolio() {
+    const [holdings,setHoldings] = useState<any[]>([]);
+    const [err,setErr] = useState('');
+    async function load(e: React.ChangeEvent<HTMLInputElement>) {
+        try {
+            const f=e.target.files?.[0]; if(!f)return;
+            if(f.size>100000)throw Error('الملف أكبر من الحجم المسموح.');
+            const x=JSON.parse(await f.text());
+            if(x.version!==1||!Array.isArray(x.holdings)||x.holdings.length>100)throw Error('صيغة الملف مش مدعومة.');
+            const seen=new Set();
+            const rows=x.holdings.map((h:any)=>{
+                if(!KEYS.includes(h.symbol)||seen.has(h.symbol)||!Number.isFinite(h.weight)||h.weight<0||h.weight>100||!(h.averageCost===null||(Number.isFinite(h.averageCost)&&h.averageCost>0)))throw Error('راجع رموز الأسهم والأوزان ومتوسطات الشراء في الملف.');
+                seen.add(h.symbol);if(h.quantity!==undefined&&(!Number.isFinite(h.quantity)||h.quantity<=0))throw Error('راجع الكميات.');
+                return {symbol:h.symbol,weight:h.weight,averageCost:h.averageCost,quantity:h.quantity??null};
+            });
+            if(Math.abs(rows.reduce((a:number,h:any)=>a+h.weight,0)-100)>.1)throw Error('مجموع الأوزان لازم يكون 100% تقريبًا.');
+            setHoldings(rows);setErr('');
+        }catch(ex){setErr(ex instanceof SyntaxError?'الملف مش JSON سليم. اختار ملف المحفظة المجهز لك.':ex instanceof Error?ex.message:'مقدرتش أقرأ الملف.');setHoldings([]);}
+        e.target.value='';
+    }
+    return <div className="eg-pad"><h2 className="eg-h">محفظتي</h2>
+        <p className="eg-note">البيانات بتتفتح على جهازك للجلسة دي بس. مش بتترفع لسيرفر، ومش بتتحط في الرابط. إعادة تحميل الصفحة بتمسحها. مفيش حفظ أو مزامنة تلقائية.</p>
+        <label className="portfolio-import">افتح ملف المحفظة الخاص <input type="file" accept="application/json,.json" onChange={load}/></label>
+        <p className="eg-note">استخدم ملف JSON المجهز لك بشكل خاص، مش صورة ولا كشف حساب. احتفظ بالملف في مكان آمن؛ أي شخص عنده الملف يقدر يقرأه.</p>
+        {err&&<p role="alert" className="eg-note eg-warn">{err}</p>}
+        {!!holdings.length&&<>
+            <button type="button" className="eg-chip" onClick={()=>setHoldings([])}>امسح البيانات من الجلسة</button>
+            <p className="eg-note">الأوزان لقطة ملفك، مش أوزان لحظية ولا رصيد متصل بالوسيط. ملف 24 نوفمبر: الأوزان الساعة 07:58، والمتوسطات والكميات الساعة 15:18. بنستخدم إقفال <L>{DATA.stocks.MASR.date}</L>، مش آخر تداول في الصور الأحدث. فرق سعر قبل الرسوم والتوزيعات، مش ربح محقق.</p>
+            {holdings.map(h=>{const s=DATA.stocks[h.symbol];const pnl=h.averageCost?100*(s.close/h.averageCost-1):null;return <section className="portfolio-holding" key={h.symbol}><h3><bdi dir="ltr">{h.symbol}</bdi><span>{h.weight.toFixed(2)}% من الأسهم في الملف</span></h3><div className="portfolio-values"><div><small>متوسط الشراء</small><b dir="ltr">{h.averageCost===null?'غير متاح':h.averageCost.toFixed(5)}</b></div><div><small>آخر إقفال متاح</small><b dir="ltr">{fmt(s.close)}</b></div><div><small>فرق السعر عن التكلفة</small><b dir="ltr">{pnl===null?'غير محسوب':pc(pnl)}</b></div></div><p className="eg-note">{h.quantity!==null&&<>الكمية <L>{h.quantity.toLocaleString('en-US')}</L> سهم. </>}فرق السعر لا يشمل التوزيعات النقدية أو الأسهم المجانية أو الرسوم، ولا يطابق بالضرورة إجمالي الربح في تطبيق الوسيط.</p>{s.ok?<Det title="افهم قراءة السهم في سياق مركزك"><Evidence s={s}/></Det>:<p className="eg-note">التاريخ المجاني ناقص، فمفيش قراءة فنية كافية.</p>}</section>})}
+            <p className="eg-note">أكبر وزن في الملف <L>{Math.max(...holdings.map(h=>h.weight)).toFixed(2)}%</L>. لو سهم وزنه 20% اتحرك 10%، أثره التقريبي على جزء الأسهم 2% مع ثبات الباقي. ده شرح للحساسية، مش توقع.</p>
+            <p className="eg-note">المتوسط المعروض 5 منازل عشرية، فضربه في الكمية ممكن يختلف قروش عن إجمالي تكلفة الوسيط بسبب التقريب. متوسط الشراء مرجع حسابي، مش سعر لازم السهم يرجع له ولا سبب كافي للاحتفاظ أو البيع. التطبيق لا ينفذ أوامر ولا يحفظ مراكز.</p>
+        </>}
+    </div>;
+}
+
 function Info() {
     return <div className="eg-pad eg-in">
         <Det title="حركة السوق (أسهم بس)"><Market /></Det>
@@ -255,7 +290,7 @@ function Info() {
 export function App() {
     const loc = useLocation();
     const p = loc.pathname.replace(/\/$/, '');
-    const tabs: [string, string, boolean][] = [['/', 'الأسهم', !p.endsWith('/info')], ['/info', 'معلومات', p.endsWith('/info')]];
+    const tabs: [string, string, boolean][] = [['/', 'الأسهم', !p.endsWith('/info') && !p.endsWith('/portfolio')], ['/portfolio', 'محفظتي', p.endsWith('/portfolio')], ['/info', 'معلومات', p.endsWith('/info')]];
     return <FileCard lang="ar" dir="rtl">
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">بيانات يومية</span></div>
         <nav className="eg-tabs" aria-label="التنقل">{tabs.map(([to, name, on]) => <NavLink key={to} to={to} className={on ? 'on' : ''}>{name}</NavLink>)}</nav>
@@ -263,6 +298,7 @@ export function App() {
             <Route path="/" element={<Home />} />
             {KEYS.map(k => <Route key={k} path={'/' + k.toLowerCase()} element={<Stock k={k} />} />)}
             <Route path="/info" element={<Info />} />
+            <Route path="/portfolio" element={<Portfolio />} />
         </Routes>
     </FileCard>;
 }
