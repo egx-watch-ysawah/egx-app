@@ -2,7 +2,7 @@ import React from 'react';
 
 type Row = [string, number, number, number, number, number, number | null, number | null, number, number, number, number | null, number | null];
 export type Toggles = { sma: boolean; vol: boolean; rsi: boolean; macd: boolean; plan: boolean; bb: boolean };
-export type Plan = { entry: number; stop: number; target: number };
+export type Plan = { entry: number; stop: number; target: number; trail: number };
 
 const W = 360;
 const PAD = 6;
@@ -29,7 +29,7 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
     const [sel, setSel] = React.useState<number | null>(null);
     const x = (i: number) => PAD + (i + 0.5) * ((W - 2 * PAD) / cnt);
     const cw = Math.max(1.2, ((W - 2 * PAD) / cnt) * 0.6);
-    const extra = t.plan ? [plan.entry, plan.stop, plan.target] : [];
+    const extra = t.plan ? [plan.entry, plan.stop, plan.trail] : [];
     const bbu = t.bb ? data.map(r => r[11]) : [], bbl = t.bb ? data.map(r => r[12]) : [];
     const hi = Math.max(...bbu.map(v => v ?? 0), ...data.map(r => r[2]), ...extra, ...(t.sma ? data.map(r => r[7] ?? 0) : []));
     const lo = Math.min(...bbl.map(v => v ?? 1e9), ...data.map(r => r[3]), ...extra, ...(t.sma ? data.map(r => r[6] ?? r[3]).concat(data.map(r => r[7] ?? r[3])) : []));
@@ -83,7 +83,7 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         {t.bb && <path d={path(bbl, x, y)} className="eg-lbb" fill="none" />}
         {t.sma && <path d={path(data.map(r => r[6]), x, y)} className="eg-l50" fill="none" />}
         {t.sma && <path d={path(data.map(r => r[7]), x, y)} className="eg-l200" fill="none" />}
-        {t.plan && line(plan.target, 'eg-pt', 'هدف')}
+        {t.plan && line(plan.trail, 'eg-pt', 'وقف متحرك')}
         {t.plan && line(plan.entry, 'eg-pe', 'دخول')}
         {t.plan && line(plan.stop, 'eg-ps', 'وقف')}
         {sel != null && <line x1={x(sel)} x2={x(sel)} y1={0} y2={H} className="eg-cross" />}
