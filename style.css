@@ -98,3 +98,12 @@ text.eg-tag { font-size: 9px; stroke: none; }
 .eg-exb p { margin: 6px 0; } .eg-exb b { color: #fff; }
 .eg-now { background: #172338; border-radius: 8px; padding: 8px 10px; color: #ffd27a; }
 .eg-sm { font-size: 12px; padding: 4px 10px; }
+.eg-p3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+.eg-p3 > div { background: #121826; border: 1px solid #1f2a3d; border-radius: 14px; padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
+.eg-p3 span { font-size: 12px; color: #9aa7bf; } .eg-p3 b { font-size: 18px; } .eg-p3 i { font-style: normal; font-size: 12px; color: #9aa7bf; }
+.eg-p3 .dn b { color: #ff7a8a; }
+.eg-why1 { margin: 2px 0 4px; font-size: 14px; color: #c8d2e6; }
+.eg-mini { display: flex; justify-content: space-between; font-size: 12px; color: #9aa7bf; } .eg-mini b { color: #e8eefc; font-size: 14px; } .eg-mini .dn b { color: #ff7a8a; }
+.eg-back { display: inline-block; margin-bottom: 6px; color: #7fb2ff; text-decoration: none; font-size: 14px; }
+.eg-verdict { padding: 14px 16px; } .eg-verdict b { font-size: 20px; display: block; } .eg-verdict p { margin: 4px 0 0; }
+.eg-ex .eg-ex { margin: 8px 0; }
