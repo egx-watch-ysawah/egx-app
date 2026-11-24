@@ -1,0 +1,17 @@
+.ab-i span[dir=ltr]{font-weight:800;letter-spacing:.3px}
+.ab-i:not(.ab-home){justify-content:center}
+.ix-n{font-size:13px;color:#98a8bf;font-weight:600}
+.ix-hd{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:8px;font-size:11px;color:#7f90a8;padding:10px 12px 4px}
+.ix-hd span:nth-child(n+2){text-align:left}
+.ix-r{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:8px;align-items:center;padding:11px 12px;margin:6px 0;border-radius:14px;background:#10203a;border:1px solid #ffffff12;color:inherit;text-decoration:none}
+.ix-r.off{opacity:.65}
+.ix-n1{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ix-n1 b{font-size:15px;line-height:1.3}
+.ix-n1 small{color:#98a8bf;font-size:11px;text-align:right}
+.ix-n1 i{font-style:normal;font-size:11.5px;color:#5eead4}
+.ix-p,.ix-v{display:flex;flex-direction:column;gap:2px;align-items:flex-start;font-variant-numeric:tabular-nums}
+.ix-p span{font-size:16px;font-weight:700}
+.ix-p small.u{color:#34d399}.ix-p small.d{color:#f87171}
+.ix-v b{font-size:13px;font-weight:600}.ix-v span{font-size:11px;color:#98a8bf}
+.ix-lbl{font-size:11px;color:#98a8bf;margin:4px 0 0}
+.ix-top{margin-top:58px}
