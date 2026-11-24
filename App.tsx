@@ -245,37 +245,45 @@ function About() {
     </div>;
 }
 
+const PORTFOLIO_KEY = 'egx-private-portfolio-v1';
+function parsePortfolio(x:any) {
+    if(x.version!==1||!Array.isArray(x.holdings)||!x.holdings.length||x.holdings.length>100)throw Error('صيغة الملف مش مدعومة.');
+    const seen=new Set();
+    const rows=x.holdings.map((h:any)=>{
+        if(!KEYS.includes(h.symbol)||seen.has(h.symbol)||!Number.isFinite(h.weight)||h.weight<0||h.weight>100||!(h.averageCost===null||(Number.isFinite(h.averageCost)&&h.averageCost>0)))throw Error('راجع رموز الأسهم والأوزان ومتوسطات الشراء في الملف.');
+        seen.add(h.symbol);if(h.quantity!==undefined&&h.quantity!==null&&(!Number.isFinite(h.quantity)||h.quantity<=0))throw Error('راجع الكميات.');
+        return {symbol:h.symbol,weight:h.weight,averageCost:h.averageCost,quantity:h.quantity??null};
+    });
+    if(Math.abs(rows.reduce((a:number,h:any)=>a+h.weight,0)-100)>.1)throw Error('مجموع الأوزان لازم يكون 100% تقريبًا.');
+    return rows;
+}
 function Portfolio() {
-    const [holdings,setHoldings] = useState<any[]>([]);
+    const [holdings,setHoldings] = useState<any[]>(()=>{try {const v=localStorage.getItem(PORTFOLIO_KEY);return v?parsePortfolio(JSON.parse(v)):[];}catch{return [];}});
     const [err,setErr] = useState('');
+    const [saved,setSaved] = useState(()=>{try{return !!localStorage.getItem(PORTFOLIO_KEY);}catch{return false;}});
     async function load(e: React.ChangeEvent<HTMLInputElement>) {
         try {
             const f=e.target.files?.[0]; if(!f)return;
             if(f.size>100000)throw Error('الملف أكبر من الحجم المسموح.');
-            const x=JSON.parse(await f.text());
-            if(x.version!==1||!Array.isArray(x.holdings)||x.holdings.length>100)throw Error('صيغة الملف مش مدعومة.');
-            const seen=new Set();
-            const rows=x.holdings.map((h:any)=>{
-                if(!KEYS.includes(h.symbol)||seen.has(h.symbol)||!Number.isFinite(h.weight)||h.weight<0||h.weight>100||!(h.averageCost===null||(Number.isFinite(h.averageCost)&&h.averageCost>0)))throw Error('راجع رموز الأسهم والأوزان ومتوسطات الشراء في الملف.');
-                seen.add(h.symbol);if(h.quantity!==undefined&&(!Number.isFinite(h.quantity)||h.quantity<=0))throw Error('راجع الكميات.');
-                return {symbol:h.symbol,weight:h.weight,averageCost:h.averageCost,quantity:h.quantity??null};
-            });
-            if(Math.abs(rows.reduce((a:number,h:any)=>a+h.weight,0)-100)>.1)throw Error('مجموع الأوزان لازم يكون 100% تقريبًا.');
+            const rows=parsePortfolio(JSON.parse(await f.text()));
             setHoldings(rows);setErr('');
-        }catch(ex){setErr(ex instanceof SyntaxError?'الملف مش JSON سليم. اختار ملف المحفظة المجهز لك.':ex instanceof Error?ex.message:'مقدرتش أقرأ الملف.');setHoldings([]);}
+            try{localStorage.setItem(PORTFOLIO_KEY,JSON.stringify({version:1,holdings:rows}));setSaved(true);}catch{setSaved(false);setErr('المتصفح رفض الحفظ. البيانات مفتوحة للجلسة الحالية بس؛ جرّب متصفح عادي مش وضع خاص.');}
+        }catch(ex){setErr(ex instanceof SyntaxError?'الملف مش JSON سليم. اختار ملف المحفظة المجهز لك.':ex instanceof Error?ex.message:'مقدرتش أقرأ الملف.');}
         e.target.value='';
     }
+    function remove(){try{localStorage.removeItem(PORTFOLIO_KEY);setHoldings([]);setSaved(false);setErr('');}catch{setErr('المتصفح منع حذف التخزين. امسح بيانات الموقع من إعداداته.');}}
     return <div className="eg-pad"><h2 className="eg-h">محفظتي</h2>
-        <p className="eg-note">البيانات بتتفتح على جهازك للجلسة دي بس. مش بتترفع لسيرفر، ومش بتتحط في الرابط. إعادة تحميل الصفحة بتمسحها. مفيش حفظ أو مزامنة تلقائية.</p>
-        <label className="portfolio-import">افتح ملف المحفظة الخاص <input type="file" accept="application/json,.json" onChange={load}/></label>
-        <p className="eg-note">استخدم ملف JSON المجهز لك بشكل خاص، مش صورة ولا كشف حساب. احتفظ بالملف في مكان آمن؛ أي شخص عنده الملف يقدر يقرأه.</p>
+        <p className="eg-note">استيراد مرة واحدة على جهازك، وبعدها المحفظة بتظهر تلقائيًا هنا في نفس المتصفح. الأرقام محفوظة محليًا، مش مرفوعة للموقع ولا في الرابط. مفيش مزامنة بين الأجهزة.</p>
+        {!holdings.length ? <label className="portfolio-import">إعداد المحفظة مرة واحدة <input type="file" accept="application/json,.json" onChange={load}/></label> : <Det title="تحديث ملف المحفظة"><label className="portfolio-import">اختار الملف الجديد <input type="file" accept="application/json,.json" onChange={load}/></label></Det>}
+        <p className="eg-note">الحفظ مش مشفّر ولا محمي بحساب. اللي يستخدم نفس المتصفح يقدر يشوفه. مسح بيانات الموقع يضيّعه. الملف الأصلي كمان فيه بياناتك، احتفظ بيه بأمان.</p>
         {err&&<p role="alert" className="eg-note eg-warn">{err}</p>}
         {!!holdings.length&&<>
-            <button type="button" className="eg-chip" onClick={()=>setHoldings([])}>امسح البيانات من الجلسة</button>
+            <p className="portfolio-saved">{saved?'محفوظ على المتصفح ده · هيفتح تلقائيًا المرة الجاية':'مفتوح للجلسة فقط، الحفظ غير متاح'}</p>
+            <button type="button" className="eg-chip" onClick={remove}>احذف محفظتي من المتصفح</button>
             <p className="eg-note">الأوزان لقطة ملفك، مش أوزان لحظية ولا رصيد متصل بالوسيط. ملف 24 نوفمبر: الأوزان الساعة 07:58، والمتوسطات والكميات الساعة 15:18. بنستخدم إقفال <L>{DATA.stocks.MASR.date}</L>، مش آخر تداول في الصور الأحدث. فرق سعر قبل الرسوم والتوزيعات، مش ربح محقق.</p>
             {holdings.map(h=>{const s=DATA.stocks[h.symbol];const pnl=h.averageCost?100*(s.close/h.averageCost-1):null;return <section className="portfolio-holding" key={h.symbol}><h3><bdi dir="ltr">{h.symbol}</bdi><span>{h.weight.toFixed(2)}% من الأسهم في الملف</span></h3><div className="portfolio-values"><div><small>متوسط الشراء</small><b dir="ltr">{h.averageCost===null?'غير متاح':h.averageCost.toFixed(5)}</b></div><div><small>آخر إقفال متاح</small><b dir="ltr">{fmt(s.close)}</b></div><div><small>فرق السعر عن التكلفة</small><b dir="ltr">{pnl===null?'غير محسوب':pc(pnl)}</b></div></div><p className="eg-note">{h.quantity!==null&&<>الكمية <L>{h.quantity.toLocaleString('en-US')}</L> سهم. </>}فرق السعر لا يشمل التوزيعات النقدية أو الأسهم المجانية أو الرسوم، ولا يطابق بالضرورة إجمالي الربح في تطبيق الوسيط.</p>{s.ok?<Det title="افهم قراءة السهم في سياق مركزك"><Evidence s={s}/></Det>:<p className="eg-note">التاريخ المجاني ناقص، فمفيش قراءة فنية كافية.</p>}</section>})}
             <p className="eg-note">أكبر وزن في الملف <L>{Math.max(...holdings.map(h=>h.weight)).toFixed(2)}%</L>. لو سهم وزنه 20% اتحرك 10%، أثره التقريبي على جزء الأسهم 2% مع ثبات الباقي. ده شرح للحساسية، مش توقع.</p>
-            <p className="eg-note">المتوسط المعروض 5 منازل عشرية، فضربه في الكمية ممكن يختلف قروش عن إجمالي تكلفة الوسيط بسبب التقريب. متوسط الشراء مرجع حسابي، مش سعر لازم السهم يرجع له ولا سبب كافي للاحتفاظ أو البيع. التطبيق لا ينفذ أوامر ولا يحفظ مراكز.</p>
+            <p className="eg-note">المتوسط المعروض 5 منازل عشرية، فضربه في الكمية ممكن يختلف قروش عن إجمالي تكلفة الوسيط بسبب التقريب. متوسط الشراء مرجع حسابي، مش سعر لازم السهم يرجع له ولا سبب كافي للاحتفاظ أو البيع. التطبيق لا ينفذ أوامر ولا يتصل بحساب الوسيط.</p>
         </>}
     </div>;
 }
