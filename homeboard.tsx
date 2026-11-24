@@ -162,7 +162,8 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
         <div><small>الأقوى</small><b dir="ltr">{best ? best.h.symbol : '-'}</b>{best && <em className="hb-up" dir="ltr">{sgn(best.dp as number)}%</em>}</div>
         <div><small>الأضعف</small><b dir="ltr">{worst ? worst.h.symbol : '-'}</b>{worst && <em className="hb-down" dir="ltr">{sgn(worst.dp as number)}%</em>}</div>
       </div>
-      <p className="hb-lbl">النسبة = تغيّر اليوم عن إقفال أمس</p>
+      <div className="hb-mix" aria-hidden="true">{rows.map(r => <i key={r.h.symbol} className={cls(r.dp)} style={{ flexGrow: r.h.weight }} />)}</div>
+      <p className="hb-lbl">النسبة = تغيّر اليوم عن إقفال أمس · عرض الشريط = وزن السهم، لونه = حركة اليوم</p>
       <div className="hb-list">
         {rows.map(({ h, s, d, dp }) => (
           <Link key={h.symbol} to={'/' + h.symbol.toLowerCase()} className="hb-row" data-dir={dp === null ? undefined : dp >= 0 ? 'up' : 'down'}>
@@ -174,6 +175,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
                 ? <em className={cls(dp)} dir="ltr">{useQty ? sgn(h.quantity * d, 0) + ' ' : sgn(d, d >= 10 || d <= -10 ? 2 : 3) + ' '}{dp >= 0 ? '▲' : '▼'} {Math.abs(dp).toFixed(2)}%</em>
                 : <em dir="ltr">-</em>}
             </FlashVal>
+            <i className="hb-w" style={{ width: Math.min(100, h.weight) + '%' }} />
           </Link>
         ))}
       </div>
