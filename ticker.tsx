@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
+import { useLive } from './homeboard';
 
 const SYMS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
 const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
@@ -14,9 +15,11 @@ function dayChange(s: any): number | null {
 }
 
 export function Ticker() {
+  const live = useLive();
   const items = SYMS.filter(k => DATA.stocks[k] && Number.isFinite(DATA.stocks[k].close)).map(k => {
-    const s = DATA.stocks[k], d = dayChange(s);
-    return { k, close: s.close as number, d };
+    const s = DATA.stocks[k], L = live && live.stocks[k];
+    const d = L ? 100 * (L.close / L.prev - 1) : dayChange(s);
+    return { k, close: (L ? L.close : s.close) as number, d };
   });
   const row = (suffix: string) => items.map(i => (
     <Link key={i.k + suffix} to={'/' + i.k.toLowerCase()} className="tk-i" tabIndex={suffix ? -1 : 0} aria-hidden={suffix ? true : undefined}>
