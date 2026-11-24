@@ -28,7 +28,7 @@ jobs:
         run: |
           pip install pandas numpy
           touch data.old.json; [ -f data.json ] && cp data.json data.old.json || true
-          if python mkdata.py && python -c "import json;d=json.load(open('data.json'));assert d['flows'] and sum(1 for s in d['stocks'].values() if s['ok'])>=4"; then echo refreshed; else [ -s data.old.json ] && cp data.old.json data.json; echo kept-old; fi
+          if python mkdata.py && python -c "import json;d=json.load(open('data.json'));assert set(d['stocks'])=={'MASR','BONY','HRHO','UNIP','PHAR','ORHD'};assert all(s.get('date') and s.get('bars') and s['close']>0 for s in d['stocks'].values())"; then echo refreshed; else [ -s data.old.json ] && cp data.old.json data.json; echo kept-old; fi
           rm data.old.json
       - name: Save refreshed data
         if: github.event_name != 'push'
