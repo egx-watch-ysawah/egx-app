@@ -62,3 +62,4 @@
 @keyframes u5-fl{0%{opacity:.28}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.fd::after{animation:none!important}.hb-row:active,.hb-tiles>div:active,.dec-row:active,.gd-tab:active,.ab a:active,.ab button:active{transform:none}.fl-up::after,.fl-down::after{animation:none;opacity:1;background:none;inset:auto 0 -2px 0;block-size:2px}.fl-up::after{background:#34d399}.fl-down::after{background:#fb7185}}
 .hb-cost{display:flex;gap:8px;align-items:baseline;font-size:14px;font-weight:600;opacity:.95}.hb-cost small{color:#9fb0c8!important;font-weight:500}
+.hb-cash{display:flex;gap:8px;align-items:baseline;font-size:13px;color:#9fb0c8}.hb-cash b{color:#e8eef8;font-weight:600}
