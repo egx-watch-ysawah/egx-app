@@ -125,3 +125,8 @@ text.eg-tag { font-size: 9px; stroke: none; }
 .eg-ex summary { transition:background .2s; }
 .eg-ex summary:active { background:#1b2b44; }
 @media (prefers-reduced-motion:no-preference) { .eg-chart { animation:eg-up .3s ease both; } }
+
+.eg-card-root { box-sizing:border-box; max-width:560px; margin:0 auto; padding:16px; font-family:Arial,Tahoma,sans-serif; }
+.eg-kind { scroll-margin-top:80px; }
+.eg-exb { min-width:0; }
+button,input { font-family:inherit; }
