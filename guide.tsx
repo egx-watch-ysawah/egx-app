@@ -257,14 +257,14 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
   const [tab, setTab] = useState<'t' | 'f' | 'v' | 'd'>('t');
   const tech = techItems(s);
   const fin = k === 'BONY' ? BONY_ITEMS : finItems(r);
-  const items = tech;
+  const items = tab === 'f' ? fin : tech;
   const lead = tab === 't'
     ? 'قراءة للسعر والحجم بعد إقفال ' + s.date + '. بتوصف اللي حصل.'
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
   const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
   return <><TrendVerdict s={s} /><DecSum s={s} k={k} /><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
-    <div className="gd-tabs">{tb('t', 'الفني')}{tb('v', 'السعر العادل')}{tb('d', 'للقرار')}</div>
+    <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{tb('d', 'للقرار')}</div>
     <div className="gd-body">
       {tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? fairCard(s, k, r) : <>
         <p className="gd-lead">{lead}</p>
@@ -273,7 +273,6 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
           <p><em>يعني إيه: </em>{it.mean}</p>
           <p><em>تأثيره على السهم: </em>{it.effect}</p>
         </div>)}
-        {tab === 'f' && r && r.risk && <div className="gd-it mid"><div className="gd-h"><span>أهم تحذير في القوائم</span></div><p>{r.risk}</p></div>}
       </>}
       <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
