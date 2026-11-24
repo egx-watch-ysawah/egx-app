@@ -171,10 +171,15 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
             <span className="hb-name"><b dir="ltr">{h.symbol}</b><small>{s.name} · وزن {h.weight.toFixed(1)}%</small></span>
             <FlashVal v={s.close}>
               <b dir="ltr">{useQty ? money(h.quantity * s.close) : fmt(s.close)}</b>
-              {dp !== null && d !== null
-                ? <em className={cls(dp)} dir="ltr">{useQty ? sgn(h.quantity * d, 0) + ' ' : sgn(d, d >= 10 || d <= -10 ? 2 : 3) + ' '}{dp >= 0 ? '▲' : '▼'} {Math.abs(dp).toFixed(2)}%</em>
-                : <em dir="ltr">-</em>}
             </FlashVal>
+            <span className="hb-two" dir="ltr">
+              {dp !== null && d !== null
+                ? <span className={'hb-chip ' + cls(dp)}><small>يومي</small>{useQty && <b>{sgn(h.quantity * d, 0)}</b>}<b>{dp >= 0 ? '▲' : '▼'} {Math.abs(dp).toFixed(2)}%</b></span>
+                : <span className="hb-chip"><small>يومي</small><b>-</b></span>}
+              {Number.isFinite(h.averageCost) && h.averageCost > 0 && Number.isFinite(h.quantity) && h.quantity > 0
+                ? (() => { const ca = h.quantity * (s.close - h.averageCost); const cp = 100 * (s.close / h.averageCost - 1); return <span className={'hb-chip ' + cls(ca)}><small>تكلفة</small><b>{sgn(ca, 0)}</b><b>{ca >= 0 ? '▲' : '▼'} {Math.abs(cp).toFixed(2)}%</b></span>; })()
+                : null}
+            </span>
             <i className="hb-w" style={{ width: Math.min(100, h.weight) + '%' }} />
           </Link>
         ))}
