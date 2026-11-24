@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-const f = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
-const p1 = (v: number) => (v > 0 ? '+' : '') + v.toFixed(1) + '%';
-const n1 = (n: number) => n.toLocaleString('en-GB', { maximumFractionDigits: 1 });
+const iso = (t: string) => '\u2066' + t + '\u2069';
+const f = (v: number) => iso(v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const p1 = (v: number) => iso((v > 0 ? '+' : '') + v.toFixed(1) + '%');
+const n1 = (n: number) => iso(n.toLocaleString('en-GB', { maximumFractionDigits: 1 }));
 
 type Item = { label: string; value: string; mean: string; effect: string; tone?: 'ok' | 'no' | 'mid' };
 
