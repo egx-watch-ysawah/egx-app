@@ -32,8 +32,12 @@ for k,s in SYM.items():
     strength=int(sum(w[a]*int(b) for a,b in lv.items())+(10 if any(bool(RULES[r](df).iloc[-1]) for r in RULES) else 0))
     if P>ema20*1.005: mode='pullback';entry=ema20
     else: mode='breakout';entry=res
-    stop=entry-2*atr;target=entry+3*atr
-    plan=dict(mode=mode,entry=round(entry,4),stop=round(stop,4),target=round(target,4),atr=round(atr,4),atrpct=round(atr/P*100,1),
+    stop=entry-2.5*atr;target=entry+3*atr
+    hh=float(df.close.tail(22).max());trail=hh-3*atr
+    z=df.close.shift(0)*df.volume;tv=float(z.tail(60).median());zd=int((df.volume.tail(60)==0).sum())
+    ext=float((P-float(df.close.iloc[-21]))/atr)
+    sizepct=round(min(25.0,1.0/abs(stop/entry-1)),1)
+    plan=dict(trail=round(trail,4),tv=round(tv/1e6,1),ext=round(ext,1),sizepct=sizepct,mode=mode,entry=round(entry,4),stop=round(stop,4),target=round(target,4),atr=round(atr,4),atrpct=round(atr/P*100,1),
       entry_pct=round((entry/P-1)*100,1),stop_pct=round((stop/entry-1)*100,1),target_pct=round((target/entry-1)*100,1),res=round(res,4),sup=round(sup,4),ema20=round(ema20,4),strength=strength)
     m20=df.close.rolling(20).mean();sd=df.close.rolling(20).std();df['bu']=m20+2*sd;df['bl']=m20-2*sd
     up_=df.high.diff();dn_=-df.low.diff();pdm=np.where((up_>dn_)&(up_>0),up_,0.0);mdm=np.where((dn_>up_)&(dn_>0),dn_,0.0)
