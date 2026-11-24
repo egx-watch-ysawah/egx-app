@@ -1,0 +1,9 @@
+import { build } from 'esbuild';
+import fs from 'fs';
+fs.mkdirSync('dist', { recursive: true });
+fs.writeFileSync('data.ts', 'export const DATA: any = ' + fs.readFileSync('data.json', 'utf8') + ';\n');
+await build({ entryPoints: ['main.tsx'], bundle: true, minify: true, outfile: 'dist/app.js', loader: { '.css': 'css' }, define: { 'process.env.NODE_ENV': '"production"' }, target: 'es2019' });
+const stamp = Date.now().toString(36);
+for (const f of ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png']) fs.copyFileSync(f, 'dist/' + f);
+fs.writeFileSync('dist/sw.js', fs.readFileSync('sw.js', 'utf8').replace('__V__', stamp));
+console.log('built', stamp);
