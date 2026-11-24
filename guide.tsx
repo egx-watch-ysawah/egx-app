@@ -24,6 +24,11 @@ const CSS = `
 .gd-fv h4{margin:0 0 6px;color:#e8edf5;font-size:15px}
 .gd-rng{display:flex;gap:6px;margin:8px 0}.gd-rng div{flex:1;text-align:center;border:1px solid #263249;border-radius:10px;padding:8px 2px;background:#0a0e17}
 .gd-rng small{display:block;color:#9aa6bd;font-size:11.5px}.gd-rng b{display:block;color:#fff;font-size:18px;margin-top:2px}
+.gd-sum{margin:0 0 12px;padding:12px 14px;border-radius:12px;background:#10213b;border:1px solid #2a4a7a;color:#fff;font-size:16px;font-weight:700;line-height:1.9}
+.gd-sum small{display:block;margin-top:4px;color:#9aa6bd;font-size:12.5px;font-weight:400}
+.gd-det{margin:4px 0 10px}.gd-det>summary{cursor:pointer;list-style:none;padding:10px 12px;border:1px solid #263249;border-radius:10px;background:#0a0e17;color:#7fb2ff;font-weight:700;font-size:14px}
+.gd-det>summary::-webkit-details-marker{display:none}.gd-det>summary::after{content:' +'}.gd-det[open]>summary::after{content:' −'}
+.gd-det[open]>summary{margin-bottom:10px}
 .gd-foot{margin:6px 0 0;color:#6f7b92;font-size:12.5px;line-height:1.7}
 `;
 
@@ -75,6 +80,25 @@ function techItems(s: any): Item[] {
   });
   return o;
 }
+
+function techSummary(s: any): string {
+  const v = s.votes || {}, p = s.plan || {};
+  let a = 'وضع السعر: ' + (v.trend ? 'فوق' : 'تحت') + ' متوسط 200 جلسة و' + (v.mid ? 'فوق' : 'تحت') + ' متوسط 50 جلسة';
+  a += v.macd ? '، وMACD فوق خطه.' : '، وMACD تحت خطه.';
+  if (s.rsi > 70) a += ' السعر صعد بسرعة.'; else if (s.rsi < 30) a += ' السعر نزل بسرعة.';
+  if (p.res) { const dr = (p.res / s.close - 1) * 100; a += dr > 0.5 ? ' أعلى إقفال في آخر 20 جلسة أعلى من السعر بـ ' + iso(dr.toFixed(1) + '%') + '.' : ' السعر قريب من أعلى مستوى في 20 جلسة.'; }
+  return a;
+}
+
+function finSummary(k: string, r: any): string {
+  if (k === 'BONY') return 'إيجار الشركة زاد 19% والربح المتكرر (حسب تعريف الشركة) زاد 129%، بس أغلب الربح المعلن إعادة تقييم عقارات مش كاش.';
+  if (!r) return '';
+  const g = r.prior ? (r.revenue / r.prior - 1) * 100 : null;
+  if (g != null) return 'إيراد 9 شهور ' + (g >= 0 ? 'زاد ' : 'نزل ') + iso(Math.abs(g).toFixed(1) + '%') + ' عن نفس الفترة السنة اللي فاتت، وربح مساهمي الأم حوالي ' + iso(r.margin + '%') + ' من الإيراد.';
+  return 'الشركة حققت إيراد ' + n1(r.revenue) + ' م وربح مساهمي الأم ' + n1(r.profit) + ' م في 9 شهور، يعني حوالي ' + iso(r.margin + '%') + ' من الإيراد.';
+}
+
+const Det = ({ children }: { children: React.ReactNode }) => <details className="gd-det"><summary>التفاصيل</summary>{children}</details>;
 
 const FIN_DICT: [string, string, string][] = [
   ['مجمل الربح', 'الإيراد ناقص التكلفة المباشرة للبيع أو التنفيذ. بيبين كام جنيه فاضل من كل جنيه مبيعات قبل المصاريف.', 'هامش أقل معناه تكلفة بتاكل من المبيعات، ولو استمر بيضغط الربح حتى لو الإيراد بيزيد.'],
@@ -137,9 +161,11 @@ function fairCard(s: any, k: string, r: any) {
   if (k === 'BONY') {
     const lo = 6.63, mid = 7.33, hi = 8.03;
     return <div className="gd-fv"><h4>السعر العادل: تقدير دفتري مؤرخ، مش سعر مستهدف</h4>
+      <p className="gd-sum">السعر الحالي حوالي {(s.close / mid * 100).toFixed(0)}% من القيمة الدفترية التقديرية، يعني السوق مسعّر الأصول بخصم، وممكن يكون لسبب (سيولة، تقييم العقارات).<small>تقدير دفتري، مش سعر مستهدف.</small></p>
       <div className="gd-rng"><div><small>عقارات -10%</small><b dir="ltr">{lo}</b></div><div><small>بالقوائم</small><b dir="ltr">{mid}</b></div><div><small>عقارات +10%</small><b dir="ltr">{hi}</b></div></div>
+      <Det>
       <p className="gd-lead">السعر الحالي <bdi dir="ltr">{f(s.close)}</bdi> يعني حوالي {(s.close / mid * 100).toFixed(0)}% من القيمة الدفترية. يعني السوق مسعّر الأصول بخصم كبير. ده مش معناه إن السعر هيرجع للدفترية، لأن الخصم ممكن يكون عن سبب (سيولة ضعيفة، تقييم العقارات، تكلفة التصرف).</p>
-      <p className="gd-foot">القسمة على 1,842.8 مليون سهم (إجمالي 1,874.8 ناقص 32 خزينة لحد 5 نوفمبر). زيادة العاملين ومشتريات الخزينة بعد 5 نوفمبر مش محسوبة. حصة غير المسيطرين لسه مش متحقق منها.</p></div>;
+      <p className="gd-foot">القسمة على 1,842.8 مليون سهم (إجمالي 1,874.8 ناقص 32 خزينة لحد 5 نوفمبر). زيادة العاملين ومشتريات الخزينة بعد 5 نوفمبر مش محسوبة. حصة غير المسيطرين لسه مش متحقق منها.</p></Det></div>;
   }
   const m = FV[k];
   if (!m) return null;
@@ -149,15 +175,17 @@ function fairCard(s: any, k: string, r: any) {
   const pe = s.close / eps;
   const pos = s.close < rows[0].v ? 'أقل من' : s.close > rows[2].v ? 'أعلى من' : 'جوه';
   return <div className="gd-fv"><h4>نطاق السعر العادل التقديري · على قوائم 9 شهور 2026</h4>
-    <p className="gd-lead">ربح السهم الحسابي <bdi dir="ltr">{eps.toFixed(eps < 0.1 ? 4 : 2)}</bdi> (ربح الأم 9 شهور <bdi dir="ltr">{n1(m.profit)}</bdi> مليون ÷ <bdi dir="ltr">{n1(m.shares)}</bdi> مليون سهم، مضروب في 4/3 لسنة كاملة). السعر الحالي <bdi dir="ltr">{f(s.close)}</bdi> يساوي {pe.toFixed(1)} مرة الربح.</p>
+    <p className="gd-sum">{pos === 'أقل من' ? 'السعر الحالي تحت أقل رقم في النطاق التقديري' : pos === 'أعلى من' ? 'السعر الحالي فوق أعلى رقم في النطاق التقديري' : 'السعر الحالي جوه النطاق التقديري'} (المحافظ {f(rows[0].v)}، المتفائل {f(rows[2].v)}){pos === 'أقل من' ? '، يعني السوق مسعّر الأرباح بمضاعف أقل من الافتراضات. مش معناه إنه رخيص، ممكن السوق متوقع ربح أقل.' : pos === 'أعلى من' ? '، يعني السوق مسعّر الأرباح بمضاعف أعلى من الافتراضات.' : rows[2].v / rows[0].v > 2 ? '، وهو واسع (الفرق بين أقل وأعلى رقم أكتر من ضعفين)، فمش بيحدد حاجة لوحده.' : '.'}<small>تقدير على قوائم 9 شهور 2026، مش سعر مستهدف.</small></p>
     <div className="gd-rng">{rows.map(r => <div key={r.n}><small>{r.n} · {r.t}</small><b dir="ltr">{f(r.v)}</b></div>)}</div>
+    <Det>
+    <p className="gd-lead">ربح السهم الحسابي <bdi dir="ltr">{eps.toFixed(eps < 0.1 ? 4 : 2)}</bdi> (ربح الأم 9 شهور <bdi dir="ltr">{n1(m.profit)}</bdi> مليون ÷ <bdi dir="ltr">{n1(m.shares)}</bdi> مليون سهم، مضروب في 4/3 لسنة كاملة). السعر الحالي <bdi dir="ltr">{f(s.close)}</bdi> يساوي {pe.toFixed(1)} مرة الربح.</p>
     <p className="gd-lead">السعر الحالي {pos} النطاق التقديري. النطاق واسع لأن فايدة الإيداع 20% بتدي مضاعف صغير، ومضاعف السوق بيدي مضاعف أكبر.</p>
     <div className="gd-it ok"><div className="gd-h"><span>القراءة الحالية</span></div><p>الوسط (10×) = <bdi dir="ltr">{f(rows[1].v)}</bdi>. السعر الحالي {s.close > rows[1].v ? 'فوق' : 'تحت'} الوسط بحوالي {Math.abs((s.close / rows[1].v - 1) * 100).toFixed(0)}%، و{s.close > rows[0].v ? 'فوق' : 'تحت'} الحد المحافظ بحوالي {Math.abs((s.close / rows[0].v - 1) * 100).toFixed(0)}%. الحد المحافظ هو الأقرب للواقع لأن فايدة الإيداع 20%. دي قراءة تقييم بالربح، مش توقع سعر، وأي رقم من القايمة تحت لو اتغير بيحرك النطاق.</p></div>
     <div className="gd-it mid"><div className="gd-h"><span>الطريقة</span></div><p>ربح السهم السنوي × مضاعف ربح. المحافظ = 1 ÷ (فايدة الإيداع 20% + علاوة مخاطرة 7% − نمو بحجم التضخم 12%). المتوسط والمتفائل = مضاعف سوق البورصة المصرية: 10 في أغسطس و17.4 في أكتوبر.</p></div>
     <div className="gd-it mid"><div className="gd-h"><span>الافتراضات (علاوة المخاطرة 7% افتراضنا)</span></div><p>ضرب 9 شهور في 4/3 بيفترض ربع رابع مثل المتوسط، وده مش مضمون. المضاعف محتاج مراجعة لكل قطاع.</p></div>
     <div className="gd-it no"><div className="gd-h"><span>حدود الدراسة: مش متاح من مصادر مجانية، هيتحدث لما يتنشر</span></div>{m.todo.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
     {m.extra && <div className="gd-it mid"><div className="gd-h"><span>تقاطع آخر</span></div><p>{m.extra}</p></div>}
-    <p className="gd-foot">مصادر: <a href="https://sis.gov.eg/en/media-center/news/egypt-s-central-bank-raises-key-interest-rates-by-1/" target="_blank" rel="noreferrer">فايدة البنك المركزي 20%</a> · <a href="https://economymiddleeast.com/news/egypts-october-inflation-eases-to-12-percent-as-monthly-rate-falls-to-0-6-percent-after-march-peak/" target="_blank" rel="noreferrer">تضخم أكتوبر 12%</a> · <a href="https://enterpriseam.com/egypt/2026/11/05/egx30-sheds-4-43-in-october-to-post-its-first-back-to-back-monthly-loss-of-2026/" target="_blank" rel="noreferrer">مضاعف السوق 17.36</a> · <a href="https://www.agbi.com/analysis/markets/2026/08/foreign-investors-return-as-egypt-stocks-hit-record-highs/" target="_blank" rel="noreferrer">مضاعف 10 في أغسطس</a> · {m.src}.</p></div>;
+    <p className="gd-foot">مصادر: <a href="https://sis.gov.eg/en/media-center/news/egypt-s-central-bank-raises-key-interest-rates-by-1/" target="_blank" rel="noreferrer">فايدة البنك المركزي 20%</a> · <a href="https://economymiddleeast.com/news/egypts-october-inflation-eases-to-12-percent-as-monthly-rate-falls-to-0-6-percent-after-march-peak/" target="_blank" rel="noreferrer">تضخم أكتوبر 12%</a> · <a href="https://enterpriseam.com/egypt/2026/11/05/egx30-sheds-4-43-in-october-to-post-its-first-back-to-back-monthly-loss-of-2026/" target="_blank" rel="noreferrer">مضاعف السوق 17.36</a> · <a href="https://www.agbi.com/analysis/markets/2026/08/foreign-investors-return-as-egypt-stocks-hit-record-highs/" target="_blank" rel="noreferrer">مضاعف 10 في أغسطس</a> · {m.src}.</p>    </Det></div>;
 }
 
 
@@ -267,12 +295,12 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
     <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{tb('d', 'للقرار')}</div>
     <div className="gd-body">
       {tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? fairCard(s, k, r) : <>
-        <p className="gd-lead">{lead}</p>
-        {items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
+        <p className="gd-sum">{tab === 'f' ? finSummary(k, r) : techSummary(s)}<small>{tab === 'f' ? 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.' : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
+        <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className="gd-h"><span>{it.label}</span><b dir="ltr">{it.value}</b></div>
           <p><em>يعني إيه: </em>{it.mean}</p>
           <p><em>تأثيره على السهم: </em>{it.effect}</p>
-        </div>)}
+        </div>)}</Det>
       </>}
       <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
