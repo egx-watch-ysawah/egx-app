@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FileCard, NavLink, Link, Route, Routes, useLocation } from './shim';
-import { DATA } from './data';
+import { DATA } from './data';import { StockGuide } from './guide';
 import { StockChart, Spark, Ring } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { Ex, X } from './explain';
@@ -133,7 +133,7 @@ function Stock({ k }: { k: string }) {
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2>
             {s.qualityChecked&&<p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer">{s.sourceName}</a>. المصدر اتغير بعد اكتشاف عيوب شموع المصدر السابق، والمؤشرات اتعادت على نفس التاريخ المتسق. المقارنة مش تحقق مستقل من كل صفقة.</p>}
             <PartialHistory s={s}/>
-            {s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
+            {s.ok&&<StockGuide s={s} k={k} r={records[k]}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
             <Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det>
             {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
