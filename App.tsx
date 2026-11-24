@@ -45,17 +45,7 @@ function Det({ title, children, open }: { title: string; children: React.ReactNo
     return <details className="eg-ex" open={open}><summary>{title}</summary><div className="eg-exb">{children}</div></details>;
 }
 
-function useCount(to: number, dec = 2) {
-    const [v, setV] = useState(to);
-    useEffect(() => {
-        let raf = 0; const t0 = performance.now(); setV(to * 0.9);
-        const step = (t: number) => { const p = Math.min(1, (t - t0) / 700); setV(to * (1 - Math.pow(1 - p, 3))); if (p < 1) raf = requestAnimationFrame(step); };
-        raf = requestAnimationFrame(step);
-        return () => cancelAnimationFrame(raf);
-    }, [to]);
-    return v.toFixed(dec);
-}
-function Price({ v }: { v: number }) { const d = v >= 10 ? 2 : 3; return <span className="eg-price" dir="ltr">{useCount(v, d)}</span>; }
+function Price({ v }: { v: number }) { return <span className="eg-price" dir="ltr">{fmt(v)}</span>; }
 
 function why(s: any): { ok: boolean; t: string }[] {
     const v = s.votes, p = s.plan, o: { ok: boolean; t: string }[] = [];
@@ -68,11 +58,14 @@ function why(s: any): { ok: boolean; t: string }[] {
 }
 
 function Home() {
+    const [filter, setFilter] = useState('all');
     const order: Record<string, number> = { go: 0, watch: 1, wait: 2, na: 3 };
     const list = KEYS.map(k => ({ k, s: DATA.stocks[k] })).sort((a, b) => order[verdict(a.s).c] - order[verdict(b.s).c] || (b.s.ok ? b.s.plan.strength : -1) - (a.s.ok ? a.s.plan.strength : -1));
     return <div className="eg-pad">
-        <p className="eg-lead">آخر إقفال <L>{DATA.stocks.MASR.date}</L></p>
-        {list.map(({ k, s }, i) => {
+        <p className="eg-lead">بيانات إقفال <L>{DATA.stocks.MASR.date}</L> · مش سعر لحظي</p>
+        <div className="eg-filters" role="group" aria-label="فلتر حالة السهم">{[['all','الكل'],['go','مرشّح'],['watch','راقب'],['wait','استنى']].map(([c,label]) => <button type="button" key={c} aria-pressed={filter === c} className={'eg-chip' + (filter === c ? ' on' : '')} onClick={() => setFilter(c)}>{label}<small>{c === 'all' ? list.length : list.filter(x => verdict(x.s).c === c).length}</small></button>)}</div>
+        <div key={filter} className="eg-list eg-in">
+        {list.filter(x => filter === 'all' || verdict(x.s).c === filter).map(({ k, s }, i) => {
             const v = verdict(s);
             return <Link key={k} className="eg-card eg-in" style={{ animationDelay: i * 60 + 'ms' }} to={'/' + k.toLowerCase()}>
                 <div className="eg-c1">
@@ -83,6 +76,8 @@ function Home() {
                 {s.ok && <div className="eg-mini"><span>السعر <b dir="ltr">{fmt(s.close)}</b></span><span>{s.plan.mode === 'pullback' ? 'دخول' : 'اختراق'} <b dir="ltr">{fmt(s.plan.entry)}</b></span><span className="dn">وقف <b dir="ltr">{fmt(s.plan.stop)}</b></span></div>}
             </Link>;
         })}
+        {filter !== 'all' && !list.some(x => verdict(x.s).c === filter) && <p className="eg-empty">مفيش أسهم بالحالة دي في آخر إقفال.</p>}
+        </div>
         <p className="eg-note eg-foot">أداة مراقبة مش نصيحة ولا ضمان ربح.</p>
     </div>;
 }
@@ -109,12 +104,12 @@ function Stock({ k }: { k: string }) {
                     <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
                 <div className="eg-chips">{RANGES[tf].map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
                 <p className="eg-note">الشمعة = {tf === 'D' ? 'يوم تداول' : tf === 'W' ? 'أسبوع تداول' : 'شهر تداول'}. مفيش شارت لحظي (دقائق/ساعات) لأن البيانات المجانية آخر اليوم بس.</p>
-                <StockChart rows={trows} n={n} t={t} plan={s.plan} />
+                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} />
                 <Ex>{X.chart(s, tf)}</Ex>
                 <div className="eg-chips">{tg('plan', 'الخطة')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
                 <Ex>{X.ma(s)}</Ex>
                 <Ex label="اشرحلي الحجم">{X.vol(s)}</Ex>
-                <p className="eg-note">المس الشارت واسحب عشان تشوف أي يوم. الأزرق متوسط 200 يوم والبرتقالي متوسط 50 يوم.</p>
+                <p className="eg-note">المس الشارت لاختيار يوم، أو حرّك المؤشر تحته. اسحب الشارت للماضي وكبّر بإصبعين. الأزرق متوسط 200 يوم والبرتقالي متوسط 50 يوم.</p>
 
                 
                 </Det>
@@ -185,7 +180,7 @@ function About() {
         <h3 className="eg-h3">حدود البيانات</h3>
         <ul className="eg-ul">
             <li>أسعار مجانية من مصدر واحد لحد آخر إقفال كامل (<L>{DATA.stocks.MASR.date}</L>). التطبيق بيتحدث تلقائيًا كل يوم بعد الإقفال، ولو المصدر المجاني معداش بيفضل على آخر بيانات سليمة.</li>
-            <li>أسعار اللحظة متأخرة 15 دقيقة على الأقل.</li>
+            <li>الشاشة دي بتستخدم إقفال يومي، ومبتعرضش أسعار اللحظة.</li>
             <li>الفريمات يومي وأسبوعي وشهري بس، لأن المصدر المجاني إقفال يومي (مفيش داخل اليوم).</li>
             <li>المؤشرات (المتوسطات وRSI وMACD وبولينجر وADX وATR) بتتحسب جوه التطبيق، وكل واحد فيه زرار "اشرحلي".</li>
             <li>آخر إقفال اتراجع على مصدر تاني، لكن التاريخ كله لأ.</li>
@@ -214,7 +209,7 @@ function About() {
 function Info() {
     return <div className="eg-pad eg-in">
         <Det title="حركة السوق (أسهم بس)"><Market /></Det>
-        <Det title="قواعد البورصة المصرية باختصار"><ul className="eg-ul"><li>الحد اليومي للسعر حوالي 20% صعود أو نزول من إقفال أمس، فالوقف ممكن يتنفذ بفجوة.</li><li>التسوية T+2: الأسهم اللي تشتريها النهارده تدخل حسابك بعد يومين عمل.</li><li>التداول من الأحد للخميس: 10:00 لـ14:15 تداول متواصل، وبعدها مزاد الإغلاق لحد 14:30.</li><li>ضريبة دمغة 0.05% على المشتري وعلى البايع، غير عمولة الوسيط (مثال منشور لتطبيق ثندر: 0.10% + 2 جنيه للأمر). يعني التكلفة الكاملة للصفقة (شراء وبيع) حوالي 0.4% تقريبًا، وخليها 1% في الحساب عشان فرق السعر.</li><li>أسهم الشركات الصغيرة (تمياز) حدها 10%.</li></ul><p className="eg-note">المصادر: دليل EFG Hermes، وبورصة مصر، ودليل أسعار ثندر (عن طريق Perplexity). اتأكد من إعلانات البورصة لكل سهم.</p></Det>
+        <Det title="قواعد البورصة المصرية باختصار"><ul className="eg-ul"><li>الحد اليومي للسعر حوالي 20% صعود أو نزول من إقفال أمس، فالوقف ممكن يتنفذ بفجوة.</li><li>التسوية T+2: الأسهم اللي تشتريها النهارده تدخل حسابك بعد يومين عمل.</li><li>التداول من الأحد للخميس: 10:00 لـ14:15 تداول متواصل، وبعدها مزاد الإغلاق لحد 14:30.</li><li>ضريبة دمغة 0.05% على المشتري وعلى البايع، غير عمولة الوسيط (مثال منشور لتطبيق ثندر: 0.10% + 2 جنيه للأمر). التكلفة بتختلف حسب حجم الأمر والوسيط والرسوم وفرق سعر الشراء والبيع، ومفيش نسبة واحدة مضمونة.</li><li>أسهم الشركات الصغيرة (تمياز) حدها 10%.</li></ul><p className="eg-note">المصادر: دليل EFG Hermes، وبورصة مصر، ودليل أسعار ثندر (عن طريق Perplexity). اتأكد من إعلانات البورصة لكل سهم.</p></Det>
         <Det title="عن التطبيق وحدوده"><About /></Det>
     </div>;
 }
@@ -223,7 +218,7 @@ export function App() {
     const p = loc.pathname.replace(/\/$/, '');
     const tabs: [string, string, boolean][] = [['/', 'الأسهم', !p.endsWith('/info')], ['/info', 'معلومات', p.endsWith('/info')]];
     return <FileCard lang="ar" dir="rtl">
-        <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live"><i />قايمة مراقبة</span></div>
+        <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">بيانات يومية</span></div>
         <nav className="eg-tabs" aria-label="التنقل">{tabs.map(([to, name, on]) => <NavLink key={to} to={to} className={on ? 'on' : ''}>{name}</NavLink>)}</nav>
         <Routes>
             <Route path="/" element={<Home />} />
