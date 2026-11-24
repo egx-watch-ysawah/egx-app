@@ -1,0 +1,67 @@
+{
+ "source": "https://startamarkets.com/api/v1/egx/history/",
+ "note": "delayed free data, not real-time",
+ "stocks": {
+  "MASR": {
+   "date": "2026-11-24",
+   "open": 6.27,
+   "high": 6.43,
+   "low": 6.24,
+   "close": 6.36,
+   "volume": 3801010,
+   "prev_close": 6.27,
+   "chg_pct": 1.44
+  },
+  "BONY": {
+   "date": "2026-11-24",
+   "open": 4.13,
+   "high": 4.21,
+   "low": 4.09,
+   "close": 4.11,
+   "volume": 2223739,
+   "prev_close": 4.13,
+   "chg_pct": -0.48
+  },
+  "HRHO": {
+   "date": "2026-11-24",
+   "open": 25.68,
+   "high": 26.5,
+   "low": 25.42,
+   "close": 26.2,
+   "volume": 8248958,
+   "prev_close": 25.68,
+   "chg_pct": 2.02
+  },
+  "UNIP": {
+   "date": "2026-11-24",
+   "open": 0.3,
+   "high": 0.31,
+   "low": 0.3,
+   "close": 0.3,
+   "volume": 14870646,
+   "prev_close": 0.3,
+   "chg_pct": 0.0
+  },
+  "PHAR": {
+   "date": "2026-11-24",
+   "open": 101.5,
+   "high": 103.5,
+   "low": 99.51,
+   "close": 100.99,
+   "volume": 334796,
+   "prev_close": 101.5,
+   "chg_pct": -0.5
+  },
+  "ORHD": {
+   "date": "2026-11-24",
+   "open": 9.98,
+   "high": 10.5,
+   "low": 9.98,
+   "close": 10.44,
+   "volume": 9924759,
+   "prev_close": 9.98,
+   "chg_pct": 4.61
+  }
+ },
+ "fetched_at_utc": "2026-11-24T19:38:55Z"
+}
