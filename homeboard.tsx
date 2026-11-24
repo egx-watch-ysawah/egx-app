@@ -1,3 +1,4 @@
+import { HistCurve, DivCalendar } from './extras';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
@@ -184,6 +185,8 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
           </Link>
         ))}
       </div>
+      <HistCurve value={grand} />
+      <DivCalendar />
     </section>
   );
 }
