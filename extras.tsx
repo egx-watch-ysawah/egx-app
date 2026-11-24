@@ -38,7 +38,7 @@ export function HistCurve({ value }: { value: number | null }) {
           <div className="hc-meta" dir="ltr"><span>{pts[0][0]}</span><span>{pts[pts.length - 1][0]}</span></div>
           <div className="hc-mm"><span>أعلى قيمة <b dir="ltr">{money(mx)}</b></span><span>أقل قيمة <b dir="ltr">{money(mn)}</b></span></div>
         </>}
-      <small className="hc-note">القيم بتتسجل على موبايلك بس (مش في الملف المشفر ولا بتتبعت لأي مكان). لو مسحت بيانات المتصفح بتتمسح. لقطات إقفال، والأسعار متأخرة حتى 20 دقيقة.</small>
+      <small className="hc-note">القيم بتتسجل على موبايلك بس (مش في الملف المشفر ولا بتتبعت لأي مكان). لو مسحت بيانات المتصفح بتتمسح.</small>
     </section>
   );
 }
