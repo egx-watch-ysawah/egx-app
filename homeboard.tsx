@@ -10,7 +10,9 @@ const PRICES_URL = 'https://raw.githubusercontent.com/egx-watch-ysawah/egx-app/m
 type Live = { at: string; stocks: Record<string, { close: number; prev: number }> } | null;
 
 export function useLive(): Live {
-  const [live, setLive] = useState<Live>(null);
+  const [live, setLive] = useState<Live>(() => {
+    try { const c = JSON.parse(localStorage.getItem('egx-feed-v1') || 'null'); return c && c.stocks ? c : null; } catch { return null; }
+  });
   useEffect(() => {
     let dead = false;
     const go = async () => {
@@ -23,7 +25,11 @@ export function useLive(): Live {
           const x = j.stocks[k];
           if (x && Number.isFinite(x.close) && x.close > 0 && Number.isFinite(x.prev_close) && x.prev_close > 0) out[k] = { close: x.close, prev: x.prev_close };
         }
-        if (!dead && Object.keys(out).length) setLive({ at: j.fetched_at_utc || '', stocks: out });
+        if (!dead && Object.keys(out).length) {
+          const nv = { at: j.fetched_at_utc || '', stocks: out };
+          setLive(nv);
+          try { localStorage.setItem('egx-feed-v1', JSON.stringify(nv)); } catch { /* ignore */ }
+        }
       } catch { /* keep the daily data */ }
     };
     go();
@@ -44,6 +50,24 @@ function freshState(at?: string): string {
   if (!Number.isFinite(t)) return 'stale';
   const age = (Date.now() - t) / 60000;
   return age <= 20 ? 'fresh' : age <= 45 ? 'aging' : 'stale';
+}
+function useCount(v: number): number {
+  const [d, setD] = useState(v);
+  const from = useRef(v);
+  useEffect(() => {
+    if (from.current === v) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { from.current = v; setD(v); return; }
+    const a = from.current, t0 = performance.now();
+    let raf = 0;
+    const step = (t: number) => {
+      const k = Math.min(1, (t - t0) / 500), e = 1 - Math.pow(1 - k, 3);
+      setD(a + (v - a) * e);
+      if (k < 1) raf = requestAnimationFrame(step); else from.current = v;
+    };
+    raf = requestAnimationFrame(step);
+    return () => { cancelAnimationFrame(raf); from.current = v; };
+  }, [v]);
+  return d;
 }
 function FlashVal({ v, children }: { v: number; children: React.ReactNode }) {
   const prev = useRef(v);
@@ -100,6 +124,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
   const cost = hasCost ? rows.reduce((a, r) => a + r.h.quantity * r.h.averageCost, 0) : null;
   const costAmt = cost !== null && total !== null ? total - cost : null;
   const costPct = cost !== null && cost > 0 && costAmt !== null ? 100 * costAmt / cost : null;
+  const shownTotal = useCount(total !== null ? total : 0);
   const up = rows.filter(r => r.dp !== null && r.dp > 0).length;
   const down = rows.filter(r => r.dp !== null && r.dp < 0).length;
   const worst = rows.filter(r => r.dp !== null).sort((a, b) => (a.dp as number) - (b.dp as number))[0];
@@ -109,7 +134,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
     <section className="hb" data-fresh={fresh} aria-label="متابعة المحفظة">
       <div className="hb-top">
         <small>{useQty ? 'إجمالي المحفظة (ج.م)' : 'حركة المحفظة اليوم'}</small>
-        {useQty && total !== null && <b className="hb-total" dir="ltr">{money(total)}</b>}
+        {useQty && total !== null && <b className="hb-total" dir="ltr">{money(shownTotal)}</b>}
         {dayPct !== null && (
           <div className={'hb-day ' + cls(dayPct)} dir="ltr">
             {dayAmt !== null && <span>{sgn(dayAmt, 0)}</span>}
