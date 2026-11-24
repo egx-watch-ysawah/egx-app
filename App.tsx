@@ -17,16 +17,15 @@ const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(1) + '%';
 const L = ({ children }: { children: React.ReactNode }) => <bdi dir="ltr">{children}</bdi>;
 
 function verdict(s: any) {
-    if (!s.ok) return { t: 'مفيش بيانات', c: 'na', col: '#8b97ad' };
-    const st = s.plan.strength;
-    if (st >= 70 && s.rsi < 70 && s.plan.ext <= 4 && s.plan.tv >= 1) return { t: 'مرشّح للدخول', c: 'go', col: '#2ee59d' };
-    if (st >= 50) return { t: 'راقب', c: 'watch', col: '#ffb84d' };
-    return { t: 'استنى', c: 'wait', col: '#ff5c70' };
+    if (!s.ok) return { t: 'بيانات ناقصة', c: 'na', col: '#8b97ad' };
+    if (s.votes.trend && s.votes.mid) return { t: 'فوق المتوسطين', c: 'go', col: '#99b9df' };
+    if (!s.votes.trend && !s.votes.mid) return { t: 'تحت المتوسطين', c: 'wait', col: '#99b9df' };
+    return { t: 'بين المتوسطين', c: 'watch', col: '#99b9df' };
 }
 function reason(s: any): string {
     if (!s.ok) return 'تاريخ السهم ناقص في المصدر المجاني.';
     const v = s.votes, p = s.plan;
-    if (verdict(s).c === 'go') return 'الاتجاه صاعد والزخم كويس. لو هتدخل، التزم بالوقف.';
+    if (verdict(s).c === 'go') return 'الإقفال فوق متوسط 50 و200 جلسة. وصف للاتجاه، مش توقع ربح.';
     if (p.ext > 4) return 'طالع بسرعة. الدخول دلوقتي متأخر.';
     if (p.tv < 1) return 'السيولة ضعيفة، ممكن تعلق فيه.';
     if (!v.trend) return 'تحت متوسط 200 يوم، الاتجاه الطويل لسه ضعيف.';
@@ -57,6 +56,24 @@ function why(s: any): { ok: boolean; t: string }[] {
     return o;
 }
 
+function Evidence({ s }: { s: any }) {
+    const trend = s.votes.trend, mid = s.votes.mid, macd = s.votes.macd;
+    const disagreements = [trend !== mid ? 'الاتجاه الطويل والمتوسط مختلفين.' : '', !!mid !== !!macd ? 'اتجاه متوسط 50 والزخم مش في نفس الاتجاه.' : '', s.chg5 > 0 && !s.votes.vol ? 'السعر أعلى من 5 جلسات، لكن حجم آخر جلسة ما أكدش الصعود.' : ''].filter(Boolean);
+    return <section className="evidence" aria-label="ملخص الأدلة">
+        <div className="evidence-head"><h3>ورا الحالة إيه؟</h3><span>يومي · <bdi dir="ltr">{s.date}</bdi></span></div>
+        <p className="evidence-intro">قراءة للبيانات، مش توقع ولا تعليمات تداول.</p>
+        <div className="evidence-row"><span>الاتجاه</span><div><b>{trend ? 'فوق' : 'تحت'} متوسط 200، و{mid ? 'فوق' : 'تحت'} متوسط 50 جلسة</b><small>بيوصف مكان السعر من تاريخه، مش اتجاه بكرة.</small></div></div>
+        <div className="evidence-row"><span>الزخم</span><div><b>MACD {macd ? 'أعلى' : 'أقل'} من خطه · RSI <bdi dir="ltr">{s.rsi}</bdi></b><small>{s.rsi > 70 ? 'حركة صعود قوية؛ مش معناها إن الهبوط لازم يبدأ.' : s.rsi < 30 ? 'حركة نزول قوية؛ مش معناها إن الارتداد مضمون.' : 'RSI في النطاق بين 30 و70، وده لوحده مش إشارة.'}</small></div></div>
+        <div className="evidence-row"><span>الحجم</span><div><b><bdi dir="ltr">{s.volx}×</bdi> متوسط 20 جلسة سابقة</b><small>{s.votes.vol ? 'حجم أعلى من المتوسط مع إقفال صاعد.' : 'شرط حجم أعلى مع إقفال صاعد مش متحقق.'} مش دليل إن المشتري مؤسسات.</small></div></div>
+        <div className="evidence-conflict"><b>فين التعارض؟</b><p>{disagreements.length ? disagreements.join(' ') : 'مفيش تعارض في الفحوصات دي، لكن اتفاقها مش ضمان ولا أدلة مستقلة.'}</p></div>
+        <Det title="إيه اللي يغيّر القراءة؟">
+            <p>إقفال جلسة جديدة على الناحية التانية من متوسط 50 أو 200 يغيّر وصف الاتجاه. تقاطع MACD مع خطه يغيّر وصف الزخم. حجم أعلى من متوسط الـ20 جلسة السابقة مع إقفال صاعد يغيّر وصف الحجم.</p>
+            <p>دي تعريفات للتغير، مش مستويات شراء أو بيع. المتوسطات نفسها بتتغير كل جلسة. بلوغ مستوى لحظيًا مش إقفال مؤكد.</p>
+        </Det>
+        <p className="evidence-limit">المؤشرات مشتقة من أسعار متداخلة، متعدّهاش كأصوات مستقلة. حجم التداول مش صافي مؤسسات. ميزة التنبؤ مش مثبتة؛ البيانات مصدر مجاني واحد وقد تتأخر أو تحتاج تصحيح تقسيمات.</p>
+    </section>;
+}
+
 function Home() {
     const [selected, setSelected] = useState('HRHO');
     const [filter, setFilter] = useState('all');
@@ -71,8 +88,8 @@ function Home() {
 
         <section className="desk-watch"><div className="desk-list-head"><h3>قارن واختار <small>{KEYS.length}</small></h3><span>المس السهم لعرض السبب والرسم ↓</span></div>
             <input className="desk-search" aria-label="دور على سهم" placeholder="⌕  دور باسم السهم أو الرمز" value={query} onChange={e=>setQuery(e.target.value)} />
-            <div className="desk-filters">{[['all','الكل'],['go','مرشّح'],['watch','راقب'],['wait','استنى']].map(([c,l])=><button key={c} className={filter===c?'on':''} onClick={()=>setFilter(c)}>{l}</button>)}</div>
-            <div className="desk-columns"><span>السهم / الحالة اليومية</span><span>الإقفال</span><span>5 جلسات</span></div>
+            <div className="desk-filters">{[['all','الكل'],['go','فوق المتوسطين'],['watch','بينهم'],['wait','تحت المتوسطين']].map(([c,l])=><button key={c} className={filter===c?'on':''} onClick={()=>setFilter(c)}>{l}</button>)}</div>
+            <div className="desk-columns"><span>السهم / مكانه من المتوسطات</span><span>الإقفال</span><span>5 جلسات</span></div>
             {list.map(k=>{const x=DATA.stocks[k],w=verdict(x);return <button key={k} className={'desk-row'+(selected===k?' selected':'')} onClick={()=>{if(x.ok){setSelected(k);requestAnimationFrame(()=>document.querySelector('.desk-feature')?.scrollIntoView({behavior:'smooth',block:'start'}));}}} disabled={!x.ok}><span className="desk-symbol"><b dir="ltr">{k}</b><small><i className={'desk-dot '+w.c}/>{w.t}</small></span><b className="desk-row-price" dir="ltr">{fmt(x.close)}</b><span className={'desk-return '+(x.ok?(x.chg5>=0?'u':'d'):'')} dir="ltr">{x.ok?pc(x.chg5):'ناقص'}</span></button>})}
             {!list.length&&<p className="eg-note">مفيش سهم مطابق للبحث.</p>}
         </section>
@@ -81,7 +98,8 @@ function Home() {
             <div className="desk-chart-label"><span>الإقفال خلال 60 جلسة</span><span>رسم يومي</span></div>
             <div className="desk-spark"><Spark vals={s.bars.slice(-60).map((b: any)=>b[4])} up={s.chg60>=0} /></div>
             <div className="desk-chart-dates"><span>{s.bars[s.bars.length-60][0]}</span><span>{s.date}</span></div>
-            <div className="desk-insight"><span className={'desk-dot '+v.c} /><p><b>{v.t}</b> · {reason(s)}<br/><span>المهم تراجعه: {s.votes.trend ? (!s.votes.mid ? 'تأكيد الاتجاه فوق متوسط 50 جلسة.' : 'الزخم والحجم مع الاتجاه، مش السعر لوحده.') : 'الاتجاه الطويل لسه ضعيف، صعود يوم لوحده مش تأكيد.'}</span></p></div>
+            
+            <Evidence s={s} />
             <Link className="desk-open" to={'/'+selected.toLowerCase()}>افتح الشارت والشرح <span>←</span></Link>
         </section>
         <p className="desk-disclaimer">متابعة موجة أيام/أسابيع، مش أوامر تداول.<br/>مفيش مدة مضمونة للربح. التقييم الفني مش توقع.</p>
@@ -103,7 +121,8 @@ function Stock({ k }: { k: string }) {
             {!s.ok ? <p className="eg-note">المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم. السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
                 <div className={'eg-verdict eg-v-' + v.c}><div><b>{v.t}</b><p>{reason(s)}</p></div></div>
-                <Det title="الفريم ومدة المتابعة" open>
+                <Evidence s={s} />
+                <Det title="الفريم ومدة المتابعة">
                     <p>التقييم والسيناريو مبنيين على شمعة يومية بعد إقفال الجلسة. ده أقرب لمتابعة موجة على أيام أو أسابيع (سوينج)، مش سكالبينج أو شراء وبيع جوه نفس الجلسة، ومش تقييم استثمار طويل الأجل.</p>
                     <p>الاتجاه من متوسط 50 و200 جلسة. السيناريو من متوسط أُسّي 20 جلسة أو أعلى 20 جلسة. الزخم من RSI 14 وMACD 12/26/9، والتذبذب من ATR 14.</p>
                     <p>مفيش عدد أيام بعدها الربح يبدأ. جدول التجربة بيقيس النتيجة بعد 10 جلسات تداول، مش 10 أيام تقويمية، وده أفق اختبار بس، مش ميعاد بيع ولا وعد ربح. ممكن الخسارة تحصل قبلها أو بعدها.</p>
