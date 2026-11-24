@@ -36,8 +36,8 @@ function reason(s: any): string {
 function Plan3({ s }: { s: any }) {
     const p = s.plan;
     return <div className="eg-p3">
-        <div><span>{p.mode === 'pullback' ? 'ادخل عند' : 'ادخل لو عدّى'}</span><b dir="ltr">{fmt(p.entry)}</b><i dir="ltr">{pc(p.entry_pct)}</i></div>
-        <div className="dn"><span>وقف الخسارة</span><b dir="ltr">{fmt(p.stop)}</b><i dir="ltr">{pc(p.stop_pct)}</i></div>
+        <div><span>{p.mode === 'pullback' ? 'تراجع محتمل إلى' : 'اختراق محتمل فوق'}</span><b dir="ltr">{fmt(p.entry)}</b><i dir="ltr">{pc(p.entry_pct)}</i></div>
+        <div className="dn"><span>وقف بعد الدخول فقط</span><b dir="ltr">{fmt(p.stop)}</b><i dir="ltr">{pc(p.stop_pct)}</i></div>
         <div><span>حجم الصفقة</span><b dir="ltr">{p.sizepct}%</b><i>من المحفظة</i></div>
     </div>;
 }
@@ -73,7 +73,7 @@ function Home() {
                     <span className={'eg-badge eg-' + v.c}>{v.t}</span>
                 </div>
                 <p className="eg-why1">{reason(s)}</p>
-                {s.ok && <div className="eg-mini"><span>السعر <b dir="ltr">{fmt(s.close)}</b></span><span>{s.plan.mode === 'pullback' ? 'دخول' : 'اختراق'} <b dir="ltr">{fmt(s.plan.entry)}</b></span><span className="dn">وقف <b dir="ltr">{fmt(s.plan.stop)}</b></span></div>}
+                {s.ok && <div className="eg-mini"><span>إقفال <b dir="ltr">{fmt(s.close)}</b> جنيه</span><span>افتح السهم لفهم الشروط ←</span></div>}
             </Link>;
         })}
         {filter !== 'all' && !list.some(x => verdict(x.s).c === filter) && <p className="eg-empty">مفيش أسهم بالحالة دي في آخر إقفال.</p>}
@@ -87,7 +87,7 @@ function Stock({ k }: { k: string }) {
     const [tf, setTf] = useState<TF>('D');
     const [n, setN] = useState(130);
     const trows = React.useMemo(() => s.ok ? mkRows(resample(s.bars, tf)) : [], [k, tf]);
-    const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: true, bb: false });
+    const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: false, bb: false });
     const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
     const v = verdict(s);
     return <div className="eg-pad">
@@ -97,18 +97,25 @@ function Stock({ k }: { k: string }) {
             {!s.ok ? <p className="eg-note">المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم. السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
                 <div className={'eg-verdict eg-v-' + v.c}><div><b>{v.t}</b><p>{reason(s)}</p></div></div>
-                <Plan3 s={s} />
-                <p className="eg-note">الخروج: وقف متحرك حاليًا <L>{fmt(s.plan.trail)}</L>. لو فتح أعلى من الدخول بأكتر من 5% متجريش وراه.</p>
+                <Det title="سيناريو صفقة محتملة، مش أمر دخول">
+                    <p className="eg-note">المستويات دي لصفقة مستقبلية لو شروطها اتحققت، مش لإدارة أسهم إنت مالكها. الحالة الحالية: {v.t}. الوقف محسوب من الدخول المحتمل، مش من إقفال النهارده، فممكن يكون أعلى من السعر الحالي.</p>
+                    <Plan3 s={s} />
+                    <p className="eg-note">{s.plan.mode === 'pullback' ? 'السيناريو مستني تراجع للسعر الموضح وتأكيد ارتداد، مش شراء بالسعر الحالي.' : 'السيناريو مستني اختراق المستوى الموضح وتأكيده، مش شراء بالسعر الحالي.'} الوصول للمستوى لوحده مش إشارة كفاية.</p>
+                </Det>
+                <p className="eg-note">مرجع فني فقط، مش وقف لمركزك: وقف متحرك <L>{fmt(s.plan.trail)}</L>. لو فتح أعلى من الدخول بأكتر من 5% متجريش وراه.</p>
                 {s.plan.tv < 1 && <p className="eg-note eg-warn">السيولة ضعيفة (حوالي {s.plan.tv} مليون جنيه في اليوم).</p>}
                 <Det title="الشارت" open>
                     <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
                 <div className="eg-chips">{RANGES[tf].map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
                 <p className="eg-note">الشمعة = {tf === 'D' ? 'يوم تداول' : tf === 'W' ? 'أسبوع تداول' : 'شهر تداول'}. مفيش شارت لحظي (دقائق/ساعات) لأن البيانات المجانية آخر اليوم بس.</p>
                 <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} />
-                <Ex>{X.chart(s, tf)}</Ex>
-                <div className="eg-chips">{tg('plan', 'الخطة')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
-                <Ex>{X.ma(s)}</Ex>
-                <Ex label="اشرحلي الحجم">{X.vol(s)}</Ex>
+
+                <div className="eg-chips">{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
+                <Det title="افهم الشارت والألوان">
+                    <p>الخط الفاتح = سعر الإقفال. لو اخترت شموع: الجسم بين الفتح والإقفال، والخيط بين أعلى وأقل سعر. الأخضر إقفال أعلى من الفتح، والأحمر العكس.</p>
+                    <p>البرتقالي متوسط 50 شمعة، والأزرق متوسط 200 شمعة على الإطار المختار. خطوط الخطة اختيارية: أزرق دخول مشروط، أحمر وقف بعد الدخول، أخضر وقف متحرك مرجعي، مش هدف ربح.</p>
+                    <p>الأرقام أعلى الشارت تخص الفترة اللي اخترتها: فتح، أعلى، أقل، إقفال، والتغير من الفتح للإقفال. الحجم عدد الأسهم المتداولة. RSI مقياس زخم من 0 لـ100، مش نسبة ربح متوقعة.</p>
+                </Det>
                 <p className="eg-note">المس الشارت لاختيار يوم، أو حرّك المؤشر تحته. اسحب الشارت للماضي وكبّر بإصبعين. الأزرق متوسط 200 يوم والبرتقالي متوسط 50 يوم.</p>
 
                 
@@ -120,7 +127,7 @@ function Stock({ k }: { k: string }) {
 
                 
                 </Det>
-                <Det title="اشرحلي الخطة (الدخول والوقف والحجم)">
+                <Det title="طريقة حساب السيناريو والمخاطرة">
                     <Ex>{X.plan(s)}</Ex>
                 </Det>
                 <Det title="المؤشرات بالتفصيل">
