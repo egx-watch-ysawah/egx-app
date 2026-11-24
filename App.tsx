@@ -17,13 +17,33 @@ const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(1) + '%';
 const L = ({ children }: { children: React.ReactNode }) => <bdi dir="ltr">{children}</bdi>;
 
 function verdict(s: any) {
-    if (!s.ok) return { t: 'مفيش بيانات', c: 'na', col: '#8b97ad', d: '' };
+    if (!s.ok) return { t: 'مفيش بيانات', c: 'na', col: '#8b97ad' };
     const st = s.plan.strength;
-    if (st >= 70 && s.rsi < 70) return { t: 'دخول محتمل', c: 'go', col: '#2ee59d', d: 'المؤشرات متوافقة. لو هتدخل، التزم بالوقف.' };
-    if (st >= 50) return { t: 'راقب', c: 'watch', col: '#ffb84d', d: 'فيه نص المؤشرات إيجابي. استنى تأكيد قبل أي دخول.' };
-    return { t: 'استنى', c: 'wait', col: '#ff5c70', d: 'أغلب المؤشرات سلبية. مفيش دخول مناسب دلوقتي.' };
+    if (st >= 70 && s.rsi < 70 && s.plan.ext <= 4 && s.plan.tv >= 1) return { t: 'مرشّح للدخول', c: 'go', col: '#2ee59d' };
+    if (st >= 50) return { t: 'راقب', c: 'watch', col: '#ffb84d' };
+    return { t: 'استنى', c: 'wait', col: '#ff5c70' };
 }
-function strengthWord(v: number) { return v >= 70 ? 'قوية' : v >= 50 ? 'متوسطة' : v >= 30 ? 'ضعيفة' : 'ضعيفة جدًا'; }
+function reason(s: any): string {
+    if (!s.ok) return 'تاريخ السهم ناقص في المصدر المجاني.';
+    const v = s.votes, p = s.plan;
+    if (verdict(s).c === 'go') return 'الاتجاه صاعد والزخم كويس. لو هتدخل، التزم بالوقف.';
+    if (p.ext > 4) return 'طالع بسرعة. الدخول دلوقتي متأخر.';
+    if (p.tv < 1) return 'السيولة ضعيفة، ممكن تعلق فيه.';
+    if (!v.trend) return 'تحت متوسط 200 يوم، الاتجاه الطويل لسه ضعيف.';
+    if (!v.mid) return 'الاتجاه الطويل تمام بس القصير ضعيف. استنى تأكيد.';
+    return 'نص المؤشرات إيجابي. استنى تأكيد قبل الدخول.';
+}
+function Plan3({ s }: { s: any }) {
+    const p = s.plan;
+    return <div className="eg-p3">
+        <div><span>{p.mode === 'pullback' ? 'ادخل عند' : 'ادخل لو عدّى'}</span><b dir="ltr">{fmt(p.entry)}</b><i dir="ltr">{pc(p.entry_pct)}</i></div>
+        <div className="dn"><span>وقف الخسارة</span><b dir="ltr">{fmt(p.stop)}</b><i dir="ltr">{pc(p.stop_pct)}</i></div>
+        <div><span>حجم الصفقة</span><b dir="ltr">{p.sizepct}%</b><i>من المحفظة</i></div>
+    </div>;
+}
+function Det({ title, children, open }: { title: string; children: React.ReactNode; open?: boolean }) {
+    return <details className="eg-ex" open={open}><summary>{title}</summary><div className="eg-exb">{children}</div></details>;
+}
 
 function useCount(to: number, dec = 2) {
     const [v, setV] = useState(to);
@@ -48,32 +68,22 @@ function why(s: any): { ok: boolean; t: string }[] {
 }
 
 function Home() {
-    const list = KEYS.map(k => ({ k, s: DATA.stocks[k] })).sort((a, b) => (b.s.ok ? b.s.plan.strength : -1) - (a.s.ok ? a.s.plan.strength : -1));
-    const top = list[0];
+    const order: Record<string, number> = { go: 0, watch: 1, wait: 2, na: 3 };
+    const list = KEYS.map(k => ({ k, s: DATA.stocks[k] })).sort((a, b) => order[verdict(a.s).c] - order[verdict(b.s).c] || (b.s.ok ? b.s.plan.strength : -1) - (a.s.ok ? a.s.plan.strength : -1));
     return <div className="eg-pad">
-        <div className="eg-hero eg-in">
-            <span className="eg-hero-k">الأقوى فنيًا دلوقتي</span>
-            <b>{top.s.name} <L>({top.k})</L></b>
-            <span className="eg-hero-s">قوة {top.s.plan.strength}/100 · {verdict(top.s).t}. ده ترتيب فني مش ضمان.</span>
-        </div>
-        <p className="eg-lead">مرتبين من الأقوى للأضعف. آخر إقفال كامل <L>{DATA.stocks.MASR.date}</L>.</p>
+        <p className="eg-lead">آخر إقفال <L>{DATA.stocks.MASR.date}</L></p>
         {list.map(({ k, s }, i) => {
             const v = verdict(s);
             return <Link key={k} className="eg-card eg-in" style={{ animationDelay: i * 60 + 'ms' }} to={'/' + k.toLowerCase()}>
                 <div className="eg-c1">
-                    {s.ok ? <Ring value={s.plan.strength} color={v.col} /> : <div className="eg-ring eg-noring">؟</div>}
-                    <div className="eg-cm">
-                        <div className="eg-row1"><b className="eg-sym" dir="ltr">{k}</b><span className="eg-name">{s.name}</span></div>
-                        <span className={'eg-badge eg-' + v.c}>{v.t}</span>
-                    </div>
-                    <div className="eg-cp">
-                        {s.ok ? <><Price v={s.close} /><span className={'eg-chg ' + (s.chg5 >= 0 ? 'u' : 'd')}><L>{pc(s.chg5)}</L> 5 أيام</span></> : <span className="eg-chg">سعر <L>{fmt(s.close)}</L></span>}
-                    </div>
+                    <div className="eg-cm"><div className="eg-row1"><b className="eg-sym" dir="ltr">{k}</b><span className="eg-name">{s.name}</span></div></div>
+                    <span className={'eg-badge eg-' + v.c}>{v.t}</span>
                 </div>
-                {s.ok ? <Spark vals={s.bars.slice(-60).map((r: any) => r[4])} up={s.chg20 >= 0} /> : <p className="eg-note">تاريخ المصدر المجاني ناقص، فمفيش شارت أو تقييم.</p>}
+                <p className="eg-why1">{reason(s)}</p>
+                {s.ok && <div className="eg-mini"><span>السعر <b dir="ltr">{fmt(s.close)}</b></span><span>{s.plan.mode === 'pullback' ? 'دخول' : 'اختراق'} <b dir="ltr">{fmt(s.plan.entry)}</b></span><span className="dn">وقف <b dir="ltr">{fmt(s.plan.stop)}</b></span></div>}
             </Link>;
         })}
-        <p className="eg-note eg-foot">التقييم من 100 تجميع لمؤشرات فنية بسيطة. الاختبار على الماضي ما أثبتش إنه بيتنبأ بالأرباح.</p>
+        <p className="eg-note eg-foot">أداة مراقبة مش نصيحة ولا ضمان ربح.</p>
     </div>;
 }
 
@@ -82,29 +92,21 @@ function Stock({ k }: { k: string }) {
     const [tf, setTf] = useState<TF>('D');
     const [n, setN] = useState(130);
     const trows = React.useMemo(() => s.ok ? mkRows(resample(s.bars, tf)) : [], [k, tf]);
-    const [t, setT] = useState({ sma: true, vol: true, rsi: false, macd: false, plan: true, bb: false });
+    const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: true, bb: false });
     const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
     const v = verdict(s);
     return <div className="eg-pad">
-        <div className="eg-pick">{KEYS.map(x => <Link key={x} className={'eg-chip' + (x === k ? ' on' : '')} to={'/' + x.toLowerCase()}>{x}</Link>)}</div>
+        <Link className="eg-back" to="/">← كل الأسهم</Link>
         <div className="eg-in">
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2>
-            {!s.ok ? <p className="eg-note">المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش شارت ولا خطة. السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
+            {!s.ok ? <p className="eg-note">المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم. السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
-
-                <div className={'eg-verdict eg-v-' + v.c}>
-                    <Ring value={s.plan.strength} color={v.col} />
-                    <div><b>{v.t}</b><span>قوة {strengthWord(s.plan.strength)} ({s.plan.strength}/100)</span><p>{v.d}</p></div>
-                </div>
-                <Ex>{X.verdict(s)}</Ex>
-
-                <h3 className="eg-h3">ليه الحكم ده؟</h3>
-                <div className="eg-why">{why(s).map((w, i) => <div key={i} className="eg-w" style={{ animationDelay: i * 50 + 'ms' }}><span className={w.ok ? 'ok' : 'no'}>{w.ok ? '✓' : '✗'}</span>{w.t}</div>)}</div>
-                <Ex>{X.why()}</Ex>
-                {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة النهارده: {s.fire.map((f: string) => RULE_AR[f]).join(' + ')}</div>}
-
-                <h3 className="eg-h3">الشارت</h3>
-                <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
+                <div className={'eg-verdict eg-v-' + v.c}><div><b>{v.t}</b><p>{reason(s)}</p></div></div>
+                <Plan3 s={s} />
+                <p className="eg-note">الخروج: وقف متحرك حاليًا <L>{fmt(s.plan.trail)}</L>. لو فتح أعلى من الدخول بأكتر من 5% متجريش وراه.</p>
+                {s.plan.tv < 1 && <p className="eg-note eg-warn">السيولة ضعيفة (حوالي {s.plan.tv} مليون جنيه في اليوم).</p>}
+                <Det title="الشارت" open>
+                    <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
                 <div className="eg-chips">{RANGES[tf].map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
                 <p className="eg-note">الشمعة = {tf === 'D' ? 'يوم تداول' : tf === 'W' ? 'أسبوع تداول' : 'شهر تداول'}. مفيش شارت لحظي (دقائق/ساعات) لأن البيانات المجانية آخر اليوم بس.</p>
                 <StockChart rows={trows} n={n} t={t} plan={s.plan} />
@@ -114,25 +116,20 @@ function Stock({ k }: { k: string }) {
                 <Ex label="اشرحلي الحجم">{X.vol(s)}</Ex>
                 <p className="eg-note">المس الشارت واسحب عشان تشوف أي يوم. الأزرق متوسط 200 يوم والبرتقالي متوسط 50 يوم.</p>
 
-                <h3 className="eg-h3">خطة الدخول لو قررت</h3>
-                <div className="eg-plan">
-                    <div className="eg-pr"><span>الدخول</span><b dir="ltr">{fmt(s.plan.entry)} <em>({pc(s.plan.entry_pct)} من السعر)</em></b></div>
-                    <p className="eg-pn">{s.plan.mode === 'pullback' ? 'استنى تراجع للمتوسط القصير (متوسط 20 يوم) بدل ما تجري ورا السعر.' : `ادخل بس لو السعر اخترق أعلى مستوى في 20 يوم (${fmt(s.plan.res)}) بحجم تداول عالي. قبل كده مفيش دخول.`}</p>
-                    <div className="eg-pr dn"><span>وقف الخسارة</span><b dir="ltr">{fmt(s.plan.stop)} <em>({pc(s.plan.stop_pct)})</em></b></div>
-                    <p className="eg-pn">الوقف = الدخول ناقص ضعف التذبذب اليومي المعتاد ({s.plan.atrpct}% في اليوم). لو السعر قفل تحته اخرج بدون تردد.</p>
-                    <div className="eg-pr up"><span>وقف متحرك (لو دخلت وطلع)</span><b dir="ltr">{fmt(s.plan.trail)}</b></div>
-                    <p className="eg-pn">مفيش هدف ثابت. لو السهم طلع، ارفع الوقف تحت أعلى سعر في آخر شهر بحوالي 3 أضعاف التذبذب اليومي، وده مستواه دلوقتي. اخرج لو قفل تحته، أو لو عدّى 60 يوم ومفيش حركة.</p>
-                    <div className="eg-pr"><span>حجم الصفقة</span><b dir="ltr">{s.plan.sizepct}% من المحفظة</b></div>
-                    <p className="eg-pn">قاعدة المخاطرة: متخسرش أكتر من 1% من المحفظة في الصفقة الواحدة. حجمك = 1% ÷ مسافة الوقف، وبحد أقصى 25%. مثال: لو بتحط 100 ألف، أقصى خسارة لو ضرب الوقف حوالي 1000 جنيه.</p>
-                    <p className="eg-pn">لو السهم فتح تاني يوم أعلى من الدخول بأكتر من 5%، متجريش وراه. استنى.</p>
-                    {s.plan.ext > 4 && <p className="eg-pn eg-warn">السهم طالع {s.plan.ext} ضعف تذبذبه في آخر 20 يوم. ده امتداد كبير، الدخول متأخر ممكن يبقى غالي.</p>}
-                    {s.plan.tv < 1 && <p className="eg-pn eg-warn">السيولة ضعيفة (متوسط التداول اليومي حوالي {s.plan.tv} مليون جنيه). ممكن تلاقي صعوبة تخرج بالسعر ده.</p>}
-                </div>
-                <Ex>{X.plan(s)}</Ex>
-                <p className="eg-note eg-warn">دي مستويات حسابية من الشارت، مش نصيحة استثمار ولا ضمان. السعر ممكن يكسر الوقف بفجوة، والسوق المصري فيه حدود سعرية وسيولة قليلة.</p>
+                
+                </Det>
+                <Det title="ليه الحكم ده؟">
+                    <div className="eg-why">{why(s).map((w, i) => <div key={i} className="eg-w" style={{ animationDelay: i * 50 + 'ms' }}><span className={w.ok ? 'ok' : 'no'}>{w.ok ? '✓' : '✗'}</span>{w.t}</div>)}</div>
+                <Ex>{X.why()}</Ex>
+                {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة النهارده: {s.fire.map((f: string) => RULE_AR[f]).join(' + ')}</div>}
 
-                <h3 className="eg-h3">المؤشرات ببساطة</h3>
-                <div className="eg-grid2">
+                
+                </Det>
+                <Det title="اشرحلي الخطة (الدخول والوقف والحجم)">
+                    <Ex>{X.plan(s)}</Ex>
+                </Det>
+                <Det title="المؤشرات بالتفصيل">
+                    <div className="eg-grid2">
                     <div className="eg-m"><span>RSI</span><b dir="ltr">{s.rsi}</b><i>من 0 لـ100. فوق 70 مبالغ، تحت 30 مبالغ في النزول.</i></div>
                     <div className="eg-m"><span>التذبذب اليومي</span><b dir="ltr">{s.plan.atrpct}%</b><i>الحركة المعتادة في اليوم. بنقيس بيها الوقف.</i></div>
                     <div className="eg-m"><span>قوة الاتجاه ADX</span><b dir="ltr">{s.plan.adx}</b><i>{s.plan.adx >= 25 ? (s.plan.pdi_gt ? 'اتجاه صاعد قوي.' : 'اتجاه هابط قوي.') : 'فوق 25 يبقى فيه اتجاه واضح. دلوقتي السوق متردد.'}</i></div>
@@ -147,13 +144,18 @@ function Stock({ k }: { k: string }) {
                 <Ex label="اشرحلي الدعم والمقاومة">{X.sr(s)}</Ex>
                 <Ex label="اشرحلي MACD">{X.macd()}</Ex>
 
-                <h3 className="eg-h3">التجربة على 5 سنين</h3>
-                <p className="eg-note">ندخل تاني يوم ونستنى 10 أيام، بعد خصم 1% تكلفة. متوسط أي يوم عشوائي <L>{pc(s.base)}</L>.</p>
+                
+                </Det>
+                <Det title="التجربة على الماضي">
+                    <p className="eg-note">ندخل تاني يوم ونستنى 10 أيام، بعد خصم 1% تكلفة. متوسط أي يوم عشوائي <L>{pc(s.base)}</L>.</p>
                 <table className="eg-tbl"><thead><tr><th>القاعدة</th><th>مرات</th><th>كسب</th><th>متوسط</th></tr></thead><tbody>
                     {Object.keys(s.bt).map(r => <tr key={r}><td>{RULE_AR[r]}</td><td>{s.bt[r].n}</td><td>{s.bt[r].win == null ? '-' : s.bt[r].win + '%'}</td><td dir="ltr">{s.bt[r].avg == null ? '-' : pc(s.bt[r].avg)}</td></tr>)}
                 </tbody></table>
                 <Ex>{X.bt(s)}</Ex>
                 <p className="eg-note eg-warn">العينة صغيرة (غالبًا أقل من 40 مرة) والنتايج مش ثابتة بين الأسهم. الماضي مش ضمان. كمان التقييم من 100 نفسه ما اتثبتش قدرته على التنبؤ في الاختبار.</p>
+            
+                </Det>
+                <p className="eg-note eg-foot">مش نصيحة استثمار ولا ضمان. السعر ممكن يكسر الوقف بفجوة.</p>
             </>}
         </div>
     </div>;
@@ -209,19 +211,23 @@ function About() {
     </div>;
 }
 
+function Info() {
+    return <div className="eg-pad eg-in">
+        <Det title="حركة السوق (أسهم بس)"><Market /></Det>
+        <Det title="عن التطبيق وحدوده" open><About /></Det>
+    </div>;
+}
 export function App() {
     const loc = useLocation();
     const p = loc.pathname.replace(/\/$/, '');
-    const onStock = KEYS.some(k => p.endsWith('/' + k.toLowerCase()));
-    const tabs: [string, string, boolean][] = [['/', 'الأسهم', p === '' || p === '/'], ['/hrho', 'التفاصيل', onStock], ['/market', 'السوق', p.endsWith('/market')], ['/about', 'عن التطبيق', p.endsWith('/about')]];
+    const tabs: [string, string, boolean][] = [['/', 'الأسهم', !p.endsWith('/info')], ['/info', 'معلومات', p.endsWith('/info')]];
     return <FileCard lang="ar" dir="rtl">
-        <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live"><i />قايمة مراقبة، مش توصيات</span></div>
+        <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live"><i />قايمة مراقبة</span></div>
         <nav className="eg-tabs" aria-label="التنقل">{tabs.map(([to, name, on]) => <NavLink key={to} to={to} className={on ? 'on' : ''}>{name}</NavLink>)}</nav>
         <Routes>
             <Route path="/" element={<Home />} />
             {KEYS.map(k => <Route key={k} path={'/' + k.toLowerCase()} element={<Stock k={k} />} />)}
-            <Route path="/market" element={<Market />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/info" element={<Info />} />
         </Routes>
     </FileCard>;
 }
