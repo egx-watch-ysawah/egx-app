@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
 
@@ -33,6 +33,31 @@ export function useLive(): Live {
   return live;
 }
 
+function inSession(): boolean {
+  const p: any = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Africa/Cairo', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  const m = +p.hour * 60 + +p.minute;
+  return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu'].includes(p.weekday) && m >= 600 && m <= 875;
+}
+function freshState(at?: string): string {
+  if (!inSession()) return 'closed';
+  const t = at ? Date.parse(at) : NaN;
+  if (!Number.isFinite(t)) return 'stale';
+  const age = (Date.now() - t) / 60000;
+  return age <= 20 ? 'fresh' : age <= 45 ? 'aging' : 'stale';
+}
+function FlashVal({ v, children }: { v: number; children: React.ReactNode }) {
+  const prev = useRef(v);
+  const [c, setC] = useState('');
+  useEffect(() => {
+    if (prev.current === v) return;
+    setC(v > prev.current ? 'fl-up' : 'fl-down');
+    prev.current = v;
+    const t = setTimeout(() => setC(''), 900);
+    return () => clearTimeout(t);
+  }, [v]);
+  return <span className={'hb-val ' + c}>{children}</span>;
+}
+
 function prevClose(s: any): number | null {
   const b = s && s.bars;
   if (!Array.isArray(b) || b.length < 2) return null;
@@ -53,6 +78,9 @@ function stamp(at?: string): string {
 
 export function HomeBoard({ holdings }: { holdings: any[] }) {
   const live = useLive();
+  const [, tick] = useState(0);
+  useEffect(() => { const id = setInterval(() => tick(x => x + 1), 30000); return () => clearInterval(id); }, []);
+  const fresh = freshState(live ? live.at : undefined);
   const rows = [...holdings].sort((a, b) => b.weight - a.weight).map(h => {
     const base = DATA.stocks[h.symbol];
     const L = live && live.stocks[h.symbol];
@@ -74,7 +102,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
   const best = rows.filter(r => r.dp !== null).sort((a, b) => (b.dp as number) - (a.dp as number))[0];
   const cls = (v: number | null) => (v === null ? '' : v >= 0 ? 'hb-up' : 'hb-down');
   return (
-    <section className="hb" aria-label="متابعة المحفظة">
+    <section className="hb" data-fresh={fresh} aria-label="متابعة المحفظة">
       <div className="hb-top">
         <small>{useQty ? 'إجمالي المحفظة (ج.م)' : 'حركة المحفظة اليوم'}</small>
         {useQty && total !== null && <b className="hb-total" dir="ltr">{money(total)}</b>}
@@ -85,26 +113,26 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
           </div>
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
-        <small className="hb-stamp">{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر حتى 20 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
+        <small className="hb-stamp"><i className="fd" role="img" aria-label={fresh} title={fresh} />{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر حتى 20 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
       </div>
       <div className="hb-tiles">
-        <div><small>صاعد اليوم</small><b className="hb-up">{up}</b></div>
-        <div><small>هابط اليوم</small><b className="hb-down">{down}</b></div>
+        <div><small>صاعد اليوم</small><b className="hb-up" data-dir="up">{up}</b></div>
+        <div><small>هابط اليوم</small><b className="hb-down" data-dir="down">{down}</b></div>
         <div><small>الأقوى</small><b dir="ltr">{best ? best.h.symbol : '-'}</b>{best && <em className="hb-up" dir="ltr">{sgn(best.dp as number)}%</em>}</div>
         <div><small>الأضعف</small><b dir="ltr">{worst ? worst.h.symbol : '-'}</b>{worst && <em className="hb-down" dir="ltr">{sgn(worst.dp as number)}%</em>}</div>
       </div>
       <p className="hb-lbl">النسبة = تغيّر اليوم عن إقفال أمس</p>
       <div className="hb-list">
         {rows.map(({ h, s, d, dp }) => (
-          <Link key={h.symbol} to={'/' + h.symbol.toLowerCase()} className="hb-row">
+          <Link key={h.symbol} to={'/' + h.symbol.toLowerCase()} className="hb-row" data-dir={dp === null ? undefined : dp >= 0 ? 'up' : 'down'}>
             <i className={'hb-ico ' + cls(dp)} dir="ltr">{h.symbol.slice(0, 2)}</i>
             <span className="hb-name"><b dir="ltr">{h.symbol}</b><small>{s.name} · وزن {h.weight.toFixed(1)}%</small></span>
-            <span className="hb-val">
+            <FlashVal v={s.close}>
               <b dir="ltr">{useQty ? money(h.quantity * s.close) : fmt(s.close)}</b>
               {dp !== null && d !== null
                 ? <em className={cls(dp)} dir="ltr">{useQty ? sgn(h.quantity * d, 0) + ' ' : sgn(d, d >= 10 || d <= -10 ? 2 : 3) + ' '}{dp >= 0 ? '▲' : '▼'} {Math.abs(dp).toFixed(2)}%</em>
                 : <em dir="ltr">-</em>}
-            </span>
+            </FlashVal>
           </Link>
         ))}
       </div>
