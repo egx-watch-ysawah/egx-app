@@ -1,0 +1,22 @@
+/* round 11: Arabic font + ported motion ideas (border beam, shimmer, spotlight sheen) + shadcn-style focus/tokens */
+:root{--ar:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif}
+body,.eg-card-root,button,input,select,textarea,.ab,.tk{font-family:var(--ar)!important}
+.hb-total,.hb-val b,.tk b,.eg-price,.tv-t{font-family:var(--ar)!important}
+/* shadcn-style focus ring and radius tokens */
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #5eead4;outline-offset:2px;border-radius:12px}
+.gd-tab,.eg-chip,.set-btn,.set-theme,.set-inst{transition:transform .15s ease-out,box-shadow .2s ease-out,background-color .2s}
+/* Magic UI style border beam on the total card */
+@property --beam{syntax:"<angle>";initial-value:0deg;inherits:false}
+.hb-top::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;
+ background:conic-gradient(from var(--beam),transparent 0 70%,#5eead4 85%,#22d3ee 92%,transparent 100%);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+/* shimmer sweep on the weight strip */
+.hb-mix i{background-image:linear-gradient(100deg,transparent 30%,#ffffff55 50%,transparent 70%);background-size:250% 100%;background-repeat:no-repeat;background-position:150% 0}
+/* Aceternity style sheen on stock cards */
+.hb-row::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 35%,#ffffff14 50%,transparent 65%);transform:translateX(-120%)}
+@media (prefers-reduced-motion:no-preference){
+ .hb-top::after{animation:beam 5s linear infinite}@keyframes beam{to{--beam:360deg}}
+ .hb-mix i{animation:shim 4.5s ease-in-out infinite}@keyframes shim{0%,60%{background-position:150% 0}100%{background-position:-50% 0}}
+ .hb-row::after{animation:sheen 6s ease-in-out infinite}.hb-row:nth-child(2)::after{animation-delay:.8s}.hb-row:nth-child(3)::after{animation-delay:1.6s}.hb-row:nth-child(4)::after{animation-delay:2.4s}.hb-row:nth-child(5)::after{animation-delay:3.2s}
+ @keyframes sheen{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+}
