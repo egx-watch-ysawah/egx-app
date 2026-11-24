@@ -18,5 +18,7 @@ import { Ticker } from './ticker';
 import { AppBar } from './appbar';
 import { SettingsGear } from './settings';
 import { Motion } from './motion';
+import { initTheme } from './theme';
+initTheme();
 
 createRoot(document.getElementById('root')!).render(<FileRouter><App /><Ticker /><AppBar /><SettingsGear /><Motion /></FileRouter>);
