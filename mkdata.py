@@ -9,8 +9,34 @@ def votes(d):
     v['rsi']=((d.rsi>=40)&(d.rsi<=70)).astype(int)
     v['vol']=((d.volume>d.vavg)&(d.close>d.close.shift())).astype(int)
     return v
+import re,json,urllib.request,datetime
+from zoneinfo import ZoneInfo
+
+URL='https://startamarkets.com/ar/symbol/BONY-%D8%A8%D9%86%D9%8A%D8%A7%D9%86-%D9%84%D9%84%D8%AA%D9%86%D9%85%D9%8A%D8%A9-%D9%88%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9/history'
+def bony_window():
+    req=urllib.request.Request(URL,headers={'User-Agent':'Mozilla/5.0'})
+    html=urllib.request.urlopen(req,timeout=25).read().decode()
+    bars=[]
+    for tr in re.findall(r'<tr[^>]*>(.*?)</tr>',html,re.S):
+        cells=[re.sub(r'<[^>]+>','',c).strip() for c in re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>',tr,re.S)]
+        if len(cells)!=6 or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',cells[0]):continue
+        vals=[float(c.replace(',','')) for c in cells[1:]]
+        o,h,l,c,v=vals
+        if not(0<l<=min(o,c)<=max(o,c)<=h and v>0):raise ValueError('Invalid OHLCV')
+        bars.append([cells[0],o,h,l,c,int(v)])
+    today=datetime.datetime.now(ZoneInfo('Africa/Cairo')).date().isoformat()
+    bars=[r for r in bars if r[0]<today]
+    bars.sort()
+    if len(bars)<50 or len({r[0] for r in bars})!=len(bars):raise ValueError('Short or duplicate window')
+    # Keep common dated closes only, never blend an intraday Yahoo tick.
+    p=bars[-1][4];prior=bars[-21:-1];volx=bars[-1][5]/(sum(r[5] for r in prior)/20)
+    return dict(name='بنيان',ok=False,partial=True,listed='2025-07-22',date=bars[-1][0],close=p,bars=bars,volx=round(volx,2),historyCount=len(bars),source=URL,sourceName='Starta Markets',chg5=round((p/bars[-6][4]-1)*100,1),chg20=round((p/bars[-21][4]-1)*100,1))
+
 out={'asof':str(datetime.date.today()),'stocks':{}}
 for k,s in SYM.items():
+    if k=='BONY':
+        try: out['stocks'][k]=bony_window();continue
+        except Exception: pass
     raw=load(s);df,q=quality(raw)
     if len(df)<250:
         out['stocks'][k]=dict(name=NAMES[k],ok=False,close=float(df.close.iloc[-1]) if len(df) else None);continue
