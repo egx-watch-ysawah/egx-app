@@ -9,7 +9,7 @@ const money = (v: number) => Math.round(v).toLocaleString('en-US');
 const PRICES_URL = 'https://raw.githubusercontent.com/egx-watch-ysawah/egx-app/main/prices.json';
 type Live = { at: string; stocks: Record<string, { close: number; prev: number }> } | null;
 
-function useLive(): Live {
+export function useLive(): Live {
   const [live, setLive] = useState<Live>(null);
   useEffect(() => {
     let dead = false;
@@ -85,7 +85,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
           </div>
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
-        <small className="hb-stamp">{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر ~15 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
+        <small className="hb-stamp">{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر حتى 20 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
       </div>
       <div className="hb-tiles">
         <div><small>صاعد اليوم</small><b className="hb-up">{up}</b></div>
