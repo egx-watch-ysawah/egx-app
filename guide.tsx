@@ -200,6 +200,24 @@ function DecisionCard({ s, k }: { s: any; k: string }) {
   </div>;
 }
 
+function TrendVerdict({ s }: { s: any }) {
+  const v = s.votes || {}; const cl = (s.bars || []).map((b: any) => b[4]);
+  const sma = (n: number) => cl.length >= n ? cl.slice(-n).reduce((a: number, b: number) => a + b, 0) / n : null;
+  const s50 = sma(50), s200 = sma(200);
+  const up = v.mid && v.macd, down = !v.mid && !v.macd;
+  const kind = up ? 'up' : down ? 'down' : 'side';
+  const title = up ? 'الاتجاه القريب: صاعد' : down ? 'الاتجاه القريب: هابط' : 'الاتجاه القريب: عرضي / متردد';
+  const why = [v.mid ? 'فوق متوسط 50 جلسة' : 'تحت متوسط 50 جلسة', v.macd ? 'MACD أعلى من خطه' : 'MACD أقل من خطه', 'RSI ' + s.rsi, v.trend ? 'فوق متوسط 200' : 'تحت متوسط 200', 'الحجم ' + s.volx + '×'].join(' · ');
+  const flip = s50 ? (up ? 'يتغير لو السعر قفل تحت ' + f(s50) + ' (متوسط 50 جلسة)' : 'يتغير لو السعر قفل فوق ' + f(s50) + ' (متوسط 50 جلسة) والـMACD رجع فوق خطه') : 'مفيش تاريخ كفاية لمستوى التغيير';
+  const sub = up ? 'اللي ماسك السهم بيستمر طالما المستوى ده متكسرش.' : down ? 'اللي بيفكر يخرج أو يستنى بيبص على المستوى ده كإشارة تغير.' : 'مفيش اتجاه واضح، والإشارات مختلفة.';
+  return <section className={'tv tv-' + kind} aria-label="الاتجاه القريب">
+    <b className="tv-t">{title}</b>
+    <span className="tv-w">{why}</span>
+    <span className="tv-f">{flip}. {sub}</span>
+    <small className="tv-n">وصف لحركة السعر لحد إقفال {s.date}، مش أمر بيع أو شراء ومش توقع. ممكن يتغير في جلسة، والوقف ممكن يتكسر بفجوة.</small>
+  </section>;
+}
+
 function DecSum({ s, k }: { s: any; k: string }) {
   const d = DEC[k];
   let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
@@ -222,7 +240,7 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
     ? 'قراءة للسعر والحجم بعد إقفال ' + s.date + '. بتوصف اللي حصل، مش بتتوقع، ومش أمر بيع أو شراء.'
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
   const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
-  return <><DecSum s={s} k={k} /><section className="gd" aria-label="ملخص السهم">
+  return <><TrendVerdict s={s} /><DecSum s={s} k={k} /><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
     <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{tb('d', 'للقرار')}</div>
     <div className="gd-body">
