@@ -58,28 +58,33 @@ function why(s: any): { ok: boolean; t: string }[] {
 }
 
 function Home() {
+    const [selected, setSelected] = useState('HRHO');
     const [filter, setFilter] = useState('all');
-    const order: Record<string, number> = { go: 0, watch: 1, wait: 2, na: 3 };
-    const list = KEYS.map(k => ({ k, s: DATA.stocks[k] })).sort((a, b) => order[verdict(a.s).c] - order[verdict(b.s).c] || (b.s.ok ? b.s.plan.strength : -1) - (a.s.ok ? a.s.plan.strength : -1));
-    return <div className="eg-pad">
-        <p className="eg-lead">بيانات إقفال <L>{DATA.stocks.MASR.date}</L> · مش سعر لحظي</p>
-        <p className="eg-note">التقييم يومي بعد الإقفال · متابعة موجة على أيام/أسابيع، مش مضاربة لحظية · مفيش مدة مضمونة للربح.</p>
-        <div className="eg-filters" role="group" aria-label="فلتر حالة السهم">{[['all','الكل'],['go','مرشّح'],['watch','راقب'],['wait','استنى']].map(([c,label]) => <button type="button" key={c} aria-pressed={filter === c} className={'eg-chip' + (filter === c ? ' on' : '')} onClick={() => setFilter(c)}>{label}<small>{c === 'all' ? list.length : list.filter(x => verdict(x.s).c === c).length}</small></button>)}</div>
-        <div key={filter} className="eg-list eg-in">
-        {list.filter(x => filter === 'all' || verdict(x.s).c === filter).map(({ k, s }, i) => {
-            const v = verdict(s);
-            return <Link key={k} className="eg-card eg-in" style={{ animationDelay: i * 60 + 'ms' }} to={'/' + k.toLowerCase()}>
-                <div className="eg-c1">
-                    <div className="eg-cm"><div className="eg-row1"><b className="eg-sym" dir="ltr">{k}</b><span className="eg-name">{s.name}</span></div></div>
-                    <span className={'eg-badge eg-' + v.c}>{v.t}</span>
-                </div>
-                <p className="eg-why1">{reason(s)}</p>
-                {s.ok && <div className="eg-mini"><span>إقفال <b dir="ltr">{fmt(s.close)}</b> جنيه</span><span>افتح السهم لفهم الشروط ←</span></div>}
-            </Link>;
-        })}
-        {filter !== 'all' && !list.some(x => verdict(x.s).c === filter) && <p className="eg-empty">مفيش أسهم بالحالة دي في آخر إقفال.</p>}
-        </div>
-        <p className="eg-note eg-foot">أداة مراقبة مش نصيحة ولا ضمان ربح.</p>
+    const [query, setQuery] = useState('');
+    const s = DATA.stocks[selected], v = verdict(s);
+    const list = KEYS.filter(k => (!query || (k + DATA.stocks[k].name).toLowerCase().includes(query.toLowerCase())) && (filter === 'all' || verdict(DATA.stocks[k]).c === filter));
+    const good = KEYS.filter(k => DATA.stocks[k].ok);
+    const up = good.filter(k => DATA.stocks[k].chg5 > 0).length;
+    return <div className="desk-home">
+        <header className="desk-heading"><div><span className="desk-eyebrow">EGX / متابعة يومية بعد الإقفال</span><h2>قائمة المتابعة</h2></div><span className="desk-currency">EGP</span></header>
+        <div className="desk-date"><i />إقفال <L>{DATA.stocks.MASR.date}</L><span>مش لحظي</span></div>
+
+        <section className="desk-watch"><div className="desk-list-head"><h3>قارن واختار <small>{KEYS.length}</small></h3><span>المس السهم لعرض السبب والرسم ↓</span></div>
+            <input className="desk-search" aria-label="دور على سهم" placeholder="⌕  دور باسم السهم أو الرمز" value={query} onChange={e=>setQuery(e.target.value)} />
+            <div className="desk-filters">{[['all','الكل'],['go','مرشّح'],['watch','راقب'],['wait','استنى']].map(([c,l])=><button key={c} className={filter===c?'on':''} onClick={()=>setFilter(c)}>{l}</button>)}</div>
+            <div className="desk-columns"><span>السهم / الحالة اليومية</span><span>الإقفال</span><span>5 جلسات</span></div>
+            {list.map(k=>{const x=DATA.stocks[k],w=verdict(x);return <button key={k} className={'desk-row'+(selected===k?' selected':'')} onClick={()=>{if(x.ok){setSelected(k);requestAnimationFrame(()=>document.querySelector('.desk-feature')?.scrollIntoView({behavior:'smooth',block:'start'}));}}} disabled={!x.ok}><span className="desk-symbol"><b dir="ltr">{k}</b><small><i className={'desk-dot '+w.c}/>{w.t}</small></span><b className="desk-row-price" dir="ltr">{fmt(x.close)}</b><span className={'desk-return '+(x.ok?(x.chg5>=0?'u':'d'):'')} dir="ltr">{x.ok?pc(x.chg5):'ناقص'}</span></button>})}
+            {!list.length&&<p className="eg-note">مفيش سهم مطابق للبحث.</p>}
+        </section>
+        <section className="desk-feature">
+            <div className="desk-feature-head"><div><span className="desk-eyebrow">السهم المحدد</span><h3 dir="ltr">{selected}</h3><span>{s.name}</span></div><div className="desk-quote"><b dir="ltr">{fmt(s.close)}</b><span className={s.chg20>=0?'u':'d'} dir="ltr">{pc(s.chg20)} <small>20 جلسة</small></span></div></div>
+            <div className="desk-chart-label"><span>الإقفال خلال 60 جلسة</span><span>رسم يومي</span></div>
+            <div className="desk-spark"><Spark vals={s.bars.slice(-60).map((b: any)=>b[4])} up={s.chg60>=0} /></div>
+            <div className="desk-chart-dates"><span>{s.bars[s.bars.length-60][0]}</span><span>{s.date}</span></div>
+            <div className="desk-insight"><span className={'desk-dot '+v.c} /><p><b>{v.t}</b> · {reason(s)}<br/><span>المهم تراجعه: {s.votes.trend ? (!s.votes.mid ? 'تأكيد الاتجاه فوق متوسط 50 جلسة.' : 'الزخم والحجم مع الاتجاه، مش السعر لوحده.') : 'الاتجاه الطويل لسه ضعيف، صعود يوم لوحده مش تأكيد.'}</span></p></div>
+            <Link className="desk-open" to={'/'+selected.toLowerCase()}>افتح الشارت والشرح <span>←</span></Link>
+        </section>
+        <p className="desk-disclaimer">متابعة موجة أيام/أسابيع، مش أوامر تداول.<br/>مفيش مدة مضمونة للربح. التقييم الفني مش توقع.</p>
     </div>;
 }
 
