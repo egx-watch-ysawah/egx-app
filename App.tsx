@@ -257,9 +257,23 @@ function parsePortfolio(x:any) {
     if(Math.abs(rows.reduce((a:number,h:any)=>a+h.weight,0)-100)>.1)throw Error('مجموع الأوزان لازم يكون 100% تقريبًا.');
     return rows;
 }
+// Fragment setup never uses a query string or a network request.
+const setupMessage = (() => {
+    const hash=window.location.hash;
+    if(!hash.startsWith('#/portfolio?setup='))return '';
+    const encoded=hash.slice('#/portfolio?setup='.length);
+    window.history.replaceState(null,'',window.location.pathname+window.location.search+'#/portfolio');
+    try {
+        if(encoded.length>15000)throw Error();
+        const raw=atob(encoded.replace(/-/g,'+').replace(/_/g,'/'));
+        const rows=parsePortfolio(JSON.parse(raw));
+        localStorage.setItem(PORTFOLIO_KEY,JSON.stringify({version:1,holdings:rows}));
+        return 'تم إعداد المحفظة على المتصفح ده من الرابط. الرابط الأصلي فيه بياناتك، متشاركوش.';
+    } catch { return 'مقدرناش نحفظ بيانات رابط الإعداد. ممكن المتصفح مانع التخزين أو الرابط ناقص. ملف الاستيراد بديل متاح.'; }
+})();
 function Portfolio() {
     const [holdings,setHoldings] = useState<any[]>(()=>{try {const v=localStorage.getItem(PORTFOLIO_KEY);return v?parsePortfolio(JSON.parse(v)):[];}catch{return [];}});
-    const [err,setErr] = useState('');
+    const [err,setErr] = useState(setupMessage);
     const [saved,setSaved] = useState(()=>{try{return !!localStorage.getItem(PORTFOLIO_KEY);}catch{return false;}});
     async function load(e: React.ChangeEvent<HTMLInputElement>) {
         try {
