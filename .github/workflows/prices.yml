@@ -1,0 +1,51 @@
+name: prices
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 8-12 * * 0-4"
+permissions:
+  contents: write
+concurrency:
+  group: prices
+  cancel-in-progress: false
+jobs:
+  prices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch delayed prices (free Starta Markets history API)
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request, datetime
+          syms = ["MASR", "BONY", "HRHO", "UNIP", "PHAR", "ORHD"]
+          out = {"source": "https://startamarkets.com/api/v1/egx/history/", "note": "delayed free data, not real-time", "stocks": {}}
+          for s in syms:
+              try:
+                  req = urllib.request.Request("https://startamarkets.com/api/v1/egx/history/" + s, headers={"User-Agent": "Mozilla/5.0"})
+                  d = json.load(urllib.request.urlopen(req, timeout=30))
+                  a, b = d[-1], d[-2]
+                  ok = all(isinstance(a.get(k), (int, float)) for k in ("open", "high", "low", "close", "volume")) and a["close"] > 0 and a["low"] <= a["close"] <= a["high"] and a["low"] <= a["open"] <= a["high"]
+                  if not ok:
+                      continue
+                  out["stocks"][s] = {"date": a["date"], "open": a["open"], "high": a["high"], "low": a["low"], "close": a["close"], "volume": a["volume"], "prev_close": b["close"], "chg_pct": round((a["close"] / b["close"] - 1) * 100, 2)}
+              except Exception as e:
+                  print("skip", s, e)
+          if len(out["stocks"]) < 6:
+              raise SystemExit("incomplete, keeping old file")
+          try:
+              old = json.load(open("prices.json"))
+          except Exception:
+              old = {}
+          if old.get("stocks") == out["stocks"]:
+              print("unchanged")
+          else:
+              out["fetched_at_utc"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+              json.dump(out, open("prices.json", "w"), ensure_ascii=False, indent=1)
+              print("updated")
+          PY
+      - name: Commit if changed
+        run: |
+          git config user.name "egx-bot"
+          git config user.email "egx-bot@users.noreply.github.com"
+          git add prices.json
+          git diff --cached --quiet || (git commit -m "prices update" && git pull --rebase && git push)
