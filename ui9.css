@@ -16,3 +16,4 @@
 .hb-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#ffffff12;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
 .hb-chip small{font-size:11px;font-weight:600;opacity:.75;color:#cbd5e1}
 .hb-chip.hb-up,.hb-chip.up{color:#34d399;background:#10b98122}.hb-chip.hb-down,.hb-chip.down{color:#fb7185;background:#f43f5e22}
+.set-theme{position:absolute;inset-inline-start:66px;top:128px;z-index:5;inline-size:42px;block-size:42px;border-radius:50%;display:grid;place-items:center;color:#9fb0c8;background:#0f1828;border:1px solid #ffffff22;-webkit-tap-highlight-color:transparent;padding:0}.set-theme:active{transform:scale(.92)}
