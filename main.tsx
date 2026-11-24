@@ -10,7 +10,9 @@ import './live.css';
 import './ui3.css';
 import './ui4.css';
 import './ui5.css';
+import './ui6.css';
 import { Ticker } from './ticker';
 import { AppBar } from './appbar';
+import { SettingsGear } from './settings';
 
-createRoot(document.getElementById('root')!).render(<FileRouter><App /><Ticker /><AppBar /></FileRouter>);
+createRoot(document.getElementById('root')!).render(<FileRouter><App /><Ticker /><AppBar /><SettingsGear /></FileRouter>);
