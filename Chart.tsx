@@ -87,8 +87,8 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         {t.sma && <path d={path(data.map(r => r[6]), x, y)} className="eg-l50" fill="none" />}
         {t.sma && <path d={path(data.map(r => r[7]), x, y)} className="eg-l200" fill="none" />}
         {t.plan && line(plan.trail, 'eg-pt', 'وقف متحرك')}
-        {t.plan && line(plan.entry, 'eg-pe', 'دخول')}
-        {t.plan && line(plan.stop, 'eg-ps', 'وقف')}
+        {t.plan && line(plan.entry, 'eg-pe', 'دخول مشروط')}
+        {t.plan && line(plan.stop, 'eg-ps', 'وقف بعد الدخول')}
         {safeSel != null && <g><line x1={x(safeSel)} x2={x(safeSel)} y1={0} y2={H} className="eg-cross" /><line x1={0} x2={W} y1={y(data[safeSel][4])} y2={y(data[safeSel][4])} className="eg-cross" /><circle cx={x(safeSel)} cy={y(data[safeSel][4])} r="4" fill="#6ea8ff" stroke="#fff" /></g>}
         <text x={W - 4} y={9} textAnchor="end" className="eg-axis">{hi.toFixed(2)}</text>
         <text x={W - 4} y={H - 2} textAnchor="end" className="eg-axis">{lo.toFixed(2)}</text>
@@ -128,9 +128,9 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
             <span>{n} شمعة</span>
         </div>
         <div className="eg-read">
-            <b>{r[0]}</b><span>O {r[1]}</span><span>H {r[2]}</span><span>L {r[3]}</span><span>C {r[4]}</span>
+            <b>{r[0]}</b><span>فتح {r[1]}</span><span>أعلى {r[2]}</span><span>أقل {r[3]}</span><span>إقفال {r[4]}</span>
             <span className={chgp >= 0 ? 'u' : 'd'}>{chgp >= 0 ? '+' : ''}{chgp.toFixed(1)}%</span>
-            <span>Vol {(r[5] / 1000).toFixed(0)}K</span><span>RSI {r[8]}</span>
+            <span>حجم {(r[5] / 1000).toFixed(0)} ألف سهم</span><span>زخم RSI {r[8]}</span>
             {sel != null && <button type="button" className="eg-x" onClick={() => setSel(null)}>×</button>}
         </div>
         {price}
