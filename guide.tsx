@@ -171,20 +171,62 @@ function fairCard(s: any, k: string, r: any) {
     <p className="gd-foot">مصادر: <a href="https://sis.gov.eg/en/media-center/news/egypt-s-central-bank-raises-key-interest-rates-by-1/" target="_blank" rel="noreferrer">فايدة البنك المركزي 20%</a> · <a href="https://economymiddleeast.com/news/egypts-october-inflation-eases-to-12-percent-as-monthly-rate-falls-to-0-6-percent-after-march-peak/" target="_blank" rel="noreferrer">تضخم أكتوبر 12%</a> · <a href="https://enterpriseam.com/egypt/2026/11/05/egx30-sheds-4-43-in-october-to-post-its-first-back-to-back-monthly-loss-of-2026/" target="_blank" rel="noreferrer">مضاعف السوق 17.36</a> · <a href="https://www.agbi.com/analysis/markets/2026/08/foreign-investors-return-as-egypt-stocks-hit-record-highs/" target="_blank" rel="noreferrer">مضاعف 10 في أغسطس</a> · {m.src}. مش نصيحة استثمار ولا سعر مستهدف.</p></div>;
 }
 
+
+const DEC: any = {
+  MASR: { up: ['مبيعات متعاقد عليها 45.4 مليار (+25%) وبكلوج إيراد 111 مليار لسه هيتسجل', 'شراء خزينة معتمد 18.15 مليون سهم'], down: ['ربح 9 شهور نزل 22.9% وهامش مجمل الربح من 66% لـ51.5%', 'قطاع عقاري: حساس لفايدة 20%'], flip: 'تحسن الهامش في الربع الجاي، أو تحصيلات المشروعات، أو اكتمال الشراء الفعلي للخزينة.' },
+  BONY: { up: ['إيجار +19% ومتكرر +129%', 'شراء خزينة لحد 4%'], down: ['السيولة والخصم الكبير عن الدفترية ممكن يفضل', 'ربح القوائم أغلبه إعادة تقييم مش كاش'], flip: 'نمو الإيجار المتكرر، أو تضييق الخصم عن الدفترية، أو تغير تقييم العقارات.' },
+  HRHO: { up: ['سمسرة وإدارة أصول والبنك أرباحهم قوية قبل الأقلية'], down: ['ربح الأم نزل لـ2,530 من 2,853 مليون', 'اضمحلال الأصول زاد لـ1,237 مليون', 'العائد على حقوق الملكية حوالي 9% أقل من فايدة الإيداع 20%'], flip: 'جودة أصول البنك والتمويل الاستهلاكي والمتناهي الصغر، وعودة العائد على حقوق الملكية فوق الفايدة.' },
+  UNIP: { up: ['مبيعات +13% (1,172 مقابل 1,037 مليون)'], down: ['السعر 0.300 أعلى من القيمة الدفترية 0.216 تقريبًا', 'الفوائد أكلت 88% من ربح التشغيل', 'صافي دين 526 مليون وكاش تشغيل سالب', ], flip: 'نزول الفايدة أو تخفيض الدين، أو تحول كاش التشغيل لموجب.' },
+  PHAR: { up: ['إيراد +3%'], down: ['ربح الأم -30%', 'كاش التشغيل سالب 171 مليون', 'تحفظ المراجع على القوائم المجمعة'], flip: 'نشر قوائم الشركة الشقيقة وزوال التحفظ، وعودة كاش التشغيل للموجب.' },
+  ORHD: { up: ['إيراد +35% وربح الأم 4.3 مليار', 'EPS الظاهر انخفض بسبب سهم المنحة مش الربح'], down: ['هامش مجمل الربح 27.5% من 32.2%', 'ديون 13 مليار والكاش الحر سالب بعد المشروعات', 'قطاع عقاري حساس للفايدة'], flip: 'تحصيلات المشروعات، وخفض الديون، وثبات الهامش.' },
+};
+
+function DecisionCard({ s, k }: { s: any; k: string }) {
+  const d = DEC[k]; const p = s.plan || {};
+  const a = (s.close / s.hi52 - 1) * 100;
+  return <div>
+    <p className="gd-lead">ملخص يساعدك تقرر بنفسك. مش توصية، ومفيش أمر بيع أو شراء.</p>
+    <div className="gd-it ok"><div className="gd-h"><span>اللي في صالح السهم</span></div>{d.up.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
+    <div className="gd-it no"><div className="gd-h"><span>اللي بيقلق</span></div>{d.down.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
+    <div className="gd-it mid"><div className="gd-h"><span>إيه اللي يغير الصورة</span></div><p>{d.flip}</p></div>
+    <div className="gd-it mid"><div className="gd-h"><span>أرقام السعر دلوقتي</span></div>
+      <p>السعر {f(s.close)} ويبعد {p1(a)} عن أعلى سعر في سنة. التذبذب اليومي المعتاد {p.atrpct}%، يعني خسارة يوم عادي حوالي {p.atrpct}% من قيمة المركز. السيولة حوالي {p.tv} مليون جنيه في اليوم{p.tv < 5 ? '، وده قليل: الدخول والخروج بكميات كبيرة صعب.' : '.'}</p></div>
+    <div className="gd-it mid"><div className="gd-h"><span>اسأل نفسك قبل أي قرار</span></div>
+      <p>• المدة: هتستنى أسابيع ولا شهور؟ الشارت مبني على أيام وأسابيع.</p>
+      <p>• أقصى خسارة تقبلها على السهم ده كام %؟ قارنها بالتذبذب فوق.</p>
+      <p>• السهم ده بيزود تركيزك في نفس القطاع؟ (مدينة مصر وبنيان وأوراسكوم كلهم عقارات.)</p>
+      <p>• بدائل: إيداع بفايدة 20% بدون مخاطرة. السهم لازم يعوضك أكتر منها.</p></div>
+    <p className="gd-foot">كل رقم هنا من نفس المصادر في تبويب السعر العادل. اللي لسه ناقص مكتوب هناك "لسه هيتم التحديث".</p>
+  </div>;
+}
+
+function DecSum({ s, k }: { s: any; k: string }) {
+  const d = DEC[k];
+  let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
+  if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.63 / 7.33 / 8.03 (مبدئي).';
+  else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق مبدئي ' + f(e * 6.67) + ' / ' + f(e * 10) + ' / ' + f(e * 17.36) + ' (لسه هيتم التحديث).'; } }
+  return <section className="dec-sum" aria-label="ملخص للقرار">
+    <div className="dec-row"><b>اللي بيحركه</b><span>{d.up[0]}{d.down[0] ? ' · ' + d.down[0] : ''}</span></div>
+    <div className="dec-row"><b>اللي يغير القراءة</b><span>{d.flip}</span></div>
+    <div className="dec-row"><b>لسه ناقص</b><span>{k === 'BONY' ? 'عدد الأسهم بعد 5 نوفمبر وحصة الأقلية' : k === 'PHAR' ? 'تحفظ المراجع وقوائم الشركة الشقيقة' : k === 'HRHO' ? 'عدد الأسهم بعد 30 سبتمبر وقيمة كل قطاع' : k === 'MASR' ? 'عدد الأسهم الدقيق وكاش المشروعات' : k === 'UNIP' ? 'توقع الفوائد والكاش' : 'تحركات رأس المال بعد 7 أكتوبر وكاش المشروعات'}</span></div>
+    <div className="dec-row"><b>السعر والنطاق</b><span>{rng}</span></div>
+  </section>;
+}
+
 export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
-  const [tab, setTab] = useState<'t' | 'f' | 'v'>('t');
+  const [tab, setTab] = useState<'t' | 'f' | 'v' | 'd'>('t');
   const tech = techItems(s);
   const fin = k === 'BONY' ? BONY_ITEMS : finItems(r);
   const items = tab === 't' ? tech : fin;
   const lead = tab === 't'
     ? 'قراءة للسعر والحجم بعد إقفال ' + s.date + '. بتوصف اللي حصل، مش بتتوقع، ومش أمر بيع أو شراء.'
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
-  const tb = (id: 't' | 'f' | 'v', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
-  return <section className="gd" aria-label="ملخص السهم">
+  const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
+  return <><DecSum s={s} k={k} /><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
-    <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}</div>
+    <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{tb('d', 'للقرار')}</div>
     <div className="gd-body">
-      {tab === 'v' ? fairCard(s, k, r) : <>
+      {tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? fairCard(s, k, r) : <>
         <p className="gd-lead">{lead}</p>
         {items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className="gd-h"><span>{it.label}</span><b dir="ltr">{it.value}</b></div>
@@ -195,5 +237,5 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
       </>}
       <p className="gd-foot">مش نصيحة استثمار. الشارت والتفاصيل الأعمق تحت.</p>
     </div>
-  </section>;
+  </section></>;
 }
