@@ -56,11 +56,6 @@ function techItems(s: any): Item[] {
     effect: s.volx < 0.7 ? 'التداول أقل بكتير من المعتاد، فأي حركة سعر ضعيفة الدلالة.' : s.volx > 1.5 ? 'نشاط أعلى من المعتاد. لو مع صعود فده أقوى، بس الحجم لوحده مش دليل إن اللي بيشتري مؤسسات.' : 'قريب من المعتاد، مفيش تأكيد خاص من الحجم.'
   });
   o.push({
-    label: 'قوة الاتجاه ADX', value: String(p.adx), tone: p.adx >= 25 ? 'ok' : 'mid',
-    mean: 'بيقيس وضوح الاتجاه من غير ما يقول صاعد أو هابط. فوق 25 اتجاه واضح.',
-    effect: p.adx >= 25 ? 'فيه اتجاه واضح فمؤشرات الاتجاه أوثق.' : 'السوق متردد، فإشارات المتوسطات ممكن تكون كاذبة أكتر.'
-  });
-  o.push({
     label: 'التذبذب اليومي ATR', value: p.atrpct + '%', tone: 'mid',
     mean: 'متوسط حركة السهم في اليوم من أعلى لأقل سعر تقريبًا.',
     effect: p.atrpct >= 4 ? 'التذبذب عالي: الوقف لازم يكون بعيد، فالخسارة المحتملة بتكبر لكل جنيه استثمار.' : 'تذبذب معتدل، المسافة بين الدخول والوقف أصغر.'
@@ -71,14 +66,6 @@ function techItems(s: any): Item[] {
       label: 'مقاومة ودعم (20 جلسة)', value: f(p.res) + ' / ' + f(p.sup), tone: 'mid',
       mean: 'أعلى سعر وأقل سعر في آخر 20 جلسة. المقاومة سقف قريب جرب السعر ما يعديهوش، والدعم أرضية جربها.',
       effect: 'المقاومة بتبعد ' + p1(dr) + ' عن السعر، والدعم ' + p1(ds) + '. كسر المقاومة بحجم أعلى إيجابي، وكسر الدعم سلبي.'
-    });
-  }
-  if (s.hi52 && s.lo52) {
-    const pos = ((s.close - s.lo52) / (s.hi52 - s.lo52)) * 100;
-    o.push({
-      label: 'مكانه في مدى السنة', value: pos.toFixed(0) + '%', tone: 'mid',
-      mean: 'صفر% عند أقل سعر في سنة (' + f(s.lo52) + ') و100% عند أعلى سعر (' + f(s.hi52) + ').',
-      effect: pos < 30 ? 'قريب من قاع السنة: يا إما فرصة ارتداد يا إما ضعف مستمر، لازم يتقري مع الأساسيات.' : pos > 70 ? 'قريب من قمة السنة: اللي اشترى بدري رابح، والدخول متأخر أخطر.' : 'في نص المدى تقريبًا.'
     });
   }
   o.push({
@@ -210,7 +197,7 @@ function DecisionCard({ s, k }: { s: any; k: string }) {
   const d = DEC[k]; const p = s.plan || {};
   const a = (s.close / s.hi52 - 1) * 100;
   return <div>
-    <p className="gd-lead">ملخص يساعدك تقرر بنفسك. مش توصية، ومفيش أمر بيع أو شراء.</p>
+    <p className="gd-lead">ملخص يساعدك تقرر بنفسك.</p>
     <div className="gd-it ok"><div className="gd-h"><span>اللي في صالح السهم</span></div>{d.up.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
     <div className="gd-it no"><div className="gd-h"><span>اللي بيقلق</span></div>{d.down.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
     <div className="gd-it mid"><div className="gd-h"><span>إيه اللي يغير الصورة</span></div><p>{d.flip}</p></div>
@@ -263,7 +250,7 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
   const fin = k === 'BONY' ? BONY_ITEMS : finItems(r);
   const items = tab === 't' ? tech : fin;
   const lead = tab === 't'
-    ? 'قراءة للسعر والحجم بعد إقفال ' + s.date + '. بتوصف اللي حصل، مش بتتوقع، ومش أمر بيع أو شراء.'
+    ? 'قراءة للسعر والحجم بعد إقفال ' + s.date + '. بتوصف اللي حصل.'
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
   const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
   return <><TrendVerdict s={s} /><DecSum s={s} k={k} /><section className="gd" aria-label="ملخص السهم">
@@ -279,7 +266,7 @@ export function StockGuide({ s, k, r }: { s: any; k: string; r: any }) {
         </div>)}
         {tab === 'f' && r && r.risk && <div className="gd-it mid"><div className="gd-h"><span>أهم تحذير في القوائم</span></div><p>{r.risk}</p></div>}
       </>}
-      <p className="gd-foot">مش نصيحة استثمار. الشارت والتفاصيل الأعمق تحت.</p>
+      <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
   </section></>;
 }
