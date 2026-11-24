@@ -96,6 +96,10 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
   const total = useQty ? rows.reduce((a, r) => a + r.h.quantity * r.s.close, 0) : null;
   const dayAmt = useQty ? rows.reduce((a, r) => a + r.h.quantity * (r.d as number), 0) : null;
   const dayPct = useQty && total !== null && dayAmt !== null && total - dayAmt > 0 ? 100 * dayAmt / (total - dayAmt) : wDay;
+  const hasCost = useQty && rows.every(r => Number.isFinite(r.h.averageCost) && r.h.averageCost > 0);
+  const cost = hasCost ? rows.reduce((a, r) => a + r.h.quantity * r.h.averageCost, 0) : null;
+  const costAmt = cost !== null && total !== null ? total - cost : null;
+  const costPct = cost !== null && cost > 0 && costAmt !== null ? 100 * costAmt / cost : null;
   const up = rows.filter(r => r.dp !== null && r.dp > 0).length;
   const down = rows.filter(r => r.dp !== null && r.dp < 0).length;
   const worst = rows.filter(r => r.dp !== null).sort((a, b) => (a.dp as number) - (b.dp as number))[0];
@@ -110,6 +114,13 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
           <div className={'hb-day ' + cls(dayPct)} dir="ltr">
             {dayAmt !== null && <span>{sgn(dayAmt, 0)}</span>}
             <span>{dayPct >= 0 ? '▲' : '▼'} {sgn(dayPct)}%</span>
+          </div>
+        )}
+        {costAmt !== null && costPct !== null && (
+          <div className={'hb-cost ' + cls(costAmt)} dir="ltr">
+            <small>عن التكلفة</small>
+            <span>{sgn(costAmt, 0)}</span>
+            <span>{costAmt >= 0 ? '▲' : '▼'} {sgn(costPct)}%</span>
           </div>
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
