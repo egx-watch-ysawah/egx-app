@@ -21,12 +21,14 @@ function path(vals: (number | null)[], x: (i: number) => number, y: (v: number) 
 export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t: Toggles; plan: Plan }) {
     const [zoom, setZoom] = React.useState<number | null>(null);
     const [off, setOff] = React.useState(0);
-    React.useEffect(() => { setZoom(null); setOff(0); }, [n0, rows.length]);
+    const [kind, setKind] = React.useState<'line' | 'candle'>('line');
+    React.useEffect(() => { setZoom(null); setOff(0); setSel(null); }, [n0, rows.length]);
     const n = Math.min(rows.length, zoom ?? n0);
     const offc = Math.round(Math.max(0, Math.min(off, rows.length - n)));
     const data = rows.slice(Math.max(0, rows.length - offc - n), rows.length - offc);
     const cnt = data.length;
     const [sel, setSel] = React.useState<number | null>(null);
+    const safeSel = sel == null ? null : Math.min(sel, cnt - 1);
     const x = (i: number) => PAD + (i + 0.5) * ((W - 2 * PAD) / cnt);
     const cw = Math.max(1.2, ((W - 2 * PAD) / cnt) * 0.6);
     const extra = t.plan ? [plan.entry, plan.stop, plan.trail] : [];
@@ -69,10 +71,11 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         ptrs.current.delete(e.pointerId); lastD.current = null;
     };
     const line = (v: number, cls: string, name: string) => <g key={name}><line x1={0} x2={W} y1={y(v)} y2={y(v)} className={cls} /><text x={4} y={y(v) - 3} className={'eg-tag ' + cls}>{name} {v >= 10 ? v.toFixed(2) : v.toFixed(3)}</text></g>;
-    const price = <svg viewBox={`0 0 ${W} ${H}`} className="eg-svg eg-touch eg-reveal" key={n + '-' + offc} role="img" aria-label="شارت الشموع" onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
+    const price = <svg viewBox={`0 0 ${W} ${H}`} className="eg-svg eg-touch" role="img" aria-label="شارت الشموع" onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
         <defs><linearGradient id="egg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#6ea8ff" stopOpacity=".12" /><stop offset="1" stopColor="#6ea8ff" stopOpacity="0" /></linearGradient></defs>
         {[0, 1, 2, 3].map(g => <line key={g} x1={0} x2={W} y1={10 + ((H - 20) * g) / 3} y2={10 + ((H - 20) * g) / 3} className="eg-grid" />)}
-        {data.map((r, i) => {
+        {kind === 'line' && <><path d={path(data.map(r => r[4]), x, y) + `L${x(cnt-1)},${H}L${x(0)},${H}Z`} fill="url(#egg)" /><path d={path(data.map(r => r[4]), x, y)} className="eg-price-line" fill="none" /></>}
+        {kind === 'candle' && data.map((r, i) => {
             const up = r[4] >= r[1];
             return <g key={i} className={up ? 'eg-cu' : 'eg-cd'}>
                 <line x1={x(i)} x2={x(i)} y1={y(r[2])} y2={y(r[3])} />
@@ -86,7 +89,7 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         {t.plan && line(plan.trail, 'eg-pt', 'وقف متحرك')}
         {t.plan && line(plan.entry, 'eg-pe', 'دخول')}
         {t.plan && line(plan.stop, 'eg-ps', 'وقف')}
-        {sel != null && <line x1={x(sel)} x2={x(sel)} y1={0} y2={H} className="eg-cross" />}
+        {safeSel != null && <g><line x1={x(safeSel)} x2={x(safeSel)} y1={0} y2={H} className="eg-cross" /><line x1={0} x2={W} y1={y(data[safeSel][4])} y2={y(data[safeSel][4])} className="eg-cross" /><circle cx={x(safeSel)} cy={y(data[safeSel][4])} r="4" fill="#6ea8ff" stroke="#fff" /></g>}
         <text x={W - 4} y={9} textAnchor="end" className="eg-axis">{hi.toFixed(2)}</text>
         <text x={W - 4} y={H - 2} textAnchor="end" className="eg-axis">{lo.toFixed(2)}</text>
     </svg>;
@@ -111,17 +114,18 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         <path d={path(data.map(r => r[10]), x, my)} className="eg-lsig" fill="none" />
     </svg>;
 
-    const r = data[sel ?? cnt - 1];
+    const r = data[safeSel ?? cnt - 1];
     const chgp = r[1] ? ((r[4] / r[1] - 1) * 100) : 0;
     const step = Math.max(2, Math.round(n / 4));
     const btn = (label: string, aria: string, fn: () => void, dis = false) => <button type="button" aria-label={aria} className="eg-zb" disabled={dis} onClick={() => { setSel(null); fn(); }}>{label}</button>;
     return <div className="eg-chart" dir="ltr">
+        <div className="eg-kind" dir="rtl" role="group" aria-label="شكل الشارت">{(['line','candle'] as const).map(v => <button key={v} type="button" aria-pressed={kind === v} className={'eg-chip' + (kind === v ? ' on' : '')} onClick={() => setKind(v)}>{v === 'line' ? 'خط' : 'شموع'}</button>)}<button type="button" className="eg-chip" onClick={() => { setZoom(null); setOff(0); setSel(null); }}>إعادة الضبط</button></div>
         <div className="eg-zoom">
             {btn('−', 'تصغير', () => setZoom(Math.min(rows.length, Math.round(n * 1.5))), n >= rows.length)}
             {btn('+', 'تكبير', () => setZoom(Math.max(15, Math.round(n / 1.5))), n <= 15)}
             {btn('◀', 'للماضي', () => setOff(offc + step), offc + n >= rows.length)}
             {btn('▶', 'للأحدث', () => setOff(Math.max(0, offc - step)), offc === 0)}
-            <span>{n} يوم</span>
+            <span>{n} شمعة</span>
         </div>
         <div className="eg-read">
             <b>{r[0]}</b><span>O {r[1]}</span><span>H {r[2]}</span><span>L {r[3]}</span><span>C {r[4]}</span>
@@ -130,6 +134,7 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
             {sel != null && <button type="button" className="eg-x" onClick={() => setSel(null)}>×</button>}
         </div>
         {price}
+        <label className="eg-scrub" dir="rtl">حرّك على الأيام <b dir="ltr">{r[0]} · {r[4]}</b><input aria-label="اختار شمعة من الشارت" type="range" min="0" max={cnt - 1} value={safeSel ?? cnt - 1} onChange={e => setSel(Number(e.target.value))} /></label>
         {t.vol && <><div className="eg-sub">Volume</div>{vol}</>}
         {t.rsi && <><div className="eg-sub">RSI 14</div>{rsi}</>}
         {t.macd && <><div className="eg-sub">MACD</div>{macd}</>}
