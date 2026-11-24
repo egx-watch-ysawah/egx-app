@@ -1,4 +1,5 @@
 import React from 'react';
+import { createChart, CandlestickSeries, LineSeries, HistogramSeries, ColorType, CrosshairMode } from 'lightweight-charts';
 
 type Row = [string, number, number, number, number, number, number | null, number | null, number, number, number, number | null, number | null];
 export type Toggles = { sma: boolean; vol: boolean; rsi: boolean; macd: boolean; plan: boolean; bb: boolean };
@@ -18,7 +19,7 @@ function path(vals: (number | null)[], x: (i: number) => number, y: (v: number) 
     return d;
 }
 
-export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t: Toggles; plan: Plan }) {
+function LegacyStockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t: Toggles; plan: Plan }) {
     const [zoom, setZoom] = React.useState<number | null>(null);
     const [off, setOff] = React.useState(0);
     const [kind, setKind] = React.useState<'line' | 'candle'>('line');
@@ -139,6 +140,40 @@ export function StockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t
         {t.rsi && <><div className="eg-sub">RSI 14</div>{rsi}</>}
         {t.macd && <><div className="eg-sub">MACD</div>{macd}</>}
     </div>;
+}
+
+export function StockChart({rows,n,t,plan}:{rows:Row[];n:number;t:Toggles;plan:Plan}) {
+ const host=React.useRef<HTMLDivElement>(null), api=React.useRef<any>(null);
+ const [kind,setKind]=React.useState<'candle'|'line'>('candle');
+ const [picked,setPicked]=React.useState<Row|null>(null);
+ const [failed,setFailed]=React.useState(false);
+ React.useEffect(()=>{
+  if(!host.current||!rows.length)return;
+  let chart:any; setPicked(null);setFailed(false);
+  try {
+   const panels=Number(t.vol)+Number(t.rsi)+Number(t.macd);
+   chart=createChart(host.current,{autoSize:true,height:320+panels*95,layout:{background:{type:ColorType.Solid,color:'#0e1520'},textColor:'#9aa9bd',fontSize:10,attributionLogo:true,panes:{separatorColor:'#273242',enableResize:false}},grid:{vertLines:{color:'#1a2635'},horzLines:{color:'#1a2635'}},crosshair:{mode:CrosshairMode.Normal},rightPriceScale:{borderColor:'#273242',minimumWidth:48},timeScale:{borderColor:'#273242',timeVisible:false,rightOffset:3},handleScroll:{vertTouchDrag:false,horzTouchDrag:true},localization:{locale:'en-GB'}});
+   api.current=chart;
+   const price=chart.addSeries(kind==='candle'?CandlestickSeries:LineSeries,kind==='candle'?{upColor:'#26a69a',downColor:'#ef5350',wickUpColor:'#26a69a',wickDownColor:'#ef5350',borderVisible:false,priceFormat:{type:'price',precision:3,minMove:.001}}:{color:'#73b2ff',lineWidth:2,priceFormat:{type:'price',precision:3,minMove:.001}});
+   price.setData(rows.map(r=>kind==='candle'?{time:r[0],open:r[1],high:r[2],low:r[3],close:r[4]}:{time:r[0],value:r[4]}));
+   const addLine=(col:number,color:string,pane=0)=>{const l=chart.addSeries(LineSeries,{color,lineWidth:1,lastValueVisible:false,priceLineVisible:false},pane);l.setData(rows.filter(r=>r[col]!=null&&Number.isFinite(r[col])).map(r=>({time:r[0],value:r[col]})));return l;};
+   if(t.sma){addLine(6,'#e6b65d');addLine(7,'#9b8fe0');}
+   if(t.bb){addLine(11,'#557b98');addLine(12,'#557b98');}
+   if(t.plan)[[plan.entry,'#75baff','دخول مشروط'],[plan.stop,'#ff6b7c','وقف بعد الدخول'],[plan.trail,'#d4ad69','وقف متحرك']].forEach(([priceValue,color,title])=>{if(Number.isFinite(priceValue))price.createPriceLine({price:priceValue,color,lineWidth:1,lineStyle:2,axisLabelVisible:true,title});});
+   let pane=0;
+   if(t.vol){const v=chart.addSeries(HistogramSeries,{priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false},++pane);v.setData(rows.map(r=>({time:r[0],value:r[5],color:r[4]>=r[1]?'#26a69a88':'#ef535088'})));}
+   if(t.rsi){const l=addLine(8,'#bc9aff',++pane);[30,70].forEach(p=>l.createPriceLine({price:p,color:'#647083',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:''}));}
+   if(t.macd){++pane;const h=chart.addSeries(HistogramSeries,{lastValueVisible:false,priceLineVisible:false},pane);h.setData(rows.map(r=>({time:r[0],value:r[9]-r[10],color:r[9]>=r[10]?'#26a69a88':'#ef535088'})));addLine(9,'#74adf5',pane);addLine(10,'#e0b665',pane);}
+   chart.panes().forEach((p:any,i:number)=>p.setHeight(i===0?300:95));
+   chart.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});
+   chart.subscribeCrosshairMove((e:any)=>{if(e.time){const r=rows.find(r=>r[0]===e.time);if(r)setPicked(r);}});
+  }catch(e){console.error('Chart unavailable',e);setFailed(true);}
+  return()=>{api.current=null;chart?.remove();};
+ },[rows,n,t.sma,t.vol,t.rsi,t.macd,t.plan,t.bb,kind,plan]);
+ if(!rows.length)return <p role="status">مفيش شموع متاحة للفترة دي.</p>;
+ if(failed)return <><p role="status">الرسم التفاعلي مش متاح هنا. عرض بديل بنفس البيانات.</p><LegacyStockChart rows={rows} n={n} t={t} plan={plan}/></>;
+ const r=picked??rows[rows.length-1];
+ return <div className="eg-chart pro-chart" dir="ltr"><div className="eg-kind" dir="rtl" role="group" aria-label="شكل الشارت">{(['candle','line'] as const).map(k=><button className={'eg-chip'+(kind===k?' on':'')} aria-pressed={kind===k} key={k} onClick={()=>setKind(k)}>{k==='candle'?'شموع':'خط'}</button>)}<button className="eg-chip" onClick={()=>{api.current?.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});setPicked(null);}}>إعادة الضبط</button></div><div className="eg-read" aria-live="polite"><b>{r[0]}</b><span>O {r[1]}</span><span>H {r[2]}</span><span>L {r[3]}</span><span>C {r[4]}</span><span>Vol {r[5].toLocaleString('en-GB')}</span></div><div ref={host} role="img" aria-label="شارت أسعار تفاعلي" style={{width:'100%',minHeight:320}}/><label className="eg-scrub" dir="rtl">اختار جلسة للتفاصيل<input aria-label="اختار شمعة من الشارت" type="range" min="0" max={rows.length-1} value={picked?rows.indexOf(picked):rows.length-1} onChange={e=>{const index=Number(e.target.value),r=rows[index];setPicked(r);}}/></label><p className="eg-note" dir="rtl">اسحب للماضي · كبّر بإصبعين · دوس مطولًا لقراءة شمعة. اسحب خارج الشارت لتكمّل الصفحة. الحجم والمؤشرات تظهر في مساحات مستقلة لما تختارها.</p><small className="chart-credit">TradingView Lightweight Charts™ · Copyright (c) 2025 TradingView, Inc. <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView</a></small></div>;
 }
 
 export function Spark({ vals, up }: { vals: number[]; up: boolean }) {
