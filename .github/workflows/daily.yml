@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: "20"
       - name: Refresh data (keeps old data if the free source fails)
+        if: github.event_name != 'push'
         run: |
           pip install pandas numpy
           touch data.old.json; [ -f data.json ] && cp data.json data.old.json || true
