@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
+import { CASH_EGP } from './cash';
 
 const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
 const sgn = (v: number, d = 2) => (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v).toFixed(d);
@@ -119,12 +120,13 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
   const wDay = wSum > 0 ? rows.reduce((a, r) => a + (r.dp !== null ? r.h.weight * r.dp : 0), 0) / wSum : null;
   const total = useQty ? rows.reduce((a, r) => a + r.h.quantity * r.s.close, 0) : null;
   const dayAmt = useQty ? rows.reduce((a, r) => a + r.h.quantity * (r.d as number), 0) : null;
-  const dayPct = useQty && total !== null && dayAmt !== null && total - dayAmt > 0 ? 100 * dayAmt / (total - dayAmt) : wDay;
+  const dayPct = useQty && total !== null && dayAmt !== null && total - dayAmt > 0 ? 100 * dayAmt / (total + CASH_EGP - dayAmt) : wDay;
   const hasCost = useQty && rows.every(r => Number.isFinite(r.h.averageCost) && r.h.averageCost > 0);
   const cost = hasCost ? rows.reduce((a, r) => a + r.h.quantity * r.h.averageCost, 0) : null;
   const costAmt = cost !== null && total !== null ? total - cost : null;
   const costPct = cost !== null && cost > 0 && costAmt !== null ? 100 * costAmt / cost : null;
-  const shownTotal = useCount(total !== null ? total : 0);
+  const grand = total !== null ? total + CASH_EGP : null;
+  const shownTotal = useCount(grand !== null ? grand : 0);
   const up = rows.filter(r => r.dp !== null && r.dp > 0).length;
   const down = rows.filter(r => r.dp !== null && r.dp < 0).length;
   const worst = rows.filter(r => r.dp !== null).sort((a, b) => (a.dp as number) - (b.dp as number))[0];
@@ -147,6 +149,9 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
             <span>{sgn(costAmt, 0)}</span>
             <span>{costAmt >= 0 ? '▲' : '▼'} {sgn(costPct)}%</span>
           </div>
+        )}
+        {useQty && CASH_EGP > 0 && (
+          <div className="hb-cash"><small>كاش</small><b dir="ltr">{CASH_EGP.toLocaleString('en-US', { maximumFractionDigits: 2 })}</b></div>
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
         <small className="hb-stamp"><i className="fd" role="img" aria-label={fresh} title={fresh} />{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر حتى 20 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
