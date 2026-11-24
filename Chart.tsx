@@ -142,9 +142,9 @@ function LegacyStockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t:
     </div>;
 }
 
-export function StockChart({rows,n,t,plan}:{rows:Row[];n:number;t:Toggles;plan:Plan}) {
+export function StockChart({rows,n,t,plan,closeOnly=false}:{rows:Row[];n:number;t:Toggles;plan:Plan;closeOnly?:boolean}) {
  const host=React.useRef<HTMLDivElement>(null), api=React.useRef<any>(null);
- const [kind,setKind]=React.useState<'candle'|'line'>('candle');
+ const [kind,setKind]=React.useState<'candle'|'line'>(closeOnly?'line':'candle');
  const [picked,setPicked]=React.useState<Row|null>(null);
  const [failed,setFailed]=React.useState(false);
  React.useEffect(()=>{
@@ -171,9 +171,10 @@ export function StockChart({rows,n,t,plan}:{rows:Row[];n:number;t:Toggles;plan:P
   return()=>{api.current=null;chart?.remove();};
  },[rows,n,t.sma,t.vol,t.rsi,t.macd,t.plan,t.bb,kind,plan]);
  if(!rows.length)return <p role="status">مفيش شموع متاحة للفترة دي.</p>;
+ if(failed&&closeOnly)return <p role="status">الرسم غير متاح مؤقتًا؛ أرقام الإقفال متاحة في المحفظة.</p>;
  if(failed)return <><p role="status">الرسم التفاعلي مش متاح هنا. عرض بديل بنفس البيانات.</p><LegacyStockChart rows={rows} n={n} t={t} plan={plan}/></>;
  const r=picked??rows[rows.length-1];
- return <div className="eg-chart pro-chart" dir="ltr"><div className="eg-kind" dir="rtl" role="group" aria-label="شكل الشارت">{(['candle','line'] as const).map(k=><button className={'eg-chip'+(kind===k?' on':'')} aria-pressed={kind===k} key={k} onClick={()=>setKind(k)}>{k==='candle'?'شموع':'خط'}</button>)}<button className="eg-chip" onClick={()=>{api.current?.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});setPicked(null);}}>إعادة الضبط</button></div><div className="eg-read" aria-live="polite"><b>{r[0]}</b><span>O {r[1]}</span><span>H {r[2]}</span><span>L {r[3]}</span><span>C {r[4]}</span><span>Vol {r[5].toLocaleString('en-GB')}</span></div><div ref={host} role="img" aria-label="شارت أسعار تفاعلي" style={{width:'100%',minHeight:320}}/><label className="eg-scrub" dir="rtl">اختار جلسة للتفاصيل<input aria-label="اختار شمعة من الشارت" type="range" min="0" max={rows.length-1} value={picked?rows.indexOf(picked):rows.length-1} onChange={e=>{const index=Number(e.target.value),r=rows[index];setPicked(r);}}/></label><p className="eg-note" dir="rtl">اسحب للماضي · كبّر بإصبعين · دوس مطولًا لقراءة شمعة. اسحب خارج الشارت لتكمّل الصفحة. الحجم والمؤشرات تظهر في مساحات مستقلة لما تختارها.</p><small className="chart-credit">TradingView Lightweight Charts™ · Copyright (c) 2025 TradingView, Inc. <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView</a></small></div>;
+ return <div className="eg-chart pro-chart" dir="ltr"><div className="eg-kind" dir="rtl" role="group" aria-label="شكل الشارت">{(closeOnly?['line'] as const:['candle','line'] as const).map(k=><button className={'eg-chip'+(kind===k?' on':'')} aria-pressed={kind===k} key={k} onClick={()=>setKind(k)}>{k==='candle'?'شموع':'خط'}</button>)}<button className="eg-chip" onClick={()=>{api.current?.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});setPicked(null);}}>إعادة الضبط</button></div><div className="eg-read" aria-live="polite"><b>{r[0]}</b>{!closeOnly&&<><span>O {r[1]}</span><span>H {r[2]}</span><span>L {r[3]}</span></>}<span>C {r[4]}</span><span>Vol {r[5].toLocaleString('en-GB')}</span></div><div ref={host} role="img" aria-label="شارت أسعار تفاعلي" style={{width:'100%',minHeight:320}}/><label className="eg-scrub" dir="rtl">اختار جلسة للتفاصيل<input aria-label="اختار شمعة من الشارت" type="range" min="0" max={rows.length-1} value={picked?rows.indexOf(picked):rows.length-1} onChange={e=>{const index=Number(e.target.value),r=rows[index];setPicked(r);}}/></label><p className="eg-note" dir="rtl">اسحب للماضي · كبّر بإصبعين · دوس مطولًا لقراءة شمعة. اسحب خارج الشارت لتكمّل الصفحة. الحجم والمؤشرات تظهر في مساحات مستقلة لما تختارها.</p><small className="chart-credit">TradingView Lightweight Charts™ · Copyright (c) 2025 TradingView, Inc. <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView</a></small></div>;
 }
 
 export function Spark({ vals, up }: { vals: number[]; up: boolean }) {
