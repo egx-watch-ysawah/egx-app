@@ -4,6 +4,7 @@ import { DATA } from './data';import { StockGuide } from './guide';
 import { StockChart, Spark, Ring } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { Ex, X } from './explain';
+import { HomeBoard } from './homeboard';
 
 
 const KEYS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
@@ -384,7 +385,7 @@ function Portfolio() {
         <Det title="حدود الحفظ المحلي"><p className="eg-note">الحفظ مش مشفّر ولا محمي بحساب. اللي يستخدم نفس المتصفح يقدر يشوفه. مسح بيانات الموقع يضيّعه. كلمة الفتح مش محفوظة هنا، لكن البيانات بعد الفتح محفوظة من غير تشفير في المتصفح.</p></Det>
         {err&&<p role="alert" className="eg-note eg-warn">{err}</p>}
         {!!holdings.length&&<>
-            <PortfolioVisual holdings={holdings}/>
+            <HomeBoard holdings={holdings}/><PortfolioVisual holdings={holdings}/>
             <p className="eg-note">افتح أي سهم من الكروت لعرض الشارت ودراسة الشركة. الفني والمالي منفصلين، ونطاق القيمة العادلة لسه غير مكتمل.</p>
             <Det title="مقارنة المتوسطات لكل الأسهم"><HoldingComparison holdings={holdings}/></Det>
             <section className="portfolio-overview" aria-label="خريطة المحفظة"><div className="evidence-head"><h3>خريطة المحفظة</h3><small>أوزان لقطة 24 نوفمبر، مش لحظية</small></div><div className="holding-signals"><div><small>عدد الأسهم</small><b><L>{holdings.length}</L></b></div><div><small>أكبر سهمين من جزء الأسهم</small><b><L>{topTwoWeight.toFixed(2)}%</L></b></div></div><div className="portfolio-map" role="img" aria-label="توزيع الأوزان المسجلة">{[...holdings].sort((a,b)=>b.weight-a.weight).map((h,i)=><span key={h.symbol} style={{width:h.weight+'%',background:['#4386ac','#4aa899','#9288bc','#b59053','#7b99b3','#77885a'][i%6]}} title={h.symbol+' '+h.weight.toFixed(2)+'%'}/>)}</div><div className="portfolio-legend">{[...holdings].sort((a,b)=>b.weight-a.weight).map(h=><span key={h.symbol}><L>{h.symbol} · {h.weight.toFixed(2)}%</L></span>)}</div><p className="eg-note">ده يوضح التركّز وقت اللقطة: حركة أكبر الأوزان أثرها أعلى، لكن تساوي الأوزان مش معناه تنويع المخاطر. الأرقام لا تشمل الكاش أو أي أصول تانية.</p><div className="portfolio-sort"><label htmlFor="holding-sort">رتّب الكروت حسب</label><select id="holding-sort" value={holdingSort} onChange={e=>setHoldingSort(e.target.value)}><option value="weight">أكبر وزن في اللقطة</option><option value="gap">الفرق عن التكلفة، وصف فقط</option></select></div><p className="eg-note">الترتيب لتسهيل المقارنة، مش ترتيب شراء أو بيع. فرق التكلفة مش مقياس لجودة السهم.</p></section>
