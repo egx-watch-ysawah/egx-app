@@ -1,0 +1,29 @@
+/* round 6: settings hide + look closer to the user's reference apps (styling only) */
+.eg-priv{display:none!important}
+html[data-set=on] .eg-priv{display:block!important;order:-1}
+html[data-set=on] .eg-priv[open]{display:block!important}
+.set-btn{position:absolute;inset-inline-start:16px;top:128px;z-index:5;inline-size:42px;block-size:42px;border-radius:50%;display:grid;place-items:center;color:#9fb0c8;background:#0f1828;border:1px solid #ffffff22;-webkit-tap-highlight-color:transparent}
+.set-btn[aria-pressed=true]{color:#5eead4;border-color:#5eead480}
+.set-btn:active{transform:scale(.92)}
+/* page header tighter, like the wealth screen */
+.eg-pad>.eg-h{font-size:18px;color:#9fb0c8;font-weight:600;margin:4px 0 0;text-align:center}
+.hb{margin-block-start:0}
+.hb-top{padding-block:6px 10px}
+/* stat tiles: bigger radius, icon-less clean cards */
+.hb-tiles>div{border-radius:20px;background:#0f1828;border:1px solid #ffffff17;padding:12px 12px 11px}
+.hb-tiles small{font-size:12px}
+/* section heading + clean rows */
+.hb-lbl{display:flex;justify-content:space-between;margin:18px 4px 4px;font-size:12px}
+.hb-list{border-block-start:0}
+.hb-row{padding-block:15px;border-block-end:1px solid #ffffff12;gap:14px}
+.hb-row:last-child{border-block-end:0}
+.hb-ico{inline-size:46px;block-size:46px;border-radius:14px;background:#ffffff0a;border:1px solid #ffffff14;font-size:14px;letter-spacing:.2px}
+.hb-ico.hb-up,.hb-ico.hb-down{background:#ffffff0a;border-color:#ffffff14}
+.hb-ico.hb-up{color:#34d399}.hb-ico.hb-down{color:#fb7185}
+.hb-row[data-dir]{border-inline-start-width:0;padding-inline-start:4px}
+.hb-row[data-dir=up] .hb-ico,.hb-row[data-dir=down] .hb-ico{border-style:solid}
+.hb-val b{font-size:19px;font-weight:700}
+.hb-val em{font-size:13px;font-weight:600}
+.hb-tiles small{white-space:nowrap}@media(max-width:380px){.hb-tiles small{font-size:11px}}
+.hb-name{justify-items:start}.hb-name b{text-align:start}
+html[data-set=on] .eg-h+.eg-priv{margin-block-start:40px}
