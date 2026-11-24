@@ -25,7 +25,7 @@ function mapColor([r, g, b, a]: RGBA, shadow: boolean): RGBA {
     nl = Math.min(0.97, Math.max(0.05, 1 - l));
     if (l > 0.85 && a < 0.5 && !shadow) nl = 0.1; // white overlays become dark overlays
     ns = Math.min(s, 0.3);
-  } else if (l > 0.4) {
+  } else if (l > 0.36) {
     nl = Math.min(l, 0.37);
   } else {
     nl = 0.97 - l * 0.45;
@@ -104,9 +104,7 @@ function build() {
   css += `
 html[data-theme=light] .eg-chart canvas{filter:invert(1) hue-rotate(180deg)}
 html[data-theme=light] .set-theme{color:#334155}
-html[data-theme=light] .hb-ico.hb-up{background:linear-gradient(145deg,#10b981,#047857)!important;color:#fff!important}
-html[data-theme=light] .hb-ico.hb-down{background:linear-gradient(145deg,#f43f5e,#be123c)!important;color:#fff!important}
-html[data-theme=light] .gd-tab.on{color:#fff!important;background:linear-gradient(135deg,#2563eb,#0891b2)!important}
+html[data-theme=light] .gd-tab.on{color:#fff!important;background:#0f766e!important}
 html[data-theme=light] .set-inst{color:#fff!important}`;
   let el = document.getElementById(ID) as HTMLStyleElement | null;
   if (!el) { el = document.createElement('style'); el.id = ID; document.head.appendChild(el); }
