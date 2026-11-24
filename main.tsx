@@ -11,8 +11,10 @@ import './ui3.css';
 import './ui4.css';
 import './ui5.css';
 import './ui6.css';
+import './ui7.css';
 import { Ticker } from './ticker';
 import { AppBar } from './appbar';
 import { SettingsGear } from './settings';
+import { Motion } from './motion';
 
-createRoot(document.getElementById('root')!).render(<FileRouter><App /><Ticker /><AppBar /><SettingsGear /></FileRouter>);
+createRoot(document.getElementById('root')!).render(<FileRouter><App /><Ticker /><AppBar /><SettingsGear /><Motion /></FileRouter>);
