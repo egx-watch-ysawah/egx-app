@@ -58,11 +58,12 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
         <small className="hb-stamp">آخر تحديث {stamp()} · إقفال يومي، مش أسعار لحظية</small>
       </div>
       <div className="hb-tiles">
-        <div><small>صاعد</small><b className="hb-up">{up}</b></div>
-        <div><small>هابط</small><b className="hb-down">{down}</b></div>
+        <div><small>صاعد اليوم</small><b className="hb-up">{up}</b></div>
+        <div><small>هابط اليوم</small><b className="hb-down">{down}</b></div>
         <div><small>الأقوى</small><b dir="ltr">{best ? best.h.symbol : '-'}</b>{best && <em className="hb-up" dir="ltr">{sgn(best.dp as number)}%</em>}</div>
         <div><small>الأضعف</small><b dir="ltr">{worst ? worst.h.symbol : '-'}</b>{worst && <em className="hb-down" dir="ltr">{sgn(worst.dp as number)}%</em>}</div>
       </div>
+      <p className="hb-lbl">النسبة = تغيّر اليوم عن إقفال أمس</p>
       <div className="hb-list">
         {rows.map(({ h, s, d, dp }) => (
           <Link key={h.symbol} to={'/' + h.symbol.toLowerCase()} className="hb-row">
