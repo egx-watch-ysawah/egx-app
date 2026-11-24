@@ -6,6 +6,8 @@ import './style.css';
 import './polish.css';
 import './native.css';
 import './ui2.css';
+import './live.css';
+import { Ticker } from './ticker';
 import { AppBar } from './appbar';
 
-createRoot(document.getElementById('root')!).render(<FileRouter><App /><AppBar /></FileRouter>);
+createRoot(document.getElementById('root')!).render(<FileRouter><App /><Ticker /><AppBar /></FileRouter>);
