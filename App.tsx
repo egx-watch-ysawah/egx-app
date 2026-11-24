@@ -115,13 +115,26 @@ function Stock({ k }: { k: string }) {
     const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
     const v = verdict(s);
     return <div className="eg-pad">
-        <Link className="eg-back" to="/">← كل الأسهم</Link>
+        <Link className="eg-back" to="/">← محفظتي</Link>
         <div className="eg-in">
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2>
             <PartialHistory s={s}/>
+            {s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
             {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
                 <div className={'eg-verdict eg-v-' + v.c}><div><b>{v.t}</b><p>{reason(s)}</p></div></div>
+                <Det title="الشارت" open>
+                    <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
+                <div className="eg-chips">{RANGES[tf].map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
+                <p className="eg-note">الشمعة = {tf === 'D' ? 'يوم تداول' : tf === 'W' ? 'أسبوع تداول' : 'شهر تداول'}. مفيش شارت لحظي (دقائق/ساعات) لأن البيانات المجانية آخر اليوم بس. اختيار الأسبوعي أو الشهري بيغيّر الرسم ومؤشراته فقط؛ التقييم والسيناريو فوق بيفضلوا على اليومي.</p>
+                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} />
+
+                <div className="eg-chips">{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
+                <Det title="افهم الشارت والألوان">
+                    <p>الخط الفاتح = سعر الإقفال. لو اخترت شموع: الجسم بين الفتح والإقفال، والخيط بين أعلى وأقل سعر. الأخضر إقفال أعلى من الفتح، والأحمر العكس.</p>
+                    <p>البرتقالي متوسط 50 شمعة، والأزرق متوسط 200 شمعة على الإطار المختار. خطوط الخطة اختيارية: أزرق دخول مشروط، أحمر وقف بعد الدخول، أخضر وقف متحرك مرجعي، مش هدف ربح.</p>
+                    <p>الأرقام أعلى الشارت تخص الفترة اللي اخترتها: فتح، أعلى، أقل، إقفال، والتغير من الفتح للإقفال. الحجم عدد الأسهم المتداولة. RSI مقياس زخم من 0 لـ100، مش نسبة ربح متوقعة.</p>
+                </Det>
                 <Evidence s={s} />
                 <Det title="الفريم ومدة المتابعة">
                     <p>التقييم والسيناريو مبنيين على شمعة يومية بعد إقفال الجلسة. ده أقرب لمتابعة موجة على أيام أو أسابيع (سوينج)، مش سكالبينج أو شراء وبيع جوه نفس الجلسة، ومش تقييم استثمار طويل الأجل.</p>
@@ -136,18 +149,7 @@ function Stock({ k }: { k: string }) {
                     <p className="eg-note">مرجع متغير يوميًا، مش وقف محفوظ لمركزك: <L>{fmt(s.plan.trail)}</L>. بيتحسب من أعلى إقفال في 22 جلسة ناقص 3 أضعاف ATR اليومي، وممكن ينزل مع إعادة الحساب. التطبيق لا ينفّذ خروجًا.</p>
                 </Det>
                 {s.plan.tv < 1 && <p className="eg-note eg-warn">السيولة ضعيفة (حوالي {s.plan.tv} مليون جنيه في اليوم).</p>}
-                <Det title="الشارت" open>
-                    <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
-                <div className="eg-chips">{RANGES[tf].map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
-                <p className="eg-note">الشمعة = {tf === 'D' ? 'يوم تداول' : tf === 'W' ? 'أسبوع تداول' : 'شهر تداول'}. مفيش شارت لحظي (دقائق/ساعات) لأن البيانات المجانية آخر اليوم بس. اختيار الأسبوعي أو الشهري بيغيّر الرسم ومؤشراته فقط؛ التقييم والسيناريو فوق بيفضلوا على اليومي.</p>
-                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} />
 
-                <div className="eg-chips">{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
-                <Det title="افهم الشارت والألوان">
-                    <p>الخط الفاتح = سعر الإقفال. لو اخترت شموع: الجسم بين الفتح والإقفال، والخيط بين أعلى وأقل سعر. الأخضر إقفال أعلى من الفتح، والأحمر العكس.</p>
-                    <p>البرتقالي متوسط 50 شمعة، والأزرق متوسط 200 شمعة على الإطار المختار. خطوط الخطة اختيارية: أزرق دخول مشروط، أحمر وقف بعد الدخول، أخضر وقف متحرك مرجعي، مش هدف ربح.</p>
-                    <p>الأرقام أعلى الشارت تخص الفترة اللي اخترتها: فتح، أعلى، أقل، إقفال، والتغير من الفتح للإقفال. الحجم عدد الأسهم المتداولة. RSI مقياس زخم من 0 لـ100، مش نسبة ربح متوقعة.</p>
-                </Det>
                 <p className="eg-note">المس الشارت لاختيار يوم، أو حرّك المؤشر تحته. اسحب الشارت للماضي وكبّر بإصبعين. الأزرق متوسط 200 شمعة والبرتقالي متوسط 50 شمعة على الفريم المختار.</p>
 
                 
@@ -297,7 +299,7 @@ function averagePosition(s:any,n:number) {
 }
 function PortfolioVisual({holdings}:{holdings:any[]}) {
     const [selected,setSelected]=useState<string|null>(null);
-    return <section className="pv-board" aria-label="لوحة المحفظة"><div className="pv-title"><h3>محفظتك في لقطة</h3><span>إقفالات يومية · مش مباشر</span></div><p className="pv-label">الرسوم: آخر 50 جلسة · النسبة: تغيّر 5 جلسات</p><div className="pv-grid">{[...holdings].sort((a,b)=>b.weight-a.weight).map(h=>{const s=DATA.stocks[h.symbol],bars=s.bars||[],change=s.chg5;return <button type="button" key={h.symbol} className={'pv-card '+(selected===h.symbol?'pv-active':'')} onClick={()=>setSelected(selected===h.symbol?null:h.symbol)} aria-expanded={selected===h.symbol}><div className="pv-top"><b dir="ltr">{h.symbol}</b><span>{h.weight.toFixed(1)}%<small> وزن اللقطة</small></span></div><div className="pv-price"><b dir="ltr">{fmt(s.close)}</b><small>ج.م</small><span className={change>=0?'pv-up':'pv-down'} dir="ltr">{change>=0?'↗':'↘'} {Number.isFinite(change)?pc(change):'—'}</span></div><div className="pv-spark">{bars.length>1?<Spark vals={bars.slice(-50).map((r:any)=>r[4])} up={change>=0}/>:<small>تاريخ قصير</small>}</div><div className="pv-foot"><span>{s.partial?'نافذة جزئية':averagePosition(s,50)==='فوق'?'فوق متوسط 50':'تحت متوسط 50'}</span><small dir="ltr">{s.date||'—'}</small></div></button>;})}</div>{selected&&(()=>{const s=DATA.stocks[selected];return <div className="pv-expanded"><b><L>{selected}</L> · مؤشرات وصفية</b><div className="holding-signals"><div><small>السعر / متوسط 50</small><b>{averagePosition(s,50)}</b></div><div><small>السعر / متوسط 200</small><b>{averagePosition(s,200)}</b></div><div><small>الحجم / السابق 20</small><b>{Number.isFinite(s.volx)?Math.round(s.volx*100)+'% من المعتاد':'غير متاح'}</b></div><div><small>أداء 5 جلسات</small><b dir="ltr">{Number.isFinite(s.chg5)?pc(s.chg5):'غير متاح'}</b></div></div><button type="button" className="eg-chip" onClick={()=>{const el=document.getElementById('held-'+selected);el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}>التفاصيل والتكلفة ←</button><Det title="يعني إيه الحجم من المعتاد؟"><p className="eg-note">بنقارن عدد أسهم آخر جلسة بمتوسط الـ20 جلسة اللي قبلها. <L>0.3× = 30%</L> من المعتاد، يعني حوالي التلت. <L>0.5×</L> يعني النص، و<L>0.2×</L> يعني الخُمس. ده نشاط تداول أقل، مش دليل لوحده على اهتمام الناس أو اتجاه السعر. الأرقام تخص تاريخ الإقفال، مش النهارده مباشر.</p></Det></div>;})()}</section>;
+    return <section className="pv-board" aria-label="لوحة المحفظة"><div className="pv-title"><h3>محفظتك في لقطة</h3><span>إقفالات يومية · مش مباشر</span></div><p className="pv-label">الرسوم: آخر 50 جلسة · النسبة: تغيّر 5 جلسات</p><div className="pv-grid">{[...holdings].sort((a,b)=>b.weight-a.weight).map(h=>{const s=DATA.stocks[h.symbol],bars=s.bars||[],change=s.chg5;return <button type="button" key={h.symbol} className={'pv-card '+(selected===h.symbol?'pv-active':'')} onClick={()=>setSelected(selected===h.symbol?null:h.symbol)} aria-expanded={selected===h.symbol}><div className="pv-top"><b dir="ltr">{h.symbol}</b><span>{h.weight.toFixed(1)}%<small> وزن اللقطة</small></span></div><div className="pv-price"><b dir="ltr">{fmt(s.close)}</b><small>ج.م</small><span className={change>=0?'pv-up':'pv-down'} dir="ltr">{change>=0?'↗':'↘'} {Number.isFinite(change)?pc(change):'—'}</span></div><div className="pv-spark">{bars.length>1?<Spark vals={bars.slice(-50).map((r:any)=>r[4])} up={change>=0}/>:<small>تاريخ قصير</small>}</div><div className="pv-foot"><span>{s.partial?'نافذة جزئية':averagePosition(s,50)==='فوق'?'فوق متوسط 50':'تحت متوسط 50'}</span><small dir="ltr">{s.date||'—'}</small></div></button>;})}</div>{selected&&(()=>{const s=DATA.stocks[selected];return <div className="pv-expanded"><b><L>{selected}</L> · مؤشرات وصفية</b><Link className="desk-open" to={"/"+selected.toLowerCase()}>افتح صفحة السهم والشارت ←</Link><div className="holding-signals"><div><small>السعر / متوسط 50</small><b>{averagePosition(s,50)}</b></div><div><small>السعر / متوسط 200</small><b>{averagePosition(s,200)}</b></div><div><small>الحجم / السابق 20</small><b>{Number.isFinite(s.volx)?Math.round(s.volx*100)+'% من المعتاد':'غير متاح'}</b></div><div><small>أداء 5 جلسات</small><b dir="ltr">{Number.isFinite(s.chg5)?pc(s.chg5):'غير متاح'}</b></div></div><button type="button" className="eg-chip" onClick={()=>{const el=document.getElementById('held-'+selected);el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}>التفاصيل والتكلفة ←</button><Det title="يعني إيه الحجم من المعتاد؟"><p className="eg-note">بنقارن عدد أسهم آخر جلسة بمتوسط الـ20 جلسة اللي قبلها. <L>0.3× = 30%</L> من المعتاد، يعني حوالي التلت. <L>0.5×</L> يعني النص، و<L>0.2×</L> يعني الخُمس. ده نشاط تداول أقل، مش دليل لوحده على اهتمام الناس أو اتجاه السعر. الأرقام تخص تاريخ الإقفال، مش النهارده مباشر.</p></Det></div>;})()}</section>;
 }
 function HoldingComparison({holdings}:{holdings:any[]}) {
     return <section className="portfolio-overview" aria-label="مقارنة الاتجاه" id="holding-comparison" tabIndex={-1}><h3>الاتجاه في نظرة</h3><p className="eg-note">السعر فين من متوسطه؟ مقارنة وصفية، مش ترتيب أفضلية. مرتبة بالرمز. اضغط الرمز لفتح تفاصيله.</p><table className="holding-compare"><thead><tr><th>السهم / الإقفال</th><th>متوسط<br/>50 جلسة</th><th>متوسط<br/>200 جلسة</th><th>الحجم<br/>× المعتاد</th></tr></thead><tbody>{[...holdings].sort((a,b)=>a.symbol.localeCompare(b.symbol)).map(h=>{const s=DATA.stocks[h.symbol];const age=calendarAge(s.date);return <tr key={h.symbol}><th scope="row"><button type="button" onClick={()=>{const el=document.getElementById('held-'+h.symbol);el?.scrollIntoView({block:'start'});el?.focus({preventScroll:true});}}><L>{h.symbol}</L></button><small><L>{s.date||'غير متاح'}</L></small>{(age===null||age<0||age>3)&&<small>راجع التاريخ</small>}</th><td>{averagePosition(s,50)}</td><td>{averagePosition(s,200)}</td><td>{(s.ok||s.partial)&&s.bars?.length>=21&&Number.isFinite(s.volx)?<L>{s.volx.toFixed(1)}×</L>:'غير متاح'}</td></tr>;})}</tbody></table><p className="eg-note">كل سهم مقارن بمتوسطاته هو، مش بسهم تاني. الحجم مقارنة بمتوسط 20 جلسة سابقة للسهم نفسه. فوق أو تحت مش تقييم لجودة الشركة، والصفوف مش أدلة مستقلة. الناقص ظاهر كغير متاح.</p></section>;
@@ -395,6 +397,6 @@ function Info() {
 export function App() {
     return <FileCard lang="ar" dir="rtl">
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">محفظتي · بيانات يومية</span></div>
-        <Portfolio />
+        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<Stock key={k} k={k}/>}/>)}<Route path="*" element={<Portfolio/>}/></Routes>
     </FileCard>;
-}
+        }
