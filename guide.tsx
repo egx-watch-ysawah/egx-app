@@ -420,7 +420,8 @@ function TrendVerdict({ s }: { s: any }) {
   const v = s.votes || {}; const cl = (s.bars || []).map((b: any) => b[4]);
   const sma = (n: number) => cl.length >= n ? cl.slice(-n).reduce((a: number, b: number) => a + b, 0) / n : null;
   const s50 = sma(50), s200 = sma(200);
-  const up = v.mid && v.macd, down = !v.mid && !v.macd;
+  const P0 = cl.length ? cl[cl.length - 1] : null;
+  const up = (P0 != null && s50 && s200) ? (P0 > s50 && P0 > s200) : (v.mid && v.macd), down = (P0 != null && s50 && s200) ? (P0 < s50 && P0 < s200) : (!v.mid && !v.macd);
   const kind = 'side';
   const title = up ? 'وضع السعر حاليًا: فوق المتوسطات' : down ? 'وضع السعر حاليًا: تحت المتوسطات' : 'وضع السعر حاليًا: مختلط، بين المتوسطات';
   const why = [v.mid ? 'فوق متوسط 50 جلسة' : 'تحت متوسط 50 جلسة', v.macd ? 'اتجاه السرعة (MACD) أعلى من خطه' : 'اتجاه السرعة (MACD) أقل من خطه', 'قوة الحركة (RSI) ' + s.rsi, (v.trend ? 'فوق متوسط 200' : 'تحت متوسط 200') + (s.historyCount && s.historyCount < 400 ? ' (من ' + s.historyCount + ' جلسة متاحة)' : ''), 'حجم آخر جلسة ' + s.volx + ' من متوسط آخر 20 جلسة (' + ((x: number) => x >= 1.5 ? 'أعلى من المعتاد' : x < 0.7 ? 'أقل من المعتاد' : 'قريب من المعتاد')(s.volx) + ')'].join(' · ');
