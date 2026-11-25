@@ -108,7 +108,7 @@ const FIN_DICT: [string, string, string][] = [
 ['صافي الفوائد', 'اللي البنك كسبه من فوايد القروض والأوراق المالية ناقص فوايد الودائع اللي بيدفعها. هو أهم مصدر دخل للبنك.', 'لو بيزيد، البنك بيكسب أكتر من نشاطه الأساسي. ولو هامش الفايدة بينزل، النمو لازم يجي من حجم أكبر.'],
 ['الدخل من غير الفوائد', 'رسوم وعمولات وخدمات وأرباح تعاملات، مش فوايد.', 'دخل أقل تقلبًا لما بيبقى رسوم وعمولات، وأكتر تقلبًا لو من أرباح تعاملات.'],
 ['مصروفات غير الفوائد', 'مرتبات وتكنولوجيا وإيجارات وكل مصاريف تشغيل البنك.', 'لو زادت أسرع من الدخل، الكفاءة بتقل.'],
-['حقوق المساهمين', 'اللي يفضل للمساهمين بالقيمة الدفترية بعد ما البنك يسدد كل التزاماته.', 'بنقسمها على عدد الأسهم عشان نعرف القيمة الدفترية للسهم ونقارن بيها السعر.'],
+['حقوق المساهمين', 'اللي يفضل للمساهمين بالقيمة الدفترية بعد سداد كل الالتزامات.', 'بنقسمها على عدد الأسهم عشان نعرف القيمة الدفترية للسهم ونقارن بيها السعر.'],
 ['ودائع العملاء', 'فلوس الناس والشركات عند البنك. هي مصدر تمويل القروض.', 'ودائع بتزيد من حسابات جارية وتوفير (رخيصة) بتحسّن هامش الفايدة.'],
 ['العائد على متوسط حقوق الملكية', 'البنك بيكسب كام في المية سنويًا من فلوس المساهمين.', 'نقارنه بالعائد المطلوب (فايدة الإيداع + علاوة مخاطرة). العالي مش مضمون يستمر.'],
 ['كفاية رأس المال', 'نسبة رأس مال البنك لمخاطر أصوله. زي وسادة الأمان.', 'المطلوب من المركزي أقل بكتير، فالنسبة العالية بتدي البنك مساحة للنمو والتوزيعات.'],
@@ -408,8 +408,8 @@ function DecisionCard({ s, k }: { s: any; k: string }) {
     <div className="gd-it mid"><div className="gd-h"><span>اسأل نفسك قبل أي قرار</span></div>
       <p>• المدة: هتستنى أسابيع ولا شهور؟ الشارت مبني على أيام وأسابيع.</p>
       <p>• أقصى خسارة تقبلها على السهم ده كام %؟ قارنها بالتذبذب فوق.</p>
-      <p>• السهم ده بيزود تركيزك في نفس القطاع؟ (مدينة مصر وبنيان وأوراسكوم كلهم عقارات.)</p>
-      <p>• بدائل: إيداع بفايدة 20% بدون مخاطرة. السهم لازم يعوضك أكتر منها.</p></div>
+      <p>• السهم ده بيزود تركيزك في نفس القطاع؟ (مدينة مصر وبنيان وأوراسكوم كلهم عقارات.)</p></div>
+
   </div>;
 }
 
@@ -455,7 +455,7 @@ export function FinCards({ k, r }: { k: string; r: any }) {
   </div></div>;
 }
 
-export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode }: { s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode }) {
+export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart }: { s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
   const [tab, setTab] = useState<'t' | 'f' | 'v' | 'd'>('t');
   const tech = techItems(s);
   const fin = light ? [] : k === 'BONY' ? BONY_ITEMS : finItems(r, k);
@@ -464,11 +464,12 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode }: { s
     ? 'قراءة للسعر والحجم بعد إقفال ' + s.date + '. بتوصف اللي حصل.'
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
   const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
-  return <><TrendVerdict s={s} />{!light && <DecSum s={s} k={k} />}<section className="gd" aria-label="ملخص السهم">
+  const nop = k === 'VLMRA';
+  return <>{!nop && <TrendVerdict s={s} />}{!light && <DecSum s={s} k={k} />}<section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
-    <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && tb('d', 'للقرار')}</div>
+    <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'القرار')}</div>
     <div className="gd-body">
-      {light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? fairCard(s, k, r) : <>
+      {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? fairCard(s, k, r) : <>
         <p className="gd-sum">{tab === 'f' ? finSummary(k, r) : techSummary(s)}<small>{tab === 'f' ? 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.' : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className="gd-h"><span>{it.label}</span><b dir="ltr">{it.value}</b></div>
@@ -478,7 +479,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode }: { s
       </>}
       <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
-  </section></>;
+  </section>{tab === 't' && !nop ? chart : null}</>;
 }
 
 const EXTRA_REC: any = {
