@@ -10,7 +10,7 @@ const STALE_AN = 'أهداف المحللين من صفحات stockanalysis وغ
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
 const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور×4/3: الأساس مش متطابق.';
-export const tidy = (x: any) => String(x == null ? '' : x).replace(/([.،؛:])(\s*[.،؛:])+/g, (m: string) => { const c = m.replace(/[\s]/g, ''); return c[c.length - 1]; }).replace(/(^|\s)([\u0600-\u06FF]{3,})\s+\2(?=\s|[.،؛:]|$)/g, '$1$2').replace(/ {2,}/g, ' ');
+export const tidy = (x: any) => String(x == null ? '' : x).replace(/القيمة العادلة/g, 'السعر العادل').replace(/قيمة عادلة/g, 'سعر عادل').replace(/([.،؛:])(\s*[.،؛:])+/g, (m: string) => { const c = m.replace(/[\s]/g, ''); return c[c.length - 1]; }).replace(/(^|\s)([\u0600-\u06FF]{3,})\s+\2(?=\s|[.،؛:]|$)/g, '$1$2').replace(/ {2,}/g, ' ');
 const isPeer = (m: any) => m && (m.method_key === 'PE' || m.method_key === 'PB' || /شركات شبهها|شركات مشابهة|أقران/.test(String(m.name_ar || m.label_ar || '')));
 const Cell = ({ l, v, t }: { l: string; v: any; t?: string }) => <div><small>{l}</small>{num(v) ? <b dir="ltr">{fx(v)}</b> : t ? <b className="mid">{t}</b> : <b dir="ltr">—</b>}</div>;
 const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l="الوسط" v={b} t={m && m.midpoint_text_ar} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
@@ -126,7 +126,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const an = s.analyst_reference || {};
   const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || /مكتوبة مرة واحدة/.test(v) || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{tidy(v)}</div>; };
   return <>
-    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{s.aggregate_headline_ar ? (/^\s*(مفيش|غير)/.test(s.aggregate_headline_ar) ? 'مفيش رقم مجمّع' : 'تقديري') : (/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري')}</b><small>{s.aggregate_headline_ar ? <>{tidy(s.aggregate_headline_ar)} {tidy(s.aggregate_have_ar)}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
+    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{s.badge_ar ? s.badge_ar : s.aggregate_headline_ar ? (/^\s*(مفيش|غير)/.test(s.aggregate_headline_ar) ? 'مفيش رقم مجمّع' : 'تقديري') : (/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري')}</b><small>{s.aggregate_headline_ar ? <>{tidy(s.aggregate_headline_ar)} {tidy(s.aggregate_have_ar)}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
     <div className="fv6"><style>{CSS}</style>
       {s.glossary_ar && Object.keys(s.glossary_ar).length ? <Fold t="معنى الكلمات">{Object.entries(s.glossary_ar).map(([a, b]: any) => <div className="na" key={a}><b>{a}:</b> {String(b)}</div>)}</Fold> : null}
       <Fold t="طرق السعر العادل ومصادرها">
