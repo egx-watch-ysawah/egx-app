@@ -84,3 +84,12 @@ export function StudyMeta({ code }: { code: string }) {
     </ul>
   </Det>;
 }
+
+// Honest freshness note: "delayed up to 20 minutes" only when the snapshot really is that recent.
+export function stampNote(iso?: string): string {
+  const t = iso ? Date.parse(iso) : NaN;
+  if (!Number.isFinite(t)) return 'مش لحظي';
+  if ((Date.now() - t) / 60000 <= 25) return 'متأخر حتى 20 دقيقة، مش لحظي';
+  const h = Number(new Date(t).toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', hour12: false }));
+  return h < 10 ? 'قبل فتح السوق (10:00): آخر لقطة متاحة، مش لحظي' : 'آخر لقطة متاحة، أقدم من 20 دقيقة، مش لحظي';
+}
