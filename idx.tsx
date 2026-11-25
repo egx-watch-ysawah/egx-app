@@ -9,6 +9,7 @@ import { ScenarioBlock, TeamBlock, StudyMeta, Glossary, stampNote } from './scen
 import { useClientStock } from './clientidx';
 import { OtherFacts, OtherLight } from './others';
 import { NewsBlock } from './news';
+import { useStudy, StudyFin, StudyFair } from './studyrest';
 import { StockGuide, OnTab, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -176,6 +177,8 @@ export function IdxStock() {
   const s = s1 || cl.s;
   const err = !!err1 && cl.done && !cl.s;
   const [fund] = useJson('fundamentals.json');
+  const [fundR] = useJson('fundamentals_rest.json');
+  const study = useStudy(code);
   const [ix0] = useJson('idx/index.json');
   const sf = useStarta();
   const ix = React.useMemo(() => overlay(ix0, sf), [ix0, sf]);
@@ -190,7 +193,7 @@ export function IdxStock() {
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
   if (err) return <OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
-  const f = fund && fund.stocks && fund.stocks[code];
+  const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
         <div className="eg-rowlab">مدة الشمعة</div><div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
         <div className="eg-rowlab">الفترة المعروضة</div><div className="eg-chips">{RANGES[tf].filter(([, b]) => b <= trows.length).concat([['المتاح كله', trows.length]] as [string, number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
@@ -202,7 +205,7 @@ export function IdxStock() {
     <div className="eg-in">
       <h2 className="eg-h ix-top">{s.name} <span dir="ltr">({code})</span></h2>
       <p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</p>
-      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={<AutoFin f={f} />} fair={<AutoFair f={f} close={s.close} />} chart={chartNode} />
+      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} />
       <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>
       <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>
       
