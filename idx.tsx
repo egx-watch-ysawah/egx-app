@@ -3,6 +3,7 @@ import { Link, useParams } from './shim';
 import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { NoteCard, SourcesBar } from './srcs';
+import { ScenarioBlock, TeamBlock, StudyMeta } from './scen';
 import { StockGuide, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -145,8 +146,8 @@ export function IdxStock() {
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
         <div className="eg-rowlab">مدة الشمعة</div><div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
         <div className="eg-rowlab">الفترة المعروضة</div><div className="eg-chips">{RANGES[tf].filter(([, b]) => b <= trows.length).concat([['المتاح كله', trows.length]] as [string, number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
-        <StockChart key={code + tf} rows={trows} n={n} t={t} plan={{ entry: 0, stop: 0, target: 0, trail: 0 }} />
-        <div className="eg-chips">{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
+        <StockChart key={code + tf} rows={trows} n={n} t={t} plan={s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? s.plan : { entry: 0, stop: 0, target: 0, trail: 0 }} />
+        <div className="eg-chips">{s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? tg('plan', 'مستويات السيناريو') : null}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
       </Det>;
   return <div className="eg-pad">
     <Link className="eg-back" to={back}>← {back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
@@ -156,6 +157,9 @@ export function IdxStock() {
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={<AutoFin f={f} />} fair={<AutoFair f={f} close={s.close} />} chart={chartNode} />
       {reviewed ? null : <NoteCard code={code} />}
       
+      {code === 'VLMRA' ? null : <ScenarioBlock s={s} />}
+      <TeamBlock code={code} />
+      {reviewed ? <StudyMeta code={code} /> : null}
       <SourcesBar code={code} reviewed={reviewed} />
     </div>
   </div>;
