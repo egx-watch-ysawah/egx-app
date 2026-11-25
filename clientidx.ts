@@ -52,7 +52,7 @@ export function buildStock(code: string, name: string, raw: any[]): Built {
   const strength = Math.trunc(Object.keys(votes).reduce((a, k) => a + w[k] * (votes as any)[k], 0) + (fire.length ? 10 : 0));
   let mode: string, entry: number;
   if (P > ema20 * 1.005) { mode = 'pullback'; entry = ema20; } else { mode = 'breakout'; entry = res; }
-  const stop = entry - 2.5 * atr, target = entry + 3 * atr, trail = Math.max(...C.slice(-22)) - 3 * atr;
+  const stop = entry - 2.5 * atr, target = entry + 3 * atr, trail = Math.max(...C.slice(-20)) - 3 * atr;
   const tv = med(C.slice(-60).map((c, i) => c * V[n - 60 + i] ));
   const ext = (P - C[n - 21]) / atr; const sizepct = r(Math.min(25, 1 / Math.abs(stop / entry - 1)), 1);
   const plan = { trail: r(trail, 4), tv: r(tv / 1e6, 1), ext: r(ext, 1), sizepct, mode, entry: r(entry, 4), stop: r(stop, 4), target: r(target, 4), atr: r(atr, 4), atrpct: r(atr / P * 100, 1), entry_pct: r((entry / P - 1) * 100, 1), stop_pct: r((stop / entry - 1) * 100, 1), target_pct: r((target / entry - 1) * 100, 1), res: r(res, 4), sup: r(sup, 4), ema20: r(ema20, 4), strength };
