@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-25T12:11:04+02:00",
+ "as_of": "2026-11-25T12:40:30+02:00",
  "items": [
   {
    "code": "ORAS",
@@ -117,6 +117,24 @@
    "published_at": "2026-11-25T11:00:00+02:00",
    "status": "reported",
    "note": "خبر صحفي عن قرار الرقابة المالية، لسه مش مقارن بالإفصاح الرسمي"
+  },
+  {
+   "code": "DGTZ",
+   "title": "البورصة تلزم ديجيتايز للاستثمار والتقنية بسداد 40 ألف جنيه لمخالفة قواعد القيد",
+   "source": "جريدة المال",
+   "url": "https://news.google.com/rss/articles/CBMimANBVV95cUxQS3NqNnZuUU9SRTRUTy1DSDkzY1ZGdEl4UjhZVWNNa1YwN3NqUTZRX3JSbUFwaEpWYTN5bUVPcEwyOERaSzRlWEYtRzZTMGdZV3lfc2U5RUNPQU9NdEVPcm01dXBSMW5PdzQ5UlBvVkw2WV90WHpYekRKSC02ajJCVFBsMzdBZE9uYWlvSG9jMV92X0FCb3JZb2VnUF9OaF9zczRWSnFNaHlRMGZXN01qX1JCZ0tJTDhTVnRrYk1EbU5MZHpiU2M1S2JWT3JWdGRob0xjRVd0T3NGZnA2UWl3clZIZHktMUZBd19oOHhWTXFMYVk0cmpNcWtORi05ZDUwV2hDaHdFS01aamp5VzZ0WlJfZTNPV3hva0NTTmZRXzhyRm40cGtqS25manAwZE1HS2tuNXB5S0ZXb21CWlhhN1FqaTd3TmZZSE9obXozYnF1SzdaWGdRd0ZxTGw1UkZJQ1MzcGNBNHhtcW1xdll2RkVLd3RPdnM5MUFxLVFiTThYVWw4TXVRSnhLTHdQS1kyelYxcmVER2g?oc=5",
+   "published_at": "2026-11-25T12:37:44+02:00",
+   "status": "reported",
+   "note": "خبر صحفي، مش مقارن بقرار البورصة الرسمي"
+  },
+  {
+   "code": "PHGC",
+   "title": "البورصة تلزم بريميم هيلثكير جروب بسداد 40 ألف جنيه لمخالفة قواعد القيد",
+   "source": "جريدة المال",
+   "url": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxQc0pIMWJRS0FNWFpfSnlMX3U0OHA2Z2wwelFtMFJDZ1lodEQ4NnphN21DaGhMMXU3OERKUnRaUXhCU1hTVUx3X2VKbE1BX0hRNURsX29ZRjRRMkZVcnByWm9FTHpaamZEMjVaOUxYdllBZDNIYW5VSGQ1SWQwNnk3ZExVV1VLeWxsb09PRWYwVnk4NXBZUVgtUDkzUWdlM2xRRU0yUTdKZmRubHFJTS03dW9zakJ3NGNGVmg3R1RDb0lJWFpLMmhBcjd3UkgxVktWTTExVGpYa0M0MEl1UXNfYmxnVEJzMzFybUl6Q3Y3cHRiWm5JaFVYN2pRSXZmVVpYNFRPLXNzOU9xQWtlZHdDRTBvVjkzQjVLbFo2b3FZR3hvWWNyTnBtT1EtWUJnZkFUaU1XNWtZQ0psdU9CUnF5YUxYdDJZZU56WjNPUUgwWHVUY25hU3JFZQ?oc=5",
+   "published_at": "2026-11-25T12:33:40+02:00",
+   "status": "reported",
+   "note": "خبر صحفي، مش مقارن بقرار البورصة الرسمي"
   }
  ]
 }
