@@ -31,7 +31,7 @@ const CSS = `
 .gd-sum small{display:block;margin-top:4px;color:#9aa6bd;font-size:12.5px;font-weight:400}
 .gd-det{margin:4px 0 10px}.gd-det>summary{cursor:pointer;list-style:none;padding:10px 12px;border:1px solid #263249;border-radius:10px;background:#0a0e17;color:#7fb2ff;font-weight:700;font-size:14px}
 .gd-det>summary::-webkit-details-marker{display:none}.gd-det>summary::after{content:' +'}.gd-det[open]>summary::after{content:' −'}
-.gd-det[open]>summary{margin-bottom:10px}
+.gd-det[open]>summary{margin-bottom:10px}.gd-det>summary{box-sizing:border-box;min-height:44px}
 .gd-foot{margin:6px 0 0;color:#6f7b92;font-size:12.5px;line-height:1.7}
 `;
 
