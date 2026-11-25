@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 // Sourced fair price and experimental targets for the six holdings. Data-only: studies_rest/studies_rest/fair_value_sourced_six.json is written by the content agent. Market data only.
 export const SIX = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
 let cache: Promise<any> | null = null;
-const load = () => cache || (cache = fetch('studies_rest/studies_rest/fair_value_sourced_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
+const load = () => cache || (cache = fetch('studies_rest/studies_rest/fair_value_sourced_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(noCodes).catch(() => null));
+// Display-only: the content files name the two scenarios T1/T3 (and the removed T2); readers see words, not codes.
+const noCodes: any = (x: any) => typeof x === 'string' ? x.replace(/\bT1\b/g, 'سيناريو 1').replace(/\bT3\b/g, 'سيناريو 2').replace(/\bT2\b/g, 'الطريقة التالتة') : Array.isArray(x) ? x.map(noCodes) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, noCodes(v)])) : x;
+const STALE_AN = 'أهداف المحللين من صفحات stockanalysis وغالبًا محسوبة على أسعار أقدم من سعر النهارده، فنسبة الفرق عن السعر الحالي مش دقيقة.';
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
 const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور×4/3: الأساس مش متطابق.';
@@ -17,6 +20,7 @@ const CSS = `
 .fv6 .q{margin:10px 0 2px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#5eead4}
 .fv6 .tg{font-size:11.5px;font-weight:400;border:1px solid #6b5b2a;color:#f5c26b;border-radius:10px;padding:2px 8px;white-space:nowrap}
 .fv6 .big{font-size:24px;font-weight:700;color:#fff;margin:2px 0}
+.fv6 .vv2{display:flex;gap:8px;margin:4px 0}.fv6 .vv2 div{flex:1;background:#101827;border-radius:10px;text-align:center;padding:6px 2px}.fv6 .vv2 small{display:block;color:#8b97ad;font-size:11.5px}.fv6 .vv2 b{color:#fff;font-size:22px}
 .fv6 .ex{font-size:13px;line-height:1.8;color:#b6c0d2;margin:2px 0 6px}
 .fv6 .mm{background:#0a0e17;border:1px solid #1b2538;border-radius:10px;padding:9px;margin:8px 0;font-size:13px;line-height:1.8;color:#d5dbe7}
 .fv6 .mm h5{margin:0 0 4px;font-size:14px;color:#fff}
@@ -63,7 +67,7 @@ export function SourcedFair({ k }: { k: string }) {
     </Fold>
     <hr />
     <div className="q"><span>السعر المستهدف</span><span className="tg">تجريبي · {day}</span></div>
-    {vs.length ? <div className="big">{rangeOf(vs)}</div> : <div className="big">غير متوفر</div>}
+    {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {t.key === 'T1' ? '1' : t.key === 'T3' ? '2' : String(t.key).slice(1)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
     <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
     {d.targets_rule_ar ? <p className="nt">{d.targets_rule_ar}</p> : null}
     {bt ? <p className="nt">{bt}</p> : null}
@@ -79,9 +83,9 @@ export function SourcedFair({ k }: { k: string }) {
         <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
         <div className="na">{t.basis_status}</div>
         {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
-        {num(t.value) && t.backtest_line ? <div className="na">{t.backtest_line}</div> : null}</div>)}
+        {num(t.value) && t.backtest_line && t.backtest_line !== bt ? <div className="na">{t.backtest_line}</div> : null}</div>)}
       {an.avg != null
-        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><A u={an.source} /></div>
+        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
         : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
     </Fold>
     {d.peer_dates_note_ar ? <p className="nt">{d.peer_dates_note_ar}</p> : null}
@@ -93,7 +97,7 @@ export function SourcedFair({ k }: { k: string }) {
 
 // Financial-tab valuation block for the six holdings. Data-only: studies_rest/studies_rest/financial_tab_wording_six.json is written by the content agent.
 let cacheF: Promise<any> | null = null;
-const loadF = () => cacheF || (cacheF = fetch('studies_rest/studies_rest/financial_tab_wording_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
+const loadF = () => cacheF || (cacheF = fetch('studies_rest/studies_rest/financial_tab_wording_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(noCodes).catch(() => null));
 const rename = (t: string) => String(t || '').replace(/القيمة العادلة/g, 'السعر العادل');
 export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const [d, setD] = useState<any>(undefined);
@@ -102,6 +106,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const s = d && d.stocks && d.stocks[k];
   if (!s) return <div className={bony ? 'bf-value' : 'fin-value'}><span>السعر العادل</span><b>غير متوفر</b><small>مقدرتش أحمّل النص دلوقتي.</small></div>;
   const an = s.analyst_reference || {};
+  const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{v}</div>; };
   return <>
     <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري'}</b><small>{rename(s.summary)} {rename(s.small)}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
     <div className="fv6"><style>{CSS}</style>
@@ -134,12 +139,12 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           <div className="ours"><b>من عندنا:</b> {t.ours}</div>
           <div className="na">{t.note}</div>
           {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
-          {num(t.value) && t.backtest_line ? <div className="na">{t.backtest_line}</div> : null}</div>)}
+          {num(t.value) ? once(t.backtest_line) : null}</div>)}
         {an.avg != null
-          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><A u={an.source} /></div>
+          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
           : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
-        {s.backtest_line ? <div className="na">{s.backtest_line}</div> : null}
-        <div className="na">{s.backtest_note}</div>
+        {once(s.backtest_line)}
+        {once(s.backtest_note)}
         <div className="na">المصادر: {(s.sources || []).map((u: string) => <A key={u} u={u} />)}</div>
       </Fold>
     </div>
