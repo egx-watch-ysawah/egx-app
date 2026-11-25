@@ -7,7 +7,7 @@ import { Link } from './shim';
 import { DATA } from './data';
 import { CASH_EGP } from './cash';
 
-const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const fmt = (v: number) => (v >= 1 ? v.toFixed(2) : v.toFixed(3));
 const sgn = (v: number, d = 2) => (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v).toFixed(d);
 const money = (v: number) => Math.round(v).toLocaleString('en-US');
 
