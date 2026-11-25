@@ -16,7 +16,7 @@ const KEYS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
 const RULE_AR: Record<string, string> = {
     'RSI<30 (oversold bounce)': 'RSI نزل تحت 30 (احتمال ارتداد)',
     'MACD cross up': 'تقاطع MACD لأعلى والسعر فوق متوسط 200',
-    '20d breakout + volume x1.5': 'اختراق أعلى سعر 20 يوم بحجم 1.5 ضعف',
+    '20d breakout + volume x1.5': 'إقفال أعلى من أعلى إقفال في 20 جلسة قبله، بحجم 1.5 ضعف',
     'SMA50 cross above SMA200': 'متوسط 50 قطع متوسط 200 لأعلى',
 };
 const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
@@ -51,7 +51,7 @@ function Det({ title, children, open }: { title: string; children: React.ReactNo
 
 function Price({ v }: { v: number }) { return <span className="eg-price" dir="ltr">{fmt(v)}</span>; }
 
-function w20(s: any): { hp: number | null; lp: number | null } { const b = (s.bars || []).slice(-21, -1); return b.length === 20 ? { hp: Math.max(...b.map((x: any) => x[2])), lp: Math.min(...b.map((x: any) => x[3])) } : { hp: null, lp: null }; }
+function w20(s: any): { hp: number | null; lp: number | null; hc: number | null; lc: number | null } { const b = (s.bars || []).slice(-21, -1); return b.length === 20 ? { hp: Math.max(...b.map((x: any) => x[2])), lp: Math.min(...b.map((x: any) => x[3])), hc: Math.max(...b.map((x: any) => x[4])), lc: Math.min(...b.map((x: any) => x[4])) } : { hp: null, lp: null, hc: null, lc: null }; }
 function why(s: any): { ok: boolean | null; t: string }[] {
     const v = s.votes, p = s.plan, o: { ok: boolean | null; t: string }[] = [];
     o.push({ ok: !!v.trend, t: v.trend ? 'السعر فوق متوسط 200 يوم: الاتجاه الطويل صاعد.' : 'السعر تحت متوسط 200 يوم: الاتجاه الطويل لسه نازل أو ضعيف.' });
@@ -194,8 +194,8 @@ function Stock({ k }: { k: string }) {
                     <div className="eg-m"><span>التذبذب اليومي</span><b dir="ltr">{s.plan.atrpct}%</b><i>الحركة المعتادة في اليوم (متوسط آخر 14 جلسة). بنحسب منها المستوى الافتراضي.</i></div>
                     <div className="eg-m"><span>قوة الاتجاه ADX</span><b dir="ltr">{s.plan.adx}</b><i>{s.plan.adx >= 25 ? ('حركة قوية نسبيًا (ADX بيقيس القوة مش الاتجاه).') : 'فوق 25 تبقى الحركة قوية. دلوقتي مفيش قوة واضحة.'}</i></div>
                     <div className="eg-m"><span>مكانه في بولينجر</span><b dir="ltr">{s.plan.bbpos}%</b><i>0% عند الحد الأدنى للنطاق المعتاد و100% عند الأعلى. تحت 20% يعني الخُمس الأدنى، فوق 80% الخُمس الأعلى، وبينهم منطقة وسطى.</i></div>
-                    <div className="eg-m"><span>أعلى 20 جلسة (شامل النهارده)</span><b dir="ltr">{fmt(s.plan.res)}</b><i>{w20(s).hp != null ? `قبل جلسة النهارده: ${fmt(w20(s).hp)}. الاختراق بيتقاس على أعلى سعر في الـ20 جلسة اللي قبل النهارده.` : 'مقاومة محتملة.'}</i></div>
-                    <div className="eg-m"><span>أقل 20 جلسة (شامل النهارده)</span><b dir="ltr">{fmt(s.plan.sup)}</b><i>{w20(s).lp != null ? `قبل جلسة النهارده: ${fmt(w20(s).lp)}. كسر الدعم بيتقاس على أقل سعر في الـ20 جلسة اللي قبل النهارده.` : 'دعم محتمل.'}</i></div>
+                    <div className="eg-m"><span>أعلى 20 جلسة (شامل النهارده)</span><b dir="ltr">{fmt(s.plan.res)}</b><i>{w20(s).hp != null ? `قبل جلسة النهارده: ${fmt(w20(s).hp)}. إشارة الاختراق بتقارن الإقفال بأعلى إقفال في الـ20 جلسة قبله (${fmt(w20(s).hc)})، فالإشارة ممكن تظهر والسعر لسه تحت أعلى سعر المعروض فوق.` : 'مقاومة محتملة.'}</i></div>
+                    <div className="eg-m"><span>أقل 20 جلسة (شامل النهارده)</span><b dir="ltr">{fmt(s.plan.sup)}</b><i>{w20(s).lp != null ? `قبل جلسة النهارده: ${fmt(w20(s).lp)}. أقل إقفال في الـ20 جلسة قبله: ${fmt(w20(s).lc)}.` : 'دعم محتمل.'}</i></div>
                 </div>
                 <Ex label="اشرحلي RSI">{X.rsi(s)}</Ex>
                 <Ex label="اشرحلي التذبذب (ATR)">{X.atr(s)}</Ex>
@@ -253,7 +253,7 @@ function About() {
             <li><b>القوة من 100:</b> اتجاه طويل 25، اتجاه متوسط 20، MACD 20، RSI صحي 15، حجم 10، وإشارة جديدة 10.</li>
             <li><b>فريم التقييم:</b> يومي بعد الإقفال. متابعة موجة أيام/أسابيع، من غير مدة ربح مضمونة. فريم الشارت لا يغيّر التقييم.</li>
             <li><b>مستويات مرجعية:</b> مستوى الانكسار الافتراضي = مستوى المراقبة ناقص 2.5 ATR. المرجع المتغير = أعلى إقفال 22 جلسة ناقص 3 ATR. التطبيق لا يحفظ مركزًا أو مستوى متحركًا لصفقة، ولا ينفذ بيعًا عند أي مستوى.</li>
-            <li><b>الدخول:</b> تراجع لمتوسط 20 يوم لو السعر فوقه، وإلا اختراق أعلى 20 يوم.</li>
+            <li><b>الدخول:</b> تراجع لمتوسط 20 يوم لو السعر فوقه، وإلا مستوى اختراق = أعلى سعر خلال اليوم في آخر 20 جلسة (شامل النهارده). إشارة الاختراق نفسها بتتحقق لما الإقفال يعدي أعلى إقفال في الـ20 جلسة قبله.</li>
         </ul>
         <h3 className="eg-h3">اتختبر ولا لأ؟ (صراحة)</h3>
         <ul className="eg-ul">
