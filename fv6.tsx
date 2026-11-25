@@ -53,7 +53,7 @@ export function SourcedFair({ k }: { k: string }) {
   const a = s.aggregate, ts: any[] = s.targets_experimental || [], an = s.analyst_reference || {};
   const vis = ts.filter(t => num(t.value)), vs: number[] = vis.map(t => t.value), hiddenN = ts.length - vis.length;
   const aOk = !!a && num(a.conservative) && num(a.optimistic);
-  const bt = (vis.find(t => t.backtest_line) || {}).backtest_line;
+  const bt = (vis.find(t => t.backtest_line && !/مكتوبة مرة واحدة/.test(t.backtest_line)) || {}).backtest_line;
   const day = (d.as_of === '2026-11-25' ? '25 نوفمبر 2026' : d.as_of);
   return <div className="gd-fv fv6"><style>{CSS}</style>
     <div className="q"><span>السعر العادل</span><span className="tg">تقديري · {day}</span></div>
@@ -99,7 +99,7 @@ export function SourcedFair({ k }: { k: string }) {
         <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
         <div className="na">{t.basis_status}</div>
         {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
-        {num(t.value) && t.backtest_line && t.backtest_line !== bt ? <div className="na">{t.backtest_line}</div> : null}</>}</div>)}
+        {num(t.value) && t.backtest_line && t.backtest_line !== bt && !/مكتوبة مرة واحدة/.test(t.backtest_line) ? <div className="na">{t.backtest_line}</div> : null}</>}</div>)}
       {an.avg != null
         ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
         : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
@@ -122,7 +122,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const s = d && d.stocks && d.stocks[k];
   if (!s) return <div className={bony ? 'bf-value' : 'fin-value'}><span>السعر العادل</span><b>غير متوفر</b><small>مقدرتش أحمّل النص دلوقتي.</small></div>;
   const an = s.analyst_reference || {};
-  const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{v}</div>; };
+  const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || /مكتوبة مرة واحدة/.test(v) || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{v}</div>; };
   return <>
     <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? (s.aggregate_headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر') : 'تقديري'}</b><small>{s.aggregate_headline_ar ? <>{s.aggregate_headline_ar} {s.aggregate_have_ar}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
     <div className="fv6"><style>{CSS}</style>
