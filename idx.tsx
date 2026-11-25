@@ -9,7 +9,7 @@ import { ScenarioBlock, TeamBlock, StudyMeta, Glossary, stampNote } from './scen
 import { useClientStock } from './clientidx';
 import { OtherFacts, OtherLight } from './others';
 import { NewsBlock } from './news';
-import { StockGuide, isReviewed, reviewedRec } from './guide';
+import { StockGuide, OnTab, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
 const cache: Record<string, Promise<any>> = {};
@@ -203,15 +203,15 @@ export function IdxStock() {
       <h2 className="eg-h ix-top">{s.name} <span dir="ltr">({code})</span></h2>
       <p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</p>
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={<AutoFin f={f} />} fair={<AutoFair f={f} close={s.close} />} chart={chartNode} />
-      {cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}
-      {reviewed ? null : <NoteCard code={code} />}
+      <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>
+      <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>
       
-      {code === 'VLMRA' ? null : <ScenarioBlock s={s} />}
-      <TeamBlock code={code} />
-      <NewsBlock code={code} />
-      <Glossary />
-      {reviewed ? <StudyMeta code={code} /> : null}
-      <SourcesBar code={code} reviewed={reviewed} />
+      <OnTab id="t">{code === 'VLMRA' ? null : <ScenarioBlock s={s} />}</OnTab>
+      <OnTab id="f"><TeamBlock code={code} /></OnTab>
+      <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>
+      <OnTab id="t"><Glossary /></OnTab>
+      <OnTab id="f">{reviewed ? <StudyMeta code={code} /> : null}</OnTab>
+      <OnTab id="f"><SourcesBar code={code} reviewed={reviewed} /></OnTab>
     </div>
   </div>;
 }
