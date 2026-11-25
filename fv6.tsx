@@ -156,7 +156,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
         <div className="na"><b>من القوائم:</b> {d.source_checks_ar[k].verified}</div>
         <div className="na"><b>موقع stockanalysis:</b> {d.source_checks_ar[k].stockanalysis}</div>
         <div className="na">{d.source_checks_ar[k].status}</div>
-        <div className="na"><A u={d.source_checks_ar[k].statement} /></div>
+        <div className="na"><a href={d.source_checks_ar[k].statement} target="_blank" rel="noreferrer">افتح القوائم المالية (PDF)</a></div>
       </Fold> : null}
       <Fold t="الأهداف التجريبية وتفاصيلها">
         {s.targets_rule_ar ? <div className="na">{s.targets_rule_ar}</div> : null}
