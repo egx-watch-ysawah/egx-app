@@ -1,6 +1,7 @@
 import { HistCurve, DivCalendar } from './extras';
 import { stampNote } from './scen';
 import { loadStarta } from './feed';
+import { RefreshBar } from './refresh';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
@@ -49,7 +50,8 @@ export function useLive(): Live {
     };
     go();
     const id = setInterval(go, 60000);
-    return () => { dead = true; clearInterval(id); };
+    window.addEventListener('egx-refresh', go);
+    return () => { dead = true; clearInterval(id); window.removeEventListener('egx-refresh', go); };
   }, []);
   return live;
 }
@@ -169,6 +171,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
         <small className="hb-stamp"><i className="fd" role="img" aria-label={fresh} title={fresh} />{live ? 'آخر تحديث ' + stamp(live.at) + ' · ' + stampNote(live.at) : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
+        <RefreshBar />
       </div>
       <div className="hb-tiles">
         <div><small>صاعد اليوم</small><b className="hb-up" data-dir="up">{up}</b></div>
