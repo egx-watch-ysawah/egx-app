@@ -1,8 +1,8 @@
 import { HistCurve, DivCalendar } from './extras';
 import { stampNote } from './scen';
-import { loadStarta } from './feed';
+import { loadStarta, useStarta, sourceState } from './feed';
 import { RefreshBar } from './refresh';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
 import { CASH_EGP } from './cash';
@@ -23,6 +23,7 @@ export function useLive(): Live {
     const go = async () => {
       try {
         const sf = await loadStarta();
+        if (!sf && sourceState.starta !== 'down') return;
         if (sf) {
           const so: Record<string, { close: number; prev: number }> = {};
           for (const k of Object.keys(sf.rows)) so[k] = { close: sf.rows[k].price, prev: sf.rows[k].prev };
@@ -53,7 +54,9 @@ export function useLive(): Live {
     window.addEventListener('egx-refresh', go);
     return () => { dead = true; clearInterval(id); window.removeEventListener('egx-refresh', go); };
   }, []);
-  return live;
+  const fd = useStarta();
+  const derived = useMemo<Live>(() => { if (!fd) return null; const so: Record<string, { close: number; prev: number }> = {}; for (const k of Object.keys(fd.rows)) so[k] = { close: fd.rows[k].price, prev: fd.rows[k].prev }; return { at: fd.at, stocks: so }; }, [fd]);
+  return derived || live;
 }
 
 function inSession(): boolean {
