@@ -12,7 +12,7 @@ const reasonLine = (status: string, reason: string) => { const r = String(reason
 const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور×4/3: الأساس مش متطابق.';
 const isPeer = (m: any) => m && (m.method_key === 'PE' || m.method_key === 'PB' || /شركات شبهها|شركات مشابهة|أقران/.test(String(m.name_ar || m.label_ar || '')));
 const Cell = ({ l, v }: { l: string; v: any }) => <div><small>{l}</small><b dir="ltr">{num(v) ? fx(v) : '—'}</b></div>;
-const Vals = ({ c, b, o }: { c: any; b: any; o: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l="محافظ" v={c} /><Cell l="متوسط" v={b} /><Cell l="متفائل" v={o} /></div> : null;
+const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l={m && m.range_kind_ar ? 'الوسط في ' + m.range_kind_ar : 'متوسط'} v={b} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
 const Caveat = ({ m }: { m: any }) => <>{m.caveat ? <div className="ours">ملحوظة: {m.caveat}</div> : null}{m.number_caveat && !String(m.caveat || '').includes(m.number_caveat) ? <div className="ours">{m.number_caveat}</div> : null}</>;
 const rangeOf = (vs: number[]) => vs.length ? (Math.min(...vs) === Math.max(...vs) ? <bdi dir="ltr">{fx(vs[0])}</bdi> : <><bdi dir="ltr">{fx(Math.min(...vs))}</bdi> إلى <bdi dir="ltr">{fx(Math.max(...vs))}</bdi></>) : null;
 const fx = (v: number) => '\u2066' + (v >= 1 ? v.toFixed(2) : v.toFixed(3)) + '\u2069';
@@ -51,10 +51,11 @@ export function SourcedFair({ k }: { k: string }) {
     <div className="q"><span>السعر العادل</span><span className="tg">تقديري · {day}</span></div>
     {aOk ? <div className="big"><bdi dir="ltr">{fx(a.conservative)}</bdi> إلى <bdi dir="ltr">{fx(a.optimistic)}</bdi></div> : <div className="big">غير متوفر</div>}
     <p className="ex">{aOk ? <>سعر تقديري من طرق ليها مرجع مكتوب تحت، عشان تقارنه بالسعر في السوق. {num(a.base) ? <>الوسط <bdi dir="ltr">{fx(a.base)}</bdi>. </> : null}{a.label} ({a.n_methods} طريقة). </> : <>غير متوفر: {(a && a.reason) || 'مفيش تجميع، لأن الطرق الموثوقة أقل من طريقتين.'} الطرق وحالة كل واحدة تحت. </>}السعر الحالي <bdi dir="ltr">{fx(s.price)}</bdi> ({s.price_note}).</p>
+    {a && a.noncore_warning_ar ? <div className="ours">{a.noncore_warning_ar}</div> : null}
     <Fold t="الطرق والمصادر">
       {s.methods.map((m: any) => <div className="mm" key={m.method_key}>
         <h5>{m.name_ar} <span className="tg">{m.status || m.label}</span></h5>
-        <Vals c={m.conservative} b={m.base} o={m.optimistic} />
+        <Vals c={m.conservative} b={m.base} o={m.optimistic} m={m} />{m.noncore_warning_ar ? <div className="ours">{m.noncore_warning_ar}</div> : null}
         {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
         {isPeer(m) && !m.peers && (num(m.conservative) || num(m.optimistic)) ? <div className="na">{PEERS}</div> : null}
         {Array.isArray(m.peers) && m.peers.length ? <div className="na">الأقران ومضاعف كل واحد وتاريخ سعره:<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar} ({p.code}): <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
@@ -72,6 +73,7 @@ export function SourcedFair({ k }: { k: string }) {
     <div className="q"><span>السعر المستهدف</span><span className="tg">تجريبي · {day}</span></div>
     {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {snum(t.key)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
     <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
+    {((a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean)) ? <div className="ours">{(a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean)}</div> : null}
     {d.targets_rule_ar ? <p className="nt">{d.targets_rule_ar}</p> : null}
     {bt ? <p className="nt">{bt} <a href="https://github.com/egx-watch-ysawah/egx-app/tree/main/docs/backtest" target="_blank" rel="noreferrer">طريقة إعادة الحساب والملفات</a></p> : null}
     <Fold t="السيناريوهين والمصادر">
@@ -117,7 +119,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
       <Fold t="طرق السعر العادل ومصادرها">
         {(s.methods || []).map((m: any, i: number) => <div className="mm" key={i}>
           <h5>{m.label_ar} <span className="tg">{m.status || 'تقديري'}</span></h5>
-          <Vals c={(m.values || {}).conservative} b={(m.values || {}).base} o={(m.values || {}).optimistic} />
+          <Vals c={(m.values || {}).conservative} b={(m.values || {}).base} o={(m.values || {}).optimistic} m={m} />{m.noncore_warning_ar ? <div className="ours">{m.noncore_warning_ar}</div> : null}
           {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
           {isPeer({ name_ar: m.label_ar }) && !m.peers && (num((m.values || {}).conservative) || num((m.values || {}).optimistic)) ? <div className="na">{PEERS}</div> : null}
           {Array.isArray(m.peers) && m.peers.length ? <div className="na">الأقران ومضاعف كل واحد وتاريخ سعره:<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar} ({p.code}): <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
@@ -134,6 +136,13 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
         <div className="na">{rename(s.method_explainer)}</div>
         <div className="na">{s.assumptions}</div>
       </Fold>
+      {d.source_checks_ar && d.source_checks_ar[k] ? <Fold t="مقارنة أرقامنا بمصدر تاني">
+        <div className="na">{d.source_checks_ar.note}</div>
+        <div className="na"><b>من القوائم:</b> {d.source_checks_ar[k].verified}</div>
+        <div className="na"><b>stockanalysis:</b> {d.source_checks_ar[k].stockanalysis}</div>
+        <div className="na">{d.source_checks_ar[k].status}</div>
+        <div className="na"><A u={d.source_checks_ar[k].statement} /></div>
+      </Fold> : null}
       <Fold t="الأهداف التجريبية وتفاصيلها">
         {s.targets_rule_ar ? <div className="na">{s.targets_rule_ar}</div> : null}
         {(s.targets_experimental || []).map((t: any, i: number) => <div className="mm" key={i}>
@@ -157,4 +166,11 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
       </Fold>
     </div>
   </>;
+}
+
+export function SummaryWorry({ k }: { k: string }) {
+  const [d, setD] = useState<any>(undefined);
+  useEffect(() => { let on = true; loadF().then(x => on && setD(x)); return () => { on = false; }; }, []);
+  const w = d && d.stocks && d.stocks[k] && d.stocks[k].summary_worry_ar;
+  return w ? <p>• {w}</p> : null;
 }
