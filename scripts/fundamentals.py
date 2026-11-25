@@ -5,7 +5,7 @@ COLS = ["name","description","close","market_cap_basic","sector","industry",
  "total_revenue_fq","net_income_fq","total_revenue_fy","net_income_fy","total_revenue_ttm","net_income_ttm",
  "earnings_per_share_basic_ttm","total_equity_fq","total_debt_fq","book_value_per_share_fq",
  "cash_f_operating_activities_ttm","free_cash_flow_ttm","gross_margin_ttm","operating_margin_ttm","net_margin_ttm","price_earnings_ttm"]
-REVIEWED = {"COMI","MASR","BONY","HRHO","UNIP","PHAR","ORHD"}
+REVIEWED = {"EXPA","CIEB","OCDI","EGAL","CLHO","CCAP","VLMRA","ASCM","ELKA","BTFH","ALCN","CNFN","GBCO","MCQE","AMOC","JUFO","EFID","MFPC","EAST","ORAS","DSCW","LCSW","ORWE","HDBK","RAYA","ISPH","RMDA","SKPC","HELI","EFIH","PHDC","ADIB","EMFD","ABUK","FWRY","TMGH","ETEL","SWDY","COMI","MASR","BONY","HRHO","UNIP","PHAR","ORHD"}
 LABEL = "آلي، غير مراجَع"
 # generic multiples: assumptions, not stock-specific targets
 MULT = {"standard": ("P/E", [5, 7, 9]), "bank": ("P/B", [0.8, 1.1, 1.5]),
