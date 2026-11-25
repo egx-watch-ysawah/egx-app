@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SourcedFair, SIX, SummaryWorry } from './fv6';
+import { WIDE, WideFair } from './wide';
 
 const iso = (t: string) => '\u2066' + t + '\u2069';
 const PER: any = { CLHO: { lab: '6 شهور', until: '30 يونيو 2026', fac: 1, mult: 'ستة شهور' }, EGAL: { lab: 'سنة مالية 2025/26', until: '30 يونيو 2026', fac: 1, mult: 'سنة كاملة', ttl: 'سنة مالية 2025/26' } };
@@ -485,7 +486,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && tab === 'd' && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
-      {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <SourcedFair k={k} /> : fairCard(s, k, r)) : <>
+      {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
         <p className="gd-sum">{tab === 'f' ? finSummary(k, r) : techSummary(s)}<small>{tab === 'f' ? 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.' : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className="gd-h"><span>{it.label}</span><Val v={it.value} /></div>
@@ -493,6 +494,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
           <p><em>تأثيره على السهم: </em>{it.effect}</p>
         </div>)}</Det>
       </>}
+      {!light && tab === 'f' && WIDE.includes(k) ? finNode : null}
       <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
   </section></>;
