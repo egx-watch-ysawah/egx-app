@@ -21,7 +21,7 @@ const shortN = (v: number) => v >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : v >= 1e3 ?
 const Det = ({ title, children, open }: { title: string; children: React.ReactNode; open?: boolean }) => <details className="eg-ex" open={open}><summary>{title}</summary><div className="eg-exb">{children}</div></details>;
 
 function status(r: any) {
-  if (r.full) return 'من محفظتك: صفحة كاملة';
+  if (r.full) return 'صفحة تحليل كاملة';
   if (!r.ok) return 'مفيش تاريخ كفاية للتحليل الفني';
   const v = r.votes || {};
   return v.trend && v.mid ? 'فوق متوسط 200 و50' : !v.trend && !v.mid ? 'تحت متوسط 200 و50' : v.trend ? 'فوق متوسط 200، تحت 50' : 'تحت متوسط 200، فوق 50';
@@ -55,26 +55,32 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
   </section>;
 }
 
+const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
+
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   const [d, err] = useJson('idx/index.json');
   const [sort, setSort] = useState<'val' | 'up' | 'down'>('val');
+  const [q, setQ] = useState('');
   const title = which === 'egx30' ? 'EGX 30' : 'EGX 70';
   if (err) return <div className="eg-pad"><h2 className="eg-h">{title}</h2><p className="eg-note">مقدرتش أحمل القايمة. جرب تفتح التطبيق تاني.</p></div>;
   if (!d) return <div className="eg-pad"><h2 className="eg-h">{title}</h2><p className="eg-note">بحمّل القايمة...</p></div>;
-  const rows = d.rows.filter((r: any) => r.lists.includes(which) && !(which === 'egx30' && r.code === 'VLMR')).slice();
+  const nq = normQ(q);
+  const rows = d.rows.filter((r: any) => !(r.code === 'VLMR') && (nq ? (normQ(r.code) + ' ' + normQ(r.name)).includes(nq) : (r.lists.includes(which)))).slice();
   rows.sort((a: any, b: any) => sort === 'val' ? (b.val || 0) - (a.val || 0) : sort === 'up' ? (b.chg ?? -99) - (a.chg ?? -99) : (a.chg ?? 99) - (b.chg ?? 99));
   const chip = (id: 'val' | 'up' | 'down', n: string) => <button type="button" className={'eg-chip' + (sort === id ? ' on' : '')} onClick={() => setSort(id)}>{n}</button>;
   return <div className="eg-pad ix">
-    <h2 className="eg-h">{title} <span className="ix-n">({rows.length} سهم)</span></h2>
+    <h2 className="eg-h">{title} <span className="ix-n">{nq ? '· نتايج البحث (' + rows.length + ')' : '(' + rows.length + ' سهم)'}</span></h2>
     <IndexSummary which={which} />
+    <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث عن سهم" autoComplete="off" /></label>
     <p className="eg-note">أسعار متأخرة حتى 20 دقيقة، والتغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
     <div className="eg-chips">{chip('val', 'الأعلى تداولًا')}{chip('up', 'الأكثر ارتفاعًا')}{chip('down', 'الأكثر هبوطًا')}</div>
     <p className="eg-note ix-lg"><b>الحجم:</b> عدد الأسهم اللي اتداولت. <b>القيمة:</b> فلوس التداول بالمليون جنيه.</p>
     <div className="ix-hd"><span>الشركة</span><span>السعر · التغيّر</span><span>الحجم · القيمة</span></div>
+    {nq && rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في EGX 30 أو EGX 70.</p>}
     {rows.map((r: any) => {
       const to = r.full ? '/' + r.code.toLowerCase() : '/s/' + r.code;
       const body = <>
-        <div className="ix-n1"><b>{r.name}</b><small dir="ltr">{r.code}</small><i>{status(r)}</i></div>
+        <div className="ix-n1"><b>{r.name}</b><small dir="ltr">{r.code}</small>{nq && <em className="ix-tag">{r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : ''}</em>}<i>{status(r)}</i></div>
         <div className="ix-p">{r.code === 'VLMRA' ? <small>السعر بالدولار، مش معروض بالجنيه</small> : <><span dir="ltr">{r.price != null ? fmt(r.price) : '-'}</span>{r.chg != null && <small className={r.chg >= 0 ? 'u' : 'd'} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</small>}</>}</div>
         <div className="ix-v"><b>{r.vol != null ? <>{shortN(r.vol)} <small>سهم</small></> : '-'}</b><span>{r.val != null && r.code !== 'VLMRA' ? Math.round(r.val / 1e6).toLocaleString('en-US') + ' مليون جنيه' : ''}</span></div>
       </>;
