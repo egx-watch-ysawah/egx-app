@@ -1,5 +1,6 @@
 import { HistCurve, DivCalendar } from './extras';
 import { stampNote } from './scen';
+import { loadStarta } from './feed';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
@@ -20,6 +21,17 @@ export function useLive(): Live {
     let dead = false;
     const go = async () => {
       try {
+        const sf = await loadStarta();
+        if (sf) {
+          const so: Record<string, { close: number; prev: number }> = {};
+          for (const k of Object.keys(sf.rows)) so[k] = { close: sf.rows[k].price, prev: sf.rows[k].prev };
+          if (!dead) {
+            const nv = { at: sf.at, stocks: so };
+            setLive(nv);
+            try { localStorage.setItem('egx-feed-v1', JSON.stringify(nv)); } catch { /* ignore */ }
+          }
+          return;
+        }
         const r = await fetch(PRICES_URL + '?t=' + Date.now(), { cache: 'no-store' });
         if (!r.ok) throw 0;
         const j = await r.json();
