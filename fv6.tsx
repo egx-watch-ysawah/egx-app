@@ -32,7 +32,8 @@ const CSS = `
 .fv6 hr{border:0;border-top:1px solid #263249;margin:12px 0}
 .fv6 .nt{font-size:12px;color:#8b97ad;line-height:1.7;margin:6px 0}
 `;
-const A = ({ u }: { u: string }) => <a href={u} target="_blank" rel="noreferrer">{u.replace('https://', '').slice(0, 60)}</a>;
+const snum = (k: any) => { const x = String(k); return /1$/.test(x) ? '1' : /3$|2$/.test(x) && /سيناريو 2|T3/.test(x) ? '2' : x.replace(/^سيناريو /, ''); };
+const A = ({ u }: { u: string }) => <a href={u} target="_blank" rel="noreferrer">{u.replace(/^https?:\/\//, '')}</a>;
 const Fold = ({ t, children }: { t: string; children: React.ReactNode }) => <details className="gd-det"><summary>{t}</summary>{children}</details>;
 
 export function SourcedFair({ k }: { k: string }) {
@@ -69,20 +70,20 @@ export function SourcedFair({ k }: { k: string }) {
     </Fold>
     <hr />
     <div className="q"><span>السعر المستهدف</span><span className="tg">تجريبي · {day}</span></div>
-    {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {t.key === 'T1' ? '1' : t.key === 'T3' ? '2' : String(t.key).slice(1)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
+    {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {snum(t.key)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
     <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
     {d.targets_rule_ar ? <p className="nt">{d.targets_rule_ar}</p> : null}
     {bt ? <p className="nt">{bt} <a href="https://github.com/egx-watch-ysawah/egx-app/tree/main/docs/backtest" target="_blank" rel="noreferrer">طريقة إعادة الحساب والملفات</a></p> : null}
     <Fold t="السيناريوهين والمصادر">
       {ts.map((t: any) => <div className="mm" key={t.key}>
-        <h5>سيناريو {t.key === 'T1' ? '1' : t.key === 'T3' ? '2' : String(t.key).slice(1)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span></h5>
+        <h5>سيناريو {snum(t.key)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span></h5>
         <div>{t.name_ar}</div>
         {num(t.value) && t.scenario_ar ? <div className="na">{t.scenario_ar}</div> : null}
         {num(t.value) && t.formula_ar ? <div className="ours"><b>الحساب:</b> <bdi dir="ltr">{t.formula_ar}</bdi></div> : null}
         {num(t.value) && t.growth_note_ar ? <div className="na">{t.growth_note_ar}</div> : null}
         {num(t.value) && t.caveat_ar ? <div className="ours"><b>تحذير:</b> {t.caveat_ar}</div> : null}
         {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
-        <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}{(t.source_links || []).map((u: string) => <A key={u} u={u} />)}</div>
+        <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}{(t.source_links || []).map((u: string, i: number) => <React.Fragment key={u}>{i ? <br /> : null}<A u={u} /></React.Fragment>)}</div>
         <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
         <div className="na">{t.basis_status}</div>
         {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
@@ -127,7 +128,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
         <div className="na">{s.special}</div>
         {s.segments_reconciliation_ar ? <div className="na">{s.segments_reconciliation_ar}{s.segments_reconciliation_source ? <> <A u={s.segments_reconciliation_source} /></> : null}</div> : null}
         {s.circular_peers_note_ar ? <div className="na">{s.circular_peers_note_ar}</div> : null}
-        {s.statement_sources ? <div className="na">{s.statement_sources.note_ar} {(s.statement_sources.urls || []).map((u: string) => <A key={u} u={u} />)}</div> : null}
+        {s.statement_sources ? <div className="na">{s.statement_sources.note_ar} {(s.statement_sources.urls || []).map((u: string, i: number) => <React.Fragment key={u}><br /><A u={u} /></React.Fragment>)}</div> : null}
         {s.treasury_note ? <div className="na">{s.treasury_note}</div> : null}
         {(s.unavailable || []).map((u: any, i: number) => <div className="na" key={i}>{typeof u === 'string' ? u : (u.method_name || '') + ': ' + (u.reason || '')}</div>)}
         <div className="na">{rename(s.method_explainer)}</div>
@@ -152,7 +153,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
         {once(s.backtest_line)}
         {once(s.backtest_note)}
-        <div className="na">المصادر: {(s.sources || []).map((u: string) => <A key={u} u={u} />)}</div>
+        <div className="na">المصادر: {(s.sources || []).map((u: string, i: number) => <React.Fragment key={u}><br /><A u={u} /></React.Fragment>)}</div>
       </Fold>
     </div>
   </>;
