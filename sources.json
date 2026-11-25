@@ -1,0 +1,674 @@
+{
+ "as_of": "2026-11-25",
+ "note_ar": "القوائم المودعة هي الأساس لكل رقم مطبوع. أي رابط خبر أو بيان صحفي معلّم press_or_news استُخدم للمقارنة بس. basis_en هو وصف المصدر والفحوص من رأس ملف الدراسة (بالإنجليزي).",
+ "sources": {
+  "ARCC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ARCC.CA/financial_statement/2026-11-12_297525_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ARCC (reviewed 2026-11-25). Source: Arabian Cement Co (Egypt) consolidated condensed interim statements 9M2026, ARABIC scanned (foudalens 2026-11-12_297525_1.pdf), read visually pp.3-5 (limited review, Deloitte, dated 11 Nov 2026, unmodified conclusion) and notes 9, 26, 27, 29. Every figure checked by arithmetic (gross = sales - cost; pre-tax - tax = profit; parent + NCI = profit; equity = assets - liabilities). Cash (4,258.7m) is DERIVED from current-asset total minus other current lines because the cash digits were not clean on the scan. EPS printed 8.06; my division of the note-9 figures gives 8.07 (parent profit 3,035.9 less the 0.36% employee share = 3,025.0, / 374.867m shares = 8.07; the printed 8.06 leaves a 0.01 gap, unconfirmed). Dividing the parent profit BEFORE the employee share gives 8.10, which is not comparable to the printed EPS. FV profit EXCLUDES other income 491.9m (of which only 139.8m is explained: export-support collected in Q2, note 29; 352m not explained) and FX gain 60.8m: pre-tax 3,972.1 - 491.9 - 60.8 = 3,419.3, taxed at the 9M effective rate 23.57% = 2,613.6m, less the employee share ratio 0.36% = 2,604.2m. That adjusted profit, the tax rate and the ratio are my computation (implied). No second news source found (searches returned the Saudi company of the same name). EGP million. Analyst data: not fetched. "
+  },
+  "UEGC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/UEGC.CA/financial_statement/2026-11-18_298146_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== UEGC (reviewed 2026-11-25). Source: El-Saeed Contracting & Real Estate Investment (SCCD) CONSOLIDATED interim statements 9M to 30 Sep 2026, English scan (foudalens 2026-11-18_298146_1.pdf): UHY United limited review p.2 (17 Nov 2026), P&L p.4, notes 14, 27. // Checks: revenue 1,282,844,687 - cost 868,848,022 = gross 413,996,665; - admin 57,054,808 - ECL 4,105,575/352,945/230,140 + other income 3,086,900 - board 11,955,330 = operating 343,384,767; - finance expense 295,442,682 + finance income 1,972,794 + FVTPL 1,278,332 + associates 20,015,261 + gain 18,948 + FX 2,694,092 = pre-tax 73,921,512; - tax 13,264,239 = 60,657,273 (all tie). Attributable to holding co 63,130,682, minority (2,473,409). Shares 725,231,685 (note 14, par 1) -> EPS 0.0870 = printed 0.087 (note 27, no employee-share deduction shown). 9M 2025: revenue 1,585,776,985, profit 115,513,926 (holding 105,942,281, EPS 0.146). // Flags: (1) review conclusion UNQUALIFIED. (2) Finance expense 295m eats 86% of operating profit 343m; credit facilities about 1.59bn (note 17/30): profit is very sensitive to rates and cash collection. (3) 9M 2025 profit included a 117.6m investment-property revaluation gain (non-recurring), so the fall from 115.5m to 60.7m overstates the operating decline. (4) Q3 2026 is weak: revenue 387m (vs 725m in Q3 2025) and total profit 9.96m vs 9M average 20.2m, so x4/3 on 9M probably OVERST"
+  },
+  "MEPA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MEPA.CA/financial_statement/2026-11-16_297874_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== MEPA (reviewed 2026-11-25). Source: Medical Packaging Co (Al-Obwat Al-Tebbeya) standalone interim statements 9M to 30 Sep 2026, Arabic scan (foudalens 2026-11-16_297874_1.pdf): Kreston Egypt limited review p.2 (15 Nov 2026), balance sheet p.4, P&L p.5, notes 19/22/23. // Checks: sales 77,955,457 - cost 52,010,182 = gross 25,945,275; - expenses 17,668,881 = operating 8,276,394. + interest 5,769,970 + T-bill income 1,940,216 - bank charges 129,660 + capital gain 554,644 + other income 2,433,874 + FX gain 85,440 - finance cost 4,998,584 + ECL reversal 1,413,819 - ECL charge 3,827,178 = pre-tax 11,518,935 (printed 11,518,940). - deferred tax 1,194,900 - current tax 931,228 = 9,392,812 (printed 9,392,757; 55 EGP difference from scan digits). Balance sheet: capital 131,000,000 + legal 3,951,210 + retained 84,701,942 + period 9,392,757 = equity 229,045,909; liabilities 68,685,375; assets 297,731,284 (ties). Shares 655,000,000 (par 0.20; note 19 and 23) -> EPS 0.0143 = printed 0.014. // Flags: (1) review conclusion UNQUALIFIED. (2) 9M profit fell 69% (30.72m in 9M 2025) on sales -22%. (3) Interest and T-bill income 7.7m is MORE than operating profit 8.3m, so most of the profit is financial income, not operations. (4) Scrap sales / insurance 2.4m + capital gain 0.55m are non-recurring. (5) Q3 2026 profit 4.99m is above the 9M average (3.1m), so x4/3 is a conservative run-rate. "
+  },
+  "ISMA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ISMA.CA/financial_statement/2026-11-12_297556_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ISMA (reviewed 2026-11-25). Source: Ismailia Misr Poultry STANDALONE interim statements 9M to 30 Sep 2026, Arabic scan (foudalens 2026-11-12_297556_1.pdf): UHY-United limited review p.3 (11 Nov 2026), P&L p.5, EPS note 23. // Checks: gross profit 37,760,966 = rent revenue 42,375,690 - cost 4,614,724. Admin & other expenses total 6,083,656; other income 2,522,066 + provisions no longer required 1,026,623 -> operating profit before tax 35,225,999 (ties); + deferred tax income 296,564 = profit 35,522,563. Shares 89,806,499 (note 23) -> EPS 0.3955 = printed 0.395. Revenue is flat at ~14.125m per quarter (rent). 9M revenue 42,375,690 vs prior 42,375,691 (restated): checked on the P&L page, identical to within EGP 1 because the rent is fixed by contract; cost of revenue differs (4.61m vs 5.54m), so it is not a copy error. // Flags: (1) review conclusion is unqualified, BUT with TWO emphasis paragraphs: prior-year restatements (lease accounting, EAS 49) and loss of control over Kiyo food subsidiary so consolidated statements were not prepared (standalone only). (2) Tax is nearly zero (deferred tax INCOME 0.3m): likely carried-forward losses; if tax normalises (22.5%) profit would be lower, so the 4/3 multiple is generous. (3) 9M profit includes 2.5m other income + 1.0m provision reversal (~10% of pre-tax). (4) Q3 profit 13.2m is above the 9M average (11.8m). (5) Balance sheet"
+  },
+  "ETRS": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ETRS.CA/financial_statement/2026-11-16_297976_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ETRS (reviewed 2026-11-25). Source: Egyptian Transport & Commercial Services (Egytrans/NOSCO) CONSOLIDATED interim statements 9M to 30 Sep 2026, Arabic scan/text (foudalens 2026-11-16_297976_1.pdf): KPMG limited review p.1 (15 Nov 2026), balance sheet p.2, P&L p.3, tax note 14, finance note 13. // Checks: total assets 2,071,371,830 = liabilities 865,123,232 + equity 1,206,248,598 (liabilities = non-current 195,065,825 + current 670,057,407 ties). Equity components: capital 224,929,817 + reserves ~492.0m + retained 308.2m + period profit 180,494,370 = parent equity ~1,205.6m + NCI 0.66m. P&L ties: gross 405,795,311 - admin 187,560,293 - selling 3,066,414 - ECL 6,193,384 - other exp 8,209,247 + other income 19,007,521 = 219,773,494; + net finance 29,745,964 + associates 9,319,953 = pre-tax 258,839,411; - tax 78,390,236 = 180,449,175 = parent 180,494,370 + NCI (45,195). EPS 0.802 = 180.494 / 224.93m shares. // Flags: (1) review conclusion CLEAN (KPMG Hazem Hassan, nothing came to attention). (2) 9M 2026 includes net FX translation gain 41.3m (13-1) = 16% of pre-tax; strip it and run-rate is lower. (3) Effective tax 30.3% (78.4 / 258.8). (4) Nosco and Nosco Shipping were acquired 11 Sep 2025 (tax note), so the 9M 2025 comparison (rev 901.9m) is NOT like-for-like; 9M 2025 also had a 71.0m bargain-purchase gain. (5) parent equity digits partly unclear in scan (~1,205.6m, +/-"
+  },
+  "ICFC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ICFC.CA/financial_statement/2026-11-12_297582_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== ICFC (reviewed 2026-11-25). Source: International Co. for Fertilizers and Chemicals interim statements 9M to 30 Sep 2026, English version titled \"separate financial statements\" (foudalens 2026-11-12_297582_2.pdf; the Arabic file 297582_1 and 347118_n8bb4c1139d are the same statements): BS p.4, P&L p.5, cash flow p.8, notes 16-25 p.25-28 of the PDF (EPS note 24). Baker Tilly limited review dated 11 Nov 2026, unmodified conclusion. Associates are carried by the equity method inside these statements; no separate consolidated file was found on the source. // Checks: total assets 1,856,308,735 = equity 1,398,241,713 + liabilities 458,067,022; equity components (233,550,000 + 33,522,856 + 470,855,848 + 421,079,730 + 239,233,279) tie to 1,398,241,713. Net sales 2,887,139,205 - cost 2,667,516,679 = gross 219,622,526; - selling 17,415,386 = operating 202,207,140. Operating - G&A 15,267,981 - takaful 7,446,287 - board 414,500 + associates 74,398,190 + ECL reversal 95,093 - ECL charge 1,882,111 + net finance 32,965,255 + capital gain 1,430,000 + FX 1,338,423 = PBT 287,423,222 (ties). PBT - tax 48,249,116 + deferred 59,173 = net 239,233,279 (ties). EPS note 24: 239,233,279 - employees and board (estimated) 1,909,180 = 237,324,099 / 116,775,000 shares (capital 233.55m at par 2) = 2.032, printed 2.03. 9M 2025: 153,545,725, printed EPS 1.18. // Flags: (1) FV profit uses the EPS-note "
+  },
+  "AMER": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/AMER.CA/financial_statement/2026-11-15_297795_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== AMER (reviewed 2026-11-25). Source: Amer Group Holding CONSOLIDATED interim statements 9M to 30 Sep 2026, Arabic scan read visually (foudalens 2026-11-15_297795_1.pdf, 39 pp): UHY review report p.3 (limited review dated 12 Nov 2026, unmodified conclusion), balance sheet p.4, P&L p.5 (digits read at 250-400 dpi), notes 25-27 p.31, EPS note 31 p.32, capital note 21 and loans note 22 p.29. // Checks: total assets 13,384,400,769 = equity 2,443,979,923 + liabilities 10,940,420,846 (non-current 2,821,786,084 + current 8,118,634,762). Equity: parent 1,935,730,738 + NCI 508,249,185 ties. Revenue 1,392,296,481 - cost 704,680,785 = gross 687,615,696. Gross - selling 261,361,690 - G&A 190,504,390 + other income 109,330,226 - other operating expenses 23,096,314 = operating 321,983,528 (ties). + finance income 18,385,301 - finance cost 100,513,962 + FX 1,281,602 + investment-property fair-value gain 27,803,447 - ECL 551,508 = PBT 268,388,408 (ties). PBT - tax 68,634,097 = 199,754,311 = parent 130,399,568 + NCI 69,354,743 (ties). EPS note 31: parent 130,399,568 - employees' share 13,039,958 - board share 5,867,981 = 111,491,629 distributable; / 902,789,840 weighted shares (= 902,789,840 shares x par 0.70 = capital 631,952,888, note 21) = 0.1235, printed 0.12. 9M 2025 parent profit 121,431,560, printed EPS 0.12. // Flags: (1) FV profit field uses the EPS-note profit AFTER employee an"
+  },
+  "MCRO": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MCRO.CA/financial_statement/2026-11-12_297544_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== MCRO (reviewed 2026-11-25). Source: Macro Group Pharmaceuticals (Macrocapital) CONDENSED CONSOLIDATED interim statements 9M to 30 Sep 2026, Arabic scan (foudalens 2026-11-12_297544_1.pdf): review report p.3, balance sheet p.4, P&L p.5 (rotated, digits read at 260 dpi), cash note 10 p.11, capital note 12 p.12, EPS note 21 p.19. PwC limited review dated 11 Nov 2026, unmodified conclusion. // Checks: total assets 1,433,173,932 = equity 917,737,808 + liabilities 515,436,124. Sales 945,447,975 - cost 290,757,536 = gross 654,690,439. Gross 654,690,439 - selling 284,902,099 - G&A 149,561,893 - 10,822,912 + other 3,462,052 = operating 212,865,587 (ties). + net finance 23,278,271 = PBT 236,143,858; - tax 55,802,756 = net 180,341,102 = parent 180,291,245 + NCI 49,857 (all tie). Share count: paid-in capital 684,247,747 = 3,421,238,736 shares x par 0.20 (note 12); printed EPS 0.05 = 180,291,245 / 3,421,238,736 = 0.0527 (note 21 weighted average equals the period-end count). // Flags: (1) Capital rose from 114.04m (570.2m shares at 0.20) at Dec 2025 to 684.25m in 2026 (IPO/share issue): the 9M 2025 comparative EPS 0.18 is on 570.2m shares and is NOT comparable with 0.05. (2) Q3 2026 net profit 90.9m (parent 90.9m) vs about 89.4m for H1: the profit base is rising fast; 9M x 4/3 is a simple run-rate, not a forecast. (3) Net finance income 23.3m (finance income 40.4m, mostly interest "
+  },
+  "ENGC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ENGC.CA/financial_statement/2026-11-23_298387_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ENGC (reviewed 2026-11-25). Source: Industrial Engineering Co. for Construction and Development (ICON) CONSOLIDATED interim statements 9M to 30 Sep 2026, English (foudalens 2026-11-23_298387_1.pdf): balance sheet p.2, P&L p.3, capital note 10 p.23, liquidity p.39, significant/subsequent events p.39-40. PwC (Ezzeldeen, Diab & Co.) limited review dated 22 Nov 2026, standard unmodified conclusion (no reservation). // Checks: total assets 9,324,356,118 = equity 4,136,649,411 + liabilities 5,187,706,707. Equity: parent 3,339,234,569 (capital 582,000,000 + legal reserve 51,003,298 + translation reserve 180,170,930 + retained 2,526,060,341 ties) + NCI 797,414,842. Revenue 6,335,546,501 - cost 4,212,490,045 = gross 2,123,056,456 (ties). PBT 1,270,527,455 - tax 402,884,768 = 867,642,687 = parent 650,226,289 + NCI 217,416,398 (ties). Printed EPS 4.47 = 650,226,289 / 145,500,000 shares (capital 582m at par 4, note 10) = 4.469; no employee share deducted. // Flags: (1) Q3 is lumpy: Q3 parent profit 340.9m vs 309.3m for the whole H1; Q3 includes an expected-credit-loss REVERSAL of 144.4m (9M net +10.4m vs a 181.3m charge in 9M 2025). Annualising 9M x 4/3 is a simple run-rate, not a forecast. (2) Financing income 132.8m (vs 14.1m) and associates' share 73.9m are non-core: together about 16% of pre-tax profit. (3) Effective tax 31.7% (9M). (4) NCI takes 25% of profit (217m of 868m); "
+  },
+  "GOUR": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/GOUR.CA/financial_statement/2026-11-08_297177_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== GOUR (reviewed 2026-11-25). Source: Egypt.com Food (Gourmet Egypt) CONSOLIDATED interim statements 9M to 30 Sep 2026, Arabic scan (foudalens 2026-11-08_297177_1.pdf): review report p.4, balance sheet p.5, income statement p.6, notes 20-27 p.35-37. Baker Tilly limited review dated 5 Nov 2026, standard unmodified conclusion (no reservation). // Checks: total assets 1,226,500,796 = equity 390,053,545 + liabilities 836,447,251. Equity: parent 390,474,572 (capital 100,000,000 + legal reserve 26,516,037 + retained 263,958,535 ties) + NCI (-421,027). Net sales 2,611,185,410 - cost 1,757,014,822 = gross profit 854,170,588 (ties). Profit before tax 280.6m - tax 69.5m = 211,133,920 = parent 211,129,929 + NCI 3,991 (ties). Q1+Q2 (6M) 139.4m + Q3 71.7m = 211.1m. Note 27: 211,129,929 / 400,000,000 shares = 0.528 (printed 0.53); no employee share deducted. // Flags: (1) operating-profit subtotal (~258.9m) is off by ~0.05m against my line-by-line re-add (scan digit read); printed PBT, tax and net profit tie. (2) Other income 50.4m includes ~47m interest and treasury-bill income (about 17% of pre-tax profit), rate-dependent. (3) Effective tax ~24.8%, no one-off gains stripped (FX gain only 0.7m, ECL reversal 0.1m). (4) Prior-year 9M EPS printed 14.50 on 9.28m shares (pre-split); on 400m shares it is 0.34. (5) Feed price 13.78 (delayed, unconfirmed) is above the range: P/E on annualise"
+  },
+  "AMIA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/AMIA.CA/financial_statement/2026-11-10_297262_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== AMIA (reviewed 2026-11-25, SEPARATE statements only). Source: Arab Multaqa for Investments interim SEPARATE (standalone) statements 9M to 30 Sep 2026, English translation (foudalens 2026-11-10_297262_1.pdf, pp.1-2 digits read at 100 dpi, clean text); UHY limited review dated 9 Nov 2026, standard unmodified conclusion. No consolidated statements were found in the filings. // Checks: assets 2,276,200,095 = equity 1,960,196,826 + liabilities 316,003,269 (non-current 136,293,376 + current 179,709,893). Income: pre-tax 1,009,945,011 - tax 81,603,774 = 928,341,237. Capital 510,570,561 shares (par 1) -> EPS 1.818 (printed 1.82); no employee share deducted. Revenue 1,038,530,145 includes 623,865,656 gain on disposal of subsidiaries. // Flags: (1) 9M profit is dominated by the one-off 623.9m gain on disposal of subsidiaries (67% of profit); FV excludes it. (2) Dividend income 94.8m is booked once a year (Q3 has none), so it is NOT multiplied by 4/3; the FV.profit below is a 9M-equivalent engineered so that UI x 4/3 gives: (pre-tax ex-gain 386.1m - dividends 94.8m = 291.2m) x 4/3 + 94.8m = 483.2m, x (1 - implied tax 21.1%) = 381.0m, i.e. EPS 0.746. The tax rate 21.1% is IMPLIED (total tax / pre-tax ex-gain), not from a tax note: the gain may have been taxed differently. (3) Balance sheet holds 1,163.8m 'right to shares of Al Baraka Bank (pending issuance)' (2.28 per share) and 3"
+  },
+  "MPRC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MPRC.CA/financial_statement/2026-11-16_298071_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== MPRC (reviewed 2026-11-25). Source: Egyptian Media Production City CONSOLIDATED interim statements 9M to 30 Sep 2026, Arabic scan (foudalens 2026-11-16_298071_1.pdf): balance sheet p.5-ish (read at 300 dpi), income statement, EPS note 36, capital note 22; Moore Egypt limited review dated 16 Nov 2026, standard unmodified conclusion (no reservation). // Checks: total assets 5,758,016,024 = equity 4,922,645,358 + liabilities 835,370,666 (current 824,006,834 + non-current 11,363,832). 9M profit 750,872,471 = parent 746,286,368 + NCI 4,586,103 (ties). Operating profit ~497.8m + net finance and FX ~253.1m = 750.87m (zone is tax-exempt: no income tax line). Note 36: parent profit 746,286,368 - employee share 74,628,137 (board proposal, estimate) = 671,658,231 / 225,000,000 shares = 2.985 (printed 2.99). Capital 2,250,000,000 (note 22). BVPS 4,894.7m / 225m = 21.75 (matches feed). // Flags: (1) a few line items on the income statement (revenue components, cost of sales, finance lines) did not re-add to the printed subtotals within about 0.05m due to scan digit reads; the printed totals (revenue 1,015,192,821, profit 750,872,471) tie to each other and to the balance sheet. (2) FV.profit below EXCLUDES the 84.2m net FX gain (not a recurring operating item), with employee share scaled proportionally (estimate): 596.36m. Printed-EPS basis would give 3.98 annualised (range 26.5 / 3"
+  },
+  "ATQA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ATQA.CA/financial_statement/2026-11-15_297769_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ATQA (reviewed 2026-11-25). Source: Misr National Steel (Ataqa) separate interim statements 9M to 30 Sep 2026, English scan (foudalens 2026-11-15_297769_1.pdf), read visually pp.2-3 (balance sheet, income statement), note 13 (capital); Zarrouk, Salawi & Co limited review dated 14 Nov 2026, unmodified. The company shows no consolidation (single-entity statements). // Arithmetic checks all tie: sales 3,551,677,671 - cost 3,262,235,353 = gross 289,442,318; gross - 28,838,516 - 124,816,123 - 5,174,022 = operating profit 130,613,657; + all other lines = pre-tax 210,354,995; + deferred 628,809 - current tax 35,337,920 = 175,645,884. Assets 4,403,987,201 = equity 2,548,312,485 + liabilities 1,855,674,716; equity components sum to 2,548,312,485. Capital 600,000,000 / par 0.50 = 1,200,000,000 shares (note 13); EPS 175.6 / 1,200 = 0.146 (printed 0.146, no employee share deducted). // Flags: (1) profit is thin and lumpy: operating profit 130.6m; other revenue 122.9m (only 0.3m of it in Q3, so it came in H1 and is probably one-off); investment returns 96.7m (428.2m last year); debit interest -125.1m; FX loss -37.5m. (2) Q3 alone (Jul-Sep): sales 1,751.1m, profit 79.9m (EPS 0.067, Q3 x 4 = 0.27/yr) vs 9M x 4/3 = 0.195/yr. (3) 9M sales -33% vs 2025 (3,551.7m vs 5,271.2m) while profit +24% because 2025 carried 314.7m interest and 228.2m fair-value loss. (4) Receivables jumped 962m to"
+  },
+  "POUL": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/POUL.CA/financial_statement/2026-11-12_297562_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== POUL (reviewed 2026-11-25). Source: Cairo Poultry Co. CONSOLIDATED interim statements 9M to 30 Sep 2026, Arabic scan (foudalens 2026-11-12_297562_1.pdf), income statement (p.3, rotated, read at 500 dpi), balance sheet (p.2), note 24 (EPS), notes 25-28; Deloitte Wafik & Rami limited review dated 11 Nov 2026, standard unmodified conclusion. Earnings release 297436_2 used only for context. // Arithmetic checks all tie: revenue 12,104,697,949 - cost 10,789,861,518 = gross 1,314,836,431; gross - G&A 243,760,122 - selling 373,856,966 - provisions 48,224,252 + provisions released 103,416,886 - ECL 2,638,428 + other op income 239,754,955 - other op expense 120,431 = operating profit 989,408,073; + finance income 611,524,600 - finance cost 26,030,785 + FX 24,650,960 = pre-tax 1,599,552,848; - tax 159,672,930 = 1,439,879,918 = parent 1,439,383,998 + NCI 495,920. Balance sheet: assets 10,844,831,122 = equity 8,343,971,571 + liabilities 2,500,859,551 (current 2,293,134,904 + non-current 207,724,647). Note 24: weighted shares 1,789,351,397 = capital 1,789,351,397 (par 1); EPS 1,439,383,998 / 1,789,351,397 = 0.804 (printed 0.80). // Flags: (1) Q3 is far weaker: parent profit Q3 101.97m (EPS 0.06) vs 678.1m in Q3 2025; Q3 operating profit only ~9.3m, so most of Q3 profit is finance income. 9M x 4/3 therefore probably overstates the run-rate (Q3 x 4 would be EPS 0.23). (2) 9M profit i"
+  },
+  "MTIE": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MTIE.CA/financial_statement/2026-11-16_298015_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== MTIE (reviewed 2026-11-25). Source: MM Group (MTI) consolidated interim statements 9M to 30 Sep 2026, English text (foudalens 2026-11-16_298015_1.pdf: income statement, balance sheet, note 28 EPS) + 9M2026 earnings release (298016_2). Kreston Egypt limited review dated 15 Nov 2026, conclusion UNMODIFIED. Arithmetic checks all tie: sales 19,356,479,308 - cost 17,540,758,909 = gross 1,815,720,399; expenses 679,588,411 -> operating profit 1,136,131,988; all lines sum to pre-tax 1,373,901,715; less tax 289,134,871 and deferred 5,369,512 = 1,079,397,332 = parent 1,025,126,865 + NCI 54,270,467; note 28: parent profit - employee share 97,387,052 - board share 83,265,931 = 844,473,882 / 2,265,930,178 weighted shares = 0.3727 (printed 0.37); capital 1,404,876,710 / 0.62 par = 2,265,930,177 shares. Equity 5,958,373,576 (parent 5,715,333,218), assets 9,763,862,588. // Flags: FV.profit = 844.474 = parent profit after BOTH employee and board share as in the printed EPS note (a different basis from studies that deduct only the employee share). Unexplained items inside the profit: other revenue 59.3m (56.5m of it in Q3) and interest on amortized-cost investments 111.8m (vs 0.4m last year) are not clearly recurring. Price not in the project's price feed: ~6.60 is derived from feed P/B 2.96 x feed bvps 2.23 (delayed, unconfirmed). No news or analyst check. "
+  },
+  "MBSC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MBSC.CA/financial_statement/2026-11-11_297401_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== MBSC (reviewed 2026-11-25). Source: Misr Beni Suef Cement consolidated interim statements 9M2026, Arabic scan (foudalens 2026-11-11_297401_1.pdf, read visually pp.3-5, notes 13, 19, 20), Kreston Egypt/Salem & Co limited review dated 10 Nov 2026, conclusion unmodified. Checks: gross = 4,738.0 - 2,302.7 = 2,435.4; pre-tax - tax (492.0 + 3.3 dividend tax - 7.8 deferred) = 2,104.5; parent 2,104.497 + NCI (-0.008) = 2,104.489; operating profit 2,174.0 and the 2,592.1 pre-tax both reconcile by arithmetic (two digits in small lines, attendance fees and ECL, were fixed by arithmetic, not read). EPS printed 33.05 = 1,707.4m profit after employee/board share (note 20) / 51,658,442 shares (55,022,327 issued less 3,363,885 treasury, which I reconciled from note 13/2: 2,460,820 - 3,493 + 906,558). FV profit is NOT the printed 1,707.4: it EXCLUDES the 9M fair-value gain (157.4m) and investment-sale gains (117.5m) = 274.9m, taxed at the 9M effective rate 18.81%, then times the printed distribution ratio 0.8113 (1,707.4 / 2,104.5): (2,592.1 - 274.9) x (1 - 0.1881) x 0.8113 = 1,526.3m. All of that (ex-gains profit, tax rate, ratio) is my computation, not printed; the ratio implies a 19% deduction for employees/board which I could not verify. The ex-gains EPS is 39.40 annualised (printed 9M 33.05). The feed shows 52.565m shares; I used 51.658m from the statements. Dividend income 66.8m "
+  },
+  "TAQA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/TAQA.CA/financial_statement/2026-11-16_297995_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== TAQA (reviewed 2026-11-25). Source: Taqa Arabia consolidated interim statements 9M2026, English (foudalens 2026-11-16_297995_2.pdf, read visually pp.2-4 and note 6.B p.29 of statements, PwC limited review report dated 12 Nov 2026, conclusion unmodified). Checks done: assets 30,444.9 = equity 6,406.6 + liabilities 24,038.3; gross = 24,356.3 - 21,874.0 = 2,482.4; pre-tax 1,871.9 - tax 492.7 = 1,379.2; parent 1,155.2 + NCI 224.0 = 1,379.2; EPS 0.847 = 1,145.7 / 1,352.35m shares. FV profit = 9M profit after the 5% legal reserve (3.3m) and 10% employee/board share (6.2m) per note 6.B = 1,145.7m. Shares 1,352.3538m (note 7, nominal 0.5). Q3-only parent profit 577.3m (about half the 9M) means the 9M-annualised range is likely conservative; the Q3 run-rate EPS ~1.69 is my computation (577.3 x 4 x 0.9918 / 1,352.35), not printed. Net finance income 378.8m (interest on large cash and T-bills) is recurring but rate-dependent. FX was a small loss (28.3m), nothing stripped. EGP million. Analyst data and news not checked. "
+  },
+  "SCEM": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/SCEM.CA/financial_statement/2026-11-16_297899_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== SCEM (reviewed 2026-11-25). Source: Sinai Cement separate interim statements 9M2026, English (foudalens 2026-11-16_297899_1.pdf, read visually pp.3-5), limited review conclusion unmodified (dated 15 Nov 2026). The company has only an affiliate investment of 25.0m (no subsidiaries shown), so separate statements are the full picture. EPS printed 10.75 = 2,804.6m / 260.81m shares (paid-in capital 2,608.1m at par 10; no employee share deducted in the note). FV profit EXCLUDES FX gains: 9M pre-tax 3,692.0m minus FX gain 398.7m = 3,293.3m, taxed at the 9M effective rate 24.03% (887.3m / 3,692.0m) = 2,501.8m. That ex-FX profit and the tax rate on it are implied (my computation, not printed). EGP million. Analyst data: not fetched. No second news source checked. "
+  },
+  "EXPA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EXPA.CA/financial_statement/2026-11-12_297503_4.pdf"
+    },
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EXPA.CA/financial_statement/2026-11-12_297497_4.pdf"
+    }
+   ],
+   "basis_en": "// ===== EXPA (reviewed 2026-11-25). Source: Export Development Bank of Egypt (EBank) consolidated interim statements 9M2026, English translation (foudalens 2026-11-12_297503_4.pdf; balance sheet p.1, income statement p.2, review report p.2 unmodified, Forvis Mazars + Accountability State Authority) and separate statements (2026-11-12_297497_4.pdf, note 13 EPS). EGP million. // KEY FACTS: (1) 9M consolidated profit to shareholders 4,827.8 (+12.1% vs 4,305.1) but includes \"Profit from financial investments\" of 3,195.8 (9M25: 86.6); only 16.2 of it in Q3, so it is H1. Q3 shareholders' profit 933.7 vs 1,661.2 (-44%). (2) Capital: 13.6bn to 18.0bn bonus shares (note 36, listed 7 Oct 2026), so shares now 1,800m (feed agrees); separate EPS printed 2.98 uses 1,360m shares (pre-bonus). (3) Consolidated EPS/deductions are not in the consolidated notes I read: I applied the SEPARATE note-13 deductions ratio (fund 46.7 + board 93.1 + staff 465.3 = 605.0 = 13.0% of separate profit) to the consolidated figure: IMPLIED, unconfirmed. (4) The tax effect on the 3.2bn gain (38.4% = the 9M effective rate) is an ASSUMPTION. \"Revenue\" = sum of net interest, net fees, dividends, trading, investment gains and other operating (my definition). Analyst data not fetched. "
+  },
+  "CIEB": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/CIEB.CA/financial_statement/2026-10-28_296633_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== CIEB (reviewed 2026-11-25). Source: Credit Agricole Egypt condensed consolidated interim statements 9M2026, English (foudalens 2026-10-28_296633_2.pdf). EPS note 13: profit after employees' share (536.5m) and Banking Sector Support Fund (54.5m) = 4,773.6m, weighted shares 1,250m, printed EPS 3.82. Cross-check The Edge 29 Oct 2026 (consolidated profit 5.36bn, +4.3%; standalone 5.45bn, +6.2%). EGP million. \"Revenue\" below = net interest income + net fees + dividends + trading + investment gains + other net operating income (my definition, not a statement line). ANOMALY: the auditors' conclusion text in the file is dated \"Cairo, 28 April 2026\", before the period end: probably a template date error in the filing, not confirmed. Equity comparative is 31 Dec 2025 (23,630.4m). Analyst data not fetched. "
+  },
+  "OCDI": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/OCDI.CA/financial_statement/2026-10-26_296520_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== OCDI (reviewed 2026-11-25). Source: SODIC consolidated interim statements 9M2026, English (foudalens 2026-10-26_296520_1.pdf), limited review conclusion unmodified (read). Cross-check The Edge 26 Oct 2026 (edgeconsultancykw.com/sodic-nine-month-2026-profit-1-29-billion-pounds-revenue-10-82-billion/): profit 1.293bn (-45.1%), revenue +1.8%. EPS printed 1.00 = parent profit 1,286.5m / 1,289.29m weighted shares (no employee share deducted in the note). EGP million. Analyst data: not fetched (page returned nothing). "
+  },
+  "EGAL": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EGAL.CA/financial_statement/2026-09-20_344382_n1ce5e193d2.pdf"
+    },
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EGAL.CA/financial_statement/2026-11-19_298297_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== EGAL (reviewed 2026-11-25, on AUDITED FY2025/26 standalone statements + press-reported Q1 FY26/27). Source: Egypt Aluminum (Egyptalum) separate statements for the year ended 30 Jun 2026, Arabic scan with Arabic-Indic digits (foudalens 2026-09-20_344382_n1ce5e193d2.pdf pp.14-21). Net profit 15,491,225,321 EGP read from the scan and it MATCHES the feed's net_income_fy 15,491,225,321 and EPS 37.5545 (=profit/412.5m shares); revenue 53.137bn matches feed; equity 33.89bn and debt 0.2126bn match feed. The prior-year profit (~10.19bn) and revenue (~43.18bn) were read from the scan only: UNCONFIRMED digits. // Q1 FY26/27 (Jul-Sep 2026): the statements are NOT filed. Company letter 19 Nov 2026 (foudalens 2026-11-19_298297_1.pdf, image) says the auditor (CAA) has not finished the 30 Sep review and no review report exists. Q1 figures come from press only (youm7.com 8 Nov 2026, zawya.com 9 Nov 2026, citing the company announcement): net profit 4.928bn (Q1 FY26 2.415bn), revenue 12.046bn, EPS 11.95 for the quarter. UNREVIEWED. "
+  },
+  "CLHO": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/CLHO.CA/financial_statement/2026-09-06_294346_2.pdf"
+    },
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/CLHO.CA/financial_statement/2026-09-06_294347_3.pdf"
+    },
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/CLHO.CA/financial_statement/2026-11-18_298183_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== CLHO (reviewed 2026-11-25 on SIX-MONTH data). Source: Cleopatra Hospital Co consolidated interim statements 6M2026, English, EGP (foudalens file 2026-09-06_294346_2.pdf) + H1 2026 earnings release (2026-09-06_294347_3.pdf). The 9M statements are NOT published: the company's 17 Nov 2026 letter (foudalens 2026-11-18_298183_1.pdf, image) says they will be filed in December 2026 after the board meets (also reported by ad-hoc-news.de, 23 Nov 2026). So this study uses 30 June 2026; annualisation is x2. Auditor conclusion text not located in the extracted statements: UNCONFIRMED. "
+  },
+  "CCAP": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/CCAP.CA/financial_statement/2026-11-17_298131_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== CCAP (reviewed 2026-11-25). Source: Qalaa Holdings (QFI) consolidated interim statements 9M2026, English, thousand EGP (foudalens file 2026-11-17_298131_2.pdf). Shares 4,226.464m (note 10 weighted = issued, par EGP 5). Parent equity NEGATIVE (-1,202.2m). Parent profit is dominated by Q3 and depends on the Egyptian Refining Company (ERC) margin; the range is a MARGIN SCENARIO with an ASSUMED linear relation fitted on two points, NOT a normal earnings multiple. Auditor conclusion text not read (Arabic report): UNCONFIRMED; note 15 going-concern material uncertainty with covenant breaches/defaults confirmed. "
+  },
+  "VLMRA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/VLMRA.CA/financial_statement/2026-11-15_297783_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== VLMRA (reviewed 2026-11-25). Source: Valmore Holding (formerly Egyptian Kuwaiti Holding) consolidated interim statements 9M2026, Arabic scan, USD (foudalens file 2026-11-15_297783_2.pdf), EY review report 12 Nov 2026 unqualified. Cross-check: company release (zawya.com/en/press-release/companies-news/valmore-holding-delivers-10-revenue-growth-in-9m26-2277516) and The Edge (edgeconsultancykw.com/valmore-holding-q3-net-profit-falls/). // UNIT NOTE: the statements are in USD and the feed's VLMR price (0.645) is quoted in USD (stockanalysis: \"Price in USD\"), so profit/shares/range are all USD, NO mult/FX needed. The VLMRA ticker (feed 25.37) is a different line that I could not reconcile to VLMR (ratio 39.3, not an FX rate): UNCONFIRMED, study is on VLMR. "
+  },
+  "ELKA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ELKA.CA/financial_statement/2026-11-18_298152_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ELKA (reviewed 2026-11-25). Source: Cairo for Housing & Development consolidated interim statements 9M2026, English translation (file 2026-11-18_298152_1.pdf, EGP exact, converted to million). Read: review report p.2-3 (UHY, unqualified, 17 Nov 2026), BS p.4, P&L p.5, EPS note 23, capital note. Cross-check: almezan.news/261973 (18 Nov 2026: profit 485.25m vs 66.82m, +626%). // KEY: reported profit is driven by NON-CASH revaluation of investment properties 526.443m + gain on sale of investment properties 41.017m. Pre-tax profit ex these two = 615.883 - 526.443 - 41.017 = 48.423m (approx; tax effect not separable: income tax 130.637m, mostly deferred on revaluation, not verified). // Shares 1,856,764,556 (note 23, par 0.50, capital increase Jan 2026 = bonus shares); EPS 0.261 printed. "
+  },
+  "BTFH": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/BTFH.CA/financial_statement/2026-11-16_297998_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== BTFH (reviewed 2026-11-25). Source: Beltone Holding consolidated interim statements 9M2026, English translation (file 2026-11-16_297998_2.pdf, EGP THOUSAND converted to million). Read visually: BS p.4, P&L p.5 (rotated). Deloitte (Wahby, Kamel & Partners) review report: unqualified. Cross-check: egyptke.com/304189 (16 Nov 2026): net profit 1.178bn vs 1.575bn (-25.2%), EPS 0.09 vs 0.17, net interest income 9.3bn vs 3.04bn. // Shares: feed 10,718.1m (capital 21,436.2m, so par 2 EGP; consistent with printed EPS: 1,011.1/10,718 = 0.094). Balance sheet restated for 31 Dec 2025 (note 51). "
+  },
+  "CNFN": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/CNFN.CA/financial_statement/2026-11-19_298255_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== CNFN (reviewed 2026-11-25). Source: Contact Financial Holding consolidated interim statements 9M2026, English translation (file 2026-11-19_298255_2.pdf, EGP exact, converted to million). KPMG Hazem Hassan review report dated 18 Nov 2026: UNQUALIFIED (\"nothing has come to our attention\"). Cross-check: Arqam 19 Nov 2026 (net income 178m). Statement printed EPS 0.10 (9M) vs 0.17; weighted shares 1,196,292,372; paid-in capital 191.5m (par is therefore NOT 1, about 0.16, not stated, not used). // BS page images not read line-by-line: parent equity taken from the statement of changes in equity: 4,400.131m at 30 Sep 2026 (NCI 384.758m, total 4,784.890m). "
+  },
+  "MCQE": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MCQE.CA/financial_statement/2026-11-12_297473_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== MCQE (reviewed 2026-11-25). Source: Misr Cement (Qena) consolidated interim statements 9M2026 (English translation of the Arabic filing; balance sheet p.4, income p.5, comprehensive income p.6, review report p.3 of the PDF, read visually) + cross-check Mubasher/Hosny & Partners and NewsX 12 Nov 2026 (net profit 2.29bn vs 1.71bn, sales 7.90bn vs 6.76bn). EGP million. Review report by Kreston Egypt (read as scanned page, no qualification noted on the page I read). // NOTE: the statement does not print EPS. Shares 96m are from the trading feed (= issued capital 960m / par 10, par assumed). The employee share is not deducted. "
+  },
+  "AMOC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/AMOC.CA/financial_statement/2026-11-15_297665_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== AMOC (reviewed 2026-11-25). Source: Alexandria Mineral Oils (AMOC) consolidated interim statements 9M2026 (Arabic, scanned; read visually: balance sheet p.6, P&L p.8 at 200 dpi). Cross-check: The Edge Consultancy 15 Nov 2026 (net profit 3,474.9m, parent 3,411.1m, sales 43,174.9m, EPS 2.64). EGP million. Review report not read in detail. // NOTE: printed EPS 2.64 (note 16) is calculated on profit BEFORE employee and board shares, so it is overstated; the final share is not printed. "
+  },
+  "JUFO": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/JUFO.CA/financial_statement/2026-11-11_297365_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== JUFO (reviewed 2026-11-25). Source: Juhayna consolidated interim statements 9M2026, KPMG Hazem Hassan limited review (English translation of the Arabic filing; balance sheet p.2, P&L p.3 of the PDF, read at 220 dpi) + cross-check Zawya/Arab Finance 11 Nov 2026 (sales 27.659bn, profit 2.035bn, +60.1%). EGP million. Review report read: unqualified conclusion plus an emphasis of matter on a tax-exemption dispute (Note 18). "
+  },
+  "EFID": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EFID.CA/financial_statement/2026-11-16_297989_3.pdf"
+    }
+   ],
+   "basis_en": "// ===== EFID (reviewed 2026-11-25). Source: Edita Food Industries condensed consolidated interim statements 9M2026 (English, image PDF; read visually: balance sheet p.2, P&L p.3, EPS note 13 p.18 of the notes), Grant Thornton review report p.1 (unqualified conclusion, read). Company release 15 Nov 2026 (Arabic) read for cross-check: sales 19.5bn (+32.6%) matches. EGP million. // UNRECONCILED: release says 9M net profit +54.0% to 2.4bn (Q3 938.1m); statements show net profit 2,611.4m (+51.3%), Q3 997.4m. We use the statements. Release definition not found. "
+  },
+  "MFPC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/MFPC.CA/financial_statement/2026-11-16_297993_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== MFPC (reviewed 2026-11-25). Source: MOPCO consolidated interim statements 9M2026 (Arabic, scanned; read visually: balance sheet p.4 of PDF, income statement p.5). Cross-check: Zawya/Arab Finance 16 Nov 2026 and Al Mal / banker.news / Egypt Oil & Gas 15 Nov 2026 (sales 27.39bn, net profit 12.14bn, EPS 4.23-4.24). Q3 net profit 2,236.0m matches TradingView feed. EGP million. KPMG limited review report seen on page 3, opinion text not read in detail. "
+  },
+  "EAST": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EAST.CA/financial_statement/2026-11-12_297540_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== EAST (reviewed 2026-11-25). Source: Eastern Company consolidated interim statements 9M2026 (Arabic, scanned; read visually pages 3-4 + EPS note 39 on page 49) + cross-check: Arab Finance/Zawya and Al Mal news, 11 Nov 2026 (same sales, gross profit, pre-tax and net profit figures). EGP million (statements are in thousands). Limited review report (BDO) not read in full. "
+  },
+  "ORAS": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ORAS.CA/financial_statement/2026-11-18_298186_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== ORAS (reviewed 2026-11-25). Source: Orascom Construction PLC consolidated interim statements 9M2026 (English, USD millions) + Q3 2026 earnings release (company). FX: CBE buying rate 54.30 EGP/USD on 24 Nov 2026 (technotime.net); statements' own closing rate 52.08 (0.0192 USD per EGP) is NOT used because it is stale. USD multiples are ASSUMPTIONS (method below), so this study needs a custom `mult` in the FV block (UI change). "
+  },
+  "DSCW": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/DSCW.CA/financial_statement/2026-11-19_298267_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== DSCW (reviewed 2026-11-25). Source: Dice Sport & Casual Wear consolidated interim statements 9M2026 (English). Read visually pages 1-2 of statements + EPS note. EGP, shown in millions. Limited review report text was not read (image). "
+  },
+  "LCSW": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/LCSW.CA/financial_statement/2026-11-15_297814_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== LCSW (reviewed 2026-11-25). Source: Lecico Egypt consolidated interim statements 9M2026 (English, text readable). EGP, shown in millions. Shares 80m = weighted average in the EPS note (the data feed shows 83.3m, not used). The statement does not state why issued capital fell from 400m to 200m. "
+  },
+  "ORWE": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ORWE.CA/financial_statement/2026-11-16_298026_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== ORWE (reviewed 2026-11-25). Source: Oriental Weavers CONSOLIDATED interim statements 9M2026 (English translation, Baker Tilly limited review, unqualified). Read visually pages 2-3 of the file + EPS note. EGP, shown in millions. EPS is CALCULATED (parent profit / 665.107m shares); the statement's printed EPS 3.33 is on the separate (company-only) profit of 2,212m. Employee share, if any, is not stated. "
+  },
+  "HDBK": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/HDBK.CA/financial_statement/2026-11-11_297342_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== HDBK (reviewed 2026-11-25). BASIS: CONSOLIDATED (not standalone) statements; profit used = attributable to shareholders (NCI 27m excluded). Source: Housing and Development Bank consolidated statements 9M2026 (English). EGP, shown in millions. Shares 1,062.6m from the EPS note. Equity shown includes non-controlling interest (the split is not in the summary table; NCI profit is only 27m). "
+  },
+  "RAYA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/RAYA.CA/financial_statement/2026-11-12_297518_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== RAYA (reviewed 2026-11-25, from the company's 3Q/9M2026 earnings release; the full statements were not machine-readable). EGP million. Shares 4,281.3m from the release (= capital 1,070m / par 0.25). EPS is before any employee share (not stated in the release). "
+  },
+  "ISPH": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ISPH.CA/financial_statement/2026-11-15_297819_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== ISPH (reviewed 2026-11-25). Source: Ibn Sina Pharma consolidated periodic statements 9M2026 (English translation, limited review by Mostafa El-Shibini, unqualified). Read visually pages 3-5. EGP, shown in millions. Shares 1,008m from the EPS note (the data feed shows 1,120m, which does not match the statement). "
+  },
+  "RMDA": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/RMDA.CA/financial_statement/2026-11-11_297373_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== RMDA (reviewed 2026-11-25). Source: Rameda consolidated interim statements 9M2026 (English translation, EY limited review, unqualified). Read visually pages 4-5. EGP, shown in millions. EPS note: weighted shares 2,012.862m (outstanding at period end 2,032.817m = capital 508.2m / par 0.25). "
+  },
+  "SKPC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/SKPC.CA/financial_statement/2026-11-12_297467_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== SKPC (reviewed 2026-11-25). Source: Sidi Kerir Petrochemicals (Sidpec) interim standalone statements 9M2026 (English translation, limited review). Image PDFs, read visually pages 1-3. EGP, shown in millions. Shares 1,134m stated in the notes. "
+  },
+  "EFIH": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EFIH.CA/financial_statement/2026-11-12_297576_1.pdf"
+    }
+   ],
+   "basis_en": "// ===== EFIH (reviewed 2026-11-25). Source: eFinance 9M2026 earnings release (company, 12 Nov 2026; numbers in EGP million). The Arabic/English full statements were not machine-readable, so figures are from the release, not the statements. Shares 3,466.667m are from the release's share-information box. "
+  },
+  "PHDC": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/PHDC.CA/financial_statement/2026-11-16_298017_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== PHDC (reviewed 2026-11-25). Source: Palm Hills 9M2026 earnings release (consolidated, EAS), tables in thousands. Shares 2,859.91m from the data feed, NOT from the statement. "
+  },
+  "ADIB": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ADIB.CA/financial_statement/2026-11-03_296969_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== ADIB (reviewed 2026-11-25). Source: condensed interim consolidated statements 9M 2026 (English translation, limited review PwC/Mazars). Tables are scanned images: figures read visually from pages 3-4 (in EGP thousands, shown here in millions). "
+  },
+  "EMFD": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/EMFD.CA/financial_statement/2026-11-12_297578_2.pdf"
+    }
+   ],
+   "basis_en": "// ===== EMFD (reviewed 2026-11-25). Source: interim condensed consolidated statements 9M 2026 (English translation, EY review, foudalens). Balance-sheet page not readable in the text; equity taken from the statement of changes in equity (page 7). "
+  },
+  "ABUK": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/ABUK.CA/financial_statement/2026-11-19_347759_n6ce32af5c8.pdf"
+    }
+   ],
+   "basis_en": "// ===== ABUK (reviewed 2026-11-25). Source: company Earnings Release for 9M 2026 (English, 7 pages, scanned image read visually). The release has no EPS, no share count and no cash flow. Share count is from the data feed (unverified). "
+  },
+  "FWRY": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/FWRY.CA/financial_statement/2026-11-16_297974_2.pdf"
+    },
+    {
+     "type": "press_or_news",
+     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "url": "https://www.fawry.com/wp-content/uploads/2026/11/Fawry-Earnings-Release-3Q26-English-v3.pdf"
+    }
+   ],
+   "basis_en": "// ===== FWRY (reviewed 2026-11-25). Source: consolidated condensed interim statements 9M 2026 (English, foudalens) + company earnings release 3Q26. Balance sheet page not readable in the text file: equity figure is from the data feed and flagged. "
+  },
+  "TMGH": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/TMGH.CA/financial_statement/2026-11-15_297746_2.pdf"
+    },
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/ar/news/297746"
+    }
+   ],
+   "basis_en": "// ===== TMGH (reviewed 2026-11-25). Source: interim consolidated statements 9M 2026 (English translation, limited review by EY/RSM), foudalens. "
+  },
+  "ETEL": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "company_release",
+     "label_ar": "بيان نتائج الشركة 9 شهور 2026 (Earnings Release). القوائم العربية المودعة على foudalens صورة ما اتقرتش، فالدراسة قائمة على بيان الشركة مش على القوائم المودعة",
+     "url": null
+    },
+    {
+     "type": "press_or_news",
+     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "url": "https://ir.te.eg/IRMedia/Financial_Information/Earnings_Release/2026/Earnings_Release87c899ff-a6a7-4c31-bd1d-a6236c2c40d6.pdf"
+    },
+    {
+     "type": "press_or_news",
+     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "url": "https://ir.te.eg/IRMedia/Financial_Information/Earnings_Release/2026/Earnings_Release6e0e975f-190e-438d-926e-1ac077443e9c.pdf"
+    }
+   ],
+   "basis_en": "// ===== ETEL (reviewed 2026-11-25). Source: company 9M 2026 Earnings Release (audited per release, EAS), pages 1,3,4,5 read from the PDF image. The Arabic statements PDF on foudalens is a scan and could not be read. "
+  },
+  "SWDY": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المقدمة للبورصة (ملف)",
+     "url": "https://foudalens.com/disclosures/SWDY.CA/financial_statement/2026-11-12_297464_2.pdf"
+    },
+    {
+     "type": "press_or_news",
+     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "url": "https://irfiles.technologyverse.com/swdy2/Elsewedy-Electric-ER-3Q2026-E-.pdf"
+    }
+   ],
+   "basis_en": "// ===== SWDY (reviewed 2026-11-25). Numbers: consolidated statements 9M26 (limited review) + company earnings release Q3 2026. "
+  },
+  "COMI": {
+   "status": "block",
+   "sources": [
+    {
+     "type": "filed_statements",
+     "label_ar": "القوائم المالية المجمعة 9 شهور سبتمبر 2026 (إيضاح ربح السهم رقم 13)",
+     "url": "https://foudalens.com/disclosures/COMI.CA/financial_statement/2026-11-10_297290_2.pdf"
+    },
+    {
+     "type": "company_release",
+     "label_ar": "بيان نتائج صادر من الشركة نفسها (مش القوائم المودعة)",
+     "url": "https://shareprices.com/rns/cib-earnings-release-9m26-cze0k37fver7csl/"
+    },
+    {
+     "type": "press_or_news",
+     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "url": "https://enterpriseam.com/egypt/2026/11/10/cibs-3q-net-income-falls-17-y-o-y-9m-core-earnings-grow-18/"
+    }
+   ],
+   "basis_en": "// ===== COMI (reviewed 2026-11-25). Paste each block in its file. Nothing here is the user's holdings. "
+  },
+  "MASR": {
+   "status": "early_page",
+   "sources": [],
+   "note_ar": "دراسة الصفحة الأولى (24 نوفمبر): مصادرها مكتوبة في الصفحة نفسها. ما فيش ملف مصادر منفصل هنا."
+  },
+  "BONY": {
+   "status": "early_page",
+   "sources": [],
+   "note_ar": "دراسة الصفحة الأولى (24 نوفمبر): مصادرها مكتوبة في الصفحة نفسها. ما فيش ملف مصادر منفصل هنا."
+  },
+  "HRHO": {
+   "status": "early_page",
+   "sources": [],
+   "note_ar": "دراسة الصفحة الأولى (24 نوفمبر): مصادرها مكتوبة في الصفحة نفسها. ما فيش ملف مصادر منفصل هنا."
+  },
+  "UNIP": {
+   "status": "early_page",
+   "sources": [],
+   "note_ar": "دراسة الصفحة الأولى (24 نوفمبر): مصادرها مكتوبة في الصفحة نفسها. ما فيش ملف مصادر منفصل هنا."
+  },
+  "PHAR": {
+   "status": "early_page",
+   "sources": [],
+   "note_ar": "دراسة الصفحة الأولى (24 نوفمبر): مصادرها مكتوبة في الصفحة نفسها. ما فيش ملف مصادر منفصل هنا."
+  },
+  "ORHD": {
+   "status": "early_page",
+   "sources": [],
+   "note_ar": "دراسة الصفحة الأولى (24 نوفمبر): مصادرها مكتوبة في الصفحة نفسها. ما فيش ملف مصادر منفصل هنا."
+  }
+ }
+}
