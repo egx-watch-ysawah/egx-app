@@ -12,6 +12,7 @@ export function Ticker() {
   const items = SYMS.filter(k => f.rows[k] && f.rows[k].price > 0 && f.rows[k].prev > 0).map(k => ({ k, close: f.rows[k].price, d: 100 * (f.rows[k].price / f.rows[k].prev - 1) }));
   if (!items.length) return null;
   const hm = (() => { try { return new Date(f.at).toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return ''; } })();
+  const dm = (() => { try { return new Date(f.at).toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); } catch { return ''; } })();
   const row = (suffix: string) => items.map(i => (
     <Link key={i.k + suffix} to={'/' + i.k.toLowerCase()} className="tk-i" tabIndex={suffix ? -1 : 0} aria-hidden={suffix ? true : undefined}>
       <b dir="ltr">{i.k}</b>
@@ -20,9 +21,9 @@ export function Ticker() {
     </Link>
   ));
   return (
-    <div className="tk" role="region" aria-label={'شريط الأسهم، آخر لقطة ' + hm} title={'آخر لقطة من المصدر ' + hm + '، متأخرة حتى 20 دقيقة'}>
+    <div className="tk" role="region" aria-label={'شريط الأسهم، آخر لقطة ' + dm + ' ' + hm} title={'آخر لقطة من المصدر ' + dm + ' ' + hm + '، متأخرة حتى 20 دقيقة'}>
       <div className="tk-track">{row('')}{row('-b')}</div>
-      <span className="tk-at" dir="ltr">{hm}</span>
+      <span className="tk-at" dir="ltr">{dm} {hm}</span>
     </div>
   );
 }
