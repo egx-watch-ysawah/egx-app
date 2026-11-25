@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStarta, URL_INDEX, inSessionNow } from './feed';
+import { RefreshBar } from './refresh';
 import { Link, useParams } from './shim';
 import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
@@ -66,8 +67,9 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
       save({ indices: { egx30: { name: 'EGX 30', close: k.value, chg: k.changePercent, chg_abs: k.change } }, fetched_at_utc: k.timestamp });
     }).catch(() => fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(save).catch(() => {}));
     go();
+    window.addEventListener('egx-refresh', go);
     const tm = setInterval(() => { if (document.visibilityState === 'visible' && inSessionNow()) go(); }, 60000);
-    return () => { dead = true; clearInterval(tm); };
+    return () => { dead = true; clearInterval(tm); window.removeEventListener('egx-refresh', go); };
   }, []);
   if (which !== 'egx30') return null;
   const x = j && j.indices && j.indices[which];
@@ -105,6 +107,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   return <div className="eg-pad ix">
     <h2 className="eg-h">{title} <span className="ix-n">{nq ? '· نتايج البحث (' + rows.length + ')' : '(' + rows.length + ' سهم)'}</span></h2>
     <IndexSummary which={which} />
+    <RefreshBar />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث عن سهم" autoComplete="off" /></label>
     <p className="eg-note">الأسعار: {stampNote(d.asof)}. التغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
     <div className="eg-chips">{chip('val', 'الأعلى تداولًا')}{chip('up', 'الأكثر ارتفاعًا')}{chip('down', 'الأكثر هبوطًا')}</div>
