@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useStarta, URL_INDEX, inSessionNow } from './feed';
 import { Link, useParams } from './shim';
 import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
@@ -34,6 +35,11 @@ function useJson(p: string) {
   useEffect(() => { let on = true; getJson(p).then(x => { if (x && Array.isArray(x.rows)) x.rows.forEach((r: any) => { r.name = arName(r.code, r.name); }); else { const mm = /idx\/([A-Z0-9]+)\.json$/.exec(p); if (x && mm) x.name = arName(mm[1], x.name); } on && setD(x); }).catch(() => { delete cache[p]; on && setE(true); }); return () => { on = false; }; }, [p]);
   return [d, e] as const;
 }
+const overlay = (d: any, f: any) => {
+  if (!d || !Array.isArray(d.rows) || !f) return d;
+  const rows = d.rows.map((r: any) => { const s = f.rows[r.code]; return s && !s.stale ? { ...r, price: s.price, chg: s.chg, vol: s.vol, val: s.price * s.vol } : r; });
+  return { ...d, rows, asof: f.at };
+};
 const L = ({ children }: { children: React.ReactNode }) => <bdi dir="ltr">{children}</bdi>;
 const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
 const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(2) + '%';
@@ -53,10 +59,15 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
   const [j, setJ] = useState<any>(() => { try { return JSON.parse(localStorage.getItem('egx-indices-v1') || 'null'); } catch { return null; } });
   useEffect(() => {
     let dead = false;
-    fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(x => {
-      if (dead || !x || !x.indices) return; setJ(x); try { localStorage.setItem('egx-indices-v1', JSON.stringify(x)); } catch { /* ignore */ }
-    }).catch(() => {});
-    return () => { dead = true; };
+    const save = (x: any) => { if (dead || !x || !x.indices) return; setJ(x); try { localStorage.setItem('egx-indices-v1', JSON.stringify(x)); } catch { /* ignore */ } };
+    const go = () => fetch(URL_INDEX + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(q => {
+      const k = q && q.quote;
+      if (!k || !(k.value > 0) || !Number.isFinite(k.changePercent) || !k.timestamp) return Promise.reject();
+      save({ indices: { egx30: { name: 'EGX 30', close: k.value, chg: k.changePercent, chg_abs: k.change } }, fetched_at_utc: k.timestamp });
+    }).catch(() => fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(save).catch(() => {}));
+    go();
+    const tm = setInterval(() => { if (document.visibilityState === 'visible' && inSessionNow()) go(); }, 60000);
+    return () => { dead = true; clearInterval(tm); };
   }, []);
   if (which !== 'egx30') return null;
   const x = j && j.indices && j.indices[which];
@@ -79,7 +90,9 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
 const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
 
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
-  const [d, err] = useJson('idx/index.json');
+  const [d0, err] = useJson('idx/index.json');
+  const sf = useStarta();
+  const d = React.useMemo(() => overlay(d0, sf), [d0, sf]);
   const [sort, setSort] = useState<'val' | 'up' | 'down'>('val');
   const [q, setQ] = useState('');
   const title = which === 'egx30' ? 'EGX 30' : 'EGX 70';
@@ -152,7 +165,9 @@ export function IdxStock() {
   const { code = '' } = useParams();
   const [s, err] = useJson('idx/' + code + '.json');
   const [fund] = useJson('fundamentals.json');
-  const [ix] = useJson('idx/index.json');
+  const [ix0] = useJson('idx/index.json');
+  const sf = useStarta();
+  const ix = React.useMemo(() => overlay(ix0, sf), [ix0, sf]);
   const reviewed = isReviewed(code);
   const [tf, setTf] = useState<TF>('D'); const [n, setN] = useState(130);
   const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: false, bb: false });
