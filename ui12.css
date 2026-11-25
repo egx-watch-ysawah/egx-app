@@ -75,3 +75,4 @@
 .nw-l small{display:block;opacity:.8;margin-top:4px;line-height:1.7}
 .nw-l em{font-style:normal}
 .nw-c{color:#2dd4bf}.nw-r{color:#fbbf24}
+.tk-at{position:absolute;inset-block:0;inset-inline-end:0;display:flex;align-items:center;padding:0 8px;font-size:10.5px;color:#9fb4d4;background:rgba(8,13,22,.94);border-inline-start:1px solid #223048;font-variant-numeric:tabular-nums}
