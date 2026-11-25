@@ -51,7 +51,8 @@ export function SourcedFair({ k }: { k: string }) {
         <h5>{m.name_ar} <span className="tg">{m.status || m.label}</span></h5>
         <Vals c={m.conservative} b={m.base} o={m.optimistic} />
         {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
-        {isPeer(m) && (num(m.conservative) || num(m.optimistic)) ? <div className="na">{PEERS}</div> : null}
+        {isPeer(m) && !m.peers && (num(m.conservative) || num(m.optimistic)) ? <div className="na">{PEERS}</div> : null}
+        {Array.isArray(m.peers) && m.peers.length ? <div className="na">الأقران ومضاعف كل واحد وتاريخ سعره:<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar} ({p.code}): <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
         {m.peers_note ? <div className="na">{m.peers_note}</div> : null}{m.implied_pb ? <div className="na">المضاعف المفترض: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
         <div>الحساب: {m.basis}</div>
         <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /><br /><small>{m.source_status}</small></div>
@@ -63,12 +64,16 @@ export function SourcedFair({ k }: { k: string }) {
     <hr />
     <div className="q"><span>السعر المستهدف</span><span className="tg">تجريبي · {day}</span></div>
     {vs.length ? <div className="big">{rangeOf(vs)}</div> : <div className="big">غير متوفر</div>}
-    <p className="ex">تلات طرق بسيطة بنجرب بيها سعر ممكن يوصله السهم. تجريبي ومش وعد.{hiddenN ? ` ${hiddenN} من التلات طرق مخفية لأنها مش موثوقة، والسبب مكتوب جنب كل طريقة.` : ''}{vs.length === 1 ? ' الظاهر طريقة واحدة بس.' : ''}</p>
+    <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
+    {d.targets_rule_ar ? <p className="nt">{d.targets_rule_ar}</p> : null}
     {bt ? <p className="nt">{bt}</p> : null}
-    <Fold t="الطرق التلاتة والمصادر">
+    <Fold t="السيناريوهين والمصادر">
       {ts.map((t: any) => <div className="mm" key={t.key}>
-        <h5>الطريقة {String(t.key).slice(1)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span></h5>
+        <h5>سيناريو {t.key === 'T1' ? '1' : t.key === 'T3' ? '2' : String(t.key).slice(1)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span></h5>
         <div>{t.name_ar}</div>
+        {num(t.value) && t.scenario_ar ? <div className="na">{t.scenario_ar}</div> : null}
+        {num(t.value) && t.formula_ar ? <div className="ours"><b>الحساب:</b> <bdi dir="ltr">{t.formula_ar}</bdi></div> : null}
+        {num(t.value) && t.growth_note_ar ? <div className="na">{t.growth_note_ar}</div> : null}
         {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
         <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}{(t.source_links || []).map((u: string) => <A key={u} u={u} />)}</div>
         <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
@@ -79,6 +84,8 @@ export function SourcedFair({ k }: { k: string }) {
         ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><A u={an.source} /></div>
         : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
     </Fold>
+    {d.peer_dates_note_ar ? <p className="nt">{d.peer_dates_note_ar}</p> : null}
+    {d.t2_removed_note_ar ? <p className="nt">{d.t2_removed_note_ar}</p> : null}
     <p className="nt">{d.curriculum_note_ar}</p>
     <p className="nt">{d.note_ar}</p>
   </div>;
@@ -103,7 +110,8 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           <h5>{m.label_ar} <span className="tg">{m.status || 'تقديري'}</span></h5>
           <Vals c={(m.values || {}).conservative} b={(m.values || {}).base} o={(m.values || {}).optimistic} />
           {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
-          {isPeer({ name_ar: m.label_ar }) && (num((m.values || {}).conservative) || num((m.values || {}).optimistic)) ? <div className="na">{PEERS}</div> : null}
+          {isPeer({ name_ar: m.label_ar }) && !m.peers && (num((m.values || {}).conservative) || num((m.values || {}).optimistic)) ? <div className="na">{PEERS}</div> : null}
+          {Array.isArray(m.peers) && m.peers.length ? <div className="na">الأقران ومضاعف كل واحد وتاريخ سعره:<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar} ({p.code}): <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
           {m.peers_note ? <div className="na">{m.peers_note}</div> : null}{m.implied_pb ? <div className="na">المضاعف المفترض: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
           <div>الحساب: {m.how}</div>
           <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /></div>
@@ -115,10 +123,14 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
         <div className="na">{s.assumptions}</div>
       </Fold>
       <Fold t="الأهداف التجريبية وتفاصيلها">
+        {s.targets_rule_ar ? <div className="na">{s.targets_rule_ar}</div> : null}
         {(s.targets_experimental || []).map((t: any, i: number) => <div className="mm" key={i}>
           <h5>{t.label_ar}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || 'تجريبي'}</span></h5>
           {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
           <div className="src"><b>من المصدر:</b> {t.from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}<A u={t.source} /></div>
+          {num(t.value) && t.scenario_ar ? <div className="na">{t.scenario_ar}</div> : null}
+          {num(t.value) && t.formula_ar ? <div className="ours"><b>الحساب:</b> <bdi dir="ltr">{t.formula_ar}</bdi></div> : null}
+          {num(t.value) && t.growth_note_ar ? <div className="na">{t.growth_note_ar}</div> : null}
           <div className="ours"><b>من عندنا:</b> {t.ours}</div>
           <div className="na">{t.note}</div>
           {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
