@@ -36,7 +36,7 @@ export function SettingsGear() {
   useEffect(() => { setOn(false); }, [loc.pathname]);
   return (
     <>
-    <small className="bid" dir="ltr">v {buildId()}</small>
+    <small className="bid">{(()=>{const t=parseInt(String(buildId()),36);if(!t||t<1e12)return "نسخة التطبيق";const d=new Date(t);return "آخر تحديث للتطبيق: "+d.toLocaleDateString("ar-EG",{day:"numeric",month:"long"})+" "+d.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"})})()}</small>
     {home && ip && <button type="button" className="set-inst" onClick={() => { ip.prompt(); setIp(null); }}>تثبيت كتطبيق</button>}
     {home && <button type="button" className="set-theme" aria-label={th === 'light' ? 'الوضع الداكن' : 'الوضع الفاتح'} onClick={() => { const n = th === 'light' ? 'dark' : 'light'; setTheme(n); setTh(n); }}>
       {th === 'light'
