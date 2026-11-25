@@ -1,0 +1,511 @@
+{
+ "note": "نصوص بديلة لتاب المالية للستة بس. لا push. اللي بيحل محل نص المضاعفات القديمة (6.67/10/17.36)",
+ "stocks": {
+  "MASR": {
+   "title": "نطاق القيمة العادلة التقديري، على قوائم 9 شهور 2026",
+   "summary": "السعر الحالي 6.36 أقل من النطاق التقديري (متحفظ 6.62، أساسي 10.34، متفائل 11.68). النطاق ده وسيط قيم 2 طرق، تجميع من عندنا، مش طريقة منشورة.",
+   "small": "تقدير بطرق منهجية، مش سعر مستهدف ولا نصيحة. الأسعار متأخرة والمضاعفات من طرف ثالث.",
+   "methods": [
+    {
+     "label_ar": "مقارنة بمضاعف ربحية الشركات المشابهة (Relative Valuation: peer P/E)",
+     "values": {
+      "conservative": 7.43,
+      "base": 10.27,
+      "optimistic": 11.65
+     },
+     "how": "EPS مُسنَد × أدنى/وسيط/أعلى مضاعف P/E بين 4 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "من مواد Damodaran (أستاذ في NYU Stern)، الفصل 17 (Relative Valuation). فتحت الملف وقرأته. لم أتحقق من ورود نفس الفصل في منهج CFA بالنص",
+     "caveat": "حقوق الملكية مستنتجة من الفيد"
+    },
+    {
+     "label_ar": "مقارنة بمضاعف القيمة الدفترية للشركات المشابهة (Relative Valuation: peer P/B)",
+     "values": {
+      "conservative": 5.82,
+      "base": 10.42,
+      "optimistic": 11.71
+     },
+     "how": "BVPS × أدنى/وسيط/أعلى P/B بين 4 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "نفس الفصل 17 لـDamodaran (NYU Stern). لم أتحقق من منهج CFA",
+     "caveat": "حقوق الملكية مستنتجة من الفيد"
+    }
+   ],
+   "method_explainer": "القيمة = رقم من القوائم (ربح السهم أو القيمة الدفترية للسهم) × مضاعف شركات مشابهة، أو معادلة من كتب التقييم. كل رقم جنبه اسم الطريقة ومصدرها. المضاعفات القديمة (6.67 / 10 / 17.36) اتشالت لأنها من غير مصدر منهجي.",
+   "assumptions": "ربح 9 شهور × 4/3 بيفترض إن الربع الرابع زي متوسط الـ9 شهور، وده مش مضمون. الشركات المشابهة اخترناها إحنا، والمضاعفات من stockanalysis (آخر 12 شهر، متأخرة). الأدنى والأعلى في كل طريقة هم أقل وأعلى مضاعف بين المشابهة، فالنطاق ممكن يكون واسع.",
+   "special": "حقوق الملكية للسهم مستنتجة من بيانات الفيد مش من القوائم نفسها.",
+   "unavailable": [
+    "القيمة الدفترية المبرَّرة / الدخل المتبقي: غير مطبَّق: المصدر الموثَّق (Damodaran finfirm) خاص بالبنوك والمؤسسات المالية؛ ولا مصدر مفتوح يغطي الاستخدام لهذا القطاع",
+    "NAV للمشروعات / DCF: غير متوفر: التدفقات النقدية للمشروعات وتكلفة الأرض والتوقيت غير متاحة"
+   ],
+   "targets_experimental": [
+    {
+     "label_ar": "سعر مستهدف = ربحية السهم المتوقعة × مضاعف ربحية الشركات المشابهة (تجريبي)",
+     "name_en": "Method of comparables with forward P/E: forecast EPS × benchmark P/E",
+     "value": 8.66,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 6 §2.1 \"The Method of Comparables\" ص259 (مضاعف مرجعي × EPS المقدّر)، و§3.1.3 \"Forward P/E\" ص272-273",
+     "from_source": "الفكرة: قيمة السهم = مضاعف P/E مرجعي من شركات مشابهة × ربحية السهم المقدّرة للسنة القادمة (forward). الكتاب نفسه بيحذّر إن اختلاف الشركات وعدم كفاءة تسعير المشابهة يخلّي النتيجة نسبية بس.",
+     "ours": "تقدير ربحية السنة القادمة (ربح 9 شهور×4/3 مقسوم على السنة السابقة، بحد -30%/+60%)، واختيار الشركات المشابهة وأخذ الوسيط، وتثبيت المضاعف 12 شهر. ده كله من عندنا.",
+     "note": "مبنية على طريقة منهجية، لكن مدخلاتها من عندنا. نتيجة الاختبار الرجعي: خطأ وسيط 81% في 12 شهر، أسوأ بكتير من \"السعر ثابت\" (24%)"
+    },
+    {
+     "label_ar": "سعر مستهدف = القيمة المقارنة × (1 + العائد المطلوب) (تجريبي)",
+     "name_en": "Target price consistent with fair value = value × (1 + required return) − dividends",
+     "value": 14.38,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 (Return Concepts) مثال \"MSFT target price\" ص43: Target price = Current price × (1 + required return) − dividend",
+     "from_source": "الصيغة: لو السهم مسعّر صح، سعره بعد سنة = السعر الحالي × (1 + العائد المطلوب) − التوزيعات.",
+     "ours": "(1) استبدلنا السعر الحالي بالقيمة المقارنة P/E-peer، (2) العائد المطلوب r = فائدة CBE + 7% افتراض مننا، (3) لم نخصم التوزيعات لأنها غير مقروءة للستة، فالرقم مبالغ فيه بمقدار توزيع سنة.",
+     "note": "الصيغة منهجية، التطبيق من عندنا ومعدّل. الاختبار الرجعي: خطأ وسيط 78% في 12 شهر"
+    },
+    {
+     "label_ar": "سعر مستهدف = السعر الحالي × (1 + نمو الأرباح المتوقع) بمضاعف ثابت (تجريبي)",
+     "name_en": "Constant P/E: price appreciation equals earnings growth",
+     "value": 4.87,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 §3.2.1 ص55: مع ثبات التوزيع وكفاءة السوق يبقى P/E ثابت والسعر ينمو بمعدل نمو الأرباح، والزيادة في السعر لا تتخطى نمو الأرباح إلا لو المضاعف اتّسع",
+     "from_source": "المبدأ: بدون تغيّر في P/E، السعر ينمو بنفس معدل نمو الأرباح.",
+     "ours": "تقدير نمو الأرباح (ربح 9 شهور×4/3 ÷ السنة السابقة، بحد -30%/+60%) وتطبيقه 12 شهر. من عندنا.",
+     "note": "مبدأ منهجي (ليس نموذج تسعير)، والتقدير من عندنا. أفضل أداء في الاختبار الرجعي بين T1-T3 (خطأ وسيط 32% مقابل 24% للسعر الثابت)"
+    }
+   ],
+   "analyst_reference": {
+    "avg": 11.7,
+    "low": 11.09,
+    "high": 12.3,
+    "n": 3,
+    "label": "مستهدف المحللين، مش قيمتنا",
+    "source": "https://stockanalysis.com/quote/egx/MASR/forecast/",
+    "note": "تاريخ التوقع غير منشور في الصفحة؛ سُحب 25 نوفمبر 2026"
+   },
+   "backtest_note": "اختبرنا الطرق على بيانات 2022-2025: \"السعر ثابت\" كان أقرب للسعر اللاحق من كل طرقنا. مضاعفات الأقران أقرب لمستهدف المحللين لكن مش لازم أصح. فالأرقام للمقارنة مش للتنبؤ.",
+   "sources": [
+    "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+    "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf"
+   ]
+  },
+  "BONY": {
+   "title": "نطاق القيمة العادلة التقديري، على قوائم 9 شهور 2026",
+   "summary": "السعر الحالي 4.11، وصافي قيمة الأصول للسهم = 7.20 (متحفظ 6.51، متفائل 7.89).",
+   "small": "تقدير بطرق منهجية، مش سعر مستهدف ولا نصيحة. الأسعار متأخرة والمضاعفات من طرف ثالث.",
+   "methods": [
+    {
+     "label_ar": "صافي قيمة الأصول للسهم (Net Asset Value per share (CFA REIT valuation))",
+     "values": {
+      "conservative": 6.51,
+      "base": 7.2,
+      "optimistic": 7.89
+     },
+     "how": "حقوق الملكية 13,499.3 م (العقارات بالقيمة العادلة في القوائم) ÷ 1,874.84 م سهم؛ ضغط ±10% على قيمة العقارات (16,688.3 م) مع أثر ضريبي 22.5% (افتراض مش مؤكد)",
+     "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/investments-real-estate-pubicly-traded-securities",
+     "curriculum_basis": "قراءة CFA Institute الرسمية عن تقييم العقارات المتداولة (NAV per share): مقروءة نتائج التعلم فقط",
+     "caveat": "عدد الأسهم 30 سبتمبر 2026؛ زيادة أكتوبر وشراء الأسهم غير محسومين. التقييم العقاري من القوائم، مش تقييم مستقل بنفسنا"
+    }
+   ],
+   "method_explainer": "القيمة = رقم من القوائم (ربح السهم أو القيمة الدفترية للسهم) × مضاعف شركات مشابهة، أو معادلة من كتب التقييم. كل رقم جنبه اسم الطريقة ومصدرها. المضاعفات القديمة (6.67 / 10 / 17.36) اتشالت لأنها من غير مصدر منهجي.",
+   "assumptions": "ربح 9 شهور × 4/3 بيفترض إن الربع الرابع زي متوسط الـ9 شهور، وده مش مضمون. الشركات المشابهة اخترناها إحنا، والمضاعفات من stockanalysis (آخر 12 شهر، متأخرة). الأدنى والأعلى في كل طريقة هم أقل وأعلى مضاعف بين المشابهة، فالنطاق ممكن يكون واسع.",
+   "special": "الربح أغلبه إعادة تقييم عقارات، فمضاعف الربحية مش مناسب. القيمة اللي معروضة هي صافي قيمة الأصول من القوائم. عدد الأسهم 1,874.8 مليون في 30 سبتمبر 2026، وزيادة أكتوبر (موظفين 2%) والشراء لسه مش محسومين.",
+   "unavailable": [
+    "مضاعف الربحية (Relative P/E): غير ملائم: الربح أغلبه إعادة تقييم عقارات (1,386.8 من 1,268 م صافي 9 شهور)",
+    "FFO/AFFO وDCF للإيجارات: غير متوفر: NOI لكل عقار وجدول العقود ومعدل الرسملة غير مقروء"
+   ],
+   "targets_experimental": [
+    {
+     "label_ar": "سعر مستهدف = ربحية السهم المتوقعة × مضاعف ربحية الشركات المشابهة (تجريبي)",
+     "name_en": "Method of comparables with forward P/E: forecast EPS × benchmark P/E",
+     "value": 2.66,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 6 §2.1 \"The Method of Comparables\" ص259 (مضاعف مرجعي × EPS المقدّر)، و§3.1.3 \"Forward P/E\" ص272-273",
+     "from_source": "الفكرة: قيمة السهم = مضاعف P/E مرجعي من شركات مشابهة × ربحية السهم المقدّرة للسنة القادمة (forward). الكتاب نفسه بيحذّر إن اختلاف الشركات وعدم كفاءة تسعير المشابهة يخلّي النتيجة نسبية بس.",
+     "ours": "تقدير ربحية السنة القادمة (ربح 9 شهور×4/3 مقسوم على السنة السابقة، بحد -30%/+60%)، واختيار الشركات المشابهة وأخذ الوسيط، وتثبيت المضاعف 12 شهر. ده كله من عندنا.",
+     "note": "مبنية على طريقة منهجية، لكن مدخلاتها من عندنا. نتيجة الاختبار الرجعي: خطأ وسيط 81% في 12 شهر، أسوأ بكتير من \"السعر ثابت\" (24%)"
+    },
+    {
+     "label_ar": "سعر مستهدف = القيمة المقارنة × (1 + العائد المطلوب) (تجريبي)",
+     "name_en": "Target price consistent with fair value = value × (1 + required return) − dividends",
+     "value": 2.15,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 (Return Concepts) مثال \"MSFT target price\" ص43: Target price = Current price × (1 + required return) − dividend",
+     "from_source": "الصيغة: لو السهم مسعّر صح، سعره بعد سنة = السعر الحالي × (1 + العائد المطلوب) − التوزيعات.",
+     "ours": "(1) استبدلنا السعر الحالي بالقيمة المقارنة P/E-peer، (2) العائد المطلوب r = فائدة CBE + 7% افتراض مننا، (3) لم نخصم التوزيعات لأنها غير مقروءة للستة، فالرقم مبالغ فيه بمقدار توزيع سنة.",
+     "note": "الصيغة منهجية، التطبيق من عندنا ومعدّل. الاختبار الرجعي: خطأ وسيط 78% في 12 شهر"
+    },
+    {
+     "label_ar": "سعر مستهدف = السعر الحالي × (1 + نمو الأرباح المتوقع) بمضاعف ثابت (تجريبي)",
+     "name_en": "Constant P/E: price appreciation equals earnings growth",
+     "value": 6.46,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 §3.2.1 ص55: مع ثبات التوزيع وكفاءة السوق يبقى P/E ثابت والسعر ينمو بمعدل نمو الأرباح، والزيادة في السعر لا تتخطى نمو الأرباح إلا لو المضاعف اتّسع",
+     "from_source": "المبدأ: بدون تغيّر في P/E، السعر ينمو بنفس معدل نمو الأرباح.",
+     "ours": "تقدير نمو الأرباح (ربح 9 شهور×4/3 ÷ السنة السابقة، بحد -30%/+60%) وتطبيقه 12 شهر. من عندنا.",
+     "note": "مبدأ منهجي (ليس نموذج تسعير)، والتقدير من عندنا. أفضل أداء في الاختبار الرجعي بين T1-T3 (خطأ وسيط 32% مقابل 24% للسعر الثابت)"
+    }
+   ],
+   "analyst_reference": {
+    "avg": 6.27,
+    "low": 5.75,
+    "high": 6.64,
+    "n": 3,
+    "label": "مستهدف المحللين، مش قيمتنا",
+    "source": "https://stockanalysis.com/quote/egx/BONY/forecast/",
+    "note": "تاريخ التوقع غير منشور؛ آخر سعر على الصفحة 24 سبتمبر"
+   },
+   "backtest_note": "اختبرنا الطرق على بيانات 2022-2025: \"السعر ثابت\" كان أقرب للسعر اللاحق من كل طرقنا. مضاعفات الأقران أقرب لمستهدف المحللين لكن مش لازم أصح. فالأرقام للمقارنة مش للتنبؤ.",
+   "sources": [
+    "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+    "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/investments-real-estate-pubicly-traded-securities"
+   ]
+  },
+  "HRHO": {
+   "title": "نطاق القيمة العادلة التقديري، على قوائم 9 شهور 2026",
+   "summary": "السعر الحالي 26.20 جوه النطاق التقديري (متحفظ 22.35، أساسي 31.91، متفائل 45.42). النطاق ده وسيط قيم 2 طرق، تجميع من عندنا، مش طريقة منشورة.",
+   "small": "تقدير بطرق منهجية، مش سعر مستهدف ولا نصيحة. الأسعار متأخرة والمضاعفات من طرف ثالث.",
+   "methods": [
+    {
+     "label_ar": "مقارنة بمضاعف ربحية الشركات المشابهة (Relative Valuation: peer P/E)",
+     "values": {
+      "conservative": 19.85,
+      "base": 37.28,
+      "optimistic": 62.6
+     },
+     "how": "EPS مُسنَد × أدنى/وسيط/أعلى مضاعف P/E بين 3 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "من مواد Damodaran (أستاذ في NYU Stern)، الفصل 17 (Relative Valuation). فتحت الملف وقرأته. لم أتحقق من ورود نفس الفصل في منهج CFA بالنص",
+     "caveat": "الملكية من الفيد"
+    },
+    {
+     "label_ar": "مقارنة بمضاعف القيمة الدفترية للشركات المشابهة (Relative Valuation: peer P/B)",
+     "values": {
+      "conservative": 24.85,
+      "base": 26.55,
+      "optimistic": 28.25
+     },
+     "how": "BVPS × أدنى/وسيط/أعلى P/B بين 2 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "نفس الفصل 17 لـDamodaran (NYU Stern). لم أتحقق من منهج CFA",
+     "caveat": "الملكية من الفيد"
+    }
+   ],
+   "method_explainer": "القيمة = رقم من القوائم (ربح السهم أو القيمة الدفترية للسهم) × مضاعف شركات مشابهة، أو معادلة من كتب التقييم. كل رقم جنبه اسم الطريقة ومصدرها. المضاعفات القديمة (6.67 / 10 / 17.36) اتشالت لأنها من غير مصدر منهجي.",
+   "assumptions": "ربح 9 شهور × 4/3 بيفترض إن الربع الرابع زي متوسط الـ9 شهور، وده مش مضمون. الشركات المشابهة اخترناها إحنا، والمضاعفات من stockanalysis (آخر 12 شهر، متأخرة). الأدنى والأعلى في كل طريقة هم أقل وأعلى مضاعف بين المشابهة، فالنطاق ممكن يكون واسع.",
+   "special": "حقوق الملكية للسهم من الفيد. شركة قابضة: قيمة كل قطاع لوحده مش متاحة.",
+   "unavailable": [
+    "القيمة الدفترية المبرَّرة / الدخل المتبقي: غير مطبَّق: المصدر الموثَّق (Damodaran finfirm) خاص بالبنوك والمؤسسات المالية؛ ولا مصدر مفتوح يغطي الاستخدام لهذا القطاع",
+    "مجموع الأجزاء (SOTP): غير متوفر: قيمة كل قطاع (سمسرة، إدارة أصول، بنك، إلخ) غير متاحة بمصدر"
+   ],
+   "targets_experimental": [
+    {
+     "label_ar": "سعر مستهدف = ربحية السهم المتوقعة × مضاعف ربحية الشركات المشابهة (تجريبي)",
+     "name_en": "Method of comparables with forward P/E: forecast EPS × benchmark P/E",
+     "value": 36.61,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 6 §2.1 \"The Method of Comparables\" ص259 (مضاعف مرجعي × EPS المقدّر)، و§3.1.3 \"Forward P/E\" ص272-273",
+     "from_source": "الفكرة: قيمة السهم = مضاعف P/E مرجعي من شركات مشابهة × ربحية السهم المقدّرة للسنة القادمة (forward). الكتاب نفسه بيحذّر إن اختلاف الشركات وعدم كفاءة تسعير المشابهة يخلّي النتيجة نسبية بس.",
+     "ours": "تقدير ربحية السنة القادمة (ربح 9 شهور×4/3 مقسوم على السنة السابقة، بحد -30%/+60%)، واختيار الشركات المشابهة وأخذ الوسيط، وتثبيت المضاعف 12 شهر. ده كله من عندنا.",
+     "note": "مبنية على طريقة منهجية، لكن مدخلاتها من عندنا. نتيجة الاختبار الرجعي: خطأ وسيط 81% في 12 شهر، أسوأ بكتير من \"السعر ثابت\" (24%)"
+    },
+    {
+     "label_ar": "سعر مستهدف = القيمة المقارنة × (1 + العائد المطلوب) (تجريبي)",
+     "name_en": "Target price consistent with fair value = value × (1 + required return) − dividends",
+     "value": 55.94,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 (Return Concepts) مثال \"MSFT target price\" ص43: Target price = Current price × (1 + required return) − dividend",
+     "from_source": "الصيغة: لو السهم مسعّر صح، سعره بعد سنة = السعر الحالي × (1 + العائد المطلوب) − التوزيعات.",
+     "ours": "(1) استبدلنا السعر الحالي بالقيمة المقارنة P/E-peer، (2) العائد المطلوب r = فائدة CBE + 7% افتراض مننا، (3) لم نخصم التوزيعات لأنها غير مقروءة للستة، فالرقم مبالغ فيه بمقدار توزيع سنة.",
+     "note": "الصيغة منهجية، التطبيق من عندنا ومعدّل. الاختبار الرجعي: خطأ وسيط 78% في 12 شهر"
+    },
+    {
+     "label_ar": "سعر مستهدف = السعر الحالي × (1 + نمو الأرباح المتوقع) بمضاعف ثابت (تجريبي)",
+     "name_en": "Constant P/E: price appreciation equals earnings growth",
+     "value": 21.78,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 §3.2.1 ص55: مع ثبات التوزيع وكفاءة السوق يبقى P/E ثابت والسعر ينمو بمعدل نمو الأرباح، والزيادة في السعر لا تتخطى نمو الأرباح إلا لو المضاعف اتّسع",
+     "from_source": "المبدأ: بدون تغيّر في P/E، السعر ينمو بنفس معدل نمو الأرباح.",
+     "ours": "تقدير نمو الأرباح (ربح 9 شهور×4/3 ÷ السنة السابقة، بحد -30%/+60%) وتطبيقه 12 شهر. من عندنا.",
+     "note": "مبدأ منهجي (ليس نموذج تسعير)، والتقدير من عندنا. أفضل أداء في الاختبار الرجعي بين T1-T3 (خطأ وسيط 32% مقابل 24% للسعر الثابت)"
+    }
+   ],
+   "analyst_reference": {
+    "avg": 35.74,
+    "low": 30.1,
+    "high": 43,
+    "n": 4,
+    "label": "مستهدف المحللين، مش قيمتنا",
+    "source": "https://stockanalysis.com/quote/egx/HRHO/forecast/",
+    "note": "تاريخ التوقع غير منشور في الصفحة؛ سُحب 25 نوفمبر 2026"
+   },
+   "backtest_note": "اختبرنا الطرق على بيانات 2022-2025: \"السعر ثابت\" كان أقرب للسعر اللاحق من كل طرقنا. مضاعفات الأقران أقرب لمستهدف المحللين لكن مش لازم أصح. فالأرقام للمقارنة مش للتنبؤ.",
+   "sources": [
+    "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+    "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf"
+   ]
+  },
+  "UNIP": {
+   "title": "نطاق القيمة العادلة التقديري، على قوائم 9 شهور 2026",
+   "summary": "السعر الحالي 0.30 أعلى من النطاق التقديري (متحفظ 0.10، أساسي 0.12، متفائل 0.24). النطاق ده وسيط قيم 2 طرق، تجميع من عندنا، مش طريقة منشورة.",
+   "small": "تقدير بطرق منهجية، مش سعر مستهدف ولا نصيحة. الأسعار متأخرة والمضاعفات من طرف ثالث.",
+   "methods": [
+    {
+     "label_ar": "مقارنة بمضاعف ربحية الشركات المشابهة (Relative Valuation: peer P/E)",
+     "values": {
+      "conservative": 0.04,
+      "base": 0.06,
+      "optimistic": 0.08
+     },
+     "how": "EPS مُسنَد × أدنى/وسيط/أعلى مضاعف P/E بين 3 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "من مواد Damodaran (أستاذ في NYU Stern)، الفصل 17 (Relative Valuation). فتحت الملف وقرأته. لم أتحقق من ورود نفس الفصل في منهج CFA بالنص",
+     "caveat": "الربح صغير جدًا (الفوائد 88% من ربح التشغيل): حساس جدًا"
+    },
+    {
+     "label_ar": "مقارنة بمضاعف القيمة الدفترية للشركات المشابهة (Relative Valuation: peer P/B)",
+     "values": {
+      "conservative": 0.16,
+      "base": 0.19,
+      "optimistic": 0.41
+     },
+     "how": "BVPS × أدنى/وسيط/أعلى P/B بين 3 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "نفس الفصل 17 لـDamodaran (NYU Stern). لم أتحقق من منهج CFA",
+     "caveat": "الربح صغير جدًا (الفوائد 88% من ربح التشغيل): حساس جدًا"
+    }
+   ],
+   "method_explainer": "القيمة = رقم من القوائم (ربح السهم أو القيمة الدفترية للسهم) × مضاعف شركات مشابهة، أو معادلة من كتب التقييم. كل رقم جنبه اسم الطريقة ومصدرها. المضاعفات القديمة (6.67 / 10 / 17.36) اتشالت لأنها من غير مصدر منهجي.",
+   "assumptions": "ربح 9 شهور × 4/3 بيفترض إن الربع الرابع زي متوسط الـ9 شهور، وده مش مضمون. الشركات المشابهة اخترناها إحنا، والمضاعفات من stockanalysis (آخر 12 شهر، متأخرة). الأدنى والأعلى في كل طريقة هم أقل وأعلى مضاعف بين المشابهة، فالنطاق ممكن يكون واسع.",
+   "special": "الربح صغير جدًا (الفوائد بتاكل 88% من ربح التشغيل)، فأي تغيير بسيط في الربح يحرك الأرقام كتير.",
+   "unavailable": [
+    "القيمة الدفترية المبرَّرة / الدخل المتبقي: غير مطبَّق: المصدر الموثَّق (Damodaran finfirm) خاص بالبنوك والمؤسسات المالية؛ ولا مصدر مفتوح يغطي الاستخدام لهذا القطاع",
+    "EV/EBITDA (Damodaran): غير متوفر: الإهلاك لم يُقرأ من القوائم (EBITDA غير معروف)، ومضاعفات 6/8/10 القديمة بدون مصدر ومستبعدة"
+   ],
+   "targets_experimental": [
+    {
+     "label_ar": "سعر مستهدف = ربحية السهم المتوقعة × مضاعف ربحية الشركات المشابهة (تجريبي)",
+     "name_en": "Method of comparables with forward P/E: forecast EPS × benchmark P/E",
+     "value": 0.0996,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 6 §2.1 \"The Method of Comparables\" ص259 (مضاعف مرجعي × EPS المقدّر)، و§3.1.3 \"Forward P/E\" ص272-273",
+     "from_source": "الفكرة: قيمة السهم = مضاعف P/E مرجعي من شركات مشابهة × ربحية السهم المقدّرة للسنة القادمة (forward). الكتاب نفسه بيحذّر إن اختلاف الشركات وعدم كفاءة تسعير المشابهة يخلّي النتيجة نسبية بس.",
+     "ours": "تقدير ربحية السنة القادمة (ربح 9 شهور×4/3 مقسوم على السنة السابقة، بحد -30%/+60%)، واختيار الشركات المشابهة وأخذ الوسيط، وتثبيت المضاعف 12 شهر. ده كله من عندنا.",
+     "note": "مبنية على طريقة منهجية، لكن مدخلاتها من عندنا. نتيجة الاختبار الرجعي: خطأ وسيط 81% في 12 شهر، أسوأ بكتير من \"السعر ثابت\" (24%)"
+    },
+    {
+     "label_ar": "سعر مستهدف = القيمة المقارنة × (1 + العائد المطلوب) (تجريبي)",
+     "name_en": "Target price consistent with fair value = value × (1 + required return) − dividends",
+     "value": 0.0836,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 (Return Concepts) مثال \"MSFT target price\" ص43: Target price = Current price × (1 + required return) − dividend",
+     "from_source": "الصيغة: لو السهم مسعّر صح، سعره بعد سنة = السعر الحالي × (1 + العائد المطلوب) − التوزيعات.",
+     "ours": "(1) استبدلنا السعر الحالي بالقيمة المقارنة P/E-peer، (2) العائد المطلوب r = فائدة CBE + 7% افتراض مننا، (3) لم نخصم التوزيعات لأنها غير مقروءة للستة، فالرقم مبالغ فيه بمقدار توزيع سنة.",
+     "note": "الصيغة منهجية، التطبيق من عندنا ومعدّل. الاختبار الرجعي: خطأ وسيط 78% في 12 شهر"
+    },
+    {
+     "label_ar": "سعر مستهدف = السعر الحالي × (1 + نمو الأرباح المتوقع) بمضاعف ثابت (تجريبي)",
+     "name_en": "Constant P/E: price appreciation equals earnings growth",
+     "value": 0.4536,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 §3.2.1 ص55: مع ثبات التوزيع وكفاءة السوق يبقى P/E ثابت والسعر ينمو بمعدل نمو الأرباح، والزيادة في السعر لا تتخطى نمو الأرباح إلا لو المضاعف اتّسع",
+     "from_source": "المبدأ: بدون تغيّر في P/E، السعر ينمو بنفس معدل نمو الأرباح.",
+     "ours": "تقدير نمو الأرباح (ربح 9 شهور×4/3 ÷ السنة السابقة، بحد -30%/+60%) وتطبيقه 12 شهر. من عندنا.",
+     "note": "مبدأ منهجي (ليس نموذج تسعير)، والتقدير من عندنا. أفضل أداء في الاختبار الرجعي بين T1-T3 (خطأ وسيط 32% مقابل 24% للسعر الثابت)"
+    }
+   ],
+   "analyst_reference": {
+    "status": "غير متوفر",
+    "reason": "مفيش صفحة توقعات المحللين لهذا السهم على المصدر"
+   },
+   "backtest_note": "اختبرنا الطرق على بيانات 2022-2025: \"السعر ثابت\" كان أقرب للسعر اللاحق من كل طرقنا. مضاعفات الأقران أقرب لمستهدف المحللين لكن مش لازم أصح. فالأرقام للمقارنة مش للتنبؤ.",
+   "sources": [
+    "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+    "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf"
+   ]
+  },
+  "PHAR": {
+   "title": "نطاق القيمة العادلة التقديري، على قوائم 9 شهور 2026",
+   "summary": "السعر الحالي 100.99 جوه النطاق التقديري (متحفظ 88.91، أساسي 117.50، متفائل 201.04). النطاق ده وسيط قيم 2 طرق، تجميع من عندنا، مش طريقة منشورة.",
+   "small": "تقدير بطرق منهجية، مش سعر مستهدف ولا نصيحة. الأسعار متأخرة والمضاعفات من طرف ثالث.",
+   "methods": [
+    {
+     "label_ar": "مقارنة بمضاعف ربحية الشركات المشابهة (Relative Valuation: peer P/E)",
+     "values": {
+      "conservative": 64.78,
+      "base": 88.5,
+      "optimistic": 190.15
+     },
+     "how": "EPS مُسنَد × أدنى/وسيط/أعلى مضاعف P/E بين 4 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "من مواد Damodaran (أستاذ في NYU Stern)، الفصل 17 (Relative Valuation). فتحت الملف وقرأته. لم أتحقق من ورود نفس الفصل في منهج CFA بالنص",
+     "caveat": "قوائم 9 شهور 2026 عليها تحفظ المراجع: مشروط، مش مراجَع"
+    },
+    {
+     "label_ar": "مقارنة بمضاعف القيمة الدفترية للشركات المشابهة (Relative Valuation: peer P/B)",
+     "values": {
+      "conservative": 113.03,
+      "base": 146.49,
+      "optimistic": 211.93
+     },
+     "how": "BVPS × أدنى/وسيط/أعلى P/B بين 4 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "نفس الفصل 17 لـDamodaran (NYU Stern). لم أتحقق من منهج CFA",
+     "caveat": "قوائم 9 شهور 2026 عليها تحفظ المراجع: مشروط، مش مراجَع"
+    }
+   ],
+   "method_explainer": "القيمة = رقم من القوائم (ربح السهم أو القيمة الدفترية للسهم) × مضاعف شركات مشابهة، أو معادلة من كتب التقييم. كل رقم جنبه اسم الطريقة ومصدرها. المضاعفات القديمة (6.67 / 10 / 17.36) اتشالت لأنها من غير مصدر منهجي.",
+   "assumptions": "ربح 9 شهور × 4/3 بيفترض إن الربع الرابع زي متوسط الـ9 شهور، وده مش مضمون. الشركات المشابهة اخترناها إحنا، والمضاعفات من stockanalysis (آخر 12 شهر، متأخرة). الأدنى والأعلى في كل طريقة هم أقل وأعلى مضاعف بين المشابهة، فالنطاق ممكن يكون واسع.",
+   "special": "قوائم 9 شهور 2026 المجمّعة عليها تحفظ من المراجع (شركة زميلة قوائمها مش موجودة)، فالأرقام مشروطة ومش مراجَعة.",
+   "unavailable": [
+    "القيمة الدفترية المبرَّرة / الدخل المتبقي: غير مطبَّق: المصدر الموثَّق (Damodaran finfirm) خاص بالبنوك والمؤسسات المالية؛ ولا مصدر مفتوح يغطي الاستخدام لهذا القطاع",
+    "DCF (FCFF): غير متوفر: لا توقعات متعددة السنوات ولا تدفق نقدي طبيعي؛ والقوائم الأخيرة بتحفظ",
+    "EV/EBITDA: غير متوفر: EBITDA وصافي الدين للأقران والسهم غير مقروءين كلهم"
+   ],
+   "targets_experimental": [
+    {
+     "label_ar": "سعر مستهدف = ربحية السهم المتوقعة × مضاعف ربحية الشركات المشابهة (تجريبي)",
+     "name_en": "Method of comparables with forward P/E: forecast EPS × benchmark P/E",
+     "value": 64.9,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 6 §2.1 \"The Method of Comparables\" ص259 (مضاعف مرجعي × EPS المقدّر)، و§3.1.3 \"Forward P/E\" ص272-273",
+     "from_source": "الفكرة: قيمة السهم = مضاعف P/E مرجعي من شركات مشابهة × ربحية السهم المقدّرة للسنة القادمة (forward). الكتاب نفسه بيحذّر إن اختلاف الشركات وعدم كفاءة تسعير المشابهة يخلّي النتيجة نسبية بس.",
+     "ours": "تقدير ربحية السنة القادمة (ربح 9 شهور×4/3 مقسوم على السنة السابقة، بحد -30%/+60%)، واختيار الشركات المشابهة وأخذ الوسيط، وتثبيت المضاعف 12 شهر. ده كله من عندنا.",
+     "note": "مبنية على طريقة منهجية، لكن مدخلاتها من عندنا. نتيجة الاختبار الرجعي: خطأ وسيط 81% في 12 شهر، أسوأ بكتير من \"السعر ثابت\" (24%)"
+    },
+    {
+     "label_ar": "سعر مستهدف = القيمة المقارنة × (1 + العائد المطلوب) (تجريبي)",
+     "name_en": "Target price consistent with fair value = value × (1 + required return) − dividends",
+     "value": 112.39,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 (Return Concepts) مثال \"MSFT target price\" ص43: Target price = Current price × (1 + required return) − dividend",
+     "from_source": "الصيغة: لو السهم مسعّر صح، سعره بعد سنة = السعر الحالي × (1 + العائد المطلوب) − التوزيعات.",
+     "ours": "(1) استبدلنا السعر الحالي بالقيمة المقارنة P/E-peer، (2) العائد المطلوب r = فائدة CBE + 7% افتراض مننا، (3) لم نخصم التوزيعات لأنها غير مقروءة للستة، فالرقم مبالغ فيه بمقدار توزيع سنة.",
+     "note": "الصيغة منهجية، التطبيق من عندنا ومعدّل. الاختبار الرجعي: خطأ وسيط 78% في 12 شهر"
+    },
+    {
+     "label_ar": "سعر مستهدف = السعر الحالي × (1 + نمو الأرباح المتوقع) بمضاعف ثابت (تجريبي)",
+     "name_en": "Constant P/E: price appreciation equals earnings growth",
+     "value": 74.07,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 §3.2.1 ص55: مع ثبات التوزيع وكفاءة السوق يبقى P/E ثابت والسعر ينمو بمعدل نمو الأرباح، والزيادة في السعر لا تتخطى نمو الأرباح إلا لو المضاعف اتّسع",
+     "from_source": "المبدأ: بدون تغيّر في P/E، السعر ينمو بنفس معدل نمو الأرباح.",
+     "ours": "تقدير نمو الأرباح (ربح 9 شهور×4/3 ÷ السنة السابقة، بحد -30%/+60%) وتطبيقه 12 شهر. من عندنا.",
+     "note": "مبدأ منهجي (ليس نموذج تسعير)، والتقدير من عندنا. أفضل أداء في الاختبار الرجعي بين T1-T3 (خطأ وسيط 32% مقابل 24% للسعر الثابت)"
+    }
+   ],
+   "analyst_reference": {
+    "avg": 108.2,
+    "low": 100,
+    "high": 116.4,
+    "n": 2,
+    "label": "مستهدف المحللين، مش قيمتنا",
+    "source": "https://stockanalysis.com/quote/egx/PHAR/forecast/",
+    "note": "تاريخ التوقع غير منشور في الصفحة؛ سُحب 25 نوفمبر 2026"
+   },
+   "backtest_note": "اختبرنا الطرق على بيانات 2022-2025: \"السعر ثابت\" كان أقرب للسعر اللاحق من كل طرقنا. مضاعفات الأقران أقرب لمستهدف المحللين لكن مش لازم أصح. فالأرقام للمقارنة مش للتنبؤ.",
+   "sources": [
+    "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+    "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf"
+   ]
+  },
+  "ORHD": {
+   "title": "نطاق القيمة العادلة التقديري، على قوائم 9 شهور 2026",
+   "summary": "السعر الحالي 10.44 جوه النطاق التقديري (متحفظ 6.71، أساسي 10.68، متفائل 12.67). النطاق ده وسيط قيم 2 طرق، تجميع من عندنا، مش طريقة منشورة.",
+   "small": "تقدير بطرق منهجية، مش سعر مستهدف ولا نصيحة. الأسعار متأخرة والمضاعفات من طرف ثالث.",
+   "methods": [
+    {
+     "label_ar": "مقارنة بمضاعف ربحية الشركات المشابهة (Relative Valuation: peer P/E)",
+     "values": {
+      "conservative": 8.57,
+      "base": 14.4,
+      "optimistic": 16.33
+     },
+     "how": "EPS مُسنَد × أدنى/وسيط/أعلى مضاعف P/E بين 4 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "من مواد Damodaran (أستاذ في NYU Stern)، الفصل 17 (Relative Valuation). فتحت الملف وقرأته. لم أتحقق من ورود نفس الفصل في منهج CFA بالنص",
+     "caveat": "الملكية مستنتجة من الفيد، وأسهم المنحة 7 أكتوبر"
+    },
+    {
+     "label_ar": "مقارنة بمضاعف القيمة الدفترية للشركات المشابهة (Relative Valuation: peer P/B)",
+     "values": {
+      "conservative": 4.84,
+      "base": 6.95,
+      "optimistic": 9.01
+     },
+     "how": "BVPS × أدنى/وسيط/أعلى P/B بين 4 شركات مشابهة",
+     "source": "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+     "curriculum_basis": "نفس الفصل 17 لـDamodaran (NYU Stern). لم أتحقق من منهج CFA",
+     "caveat": "الملكية مستنتجة من الفيد، وأسهم المنحة 7 أكتوبر"
+    }
+   ],
+   "method_explainer": "القيمة = رقم من القوائم (ربح السهم أو القيمة الدفترية للسهم) × مضاعف شركات مشابهة، أو معادلة من كتب التقييم. كل رقم جنبه اسم الطريقة ومصدرها. المضاعفات القديمة (6.67 / 10 / 17.36) اتشالت لأنها من غير مصدر منهجي.",
+   "assumptions": "ربح 9 شهور × 4/3 بيفترض إن الربع الرابع زي متوسط الـ9 شهور، وده مش مضمون. الشركات المشابهة اخترناها إحنا، والمضاعفات من stockanalysis (آخر 12 شهر، متأخرة). الأدنى والأعلى في كل طريقة هم أقل وأعلى مضاعف بين المشابهة، فالنطاق ممكن يكون واسع.",
+   "special": "حقوق الملكية مستنتجة من الفيد، وأسهم المنحة (7 أكتوبر) غيّرت عدد الأسهم.",
+   "unavailable": [
+    "القيمة الدفترية المبرَّرة / الدخل المتبقي: غير مطبَّق: المصدر الموثَّق (Damodaran finfirm) خاص بالبنوك والمؤسسات المالية؛ ولا مصدر مفتوح يغطي الاستخدام لهذا القطاع",
+    "NAV للمشروعات / DCF: غير متوفر: التدفقات النقدية للمشروعات وتكلفة الأرض والتوقيت غير متاحة"
+   ],
+   "targets_experimental": [
+    {
+     "label_ar": "سعر مستهدف = ربحية السهم المتوقعة × مضاعف ربحية الشركات المشابهة (تجريبي)",
+     "name_en": "Method of comparables with forward P/E: forecast EPS × benchmark P/E",
+     "value": 16.57,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 6 §2.1 \"The Method of Comparables\" ص259 (مضاعف مرجعي × EPS المقدّر)، و§3.1.3 \"Forward P/E\" ص272-273",
+     "from_source": "الفكرة: قيمة السهم = مضاعف P/E مرجعي من شركات مشابهة × ربحية السهم المقدّرة للسنة القادمة (forward). الكتاب نفسه بيحذّر إن اختلاف الشركات وعدم كفاءة تسعير المشابهة يخلّي النتيجة نسبية بس.",
+     "ours": "تقدير ربحية السنة القادمة (ربح 9 شهور×4/3 مقسوم على السنة السابقة، بحد -30%/+60%)، واختيار الشركات المشابهة وأخذ الوسيط، وتثبيت المضاعف 12 شهر. ده كله من عندنا.",
+     "note": "مبنية على طريقة منهجية، لكن مدخلاتها من عندنا. نتيجة الاختبار الرجعي: خطأ وسيط 81% في 12 شهر، أسوأ بكتير من \"السعر ثابت\" (24%)"
+    },
+    {
+     "label_ar": "سعر مستهدف = القيمة المقارنة × (1 + العائد المطلوب) (تجريبي)",
+     "name_en": "Target price consistent with fair value = value × (1 + required return) − dividends",
+     "value": 20.16,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 (Return Concepts) مثال \"MSFT target price\" ص43: Target price = Current price × (1 + required return) − dividend",
+     "from_source": "الصيغة: لو السهم مسعّر صح، سعره بعد سنة = السعر الحالي × (1 + العائد المطلوب) − التوزيعات.",
+     "ours": "(1) استبدلنا السعر الحالي بالقيمة المقارنة P/E-peer، (2) العائد المطلوب r = فائدة CBE + 7% افتراض مننا، (3) لم نخصم التوزيعات لأنها غير مقروءة للستة، فالرقم مبالغ فيه بمقدار توزيع سنة.",
+     "note": "الصيغة منهجية، التطبيق من عندنا ومعدّل. الاختبار الرجعي: خطأ وسيط 78% في 12 شهر"
+    },
+    {
+     "label_ar": "سعر مستهدف = السعر الحالي × (1 + نمو الأرباح المتوقع) بمضاعف ثابت (تجريبي)",
+     "name_en": "Constant P/E: price appreciation equals earnings growth",
+     "value": 10.9,
+     "status": null,
+     "source": "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf",
+     "source_reference": "Pinto, Henry, Robinson, Stowe, Equity Asset Valuation, 2nd ed., CFA Institute Investment Series (نسخة PDF فتحتها بنفسي على مدونة طرف ثالث، مش موقع CFA الرسمي): الفصل 2 §3.2.1 ص55: مع ثبات التوزيع وكفاءة السوق يبقى P/E ثابت والسعر ينمو بمعدل نمو الأرباح، والزيادة في السعر لا تتخطى نمو الأرباح إلا لو المضاعف اتّسع",
+     "from_source": "المبدأ: بدون تغيّر في P/E، السعر ينمو بنفس معدل نمو الأرباح.",
+     "ours": "تقدير نمو الأرباح (ربح 9 شهور×4/3 ÷ السنة السابقة، بحد -30%/+60%) وتطبيقه 12 شهر. من عندنا.",
+     "note": "مبدأ منهجي (ليس نموذج تسعير)، والتقدير من عندنا. أفضل أداء في الاختبار الرجعي بين T1-T3 (خطأ وسيط 32% مقابل 24% للسعر الثابت)"
+    }
+   ],
+   "analyst_reference": {
+    "avg": 17.42,
+    "low": 16.88,
+    "high": 17.96,
+    "n": 2,
+    "label": "مستهدف المحللين، مش قيمتنا",
+    "source": "https://stockanalysis.com/quote/egx/ORHD/forecast/",
+    "note": "تاريخ التوقع غير منشور في الصفحة؛ سُحب 25 نوفمبر 2026"
+   },
+   "backtest_note": "اختبرنا الطرق على بيانات 2022-2025: \"السعر ثابت\" كان أقرب للسعر اللاحق من كل طرقنا. مضاعفات الأقران أقرب لمستهدف المحللين لكن مش لازم أصح. فالأرقام للمقارنة مش للتنبؤ.",
+   "sources": [
+    "https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch17.pdf",
+    "https://theequityanalyst.wordpress.com/wp-content/uploads/2015/08/equity-asset-valuation.pdf"
+   ]
+  }
+ }
+}
