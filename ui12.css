@@ -64,3 +64,8 @@
 .tv-down .tv-t{color:#f0b3bc;text-shadow:none}
 .gd-fv .gd-it.ok,.gd-fv .gd-it.no,.gd-fv .gd-it.mid,.gd-fv .gd-rng div{border-inline-start-color:#475569}
 .gd-fv .gd-it.ok .gd-h b,.gd-fv .gd-it.no .gd-h b,.gd-fv .gd-it.mid .gd-h b{background:#ffffff12;color:#dbe4f0}
+.ot-lb{background:#111a2a;border:1px solid #ffffff14;border-radius:12px;padding:8px 12px}
+.ot-px{display:flex;align-items:baseline;gap:.5em;margin:.4em 0}.ot-px b{font-size:34px}.ot-px .u{color:#4cf0b0}.ot-px .d{color:#e58f9b}
+.ot-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.ot-g .eg-m{margin:0}
+.ot-ch svg{width:100%;height:150px;background:#0e1626;border-radius:14px}.ot-ax{direction:ltr;display:flex;justify-content:space-between;font-size:12.5px;color:#a9b6cb;margin-top:4px}
+.ot-g .na{display:block;font-size:13px;font-weight:500;line-height:1.7;color:#a9b6cb}.ot-g .na small{font-size:12.5px}
