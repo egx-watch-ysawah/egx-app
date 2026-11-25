@@ -10,15 +10,16 @@ const STALE_AN = 'أهداف المحللين من صفحات stockanalysis وغ
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
 const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور×4/3: الأساس مش متطابق.';
+export const tidy = (x: any) => String(x == null ? '' : x).replace(/([.،؛:])(\s*[.،؛:])+/g, (m: string) => { const c = m.replace(/[\s]/g, ''); return c[c.length - 1]; }).replace(/(^|\s)([\u0600-\u06FF]{3,})\s+\2(?=\s|[.،؛:]|$)/g, '$1$2').replace(/ {2,}/g, ' ');
 const isPeer = (m: any) => m && (m.method_key === 'PE' || m.method_key === 'PB' || /شركات شبهها|شركات مشابهة|أقران/.test(String(m.name_ar || m.label_ar || '')));
-const Cell = ({ l, v }: { l: string; v: any }) => <div><small>{l}</small><b dir="ltr">{num(v) ? fx(v) : '—'}</b></div>;
-const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l={m && m.range_kind_ar ? 'الوسط في ' + m.range_kind_ar : 'متوسط'} v={b} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
+const Cell = ({ l, v, t }: { l: string; v: any; t?: string }) => <div><small>{l}</small>{num(v) ? <b dir="ltr">{fx(v)}</b> : t ? <b className="mid">{t}</b> : <b dir="ltr">—</b>}</div>;
+const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l={m && m.range_kind_ar ? 'الوسط في ' + m.range_kind_ar : 'متوسط'} v={b} t={m && m.midpoint_text_ar} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
 const Caveat = ({ m }: { m: any }) => <>{m.caveat ? <div className="ours">ملحوظة: {m.caveat}</div> : null}{m.number_caveat && !String(m.caveat || '').includes(m.number_caveat) ? <div className="ours">{m.number_caveat}</div> : null}</>;
 const Card = ({ c }: { c: any }) => <>
-  {c.headline_ar ? <div className="ch"><b>{c.headline_ar}</b></div> : null}
-  {(c.lines_ar || []).map((l: string, i: number) => <div className="cl" key={i}>{l}</div>)}
-  {c.caveat_line_ar ? <div className="ours">{c.caveat_line_ar}</div> : null}
-  {(c.details_ar || []).length ? <Fold t="تفاصيل أكتر">{(c.details_ar || []).map((l: string, i: number) => <div className="na" key={i}>{l}</div>)}</Fold> : null}
+  {c.headline_ar ? <div className="ch"><b>{tidy(c.headline_ar)}</b></div> : null}
+  {(c.lines_ar || []).map((l: string, i: number) => <div className="cl" key={i}>{tidy(l)}</div>)}
+  {c.caveat_line_ar ? <div className="ours">{tidy(c.caveat_line_ar)}</div> : null}
+  {(c.details_ar || []).length ? <Fold t="تفاصيل أكتر">{(c.details_ar || []).map((l: string, i: number) => <div className="na" key={i}>{tidy(l)}</div>)}</Fold> : null}
 </>;
 const Srcs = ({ l }: { l: any }) => Array.isArray(l) && l.length ? <div className="na"><b>المصادر:</b><ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{l.map((x: any) => <li key={x.url}><a href={x.url} target="_blank" rel="noreferrer">{x.title_ar}</a></li>)}</ul></div> : null;
 const rangeOf = (vs: number[]) => vs.length ? (Math.min(...vs) === Math.max(...vs) ? <bdi dir="ltr">{fx(vs[0])}</bdi> : <><bdi dir="ltr">{fx(Math.min(...vs))}</bdi> إلى <bdi dir="ltr">{fx(Math.max(...vs))}</bdi></>) : null;
@@ -34,7 +35,7 @@ const CSS = `
 .fv6 .vv{display:flex;gap:6px;margin:4px 0}.fv6 .vv div{flex:1;background:#101827;border-radius:8px;text-align:center;padding:4px 2px}
 .fv6 .vv small{display:block;color:#8b97ad;font-size:11px}.fv6 .vv b{color:#fff}
 .fv6 .src{color:#9fb0c9}.fv6 .src a{color:#7dd3fc;word-break:break-all}.fv6 .ours{color:#f5c26b}
-.fv6 .ch{margin:6px 0;line-height:1.8;color:#e8edf5}.fv6 .cl{color:#cbd5e6;font-size:13px;line-height:1.9;margin:3px 0}
+.fv6 .vv .mid{font-size:11.5px;font-weight:500;line-height:1.6;color:#cbd5e6}.fv6 .ch{margin:6px 0;line-height:1.8;color:#e8edf5}.fv6 .cl{color:#cbd5e6;font-size:13px;line-height:1.9;margin:3px 0}
 .fv6 .na{color:#9aa6bb;font-size:12.5px;line-height:1.8;margin:4px 0}
 .fv6 .an{border-top:1px dashed #2a3650;margin-top:8px;padding-top:6px;font-size:13px;color:#d5dbe7}
 .fv6 hr{border:0;border-top:1px solid #263249;margin:12px 0}
@@ -58,7 +59,7 @@ export function SourcedFair({ k }: { k: string }) {
   return <div className="gd-fv fv6"><style>{CSS}</style>
     <div className="q"><span>السعر العادل</span><span className="tg">تقديري · {day}</span></div>
     {aOk ? <div className="big"><bdi dir="ltr">{fx(a.conservative)}</bdi> إلى <bdi dir="ltr">{fx(a.optimistic)}</bdi></div> : <div className="big">{a && a.headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر'}</div>}
-    <p className="ex">{aOk ? <>سعر تقديري من طرق ليها مرجع مكتوب تحت، عشان تقارنه بالسعر في السوق. {num(a.base) ? <>الوسط <bdi dir="ltr">{fx(a.base)}</bdi>. </> : null}{a.label} ({a.n_methods} طريقة). </> : a && a.headline_ar ? <>{a.headline_ar} {a.have_ar} </> : <>غير متوفر: {(a && a.reason) || 'مفيش تجميع، لأن الطرق الموثوقة أقل من طريقتين.'} الطرق وحالة كل واحدة تحت. </>}السعر الحالي <bdi dir="ltr">{fx(s.price)}</bdi> ({s.price_note}).</p>
+    <p className="ex">{aOk ? <>سعر تقديري من طرق ليها مرجع مكتوب تحت، عشان تقارنه بالسعر في السوق. {num(a.base) ? <>الوسط <bdi dir="ltr">{fx(a.base)}</bdi>. </> : null}{a.label} ({a.n_methods} طريقة). </> : a && a.headline_ar ? <>{tidy(a.headline_ar)} {tidy(a.have_ar)} </> : <>غير متوفر: {(a && a.reason) || 'مفيش تجميع، لأن الطرق الموثوقة أقل من طريقتين.'} الطرق وحالة كل واحدة تحت. </>}السعر الحالي <bdi dir="ltr">{fx(s.price)}</bdi> ({s.price_note}).</p>
     {a && a.noncore_warning_ar ? <div className="ours">{a.noncore_warning_ar}</div> : null}
     <Fold t="الطرق والمصادر">
       {s.methods.map((m: any) => <div className="mm" key={m.method_key}>
@@ -66,8 +67,8 @@ export function SourcedFair({ k }: { k: string }) {
         <Vals c={m.conservative} b={m.base} o={m.optimistic} m={m} />{m.noncore_warning_ar && !m.card_ar ? <div className="ours">{m.noncore_warning_ar}</div> : null}
         {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
         {isPeer(m) && !m.peers && (num(m.conservative) || num(m.optimistic)) ? <div className="na">{PEERS}</div> : null}
-        {Array.isArray(m.peers) && m.peers.length ? <div className="na">الأقران ومضاعف كل واحد وتاريخ سعره:<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar} ({p.code}): <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
-        {m.peers_note ? <div className="na">{m.peers_note}</div> : null}{m.implied_pb ? <div className="na">المضاعف المفترض: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
+        {Array.isArray(m.peers) && m.peers.length ? <div className="na">{m.peers_label_ar || 'الشركات المشابهة، والمضاعف بتاعها، وتاريخ سعرها:'}<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar}: <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
+        {m.peers_note ? <div className="na">{m.peers_note}</div> : null}{m.implied_pb ? <div className="na">{m.assumed_multiple_label_ar || 'المضاعف المفترض'}: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
         {m.card_ar ? <Card c={m.card_ar} /> : <><div>الحساب: {m.basis}</div>
         <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /><br /><small>{m.source_status}</small></div>
         <Caveat m={m} /></>}</div>)}
@@ -122,9 +123,9 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const s = d && d.stocks && d.stocks[k];
   if (!s) return <div className={bony ? 'bf-value' : 'fin-value'}><span>السعر العادل</span><b>غير متوفر</b><small>مقدرتش أحمّل النص دلوقتي.</small></div>;
   const an = s.analyst_reference || {};
-  const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || /مكتوبة مرة واحدة/.test(v) || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{v}</div>; };
+  const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || /مكتوبة مرة واحدة/.test(v) || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{tidy(v)}</div>; };
   return <>
-    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? (s.aggregate_headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر') : 'تقديري'}</b><small>{s.aggregate_headline_ar ? <>{s.aggregate_headline_ar} {s.aggregate_have_ar}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
+    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? (s.aggregate_headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر') : 'تقديري'}</b><small>{s.aggregate_headline_ar ? <>{tidy(s.aggregate_headline_ar)} {tidy(s.aggregate_have_ar)}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
     <div className="fv6"><style>{CSS}</style>
       {s.glossary_ar && Object.keys(s.glossary_ar).length ? <Fold t="معنى الكلمات">{Object.entries(s.glossary_ar).map(([a, b]: any) => <div className="na" key={a}><b>{a}:</b> {String(b)}</div>)}</Fold> : null}
       <Fold t="طرق السعر العادل ومصادرها">
@@ -133,12 +134,13 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           <Vals c={(m.values || {}).conservative} b={(m.values || {}).base} o={(m.values || {}).optimistic} m={m} />{m.noncore_warning_ar && !m.card_ar ? <div className="ours">{m.noncore_warning_ar}</div> : null}
           {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
           {isPeer({ name_ar: m.label_ar }) && !m.peers && !m.card_ar && !m.peers_note && !s.circular_peers_note_ar && (num((m.values || {}).conservative) || num((m.values || {}).optimistic)) ? <div className="na">{PEERS}</div> : null}
-          {Array.isArray(m.peers) && m.peers.length ? <div className="na">الأقران ومضاعف كل واحد وتاريخ سعره:<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar} ({p.code}): <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
-          {m.peers_note ? once(m.peers_note) : null}{m.implied_pb ? <div className="na">المضاعف المفترض: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
+          {Array.isArray(m.peers) && m.peers.length ? <div className="na">{m.peers_label_ar || 'الشركات المشابهة، والمضاعف بتاعها، وتاريخ سعرها:'}<ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{m.peers.map((p: any) => <li key={p.code}>{p.name_ar}: <bdi dir="ltr">{p.value}</bdi> · سعر {p.price_as_of}</li>)}</ul></div> : null}
+          {m.peers_note ? once(m.peers_note) : null}{m.implied_pb ? <div className="na">{m.assumed_multiple_label_ar || 'المضاعف المفترض'}: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
           {m.card_ar ? <Card c={m.card_ar} /> : <><div>الحساب: {m.how}</div>
           <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /></div>
           <Caveat m={m} /></>}</div>)}
-        <div className="na">{s.special}</div>
+        <div className="na">{tidy(s.special)}</div>
+        {Array.isArray(s.roe_lines_ar) ? s.roe_lines_ar.map((l: string, i: number) => <div className="na" key={'r' + i}>{tidy(l)}</div>) : null}
         {s.segments_reconciliation_ar ? <div className="na">{s.segments_reconciliation_ar}{s.segments_reconciliation_source && !s.sources_detail_ar ? <> <A u={s.segments_reconciliation_source} /></> : null}</div> : null}
         {s.circular_peers_note_ar ? once(s.circular_peers_note_ar) : null}
         {s.statement_sources ? <div className="na">{s.statement_sources.note_ar} {(s.sources_detail_ar ? [] : (s.statement_sources.urls || [])).map((u: string, i: number) => <React.Fragment key={u}><br /><A u={u} /></React.Fragment>)}</div> : null}
