@@ -1,0 +1,459 @@
+{
+ "note_ar": "فترة كل دراسة من رأس ملف الكتلة؛ راجع الدراسة لو فيها تفاصيل. EGAL وCLHO فترتهم مذكورة صراحة في نصوصهم (6 شهور لحد يونيو / سنة لحد يونيو).",
+ "studies": {
+  "ARCC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "UEGC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "MEPA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ISMA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ETRS": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ICFC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "AMER": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "MCRO": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "ENGC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "GOUR": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "AMIA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "MPRC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "ATQA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "POUL": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "MTIE": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "MBSC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "TAQA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "SCEM": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "EXPA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "CIEB": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "OCDI": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "EGAL": {
+   "study_date": "2026-11-25",
+   "period_ar": "السنة المالية لحد يونيو 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "CLHO": {
+   "study_date": "2026-11-25",
+   "period_ar": "6 شهور لحد 30 يونيو 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "CCAP": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "VLMRA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": "فيه بنود ما اتأكدتش على الصورة (مكتوبة في الدراسة)"
+  },
+  "ELKA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "BTFH": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "CNFN": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "MCQE": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "AMOC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "JUFO": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "EFID": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "MFPC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "EAST": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ORAS": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "DSCW": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "LCSW": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ORWE": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "HDBK": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "RAYA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ISPH": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "RMDA": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "SKPC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "EFIH": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "PHDC": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ADIB": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "EMFD": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ABUK": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "FWRY": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "TMGH": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "ETEL": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "SWDY": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": null,
+   "unconfirmed_items": null
+  },
+  "COMI": {
+   "study_date": "2026-11-25",
+   "period_ar": "9 شهور لحد 30 سبتمبر 2026",
+   "fv_label_ar": "تقديري، مش سعر مستهدف",
+   "price_label_ar": "السعر من مصدر متأخر 15-20 دقيقة وبتاريخ آخر تحديث",
+   "estimated_items": "فيه أرقام تقديرية مش مطبوعة (مكتوبة في الدراسة)",
+   "unconfirmed_items": null
+  },
+  "MASR": {
+   "study_date": "2026-11-24",
+   "period": "راجع الصفحة",
+   "fv_label_ar": "تقديري، مش سعر مستهدف"
+  },
+  "BONY": {
+   "study_date": "2026-11-24",
+   "period": "راجع الصفحة",
+   "fv_label_ar": "تقديري، مش سعر مستهدف"
+  },
+  "HRHO": {
+   "study_date": "2026-11-24",
+   "period": "راجع الصفحة",
+   "fv_label_ar": "تقديري، مش سعر مستهدف"
+  },
+  "UNIP": {
+   "study_date": "2026-11-24",
+   "period": "راجع الصفحة",
+   "fv_label_ar": "تقديري، مش سعر مستهدف"
+  },
+  "PHAR": {
+   "study_date": "2026-11-24",
+   "period": "راجع الصفحة",
+   "fv_label_ar": "تقديري، مش سعر مستهدف"
+  },
+  "ORHD": {
+   "study_date": "2026-11-24",
+   "period": "راجع الصفحة",
+   "fv_label_ar": "تقديري، مش سعر مستهدف"
+  }
+ }
+}
