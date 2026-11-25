@@ -57,8 +57,7 @@ export function TeamBlock({ code }: { code: string }) {
 export function StudyMeta({ code }: { code: string }) {
   const m: any = (META as any).studies[code];
   if (!m) return null;
-  return <section className="eg-srcc" dir="rtl" aria-label="بطاقة الدراسة">
-    <h3>بطاقة الدراسة</h3>
+  return <Det title="بطاقة الدراسة">
     <ul>
       <li>تاريخ الدراسة: <bdi dir="ltr">{m.study_date}</bdi></li>
       {m.period_ar ? <li>الفترة: {m.period_ar}</li> : null}
@@ -67,5 +66,5 @@ export function StudyMeta({ code }: { code: string }) {
       {m.estimated_items ? <li>{m.estimated_items}</li> : null}
       {m.unconfirmed_items ? <li>{m.unconfirmed_items}</li> : null}
     </ul>
-  </section>;
+  </Det>;
 }
