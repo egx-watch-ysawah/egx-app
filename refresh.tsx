@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStarta, loadStarta, getFeed } from './feed';
+import { useStarta, loadStarta, getFeed, sourceState, disagree } from './feed';
 import { stampNote } from './scen';
 const hm = (iso?: string) => { try { return new Date(iso as string).toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit' }); } catch { return ''; } };
 // Manual refresh: reloads the price feed on demand and says honestly what came back.
@@ -25,11 +25,13 @@ export function RefreshBar() {
     : st === 'new' ? 'اتحدّث الساعة ' + when + '. آخر لقطة من المصدر ' + snap + '.'
     : st === 'same' ? 'مفيش جديد من المصدر الساعة ' + when + '. آخر لقطة ' + snap + '.'
     : f ? 'آخر لقطة أسعار ' + snap + ' · ' + stampNote(f.at) : 'لسه ما اتحملتش لقطة أسعار.';
+  const srcLine = sourceState.starta === 'ok' ? (sourceState.tv === 'down' ? 'المصدر: Starta (المصدر الاحتياطي مش متاح دلوقتي)' : 'المصدر: Starta' + (sourceState.tv === 'ok' ? '، والاحتياطي TradingView للمقارنة' : '')) : sourceState.tv === 'ok' ? 'Starta مش متاح، الأسعار من المصدر الاحتياطي TradingView (متأخر حوالي 15 دقيقة)' : sourceState.starta === 'down' ? 'المصدرين مش متاحين دلوقتي' : '';
+  const dis = disagree.length ? ' المصدرين مختلفين في ' + disagree.length + ' سهم بأكتر من 1.5% (ممكن يكون فرق توقيت)، والمعروض الأحدث.' : '';
   return <div className="rf-bar">
     <button type="button" className={'rf-btn' + (st === 'load' ? ' spin' : '')} onClick={go} disabled={st === 'load'} aria-label="تحديث الأسعار">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
       <span>تحديث</span>
     </button>
-    <small className="rf-msg" role="status" aria-live="polite">{msg}</small>
+    <small className="rf-msg" role="status" aria-live="polite">{msg}{srcLine ? <><br />{srcLine}.</> : null}{dis}</small>
   </div>;
 }
