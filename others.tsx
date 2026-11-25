@@ -1,5 +1,6 @@
 import { TeamBlock } from './scen';
 import { NewsBlock } from './news';
+import { useStudy, StudyLight, StudyLightFair } from './studyrest';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
@@ -117,14 +118,19 @@ export function OtherFacts({ row: r }: { row: any }) {
 }
 
 export function OtherLight({ code, row, reason }: { code: string; row: any; reason: string }) {
+  const study = useStudy(code);
   const back = <Link className="eg-back" to="/others">← باقي الأسهم</Link>;
-  if (!row) return <div className="eg-pad">{back}<p className="eg-note">غير متوفر: {reason || 'مفيش بيانات للسهم ده.'}</p></div>;
+  if (!row) return <div className="eg-pad">{back}
+    {study ? <h2 className="eg-h">{study.record.name} <L>{code}</L></h2> : null}
+    <p className="eg-note">غير متوفر: {reason || 'مفيش بيانات للسهم ده.'}{study ? ' (سعر السوق والقراءة الفنية). الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>
+    {study ? <><StudyLight st={study} /><StudyLightFair st={study} /><TeamBlock code={code} /><NewsBlock code={code} /></> : null}</div>;
   return <div className="eg-pad">{back}
     <h2 className="eg-h">{row.name_ar || row.name_en} <L>{code}</L></h2>
     <Label />
     <div className="ot-px"><b dir="ltr">{fmt(row.last_price)}</b><small>ج.م</small><span className={row.change_percent >= 0 ? 'u' : 'd'} dir="ltr">{row.change_percent >= 0 ? '▲' : '▼'} {Math.abs(row.change_percent || 0).toFixed(2)}%</span></div>
     <p className="eg-note">غير متوفر: القراءة الفنية والسيناريو والرسم. السبب: {reason}</p>
     <OtherFacts row={row} />
+    {study ? <><StudyLight st={study} /><StudyLightFair st={study} /></> : null}
     <TeamBlock code={code} />
     <NewsBlock code={code} />
     <p className="eg-note">المصدر: <a href={'https://startamarkets.com/symbol/' + code} target="_blank" rel="noreferrer">Starta Markets</a>. مش نصيحة استثمار.</p>
