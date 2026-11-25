@@ -5,7 +5,7 @@ export const SIX = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
 let cache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/fair_value_sourced_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(noCodes).catch(() => null));
 // Display-only: the content files name the two scenarios T1/T3 (and the removed T2); readers see words, not codes.
-const noCodes: any = (x: any) => typeof x === 'string' ? x.replace(/\bT1\b/g, 'سيناريو 1').replace(/\bT3\b/g, 'سيناريو 2').replace(/\bT2\b/g, 'الطريقة التالتة') : Array.isArray(x) ? x.map(noCodes) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, noCodes(v)])) : x;
+export const noCodes: any = (x: any) => typeof x === 'string' ? x.replace(/\bT1\b/g, 'سيناريو 1').replace(/\bT3\b/g, 'سيناريو 2').replace(/\bT2\b/g, 'الطريقة التالتة') : Array.isArray(x) ? x.map(noCodes) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, noCodes(v)])) : x;
 const STALE_AN = 'أهداف المحللين من صفحات stockanalysis وغالبًا محسوبة على أسعار أقدم من سعر النهارده، فنسبة الفرق عن السعر الحالي مش دقيقة.';
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
@@ -15,16 +15,16 @@ const isPeer = (m: any) => m && (m.method_key === 'PE' || m.method_key === 'PB' 
 const Cell = ({ l, v, t }: { l: string; v: any; t?: string }) => <div><small>{l}</small>{num(v) ? <b dir="ltr">{fx(v)}</b> : t ? <b className="mid">{t}</b> : <b dir="ltr">—</b>}</div>;
 const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l="الوسط" v={b} t={m && m.midpoint_text_ar} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
 const Caveat = ({ m }: { m: any }) => <>{m.caveat ? <div className="ours">ملحوظة: {m.caveat}</div> : null}{m.number_caveat && !String(m.caveat || '').includes(m.number_caveat) ? <div className="ours">{m.number_caveat}</div> : null}</>;
-const Card = ({ c }: { c: any }) => <>
+export const Card = ({ c }: { c: any }) => <>
   {c.headline_ar ? <div className="ch"><b>{tidy(c.headline_ar)}</b></div> : null}
   {(c.lines_ar || []).map((l: string, i: number) => <div className="cl" key={i}>{tidy(l)}</div>)}
   {c.caveat_line_ar ? <div className="ours">{tidy(c.caveat_line_ar)}</div> : null}
   {(c.details_ar || []).length ? <Fold t="تفاصيل أكتر">{(c.details_ar || []).map((l: string, i: number) => <div className="na" key={i}>{tidy(l)}</div>)}</Fold> : null}
 </>;
-const Srcs = ({ l }: { l: any }) => Array.isArray(l) && l.length ? <div className="na"><b>المصادر:</b><ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{l.map((x: any) => <li key={x.url}><a href={x.url} target="_blank" rel="noreferrer">{x.title_ar}</a></li>)}</ul></div> : null;
+export const Srcs = ({ l }: { l: any }) => Array.isArray(l) && l.length ? <div className="na"><b>المصادر:</b><ul style={{ margin: '2px 0', paddingInlineStart: 18 }}>{l.map((x: any) => <li key={x.url}><a href={x.url} target="_blank" rel="noreferrer">{x.title_ar}</a></li>)}</ul></div> : null;
 const rangeOf = (vs: number[]) => vs.length ? (Math.min(...vs) === Math.max(...vs) ? <bdi dir="ltr">{fx(vs[0])}</bdi> : <><bdi dir="ltr">{fx(Math.min(...vs))}</bdi> إلى <bdi dir="ltr">{fx(Math.max(...vs))}</bdi></>) : null;
 const fx = (v: number) => '\u2066' + (v >= 1 ? v.toFixed(2) : v.toFixed(3)) + '\u2069';
-const CSS = `
+export const FV6CSS = `
 .fv6 .q{margin:10px 0 2px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#5eead4}
 .fv6 .tg{font-size:11.5px;font-weight:400;border:1px solid #6b5b2a;color:#f5c26b;border-radius:10px;padding:2px 8px;white-space:nowrap}
 .fv6 .big{font-size:24px;font-weight:700;color:#fff;margin:2px 0}
@@ -42,7 +42,7 @@ const CSS = `
 .fv6 hr{border:0;border-top:1px solid #263249;margin:12px 0}
 .fv6 .nt{font-size:12px;color:#8b97ad;line-height:1.7;margin:6px 0}
 `;
-const snum = (k: any) => { const x = String(k); return /1$/.test(x) ? '1' : /3$|2$/.test(x) && /سيناريو 2|T3/.test(x) ? '2' : x.replace(/^سيناريو /, ''); };
+export const snum = (k: any) => { const x = String(k); return /1$/.test(x) ? '1' : /3$|2$/.test(x) && /سيناريو 2|T3/.test(x) ? '2' : x.replace(/^سيناريو /, ''); };
 const A = ({ u }: { u: string }) => <a href={u} target="_blank" rel="noreferrer">{u.replace(/^https?:\/\//, '')}</a>;
 const Fold = ({ t, children }: { t: string; children: React.ReactNode }) => <details className="gd-det"><summary>{t}</summary>{children}</details>;
 
@@ -57,7 +57,7 @@ export function SourcedFair({ k }: { k: string }) {
   const aOk = !!a && num(a.conservative) && num(a.optimistic);
   const bt = (vis.find(t => t.backtest_line && !/مكتوبة مرة واحدة/.test(t.backtest_line)) || {}).backtest_line;
   const day = (d.as_of === '2026-11-25' ? '25 نوفمبر 2026' : d.as_of);
-  return <div className="gd-fv fv6"><style>{CSS}</style>
+  return <div className="gd-fv fv6"><style>{FV6CSS}</style>
     <div className="q"><span>السعر العادل</span><span className="tg">تقديري · {day}</span></div>
     {s.price_label_ar ? <p className="ex" style={{ opacity: .85 }}>الأرقام دي محسوبة على سعر {s.price_label_ar}{num(s.price) ? <> (<bdi dir="ltr">{fx(s.price)}</bdi>)</> : null}، مش على سعر اليوم.</p> : null}
     {aOk ? <div className="big"><bdi dir="ltr">{fx(a.conservative)}</bdi> إلى <bdi dir="ltr">{fx(a.optimistic)}</bdi></div> : <div className="big">{a && a.headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر'}</div>}
@@ -84,7 +84,7 @@ export function SourcedFair({ k }: { k: string }) {
     <hr />
     <div className="q"><span>{d.scenarios_heading_ar || 'السيناريوهات (تجريبي)'}</span><span className="tg">تجريبي · {day}</span></div>
     {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {snum(t.key)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
-    <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
+    <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 && !s.scenarios_note_ar ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
     {((a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean)) ? <div className="ours">{(a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean)}</div> : null}
     {d.targets_rule_ar ? <p className="nt">{d.targets_rule_ar}</p> : null}
     {bt ? <p className="nt">{bt} <a href="https://github.com/egx-watch-ysawah/egx-app/tree/main/docs/backtest" target="_blank" rel="noreferrer">طريقة إعادة الحساب والملفات</a></p> : null}
@@ -114,6 +114,44 @@ export function SourcedFair({ k }: { k: string }) {
   </div>;
 }
 
+
+// Scenarios block, shared by the wide-range card. Same rendering as SourcedFair; texts come from the data file.
+export function SixScen({ d, s }: { d: any; s: any }) {
+  const ts: any[] = s.targets_experimental || [], an = s.analyst_reference || {}, a = s.aggregate;
+  const vis = ts.filter(t => num(t.value)), vs: number[] = vis.map(t => t.value), hiddenN = ts.length - vis.length;
+  const bt = (vis.find(t => t.backtest_line && !/مكتوبة مرة واحدة/.test(t.backtest_line)) || {}).backtest_line;
+  const day = (d.as_of === '2026-11-25' ? '25 نوفمبر 2026' : d.as_of);
+  return <>
+    <hr />
+    <div className="q"><span>{d.scenarios_heading_ar || 'السيناريوهات (تجريبي)'}</span><span className="tg">تجريبي · {day}</span></div>
+    {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {snum(t.key)}</small><b dir="ltr">{fx(t.value)} <small>جنيه</small></b></div>)}</div> : <div className="big">غير متوفر</div>}
+    {vs.length ? Array.from(new Set(ts.filter(t => num(t.value) && t.backtest_under_numbers_ar).map(t => String(t.backtest_under_numbers_ar)))).map((x, i) => <p className="nt" key={i}>{x}</p>) : null}
+    <p className="ex">{vs.length ? (s.scenarios_intro_ar || d.scenarios_intro_ar || '') : ''}{hiddenN && vis.length === 0 && !s.scenarios_note_ar ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
+    {s.scenarios_note_ar ? <p className="nt">{s.scenarios_note_ar}</p> : null}
+    {(() => { const nc = (ts.find((t: any) => num(t.value) && t.caveat_ar) || {}).caveat_ar || (a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean); return nc ? <div className="ours">{nc}</div> : null; })()}
+    {bt && !vs.length ? null : bt && !ts.some((x: any) => num(x.value) && x.backtest_under_numbers_ar) ? <p className="nt">{bt} <a href="https://github.com/egx-watch-ysawah/egx-app/tree/main/docs/backtest" target="_blank" rel="noreferrer">طريقة إعادة الحساب والملفات</a></p> : null}
+    <Fold t="السيناريوهين والمصادر">
+      {ts.map((t: any) => <div className="mm" key={t.key}>
+        <h5>سيناريو {snum(t.key)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span>{t.section_title_ar ? <span className="tg">{t.section_title_ar}</span> : null}</h5>
+        {t.card_ar ? <>{!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}<Card c={t.card_ar} /></> : <>
+        <div>{t.name_ar}</div>
+        {num(t.value) && t.scenario_ar ? <div className="na">{t.scenario_ar}</div> : null}
+        {num(t.value) && t.formula_ar ? <div className="ours"><b>الحساب:</b> <bdi dir="ltr">{t.formula_ar}</bdi></div> : null}
+        {num(t.value) && t.growth_note_ar ? <div className="na">{t.growth_note_ar}</div> : null}
+        {num(t.value) && t.caveat_ar ? <div className="ours"><b>تحذير:</b> {t.caveat_ar}</div> : null}
+        {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
+        <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}{(t.source_links || []).map((u: string, i: number) => <React.Fragment key={u}>{i ? <br /> : null}<A u={u} /></React.Fragment>)}</div>
+        <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
+        <div className="na">{t.basis_status}</div>
+        {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
+        {num(t.value) && t.backtest_line && t.backtest_line !== bt && !/مكتوبة مرة واحدة/.test(t.backtest_line) ? <div className="na">{t.backtest_line}</div> : null}</>}</div>)}
+      {an.avg != null
+        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
+        : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
+    </Fold>
+  </>;
+}
+
 // Financial-tab valuation block for the six holdings. Data-only: studies_rest/studies_rest/financial_tab_wording_six.json is written by the content agent.
 let cacheF: Promise<any> | null = null;
 const loadF = () => cacheF || (cacheF = fetch('studies_rest/studies_rest/financial_tab_wording_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(noCodes).catch(() => null));
@@ -128,7 +166,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || /مكتوبة مرة واحدة/.test(v) || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{tidy(v)}</div>; };
   return <>
     <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{s.badge_ar ? s.badge_ar : s.aggregate_headline_ar ? (/^\s*(مفيش|غير)/.test(s.aggregate_headline_ar) ? 'مفيش رقم مجمّع' : 'تقديري') : (/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري')}</b><small>{s.aggregate_headline_ar ? <>{tidy(s.aggregate_headline_ar)} {tidy(s.aggregate_have_ar)}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
-    <div className="fv6"><style>{CSS}</style>
+    <div className="fv6"><style>{FV6CSS}</style>
       {s.glossary_ar && Object.keys(s.glossary_ar).length ? <Fold t="معنى الكلمات">{Object.entries(s.glossary_ar).map(([a, b]: any) => <div className="na" key={a}><b>{a}:</b> {String(b)}</div>)}</Fold> : null}
       <Fold t="طرق السعر العادل ومصادرها">
         {(s.methods || []).map((m: any, i: number) => <div className="mm" key={i}>
