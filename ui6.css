@@ -27,6 +27,9 @@ html[data-set=on] .eg-priv[open]{display:block!important}
 .hb-tiles small{white-space:nowrap}@media(max-width:380px){.hb-tiles small{font-size:11px}}
 .hb-name{justify-items:start}.hb-name b{text-align:start}
 html[data-set=on] .eg-h+.eg-priv{margin-block-start:40px}
-.bid{display:block;text-align:center;margin:10px 0 86px;font-size:10px;color:#8a9ab3;opacity:.55;pointer-events:none}
+.bid{display:block;text-align:center;margin:10px 0 86px;font-size:12px;color:#9fb0c8;opacity:.9;pointer-events:none}
 .set-inst{position:absolute;inset-inline-end:16px;top:132px;z-index:5;block-size:34px;padding:0 14px;border-radius:999px;font:inherit;font-size:13px;font-weight:700;color:#052e2b;background:#5eead4;border:0}
 .set-inst:active{transform:scale(.95)}
+
+.eg-sub,.eg-read,.eg-zoom span,.ix-hd,.ix-n1 small,.ix-v span,.ix-lbl,.mp small,.pv-label,.pv-top>span,.pv-up,.pv-down,.hb-chip small{font-size:12px}.ab-i span,.desk-date,.ix-tag,.portfolio-values small{font-size:12px}.eg-axis,text.eg-tag{font-size:10px}
+.eg-legend a,.eg-card a,.na a,.fv6 a{display:inline-block;min-height:32px;line-height:32px}
