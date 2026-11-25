@@ -23,8 +23,8 @@ export function StudyFin({ st }: { st: any }) {
       <div className="eg-m"><span>الإيراد</span><b dir="ltr">{num(r.revenue)}</b><i>مليون{r.prior ? ' · قبلها ' + num(r.prior) + (g != null ? ' (' + (g >= 0 ? '+' : '') + g.toFixed(1) + '%)' : '') : ''}</i></div>
       <div className="eg-m"><span>ربح المساهمين</span><b dir="ltr">{num(r.profit)}</b><i>مليون{r.profit_prior ? ' · قبلها ' + num(r.profit_prior) : ''}</i></div>
     </div> : null}
-    {b.up && b.up.length ? <><h4 className="eg-h4">اللي في صالح السهم</h4><ul>{b.up.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></> : null}
-    {b.down && b.down.length ? <><h4 className="eg-h4">اللي بيقلق</h4><ul>{b.down.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></> : null}
+    {b.up && b.up.length ? <><h4 className="eg-h4">نقاط إيجابية في الأرقام</h4><ul>{b.up.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></> : null}
+    {b.down && b.down.length ? <><h4 className="eg-h4">نقاط محتاجة انتباه</h4><ul>{b.down.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></> : null}
     {b.flip ? <><h4 className="eg-h4">إيه اللي يغير الصورة</h4><p>{b.flip}</p></> : null}
     <details className="gd-det"><summary>التفاصيل</summary>
       {(r.facts || []).map((x: any[], i: number) => <div className="gd-it" key={i}><div className="gd-h"><span>{x[0]}</span><b dir="ltr">{num(x[1])} {x[2]}</b></div>{x[3] ? <p>{x[3]}</p> : null}</div>)}
