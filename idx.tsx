@@ -6,6 +6,8 @@ import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { NoteCard, SourcesBar } from './srcs';
 import { ScenarioBlock, TeamBlock, StudyMeta, Glossary, stampNote } from './scen';
+import { useClientStock } from './clientidx';
+import { OtherFacts, OtherLight } from './others';
 import { StockGuide, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -64,7 +66,7 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
     const go = () => fetch(URL_INDEX + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(q => {
       const k = q && q.quote;
       if (!k || !(k.value > 0) || !Number.isFinite(k.changePercent) || !k.timestamp) return Promise.reject();
-      save({ indices: { egx30: { name: 'EGX 30', close: k.value, chg: k.changePercent, chg_abs: k.change } }, fetched_at_utc: k.timestamp });
+      save({ indices: { egx30: { name: 'EGX 30', close: k.value, chg: k.changePercent, chg_abs: k.change } }, fetched_at_utc: k.timestamp, live: true, loaded_at: new Date().toISOString(), delay_s: Number.isFinite(q.delaySeconds) ? q.delaySeconds : 900 });
     }).catch(() => fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(save).catch(() => {}));
     go();
     window.addEventListener('egx-refresh', go);
@@ -76,6 +78,7 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
   if (!x || !Number.isFinite(x.close) || !Number.isFinite(x.chg)) return <section className="hb ixs"><div className="hb-top"><small>{which === 'egx30' ? 'EGX 30' : 'EGX 70'}</small><p className="eg-note">مستوى المؤشر مش متاح دلوقتي.</p></div></section>;
   const up = x.chg >= 0, cls = up ? 'hb-up' : 'hb-down';
   const sg = (v: number, d: number) => (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const ft = (iso: string, timeOnly?: boolean) => { try { const dt = new Date(iso); const o: any = { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }; const tm = dt.toLocaleTimeString('en-GB', o); const dd = dt.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); const today = new Date().toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); return timeOnly || dd === today ? tm : tm + ' ' + dd; } catch { return ''; } };
   let at = '';
   try { const dt = new Date(j.fetched_at_utc); const o: any = { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }; const t = dt.toLocaleTimeString('en-GB', o); const d = dt.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); at = t + ' ' + d; } catch { /* ignore */ }
   return <section className="hb ixs" aria-label={'مؤشر ' + x.name}>
@@ -84,7 +87,8 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
       <b className="hb-total" dir="ltr">{x.close.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b>
       <div className={'hb-day ' + cls} dir="ltr"><span>{sg(x.chg_abs, 1)}</span><span>{up ? '▲' : '▼'} {sg(x.chg, 2)}%</span></div>
       <p className="ixs-s">{up ? 'المؤشر طالع النهارده' : 'المؤشر نازل النهارده'}</p>
-      <p className="ixs-t">{at && <>آخر تحديث <bdi dir="ltr">{at}</bdi> · </>}{stampNote(j.fetched_at_utc)}</p>
+      {j.live ? <p className="ixs-t">اتحمّل الساعة <bdi dir="ltr">{ft(j.loaded_at)}</bdi> · المصدر بيعلن إن المؤشر متأخر حوالي {Math.round((j.delay_s || 900) / 60)} دقيقة، مش لحظي. الوقت المسجّل عنده للمؤشر ثابت <bdi dir="ltr">{ft(j.fetched_at_utc, true)}</bdi> طول اليوم، فمش بنعتمد عليه.</p>
+        : <p className="ixs-t">{at && <>آخر تحديث <bdi dir="ltr">{at}</bdi> · </>}{stampNote(j.fetched_at_utc)}</p>}
     </div>
   </section>;
 }
@@ -123,7 +127,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
       </>;
       return r.ok || r.full ? <Link key={r.code} to={to} className="ix-r">{body}</Link> : <div key={r.code} className="ix-r off">{body}</div>;
     })}
-    <p className="eg-note">آخر تحديث للقايمة: <L>{String(d.asof).slice(0, 10)}</L> · الأسهم اللي فيها تاريخ ناقص بتظهر بالسعر بس.</p>
+    <p className="eg-note">آخر تحديث للقايمة: <L>{(() => { try { const t = new Date(d.asof); return t.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }) + ' ' + t.toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return String(d.asof).slice(0, 10); } })()}</L> · الأسهم اللي فيها تاريخ ناقص بتظهر بالسعر بس.</p>
   </div>;
 }
 
@@ -166,7 +170,10 @@ function AutoFair({ f, close }: { f: any; close: number }) {
 
 export function IdxStock() {
   const { code = '' } = useParams();
-  const [s, err] = useJson('idx/' + code + '.json');
+  const [s1, err1] = useJson('idx/' + code + '.json');
+  const cl = useClientStock(code, !!err1);
+  const s = s1 || cl.s;
+  const err = !!err1 && cl.done && !cl.s;
   const [fund] = useJson('fundamentals.json');
   const [ix0] = useJson('idx/index.json');
   const sf = useStarta();
@@ -176,9 +183,11 @@ export function IdxStock() {
   const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: false, bb: false });
   const trows = React.useMemo(() => s ? mkRows(resample(s.bars, tf)) : [], [s, tf]);
   const row = ix && ix.rows.find((r: any) => r.code === code);
-  const back = row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
+  const isOther = !!cl.s || (!!err1 && !row);
+  useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
+  const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
-  if (err) return <div className="eg-pad"><Link className="eg-back" to="/egx30">← EGX 30</Link><p className="eg-note">مفيش بيانات تحليل للسهم ده.</p></div>;
+  if (err) return <OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = fund && fund.stocks && fund.stocks[code];
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
@@ -188,11 +197,12 @@ export function IdxStock() {
         <div className="eg-chips">{s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? tg('plan', 'مستويات السيناريو') : null}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
       </Det>;
   return <div className="eg-pad">
-    <Link className="eg-back" to={back}>← {back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
+    <Link className="eg-back" to={back}>← {back === '/others' ? 'باقي الأسهم' : back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
     <div className="eg-in">
       <h2 className="eg-h ix-top">{s.name} <span dir="ltr">({code})</span></h2>
       <p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</p>
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={<AutoFin f={f} />} fair={<AutoFair f={f} close={s.close} />} chart={chartNode} />
+      {cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}
       {reviewed ? null : <NoteCard code={code} />}
       
       {code === 'VLMRA' ? null : <ScenarioBlock s={s} />}
