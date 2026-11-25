@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from './shim';
 import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
+import { NoteCard, SourcesBar } from './srcs';
 import { StockGuide, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -26,26 +27,56 @@ function status(r: any) {
   return v.trend && v.mid ? 'فوق متوسط 200 و50' : !v.trend && !v.mid ? 'تحت متوسط 200 و50' : v.trend ? 'فوق متوسط 200، تحت 50' : 'تحت متوسط 200، فوق 50';
 }
 
+const INDICES_URL = 'https://raw.githubusercontent.com/egx-watch-ysawah/egx-app/main/indices.json';
+function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
+  const [j, setJ] = useState<any>(() => { try { return JSON.parse(localStorage.getItem('egx-indices-v1') || 'null'); } catch { return null; } });
+  useEffect(() => {
+    let dead = false;
+    fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject()).then(x => {
+      if (dead || !x || !x.indices) return; setJ(x); try { localStorage.setItem('egx-indices-v1', JSON.stringify(x)); } catch { /* ignore */ }
+    }).catch(() => {});
+    return () => { dead = true; };
+  }, []);
+  if (which !== 'egx30') return null;
+  const x = j && j.indices && j.indices[which];
+  if (!x || !Number.isFinite(x.close) || !Number.isFinite(x.chg)) return <section className="hb ixs"><div className="hb-top"><small>{which === 'egx30' ? 'EGX 30' : 'EGX 70'}</small><p className="eg-note">مستوى المؤشر مش متاح دلوقتي.</p></div></section>;
+  const up = x.chg >= 0, cls = up ? 'hb-up' : 'hb-down';
+  const sg = (v: number, d: number) => (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+  let at = '';
+  try { const dt = new Date(j.fetched_at_utc); const o: any = { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }; const t = dt.toLocaleTimeString('en-GB', o); const d = dt.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); at = t + ' ' + d; } catch { /* ignore */ }
+  return <section className="hb ixs" aria-label={'مؤشر ' + x.name}>
+    <div className="hb-top">
+      <small>{which === 'egx30' ? 'مؤشر EGX 30' : 'مؤشر EGX 70 (متساوي الأوزان)'}</small>
+      <b className="hb-total" dir="ltr">{x.close.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b>
+      <div className={'hb-day ' + cls} dir="ltr"><span>{sg(x.chg_abs, 1)}</span><span>{up ? '▲' : '▼'} {sg(x.chg, 2)}%</span></div>
+      <p className="ixs-s">{up ? 'المؤشر طالع النهارده' : 'المؤشر نازل النهارده'}</p>
+      <p className="ixs-t">{at && <>آخر تحديث <bdi dir="ltr">{at}</bdi> · </>}متأخر حتى 20 دقيقة، مش لحظي</p>
+    </div>
+  </section>;
+}
+
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   const [d, err] = useJson('idx/index.json');
   const [sort, setSort] = useState<'val' | 'up' | 'down'>('val');
   const title = which === 'egx30' ? 'EGX 30' : 'EGX 70';
   if (err) return <div className="eg-pad"><h2 className="eg-h">{title}</h2><p className="eg-note">مقدرتش أحمل القايمة. جرب تفتح التطبيق تاني.</p></div>;
   if (!d) return <div className="eg-pad"><h2 className="eg-h">{title}</h2><p className="eg-note">بحمّل القايمة...</p></div>;
-  const rows = d.rows.filter((r: any) => r.lists.includes(which)).slice();
+  const rows = d.rows.filter((r: any) => r.lists.includes(which) && !(which === 'egx30' && r.code === 'VLMR')).slice();
   rows.sort((a: any, b: any) => sort === 'val' ? (b.val || 0) - (a.val || 0) : sort === 'up' ? (b.chg ?? -99) - (a.chg ?? -99) : (a.chg ?? 99) - (b.chg ?? 99));
   const chip = (id: 'val' | 'up' | 'down', n: string) => <button type="button" className={'eg-chip' + (sort === id ? ' on' : '')} onClick={() => setSort(id)}>{n}</button>;
   return <div className="eg-pad ix">
     <h2 className="eg-h">{title} <span className="ix-n">({rows.length} سهم)</span></h2>
+    <IndexSummary which={which} />
     <p className="eg-note">أسعار متأخرة حتى 20 دقيقة، والتغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
     <div className="eg-chips">{chip('val', 'الأعلى تداولًا')}{chip('up', 'الأكثر ارتفاعًا')}{chip('down', 'الأكثر هبوطًا')}</div>
+    <p className="eg-note ix-lg"><b>الحجم:</b> عدد الأسهم اللي اتداولت. <b>القيمة:</b> فلوس التداول بالمليون جنيه.</p>
     <div className="ix-hd"><span>الشركة</span><span>السعر · التغيّر</span><span>الحجم · القيمة</span></div>
     {rows.map((r: any) => {
       const to = r.full ? '/' + r.code.toLowerCase() : '/s/' + r.code;
       const body = <>
         <div className="ix-n1"><b>{r.name}</b><small dir="ltr">{r.code}</small><i>{status(r)}</i></div>
-        <div className="ix-p"><span dir="ltr">{r.price != null ? fmt(r.price) : '-'}</span>{r.chg != null && <small className={r.chg >= 0 ? 'u' : 'd'} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</small>}</div>
-        <div className="ix-v"><b>{r.vol != null ? shortN(r.vol) : '-'}</b><span>{r.val != null ? Math.round(r.val / 1e6).toLocaleString('en-US') + ' م.ج' : ''}</span></div>
+        <div className="ix-p">{r.code === 'VLMRA' ? <small>السعر بالدولار، مش معروض بالجنيه</small> : <><span dir="ltr">{r.price != null ? fmt(r.price) : '-'}</span>{r.chg != null && <small className={r.chg >= 0 ? 'u' : 'd'} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</small>}</>}</div>
+        <div className="ix-v"><b>{r.vol != null ? <>{shortN(r.vol)} <small>سهم</small></> : '-'}</b><span>{r.val != null && r.code !== 'VLMRA' ? Math.round(r.val / 1e6).toLocaleString('en-US') + ' مليون جنيه' : ''}</span></div>
       </>;
       return r.ok || r.full ? <Link key={r.code} to={to} className="ix-r">{body}</Link> : <div key={r.code} className="ix-r off">{body}</div>;
     })}
@@ -105,18 +136,21 @@ export function IdxStock() {
   if (err) return <div className="eg-pad"><Link className="eg-back" to="/egx30">← EGX 30</Link><p className="eg-note">مفيش بيانات تحليل للسهم ده.</p></div>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = fund && fund.stocks && fund.stocks[code];
+  const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
+        <div className="eg-rowlab">مدة الشمعة</div><div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
+        <div className="eg-rowlab">الفترة المعروضة</div><div className="eg-chips">{RANGES[tf].filter(([, b]) => b <= trows.length).concat([['المتاح كله', trows.length]] as [string, number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
+        <StockChart key={code + tf} rows={trows} n={n} t={t} plan={{ entry: 0, stop: 0, target: 0, trail: 0 }} />
+        <div className="eg-chips">{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
+      </Det>;
   return <div className="eg-pad">
     <Link className="eg-back" to={back}>← {back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
     <div className="eg-in">
       <h2 className="eg-h ix-top">{s.name} <span dir="ltr">({code})</span></h2>
       <p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</p>
-      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={<AutoFin f={f} />} fair={<AutoFair f={f} close={s.close} />} />
-      <Det title="الشارت" open>
-        <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
-        <div className="eg-chips">{RANGES[tf].filter(([, b]) => b <= trows.length).concat([['المتاح كله', trows.length]] as [string, number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
-        <StockChart key={code + tf} rows={trows} n={n} t={t} plan={{ entry: 0, stop: 0, target: 0, trail: 0 }} />
-        <div className="eg-chips">{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
-      </Det>
+      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={<AutoFin f={f} />} fair={<AutoFair f={f} close={s.close} />} chart={chartNode} />
+      {reviewed ? null : <NoteCard code={code} />}
+      
+      <SourcesBar code={code} reviewed={reviewed} />
     </div>
   </div>;
 }
