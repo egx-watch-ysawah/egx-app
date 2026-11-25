@@ -125,7 +125,14 @@ function MyPosition({k}:{k:string}){
     let h:any=null;
     try{const v=localStorage.getItem(PORTFOLIO_KEY);if(v)h=parsePortfolio(JSON.parse(v)).find((x:any)=>x.symbol===k);}catch{}
     if(!h)return null;
-    return <p className="eg-note my-pos">متوسط تكلفتك <L>{h.averageCost===null?'غير متاح':h.averageCost.toFixed(5)}</L>{h.quantity!==null&&<> · الكمية <L>{h.quantity.toLocaleString('en-US')}</L> سهم</>} · لقطة 24/11 15:18</p>;
+    const px=(DATA as any).stocks[k]?.close;
+    const gap=h.averageCost>0&&Number.isFinite(px)?100*(px/h.averageCost-1):null;
+    const cls=gap===null?'':gap>=0?'u':'d';
+    const arrow=gap===null?'':gap>=0?'▲':'▼';
+    const gtxt=gap===null?'غير متاح':(gap>=0?'+':'')+gap.toFixed(1)+'%';
+    const avg=h.averageCost===null?'غير متاح':h.averageCost.toFixed(h.averageCost<1?4:2);
+    const qty=h.quantity!==null?h.quantity.toLocaleString('en-US'):'غير متاح';
+    return <section className="mp mp-b" aria-label="مركزك"><div className="mp-big"><span>الإقفال مقارنة بمتوسط تكلفتك</span><b className={cls} dir="ltr">{arrow} {gtxt}</b></div><div className="mp-line"><span>متوسط التكلفة <bdi dir="ltr">{avg}</bdi></span><span>الكمية <bdi dir="ltr">{qty}</bdi> سهم</span><span>السعر <bdi dir="ltr">{fmt(px)}</bdi></span></div><small className="mp-foot">لقطة 24/11 15:18 · مش نصيحة</small></section>;
 }
 function Stock({ k }: { k: string }) {
     const s = DATA.stocks[k];
