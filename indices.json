@@ -1,0 +1,13 @@
+{
+ "source": "https://startamarkets.com/api/v1/egx30/index",
+ "note": "delayed free data, not real-time",
+ "indices": {
+  "egx30": {
+   "name": "EGX 30",
+   "close": 50885.3,
+   "chg": 0.34,
+   "chg_abs": 173.3
+  }
+ },
+ "fetched_at_utc": "2026-11-25T06:48:53Z"
+}
