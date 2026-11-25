@@ -455,8 +455,19 @@ export function FinCards({ k, r }: { k: string; r: any }) {
   </div></div>;
 }
 
+let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
+const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
+// Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
+export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
+  const [, tick] = useState(0);
+  React.useEffect(() => { const f = () => tick(x => x + 1); guideSubs.add(f); f(); return () => { guideSubs.delete(f); }; }, []);
+  return !guideOn || guideTab === id ? <>{children}</> : null;
+}
+
 export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart }: { s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
-  const [tab, setTab] = useState<'t' | 'f' | 'v' | 'd'>('t');
+  const [tab, setTab0] = useState<'t' | 'f' | 'v' | 'd'>('t');
+  const setTab = (t: 't' | 'f' | 'v' | 'd') => { setTab0(t); setGuide(t, true); };
+  React.useEffect(() => { setGuide('t', true); return () => setGuide('t', false); }, [k]);
   const tech = techItems(s);
   const fin = light ? [] : k === 'BONY' ? BONY_ITEMS : finItems(r, k);
   const items = tab === 'f' ? fin : tech;
@@ -465,7 +476,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
   const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
   const nop = k === 'VLMRA';
-  return <>{!nop && <TrendVerdict s={s} />}{!light && <DecSum s={s} k={k} />}<section className="gd" aria-label="ملخص السهم">
+  return <>{!nop && tab === 't' && <TrendVerdict s={s} />}{!light && tab === 'd' && <DecSum s={s} k={k} />}<section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
     <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
     <div className="gd-body">
