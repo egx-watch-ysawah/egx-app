@@ -1,4 +1,5 @@
 import { TeamBlock } from './scen';
+import { NewsBlock } from './news';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
@@ -125,6 +126,7 @@ export function OtherLight({ code, row, reason }: { code: string; row: any; reas
     <p className="eg-note">غير متوفر: القراءة الفنية والسيناريو والرسم. السبب: {reason}</p>
     <OtherFacts row={row} />
     <TeamBlock code={code} />
+    <NewsBlock code={code} />
     <p className="eg-note">المصدر: <a href={'https://startamarkets.com/symbol/' + code} target="_blank" rel="noreferrer">Starta Markets</a>. مش نصيحة استثمار.</p>
   </div>;
 }
