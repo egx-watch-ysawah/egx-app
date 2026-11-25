@@ -62,6 +62,8 @@ export function SourcedFair({ k }: { k: string }) {
         <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /><br /><small>{m.source_status}</small></div>
         <Caveat m={m} /></div>)}
       {s.peers_note ? <div className="na">{s.peers_note}</div> : null}
+      {s.circular_peers_note_ar ? <div className="na">{s.circular_peers_note_ar}</div> : null}
+      {s.share_basis_note ? <div className="na">{s.share_basis_note}</div> : null}
       {(s.unavailable || []).map((u: any, i: number) => <div className="na" key={i}><b>{u.method_name}:</b> {u.reason}</div>)}
       {aOk ? <div className="na">{a.name_ar}. {a.curriculum_basis}</div> : null}
     </Fold>
@@ -70,7 +72,7 @@ export function SourcedFair({ k }: { k: string }) {
     {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {t.key === 'T1' ? '1' : t.key === 'T3' ? '2' : String(t.key).slice(1)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
     <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
     {d.targets_rule_ar ? <p className="nt">{d.targets_rule_ar}</p> : null}
-    {bt ? <p className="nt">{bt}</p> : null}
+    {bt ? <p className="nt">{bt} <a href="https://github.com/egx-watch-ysawah/egx-app/tree/main/docs/backtest" target="_blank" rel="noreferrer">طريقة إعادة الحساب والملفات</a></p> : null}
     <Fold t="السيناريوهين والمصادر">
       {ts.map((t: any) => <div className="mm" key={t.key}>
         <h5>سيناريو {t.key === 'T1' ? '1' : t.key === 'T3' ? '2' : String(t.key).slice(1)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span></h5>
@@ -78,6 +80,7 @@ export function SourcedFair({ k }: { k: string }) {
         {num(t.value) && t.scenario_ar ? <div className="na">{t.scenario_ar}</div> : null}
         {num(t.value) && t.formula_ar ? <div className="ours"><b>الحساب:</b> <bdi dir="ltr">{t.formula_ar}</bdi></div> : null}
         {num(t.value) && t.growth_note_ar ? <div className="na">{t.growth_note_ar}</div> : null}
+        {num(t.value) && t.caveat_ar ? <div className="ours"><b>تحذير:</b> {t.caveat_ar}</div> : null}
         {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
         <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}{(t.source_links || []).map((u: string) => <A key={u} u={u} />)}</div>
         <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
@@ -122,6 +125,9 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /></div>
           <Caveat m={m} /></div>)}
         <div className="na">{s.special}</div>
+        {s.segments_reconciliation_ar ? <div className="na">{s.segments_reconciliation_ar}{s.segments_reconciliation_source ? <> <A u={s.segments_reconciliation_source} /></> : null}</div> : null}
+        {s.circular_peers_note_ar ? <div className="na">{s.circular_peers_note_ar}</div> : null}
+        {s.statement_sources ? <div className="na">{s.statement_sources.note_ar} {(s.statement_sources.urls || []).map((u: string) => <A key={u} u={u} />)}</div> : null}
         {s.treasury_note ? <div className="na">{s.treasury_note}</div> : null}
         {(s.unavailable || []).map((u: any, i: number) => <div className="na" key={i}>{typeof u === 'string' ? u : (u.method_name || '') + ': ' + (u.reason || '')}</div>)}
         <div className="na">{rename(s.method_explainer)}</div>
@@ -136,6 +142,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           {num(t.value) && t.scenario_ar ? <div className="na">{t.scenario_ar}</div> : null}
           {num(t.value) && t.formula_ar ? <div className="ours"><b>الحساب:</b> <bdi dir="ltr">{t.formula_ar}</bdi></div> : null}
           {num(t.value) && t.growth_note_ar ? <div className="na">{t.growth_note_ar}</div> : null}
+          {num(t.value) && t.caveat_ar ? <div className="ours"><b>تحذير:</b> {t.caveat_ar}</div> : null}
           <div className="ours"><b>من عندنا:</b> {t.ours}</div>
           <div className="na">{t.note}</div>
           {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
