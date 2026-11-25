@@ -46,7 +46,7 @@ const overlay = (d: any, f: any) => {
   return { ...d, rows, asof: f.at };
 };
 const L = ({ children }: { children: React.ReactNode }) => <bdi dir="ltr">{children}</bdi>;
-const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const fmt = (v: number) => (v >= 1 ? v.toFixed(2) : v.toFixed(3));
 const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(2) + '%';
 const big = (v: number) => { const a = Math.abs(v); return a >= 1e9 ? (v / 1e9).toFixed(2) + ' مليار' : a >= 1e6 ? (v / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' مليون' : Math.round(v).toLocaleString('en-US'); };
 const shortN = (v: number) => v >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : v >= 1e3 ? Math.round(v / 1e3) + 'K' : String(Math.round(v));
@@ -163,7 +163,7 @@ function AutoFair({ f, close }: { f: any; close: number }) {
   if (!fv || !fv.low_base_high) return <p className="gd-sum">{NO_DATA}<small>{fv && fv.reason ? fv.reason + ' · ' : ''}{AUTO_LABEL}</small></p>;
   const [lo, mid, hi] = fv.low_base_high;
   const pos = close < lo ? 'تحت أقل رقم في' : close > hi ? 'فوق أعلى رقم في' : 'جوه';
-  const fmx = (x: number) => (x >= 10 ? x.toFixed(2) : x.toFixed(3));
+  const fmx = (x: number) => (x >= 1 ? x.toFixed(2) : x.toFixed(3));
   return <div className="gd-fv"><h4>مدى تقديري بمضاعفات عامة · {AUTO_LABEL}</h4>
     <p className="gd-sum">السعر الحالي {pos} المدى التقديري (الحذر {fmx(lo)}، المتفائل {fmx(hi)}).<small>{AUTO_DISCLAIMER} · مضاعفات افتراضية عامة مش مبنية على دراسة السهم · {f.period}</small></p>
     <div className="gd-rng"><div><small>حذر</small><b dir="ltr">{fmx(lo)}</b></div><div><small>أساسي</small><b dir="ltr">{fmx(mid)}</b></div><div><small>متفائل</small><b dir="ltr">{fmx(hi)}</b></div></div>
