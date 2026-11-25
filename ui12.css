@@ -30,3 +30,8 @@
 .eg-srcbar{margin:14px 0;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);font-size:14px;line-height:1.7}
 .eg-srcbar summary{cursor:pointer;padding:12px 14px;font-weight:700;list-style:none}.eg-srcbar summary::after{content:" +";float:left}.eg-srcbar[open] summary::after{content:" −"}
 .eg-srcbar ul{margin:0;padding:0 32px 12px 14px}.eg-srcbar a{color:#5eead4;word-break:break-word}
+.ix-search{display:flex;align-items:center;gap:10px;margin:10px 0;padding:0 14px;height:46px;border-radius:14px;background:#0b0f17;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+.ix-search input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:inherit;font-size:15px;text-align:right}
+.ix-search input::placeholder{color:rgba(255,255,255,.55)}.ix-search:focus-within{border-color:#5eead4}
+.ix-tag{font-style:normal;font-size:10px;padding:1px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.2);opacity:.75;margin-inline-start:6px}
+.ix-tag{align-self:flex-start;width:max-content}
