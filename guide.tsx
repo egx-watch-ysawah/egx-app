@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SourcedFair, SIX } from './fv6';
 
 const iso = (t: string) => '\u2066' + t + '\u2069';
 const PER: any = { CLHO: { lab: '6 شهور', until: '30 يونيو 2026', fac: 1, mult: 'ستة شهور' }, EGAL: { lab: 'سنة مالية 2025/26', until: '30 يونيو 2026', fac: 1, mult: 'سنة كاملة', ttl: 'سنة مالية 2025/26' } };
@@ -434,7 +435,8 @@ function TrendVerdict({ s }: { s: any }) {
 function DecSum({ s, k }: { s: any; k: string }) {
   const d = DEC[k];
   let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
-  if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.63 / 7.33 / 8.03 (تقديري).';
+  if (SIX.includes(k)) rng = 'نطاق السعر العادل ومصادر كل طريقة: راجع تبويب السعر العادل.';
+  else if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.63 / 7.33 / 8.03 (تقديري).';
   else if (FV[k] && FV[k].nocmp) rng = 'نطاق الدراسة بالدولار، والسعر على الصفحة دي بالجنيه، فمفيش مقارنة. التفاصيل في تبويب السعر العادل.';
   else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق الدراسة (محافظ / متوسط / متفائل) ' + f(e * (m.mult || [6.67, 10, 17.36])[0]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[1]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[2]) + ' (حدود الدراسة في تبويب السعر العادل).'; } }
   return <section className="dec-sum" aria-label="ملخص القراءة">
@@ -480,7 +482,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     <style>{CSS}</style>
     <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
     <div className="gd-body">
-      {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? fairCard(s, k, r) : <>
+      {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <SourcedFair k={k} /> : fairCard(s, k, r)) : <>
         <p className="gd-sum">{tab === 'f' ? finSummary(k, r) : techSummary(s)}<small>{tab === 'f' ? 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.' : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className="gd-h"><span>{it.label}</span><b dir="ltr">{it.value}</b></div>
