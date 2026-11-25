@@ -35,3 +35,10 @@
 .ix-search input::placeholder{color:rgba(255,255,255,.55)}.ix-search:focus-within{border-color:#5eead4}
 .ix-tag{font-style:normal;font-size:10px;padding:1px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.2);opacity:.75;margin-inline-start:6px}
 .ix-tag{align-self:flex-start;width:max-content}
+
+.mp{margin:10px 0;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.mp small{color:#98a8bf;font-size:11px}.mp .u{color:#4ade80}.mp .d{color:#f87171}
+.mp-foot{display:block;margin-top:8px;font-size:10.5px}
+.mp-b{background:linear-gradient(160deg,#0f1c2e,#0b1320)}.mp-big{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mp-big span{font-size:12.5px;color:#98a8bf}.mp-big b{font-size:24px}
+.mp-line{display:flex;justify-content:space-between;gap:6px;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px;color:#cbd5e1}
