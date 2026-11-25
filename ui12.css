@@ -15,6 +15,7 @@
 .ix-v b{font-size:13px;font-weight:600}.ix-v span{font-size:11px;color:#98a8bf}
 .ix-lbl{font-size:11px;color:#98a8bf;margin:4px 0 0}
 .ix-top{margin-top:58px}
+body:has(.set-btn) .eg-card-root:has(.gd) .eg-pad{padding-top:106px}
 .ix-v b small{font-size:10.5px;font-weight:400;color:#98a8bf}.ix-hd span{line-height:1.5}
 .ix-lg b{color:#c9d3e6}
 .ix-hd{font-size:13px;font-weight:600;color:#b4c0d4;padding:12px 12px 6px;align-items:center}
