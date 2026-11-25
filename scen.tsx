@@ -15,7 +15,7 @@ const state = (s: any) => s.votes.trend && s.votes.mid ? 'فوق المتوسط�
 function Plan3({ s }: { s: any }) {
   const p = s.plan;
   return <div className="eg-p3">
-    <div><span>{p.mode === 'pullback' ? 'مستوى تراجع للمراقبة' : 'مستوى اختراق للمراقبة'}</span><b dir="ltr">{fmt(p.entry)}</b><i dir="ltr">{pc(p.entry_pct)}</i></div>
+    <div><span>{p.mode === 'pullback' ? 'مستوى تراجع للمراقبة' : 'مستوى اختراق للمراقبة'}</span><b dir="ltr">{fmt(p.entry)}</b><i>{(p.entry_pct >= 0 ? "أعلى من السعر بحوالي " : "أقل من السعر بحوالي ") + Math.abs(p.entry_pct).toFixed(0) + "%"}</i></div>
   </div>;
 }
 // Same sections as the hand-built portfolio pages: timeframe, scenario, method. Needs plan numbers from the daily build.
@@ -26,7 +26,7 @@ export function ScenarioBlock({ s }: { s: any }) {
   return <>
     <Det title="الفريم ومدة المتابعة"><Use>تعرف تتابع السهم كام يوم أو أسبوع، مش مضاربة جوه الجلسة.</Use><p>التقييم والسيناريو على شمعة يومية بعد الإقفال، أقرب لمتابعة على أيام أو أسابيع، مش مضاربة جوه الجلسة.</p><p>التطبيق مش بيتابع مركزك ولا تاريخ دخولك، والمرجع المتحرك بيتحسب من جديد كل يوم، مش مستوى محفوظ.</p></Det>
     {!has ? <p className="eg-note">السيناريو لسه مش متاح للسهم ده لحد ما الأرقام تتحدث في التحديث الجاي.</p>
-      : thin ? <p className="eg-note eg-warn">السيناريو مش معروض: {p.tv < 1 ? <>السيولة ضعيفة (وسيط قيمة التداول اليومي في آخر 60 جلسة حوالي <bdi dir="ltr">{p.tv}</bdi> مليون جنيه)، فمستويات المراقبة مش موثوقة.</> : 'تاريخ السهم أقصر من الكفاية لحساب مستويات موثوقة.'}</p>
+      : thin ? <p className="eg-note eg-warn">السيناريو مش معروض: {p.tv < 1 ? <>السيولة ضعيفة (الرقم الأوسط لقيمة التداول اليومي في آخر 60 جلسة حوالي <bdi dir="ltr">{p.tv}</bdi> مليون جنيه)، فمستويات المراقبة مش موثوقة.</> : 'تاريخ السهم أقصر من الكفاية لحساب مستويات موثوقة.'}</p>
       : <>
         <Det title="سيناريو افتراضي للمتابعة، مش توصية"><Use>مستويات سعر للمراقبة بس، تقدر تفهم بيها لو السعر وصل لحاجة منها الصورة الفنية بتتغير إزاي. مش أمر ومش توصية.</Use>
           <p className="eg-note">المستويات دي حساب افتراضي من حركة السعر والتذبذب، مش خطة لحد. الحالة الحالية: {state(s)}.</p>
