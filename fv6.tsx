@@ -65,3 +65,45 @@ export function SourcedFair({ k }: { k: string }) {
     <p className="nt">{d.note_ar}</p>
   </div>;
 }
+
+// Financial-tab valuation block for the six holdings. Data-only: studies_rest/studies_rest/financial_tab_wording_six.json is written by the content agent.
+let cacheF: Promise<any> | null = null;
+const loadF = () => cacheF || (cacheF = fetch('studies_rest/studies_rest/financial_tab_wording_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
+const rename = (t: string) => String(t || '').replace(/القيمة العادلة/g, 'السعر العادل');
+export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
+  const [d, setD] = useState<any>(undefined);
+  useEffect(() => { let on = true; loadF().then(x => on && setD(x)); return () => { on = false; }; }, []);
+  if (d === undefined) return null;
+  const s = d && d.stocks && d.stocks[k];
+  if (!s) return <div className={bony ? 'bf-value' : 'fin-value'}><span>السعر العادل</span><b>غير متوفر</b><small>مقدرتش أحمّل النص دلوقتي.</small></div>;
+  const an = s.analyst_reference || {};
+  return <>
+    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.title)}</span><b>تقديري</b><small>{rename(s.summary)} {rename(s.small)}</small></div>
+    <div className="fv6"><style>{CSS}</style>
+      <Fold t="طرق السعر العادل ومصادرها">
+        {(s.methods || []).map((m: any, i: number) => <div className="mm" key={i}>
+          <h5>{m.label_ar} <span className="tg">تقديري</span></h5>
+          <div className="vv"><div><small>محافظ</small><b dir="ltr">{fx(m.values.conservative)}</b></div><div><small>متوسط</small><b dir="ltr">{fx(m.values.base)}</b></div><div><small>متفائل</small><b dir="ltr">{fx(m.values.optimistic)}</b></div></div>
+          <div>الحساب: {m.how}</div>
+          <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /></div>
+          <div className="ours">ملحوظة: {m.caveat}</div></div>)}
+        <div className="na">{s.special}</div>
+        {(s.unavailable || []).map((u: any, i: number) => <div className="na" key={i}>{typeof u === 'string' ? u : (u.method_name || '') + ': ' + (u.reason || '')}</div>)}
+        <div className="na">{rename(s.method_explainer)}</div>
+        <div className="na">{s.assumptions}</div>
+      </Fold>
+      <Fold t="الأهداف التجريبية وتفاصيلها">
+        {(s.targets_experimental || []).map((t: any, i: number) => <div className="mm" key={i}>
+          <h5>{t.label_ar}: <bdi dir="ltr">{fx(t.value)}</bdi> <span className="tg">تجريبي</span></h5>
+          <div className="src"><b>من المصدر:</b> {t.from_source}<br />{t.source_reference}<br /><A u={t.source} /></div>
+          <div className="ours"><b>من عندنا:</b> {t.ours}</div>
+          <div className="na">{t.note}</div></div>)}
+        {an.avg != null
+          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small><br /><A u={an.source} /></div>
+          : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
+        <div className="na">{s.backtest_note}</div>
+        <div className="na">المصادر: {(s.sources || []).map((u: string) => <A key={u} u={u} />)}</div>
+      </Fold>
+    </div>
+  </>;
+}
