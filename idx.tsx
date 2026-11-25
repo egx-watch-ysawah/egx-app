@@ -3,7 +3,7 @@ import { Link, useParams } from './shim';
 import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { NoteCard, SourcesBar } from './srcs';
-import { ScenarioBlock, TeamBlock, StudyMeta } from './scen';
+import { ScenarioBlock, TeamBlock, StudyMeta, Glossary } from './scen';
 import { StockGuide, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -159,6 +159,7 @@ export function IdxStock() {
       
       {code === 'VLMRA' ? null : <ScenarioBlock s={s} />}
       <TeamBlock code={code} />
+      <Glossary />
       {reviewed ? <StudyMeta code={code} /> : null}
       <SourcesBar code={code} reviewed={reviewed} />
     </div>
