@@ -273,6 +273,117 @@
    "holders_ar": "غير متوفر",
    "followup_ar": "غير متوفر",
    "followup_sources": []
+  },
+  "EMFD": {
+   "team_ar": [
+    "رئيس مجلس الإدارة (غير تنفيذي) حسب إفصاح أكتوبر 2026: جمال ماجد خلفان بن ثنية",
+    "الرئيس التنفيذي السابق مصطفى القاضي اتنهت خدمته 25 مايو 2026، ومحمد العبار (مؤسس المجموعة) تولى الإشراف على العمليات، والشركة وضحت إنها ما عينتش رئيس تنفيذي جديد"
+   ],
+   "team_sources": [
+    {
+     "label": "إفصاح المادة 30 عن المجلس والمساهمين (11 أكتوبر 2026)",
+     "url": "https://foudalens.com/disclosures/EMFD.CA/board_agm/2026-10-11_295798_1.pdf"
+    },
+    {
+     "label": "Enterprise، 3 يونيو 2026: إنهاء خدمة الرئيس التنفيذي",
+     "url": "https://enterpriseam.com/egypt/2026/06/03/emaar-misr-ceo-mostafa-el-kady-is-out-mohamed-alabbar-takes-over/"
+    },
+    {
+     "label": "Arab Finance، 2 يونيو 2026: توضيح الشركة بعدم تعيين رئيس تنفيذي",
+     "url": "https://www.arabfinance.com/en/news/newdetails/emaar-misr-says-no-ceo-appointed-and-mohamed-alabbar-maintains-operational-oversight"
+    }
+   ],
+   "team_confidence_ar": "إفصاح رسمي حديث. تنبيه: صفحة موقع الشركة بتسمي محمد العبار رئيس مجلس (https://www.emaarmisr.com/board-member/h-e-mohamed-ali-rashed-alabbar/)، وده بيتعارض مع الإفصاح، فالاسم المعتمد هنا من الإفصاح الرسمي",
+   "holders_ar": "5% فأكتر (إفصاح 11 أكتوبر 2026): إعمار العقارية 72.315% (مع شركة تابعة 73.791%)، ألبرو نيزرلاند 16.846% (مع شركة تابعة 16.858%). الأسهم حرة التداول 9.36%",
+   "followup_ar": "آخر إفصاح ملكية: 11 أكتوبر 2026. القوائم الجاية: السنة المالية 2026، موعدها غير معلن.",
+   "followup_sources": []
+  },
+  "PHDC": {
+   "team_ar": [
+    "رئيس مجلس الإدارة والرئيس التنفيذي للمجموعة: ياسين منصور",
+    "الرئيس التنفيذي المشارك والعضو المنتدب: حازم بدران (من منتصف 2021)",
+    "نائب الرئيس (ممثل MMID): محمد منصور"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة مجلس الإدارة في موقع المستثمرين",
+     "url": "https://ir.palmhillsdevelopments.com/en-us/corporate/boardofdirectors"
+    }
+   ],
+   "team_confidence_ar": "مصدر واحد (موقع الشركة، غير مؤرخ). محتاجة تأكيد",
+   "holders_ar": "غير متوفر: خبر 15 أكتوبر 2026 بيقول ياسين منصور زود حصته المباشرة (https://www.billionaires.africa/2026/10/15/egyptian-billionaire-yasseen-mansour-lifts-palm-hills-stake-as-his-son-takes-shares/) لكنه مصدر صحفي والنسب ما اتأكدتش من إفصاح",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "EFIH": {
+   "team_ar": [
+    "رئيس مجلس الإدارة والعضو المنتدب: إبراهيم سرحان",
+    "أعضاء المجلس: إبراهيم عبد السلام، هشام الشعراوي، أيمن حسين، خالد زكريا، ندى مسعود، طارق المحمودي"
+   ],
+   "team_sources": [
+    {
+     "label": "معلومات الشركة في موقع المستثمرين",
+     "url": "https://investors.efinanceinvestment.com/en/share-and-corporate-information"
+    },
+    {
+     "label": "صفحة القيادة",
+     "url": "https://investors.efinanceinvestment.com/en/our-people"
+    }
+   ],
+   "team_confidence_ar": "من موقع الشركة (غير مؤرخ). محتاجة تأكيد",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "آخر نتائج منشورة قريتها: نشرة أرباح النصف الأول 2026 على موقع الشركة. القوائم الجاية موعدها غير معلن.",
+   "followup_sources": [
+    {
+     "label": "نشرة نتائج 1H2026",
+     "url": "https://irfiles.technologyverse.com/ef/e-finance-1H2026-ER-Final.pdf"
+    }
+   ]
+  },
+  "MASR": {
+   "team_ar": [
+    "الرئيس التنفيذي: عبد الله سلام",
+    "رئيس مجلس الإدارة: غير مؤكد. صفحة المستثمرين بتوصف اللواء م. محمد مصطفى عبد الرحمن لبن كعضو منتدب تنفيذي ورئيس غير تنفيذي بالإنابة للشركة القابضة (مش لمدينة مصر نفسها بشكل واضح)، فمش هكتب اسم"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة القيادة في موقع المستثمرين",
+     "url": "https://ir.madinetmasr.com/en/leadership"
+    },
+    {
+     "label": "صفحة من نحن",
+     "url": "https://madinetmasr.com/en/about-us"
+    }
+   ],
+   "team_confidence_ar": "اسم الرئيس التنفيذي من صفحة الشركة. رئيس المجلس محتاج إفصاح",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "ORAS": {
+   "team_ar": [
+    "رئيس مجلس الإدارة (مستقل غير تنفيذي): جيروم جيرو",
+    "الرئيس التنفيذي: أسامة بشاي"
+   ],
+   "team_sources": [
+    {
+     "label": "عرض الشركة للمستثمرين، نوفمبر 2025",
+     "url": "https://orascom.com/wp-content/uploads/Orascom-Construction-PLC-Corporate-Presentation-November-2025.pdf"
+    },
+    {
+     "label": "Reuters/LSEG: قيادة الشركة",
+     "url": "https://www.reuters.com/markets/companies/ORAS.CA/"
+    }
+   ],
+   "team_confidence_ar": "عرض الشركة عمره سنة تقريبًا ومصدر تاني غير مؤرخ. محتاجة تأكيد من آخر إفصاح",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "الشركة مسجلة في أبوظبي والقاهرة وبتنشر نتائج مبدئية (آخر ما لقيته: نتائج 2025 بتاريخ 12 فبراير 2026). موعد الجاية غير معلن.",
+   "followup_sources": [
+    {
+     "label": "النتائج المبدئية 2025",
+     "url": "https://orascom.com/wp-content/uploads/OC-PLC_Preliminary-Unaudited-Results_EN.pdf"
+    }
+   ]
   }
  }
 }
