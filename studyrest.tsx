@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // Financial studies for stocks outside the bundled reviewed set. Data-only: studies_rest/<CODE>.json is written by the content agent.
 // Every study carries its own honesty status line; nothing here adds numbers or opinions.
 const cache: Record<string, Promise<any>> = {};
-const load = (code: string) => cache[code] || (cache[code] = fetch('studies_rest/' + code + '.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
+const load = (code: string) => cache[code] || (cache[code] = fetch('studies_rest/studies_rest/' + code + '.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
 export function useStudy(code: string) {
   const [st, setSt] = useState<any>(null);
   useEffect(() => { let on = true; setSt(null); load(code).then(x => { if (on && x && x.record) setSt(x); }); return () => { on = false; }; }, [code]);
