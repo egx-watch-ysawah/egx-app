@@ -57,8 +57,8 @@ export function SourcedFair({ k }: { k: string }) {
   const day = (d.as_of === '2026-11-25' ? '25 نوفمبر 2026' : d.as_of);
   return <div className="gd-fv fv6"><style>{CSS}</style>
     <div className="q"><span>السعر العادل</span><span className="tg">تقديري · {day}</span></div>
-    {aOk ? <div className="big"><bdi dir="ltr">{fx(a.conservative)}</bdi> إلى <bdi dir="ltr">{fx(a.optimistic)}</bdi></div> : <div className="big">غير متوفر</div>}
-    <p className="ex">{aOk ? <>سعر تقديري من طرق ليها مرجع مكتوب تحت، عشان تقارنه بالسعر في السوق. {num(a.base) ? <>الوسط <bdi dir="ltr">{fx(a.base)}</bdi>. </> : null}{a.label} ({a.n_methods} طريقة). </> : <>غير متوفر: {(a && a.reason) || 'مفيش تجميع، لأن الطرق الموثوقة أقل من طريقتين.'} الطرق وحالة كل واحدة تحت. </>}السعر الحالي <bdi dir="ltr">{fx(s.price)}</bdi> ({s.price_note}).</p>
+    {aOk ? <div className="big"><bdi dir="ltr">{fx(a.conservative)}</bdi> إلى <bdi dir="ltr">{fx(a.optimistic)}</bdi></div> : <div className="big">{a && a.headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر'}</div>}
+    <p className="ex">{aOk ? <>سعر تقديري من طرق ليها مرجع مكتوب تحت، عشان تقارنه بالسعر في السوق. {num(a.base) ? <>الوسط <bdi dir="ltr">{fx(a.base)}</bdi>. </> : null}{a.label} ({a.n_methods} طريقة). </> : a && a.headline_ar ? <>{a.headline_ar} {a.have_ar} </> : <>غير متوفر: {(a && a.reason) || 'مفيش تجميع، لأن الطرق الموثوقة أقل من طريقتين.'} الطرق وحالة كل واحدة تحت. </>}السعر الحالي <bdi dir="ltr">{fx(s.price)}</bdi> ({s.price_note}).</p>
     {a && a.noncore_warning_ar ? <div className="ours">{a.noncore_warning_ar}</div> : null}
     <Fold t="الطرق والمصادر">
       {s.methods.map((m: any) => <div className="mm" key={m.method_key}>
