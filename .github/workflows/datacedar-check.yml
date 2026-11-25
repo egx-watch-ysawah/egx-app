@@ -11,7 +11,7 @@ jobs:
         env:
           DC_KEY: ${{ secrets.DATACEDAR_API_KEY }}
         run: |
-          curl -s -o /tmp/a 'https://api.datacedar.com/v3/exchanges/egx/symbols?limit=1000' -H "X-API-Key: $DC_KEY"; head -c 500 /tmp/a; echo
-          jq -r '.data | length' /tmp/a; jq -c '[.data[] | (.symbol // .ticker // .code)] | join(",")' /tmp/a | head -c 3500; echo
-          SID=$(jq -r '[.data[] | select((.symbol // .ticker // .code) == "COMI")][0].sid // .data[0].sid // empty' /tmp/a); echo "sid=$SID"
-          sleep 2; if [ -n "$SID" ]; then curl -s -D /tmp/h2 -o /tmp/b "https://api.datacedar.com/v3/stocks/$SID/bars?timeframe=1d&order=desc&limit=3" -H "X-API-Key: $DC_KEY"; head -1 /tmp/h2; grep -i '^x-ratelimit' /tmp/h2 || true; head -c 900 /tmp/b; echo; fi
+          curl -s -o /tmp/a 'https://api.datacedar.com/v3/exchanges/egx/symbols?limit=1000' -H "X-API-Key: $DC_KEY"
+          jq -r '.data[] | select(.name | test("Golden|Commercial International|Textile"; "i")) | .sid + " " + .name' /tmp/a | head -12
+          sleep 2; curl -s -D /tmp/h2 -o /tmp/b "https://api.datacedar.com/v3/stocks/egx:EGS60121C018/bars?timeframe=1d&order=desc&limit=3" -H "X-API-Key: $DC_KEY"; head -1 /tmp/h2; head -c 700 /tmp/b; echo
+          sleep 2; curl -s -o /tmp/c "https://api.datacedar.com/v3/stocks/egx:EGX30/bars?timeframe=1d&order=desc&limit=2" -H "X-API-Key: $DC_KEY"; head -c 600 /tmp/c; echo
