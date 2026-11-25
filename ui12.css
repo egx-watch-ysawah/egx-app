@@ -53,3 +53,14 @@
 .rf-btn.spin svg{animation:rfspin .9s linear infinite}
 @keyframes rfspin{to{transform:rotate(360deg)}}
 .rf-msg{opacity:.85;line-height:1.6;font-size:.82em}
+/* ui13: readability, spacing, calmer colors, touch targets */
+.eg-card-root{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.ab,.eg-tabs{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+.gd-tab,.gd-tabs button,.rf-btn,.eg-chip,summary,.eg-tabs a,.ab a,.ab button{min-height:44px}
+.gd-tab{display:flex;align-items:center;justify-content:center}
+.eg-card-root small,.eg-card-root .tv-n,.eg-card-root .gd-rng small,.eg-card-root .rf-msg,.gd-foot,.eg-note,.hb-stamp,.cov-row small{font-size:12.5px;color:#a9b6cb}
+.tv-down{--c:#e58f9b}
+.tv-down.tv{background:linear-gradient(160deg,#1a1f2e,#0e1626 80%);border-color:#e58f9b44}
+.tv-down .tv-t{color:#f0b3bc;text-shadow:none}
+.gd-fv .gd-it.ok,.gd-fv .gd-it.no,.gd-fv .gd-it.mid,.gd-fv .gd-rng div{border-inline-start-color:#475569}
+.gd-fv .gd-it.ok .gd-h b,.gd-fv .gd-it.no .gd-h b,.gd-fv .gd-it.mid .gd-h b{background:#ffffff12;color:#dbe4f0}
