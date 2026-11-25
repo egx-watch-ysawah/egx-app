@@ -8,7 +8,7 @@ import { RefreshBar } from './refresh';
 const URL_STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const URL_HIST = 'https://startamarkets.com/api/v1/egx/history/';
 const PORT = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
-const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const fmt = (v: number) => (v >= 1 ? v.toFixed(2) : v.toFixed(3));
 const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(2) + '%';
 const big = (v: number) => { const a = Math.abs(v); return a >= 1e9 ? (v / 1e9).toFixed(2) + ' مليار' : a >= 1e6 ? (v / 1e6).toFixed(1) + ' مليون' : Math.round(v).toLocaleString('en-US'); };
 const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
