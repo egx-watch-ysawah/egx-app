@@ -1,0 +1,38 @@
+name: indices
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 8-12 * * 0-4"
+permissions:
+  contents: write
+concurrency:
+  group: indices
+  cancel-in-progress: false
+jobs:
+  indices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch EGX 30 index level (Starta Markets, delayed)
+        run: |
+          python3 - <<'PY'
+          import json,urllib.request,datetime
+          d=json.load(urllib.request.urlopen(urllib.request.Request('https://startamarkets.com/api/v1/egx30/index',headers={'User-Agent':'Mozilla/5.0'}),timeout=30))
+          q=d.get('quote') or {}
+          if not d.get('available') or not all(isinstance(q.get(x),(int,float)) for x in ('value','change','changePercent')) or q['value']<=0: raise SystemExit('bad index, keeping old file')
+          out={'source':'https://startamarkets.com/api/v1/egx30/index','note':'delayed free data, not real-time','indices':{'egx30':{'name':'EGX 30','close':q['value'],'chg':round(q['changePercent'],2),'chg_abs':round(q['change'],2)}}}
+          try: old=json.load(open('indices.json'))
+          except Exception: old={}
+          if old.get('indices')!=out['indices']:
+              out['fetched_at_utc']=datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+              json.dump(out,open('indices.json','w'),ensure_ascii=False,indent=1)
+              print('updated')
+          else:
+              print('unchanged')
+          PY
+      - name: Commit if changed
+        run: |
+          git config user.name "egx-bot"
+          git config user.email "egx-bot@users.noreply.github.com"
+          git add indices.json
+          git diff --cached --quiet || (git commit -m "index update" && git pull --rebase && git push)
