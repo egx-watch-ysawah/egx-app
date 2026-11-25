@@ -76,7 +76,7 @@ for k,s in SYM.items():
         if P>ema20*1.005: mode='pullback';entry=ema20
         else: mode='breakout';entry=res
         stop=entry-2.5*atr;target=entry+3*atr
-        hh=float(df.close.tail(22).max());trail=hh-3*atr
+        hh=float(df.close.tail(20).max());trail=hh-3*atr
         z=df.close.shift(0)*df.volume;tv=float(z.tail(60).median());zd=int((df.volume.tail(60)==0).sum())
         ext=float((P-float(df.close.iloc[-21]))/atr)
         sizepct=round(min(25.0,1.0/abs(stop/entry-1)),1)
