@@ -1,4 +1,5 @@
 import { HistCurve, DivCalendar } from './extras';
+import { stampNote } from './scen';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
@@ -155,7 +156,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
           <div className="hb-cash"><small>كاش</small><b dir="ltr">{CASH_EGP.toLocaleString('en-US', { maximumFractionDigits: 2 })}</b></div>
         )}
         {!useQty && <small className="hb-note">نسبة تقريبية بأوزان لقطة 24 نوفمبر. أضف الكميات في الملف المشفر عشان تظهر القيمة بالجنيه.</small>}
-        <small className="hb-stamp"><i className="fd" role="img" aria-label={fresh} title={fresh} />{live ? 'آخر تحديث ' + stamp(live.at) + ' · متأخر حتى 20 دقيقة، مش لحظي' : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
+        <small className="hb-stamp"><i className="fd" role="img" aria-label={fresh} title={fresh} />{live ? 'آخر تحديث ' + stamp(live.at) + ' · ' + stampNote(live.at) : 'آخر تحديث ' + stamp() + ' · إقفال يومي، مش أسعار لحظية'}</small>
       </div>
       <div className="hb-tiles">
         <div><small>صاعد اليوم</small><b className="hb-up" data-dir="up">{up}</b></div>
