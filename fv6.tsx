@@ -52,9 +52,11 @@ export function SourcedFair({ k }: { k: string }) {
         <Vals c={m.conservative} b={m.base} o={m.optimistic} />
         {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
         {isPeer(m) && (num(m.conservative) || num(m.optimistic)) ? <div className="na">{PEERS}</div> : null}
+        {m.peers_note ? <div className="na">{m.peers_note}</div> : null}{m.implied_pb ? <div className="na">المضاعف المفترض: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
         <div>الحساب: {m.basis}</div>
         <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /><br /><small>{m.source_status}</small></div>
         <Caveat m={m} /></div>)}
+      {s.peers_note ? <div className="na">{s.peers_note}</div> : null}
       {(s.unavailable || []).map((u: any, i: number) => <div className="na" key={i}><b>{u.method_name}:</b> {u.reason}</div>)}
       {aOk ? <div className="na">{a.name_ar}. {a.curriculum_basis}</div> : null}
     </Fold>
@@ -68,13 +70,13 @@ export function SourcedFair({ k }: { k: string }) {
         <h5>الطريقة {String(t.key).slice(1)}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || t.label}</span></h5>
         <div>{t.name_ar}</div>
         {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
-        <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{(t.source_links || []).map((u: string) => <A key={u} u={u} />)}</div>
+        <div className="src"><b>من المصدر:</b> {t.part_from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}{(t.source_links || []).map((u: string) => <A key={u} u={u} />)}</div>
         <div className="ours"><b>من عندنا:</b> {t.part_ours}</div>
         <div className="na">{t.basis_status}</div>
         {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
         {num(t.value) && t.backtest_line ? <div className="na">{t.backtest_line}</div> : null}</div>)}
       {an.avg != null
-        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small><br /><A u={an.source} /></div>
+        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><A u={an.source} /></div>
         : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
     </Fold>
     <p className="nt">{d.curriculum_note_ar}</p>
@@ -94,7 +96,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   if (!s) return <div className={bony ? 'bf-value' : 'fin-value'}><span>السعر العادل</span><b>غير متوفر</b><small>مقدرتش أحمّل النص دلوقتي.</small></div>;
   const an = s.analyst_reference || {};
   return <>
-    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري'}</b><small>{rename(s.summary)} {rename(s.small)}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
+    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري'}</b><small>{rename(s.summary)} {rename(s.small)}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
     <div className="fv6"><style>{CSS}</style>
       <Fold t="طرق السعر العادل ومصادرها">
         {(s.methods || []).map((m: any, i: number) => <div className="mm" key={i}>
@@ -102,10 +104,12 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           <Vals c={(m.values || {}).conservative} b={(m.values || {}).base} o={(m.values || {}).optimistic} />
           {m.status_reason ? <div className="na"><b>{reasonLine(m.status, m.status_reason)}</b></div> : null}
           {isPeer({ name_ar: m.label_ar }) && (num((m.values || {}).conservative) || num((m.values || {}).optimistic)) ? <div className="na">{PEERS}</div> : null}
+          {m.peers_note ? <div className="na">{m.peers_note}</div> : null}{m.implied_pb ? <div className="na">المضاعف المفترض: <bdi dir="ltr">{m.implied_pb}</bdi></div> : null}
           <div>الحساب: {m.how}</div>
           <div className="src">المرجع: {m.curriculum_basis}<br /><A u={m.source} /></div>
           <Caveat m={m} /></div>)}
         <div className="na">{s.special}</div>
+        {s.treasury_note ? <div className="na">{s.treasury_note}</div> : null}
         {(s.unavailable || []).map((u: any, i: number) => <div className="na" key={i}>{typeof u === 'string' ? u : (u.method_name || '') + ': ' + (u.reason || '')}</div>)}
         <div className="na">{rename(s.method_explainer)}</div>
         <div className="na">{s.assumptions}</div>
@@ -114,13 +118,13 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
         {(s.targets_experimental || []).map((t: any, i: number) => <div className="mm" key={i}>
           <h5>{t.label_ar}: {num(t.value) ? <bdi dir="ltr">{fx(t.value)}</bdi> : 'غير موثوق'} <span className="tg">{t.status || 'تجريبي'}</span></h5>
           {!num(t.value) && t.status_reason ? <div className="na"><b>{t.status_reason}</b></div> : null}
-          <div className="src"><b>من المصدر:</b> {t.from_source}<br />{t.source_reference}<br /><A u={t.source} /></div>
+          <div className="src"><b>من المصدر:</b> {t.from_source}<br />{t.source_reference}<br />{t.source_status ? <><small>{t.source_status}</small><br /></> : null}<A u={t.source} /></div>
           <div className="ours"><b>من عندنا:</b> {t.ours}</div>
           <div className="na">{t.note}</div>
           {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
           {num(t.value) && t.backtest_line ? <div className="na">{t.backtest_line}</div> : null}</div>)}
         {an.avg != null
-          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small><br /><A u={an.source} /></div>
+          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><A u={an.source} /></div>
           : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
         {s.backtest_line ? <div className="na">{s.backtest_line}</div> : null}
         <div className="na">{s.backtest_note}</div>
