@@ -13,7 +13,7 @@ const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر
 export const tidy = (x: any) => String(x == null ? '' : x).replace(/([.،؛:])(\s*[.،؛:])+/g, (m: string) => { const c = m.replace(/[\s]/g, ''); return c[c.length - 1]; }).replace(/(^|\s)([\u0600-\u06FF]{3,})\s+\2(?=\s|[.،؛:]|$)/g, '$1$2').replace(/ {2,}/g, ' ');
 const isPeer = (m: any) => m && (m.method_key === 'PE' || m.method_key === 'PB' || /شركات شبهها|شركات مشابهة|أقران/.test(String(m.name_ar || m.label_ar || '')));
 const Cell = ({ l, v, t }: { l: string; v: any; t?: string }) => <div><small>{l}</small>{num(v) ? <b dir="ltr">{fx(v)}</b> : t ? <b className="mid">{t}</b> : <b dir="ltr">—</b>}</div>;
-const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l={m && m.range_kind_ar ? 'الوسط في ' + m.range_kind_ar : 'متوسط'} v={b} t={m && m.midpoint_text_ar} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
+const Vals = ({ c, b, o, m }: { c: any; b: any; o: any; m?: any }) => (num(c) || num(b) || num(o)) ? <div className="vv"><Cell l={(m && m.low_label_ar) || 'محافظ'} v={c} /><Cell l="الوسط" v={b} t={m && m.midpoint_text_ar} /><Cell l={(m && m.high_label_ar) || 'متفائل'} v={o} /></div> : null;
 const Caveat = ({ m }: { m: any }) => <>{m.caveat ? <div className="ours">ملحوظة: {m.caveat}</div> : null}{m.number_caveat && !String(m.caveat || '').includes(m.number_caveat) ? <div className="ours">{m.number_caveat}</div> : null}</>;
 const Card = ({ c }: { c: any }) => <>
   {c.headline_ar ? <div className="ch"><b>{tidy(c.headline_ar)}</b></div> : null}
@@ -36,6 +36,7 @@ const CSS = `
 .fv6 .vv small{display:block;color:#8b97ad;font-size:11px}.fv6 .vv b{color:#fff}
 .fv6 .src{color:#9fb0c9}.fv6 .src a{color:#7dd3fc;word-break:break-all}.fv6 .ours{color:#f5c26b}
 .fv6 .vv .mid{font-size:11.5px;font-weight:500;line-height:1.6;color:#cbd5e6}.fv6 .ch{margin:6px 0;line-height:1.8;color:#e8edf5}.fv6 .cl{color:#cbd5e6;font-size:13px;line-height:1.9;margin:3px 0}
+.fv6 .na a,.fv6 .src a{display:inline-block;padding:10px 0}
 .fv6 .na{color:#9aa6bb;font-size:12.5px;line-height:1.8;margin:4px 0}
 .fv6 .an{border-top:1px dashed #2a3650;margin-top:8px;padding-top:6px;font-size:13px;color:#d5dbe7}
 .fv6 hr{border:0;border-top:1px solid #263249;margin:12px 0}
@@ -125,7 +126,7 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
   const an = s.analyst_reference || {};
   const seenBt = new Set<string>(); const once = (x: any) => { const v = String(x || '').trim(); if (!v || /مكتوبة مرة واحدة/.test(v) || seenBt.has(v)) return null; seenBt.add(v); return <div className="na">{tidy(v)}</div>; };
   return <>
-    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{/مفيش نطاق/.test(String(s.summary || '')) ? (s.aggregate_headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر') : 'تقديري'}</b><small>{s.aggregate_headline_ar ? <>{tidy(s.aggregate_headline_ar)} {tidy(s.aggregate_have_ar)}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
+    <div className={bony ? 'bf-value' : 'fin-value'}><span>{rename(s.block_title || s.title)}</span><b>{s.aggregate_headline_ar ? (/^\s*(مفيش|غير)/.test(s.aggregate_headline_ar) ? 'مفيش رقم مجمّع' : 'تقديري') : (/مفيش نطاق/.test(String(s.summary || '')) ? 'غير متوفر' : 'تقديري')}</b><small>{s.aggregate_headline_ar ? <>{tidy(s.aggregate_headline_ar)} {tidy(s.aggregate_have_ar)}</> : <>{rename(s.summary)} {rename(s.small)}</>}</small>{s.profit_change_line ? <small>{s.profit_change_line}</small> : null}</div>
     <div className="fv6"><style>{CSS}</style>
       {s.glossary_ar && Object.keys(s.glossary_ar).length ? <Fold t="معنى الكلمات">{Object.entries(s.glossary_ar).map(([a, b]: any) => <div className="na" key={a}><b>{a}:</b> {String(b)}</div>)}</Fold> : null}
       <Fold t="طرق السعر العادل ومصادرها">
