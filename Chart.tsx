@@ -89,7 +89,7 @@ function LegacyStockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t:
         {t.sma && <path d={path(data.map(r => r[7]), x, y)} className="eg-l200" fill="none" />}
         {t.plan && line(plan.trail, 'eg-pt', 'مرجع متحرك')}
         {t.plan && line(plan.entry, 'eg-pe', 'مستوى مراقبة')}
-        {t.plan && line(plan.stop, 'eg-ps', 'مستوى انكسار افتراضي')}
+        {t.plan && line(plan.stop, 'eg-ps', plan.mode === 'breakout' ? 'وقف لو الدخول عند المقاومة' : 'مستوى انكسار افتراضي')}
         {safeSel != null && <g><line x1={x(safeSel)} x2={x(safeSel)} y1={0} y2={H} className="eg-cross" /><line x1={0} x2={W} y1={y(data[safeSel][4])} y2={y(data[safeSel][4])} className="eg-cross" /><circle cx={x(safeSel)} cy={y(data[safeSel][4])} r="4" fill="#6ea8ff" stroke="#fff" /></g>}
         <text x={W - 4} y={9} textAnchor="end" className="eg-axis">{hi.toFixed(2)}</text>
         <text x={W - 4} y={H - 2} textAnchor="end" className="eg-axis">{lo.toFixed(2)}</text>
@@ -159,7 +159,7 @@ export function StockChart({rows,n,t,plan,closeOnly=false}:{rows:Row[];n:number;
    const addLine=(col:number,color:string,pane=0)=>{const l=chart.addSeries(LineSeries,{color,lineWidth:1,lastValueVisible:false,priceLineVisible:false},pane);l.setData(rows.filter(r=>r[col]!=null&&Number.isFinite(r[col])).map(r=>({time:r[0],value:r[col]})));return l;};
    if(t.sma){addLine(6,'#e6b65d');addLine(7,'#9b8fe0');}
    if(t.bb){addLine(11,'#557b98');addLine(12,'#557b98');}
-   if(t.plan)[[plan.entry,'#75baff','مستوى مراقبة'],[plan.stop,'#ff6b7c','مستوى انكسار افتراضي'],[plan.trail,'#d4ad69','مرجع متحرك']].forEach(([priceValue,color,title])=>{if(Number.isFinite(priceValue))price.createPriceLine({price:priceValue,color,lineWidth:1,lineStyle:2,axisLabelVisible:true,title});});
+   if(t.plan)[[plan.entry,'#75baff','مستوى مراقبة'],[plan.stop,'#ff6b7c',plan.mode==='breakout'?'وقف لو الدخول عند المقاومة':'مستوى انكسار افتراضي'],[plan.trail,'#d4ad69','مرجع متحرك']].forEach(([priceValue,color,title])=>{if(Number.isFinite(priceValue))price.createPriceLine({price:priceValue,color,lineWidth:1,lineStyle:2,axisLabelVisible:true,title});});
    let pane=0;
    if(t.vol){const v=chart.addSeries(HistogramSeries,{priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false},++pane);v.setData(rows.map(r=>({time:r[0],value:r[5],color:r[4]>=r[1]?'#26a69a88':'#ef535088'})));}
    if(t.rsi){const l=addLine(8,'#bc9aff',++pane);[30,70].forEach(p=>l.createPriceLine({price:p,color:'#647083',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:''}));}
