@@ -3,7 +3,7 @@ import { Link } from './shim';
 import { useStarta } from './feed';
 
 const SYMS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
-const fmt = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const fmt = (v: number) => (v >= 1 ? v.toFixed(2) : v.toFixed(3));
 
 export function Ticker() {
   const f = useStarta();
