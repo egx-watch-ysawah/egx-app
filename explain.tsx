@@ -3,7 +3,7 @@ export const Ex = ({ children, label = 'اشرحلي' }: { children: React.React
     <details className="eg-ex"><summary>{label}</summary><div className="eg-exb">{children}</div></details>;
 const P = ({ h, children }: { h: string; children: React.ReactNode }) => <p><b>{h}</b> {children}</p>;
 const Now = ({ children }: { children: React.ReactNode }) => <p className="eg-now"><b>دلوقتي بيقول:</b> {children}</p>;
-const f = (v: number) => (v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const f = (v: number) => (v >= 1 ? v.toFixed(2) : v.toFixed(3));
 export const X = {
     chart: (s: any, tf: string) => <>
         <P h="إيه ده؟">كل شمعة بتلخص فترة تداول: الجسم بين الفتح والإغلاق، والخيط بين أعلى وأقل سعر. الشمعة الخضرا يعني أقفل أعلى من ما فتح، والحمرا العكس.</P>
