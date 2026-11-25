@@ -93,7 +93,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
     <h2 className="eg-h">{title} <span className="ix-n">{nq ? '· نتايج البحث (' + rows.length + ')' : '(' + rows.length + ' سهم)'}</span></h2>
     <IndexSummary which={which} />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث عن سهم" autoComplete="off" /></label>
-    <p className="eg-note">أسعار متأخرة حتى 20 دقيقة، والتغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
+    <p className="eg-note">الأسعار: {stampNote(d.asof)}. التغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
     <div className="eg-chips">{chip('val', 'الأعلى تداولًا')}{chip('up', 'الأكثر ارتفاعًا')}{chip('down', 'الأكثر هبوطًا')}</div>
     <p className="eg-note ix-lg"><b>الحجم:</b> عدد الأسهم اللي اتداولت. <b>القيمة:</b> فلوس التداول بالمليون جنيه.</p>
     <div className="ix-hd"><span>الشركة</span><span>السعر · التغيّر</span><span>الحجم · القيمة</span></div>
