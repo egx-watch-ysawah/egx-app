@@ -1,3 +1,4 @@
+import { TeamBlock } from './scen';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
@@ -123,6 +124,7 @@ export function OtherLight({ code, row, reason }: { code: string; row: any; reas
     <div className="ot-px"><b dir="ltr">{fmt(row.last_price)}</b><small>ج.م</small><span className={row.change_percent >= 0 ? 'u' : 'd'} dir="ltr">{row.change_percent >= 0 ? '▲' : '▼'} {Math.abs(row.change_percent || 0).toFixed(2)}%</span></div>
     <p className="eg-note">غير متوفر: القراءة الفنية والسيناريو والرسم. السبب: {reason}</p>
     <OtherFacts row={row} />
+    <TeamBlock code={code} />
     <p className="eg-note">المصدر: <a href={'https://startamarkets.com/symbol/' + code} target="_blank" rel="noreferrer">Starta Markets</a>. مش نصيحة استثمار.</p>
   </div>;
 }
