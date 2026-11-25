@@ -2537,7 +2537,6 @@
     "cash_f_operating_activities_ttm": 904180413,
     "earnings_per_share_basic_ttm": 1.438,
     "free_cash_flow_ttm": 471767340,
-    "gross_margin_ttm": 59.6957,
     "net_income_fq": 790365400,
     "net_income_fy": 3157409001,
     "net_income_ttm": 3065745111,
@@ -2545,9 +2544,7 @@
     "operating_margin_ttm": 40.9297,
     "total_debt_fq": 7868961700,
     "total_equity_fq": 13368462400,
-    "total_revenue_fq": 3357311000,
-    "total_revenue_fy": 12739155352,
-    "total_revenue_ttm": 12986384824
+    "total_revenue_fy": 12739155352
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
