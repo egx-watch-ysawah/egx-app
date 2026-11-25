@@ -8,6 +8,7 @@ import { Ex, X } from './explain';
 import { HomeBoard } from './homeboard';
 import { IndexList, IdxStock } from './idx';
 import { TeamBlock, Use, Glossary } from './scen';
+import { NewsBlock } from './news';
 
 
 const KEYS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
@@ -211,7 +212,7 @@ function Stock({ k }: { k: string }) {
                 
                 <p className="eg-note eg-foot">قراءة تاريخية للسعر والتذبذب، مش نصيحة ولا توقع. السعر ممكن يتخطى أي مستوى بفجوة. المؤشرات مشتقة من نفس الأسعار فمش أدلة مستقلة، وميزة التنبؤ مش مثبتة، والبيانات من مصدر مجاني واحد ممكن يتأخر أو يحتاج تصحيح تقسيمات.</p>
             </>}
-            <TeamBlock code={k} /><Glossary />
+            <TeamBlock code={k} /><NewsBlock code={k} /><Glossary />
         </div>
     </div>;
 }
