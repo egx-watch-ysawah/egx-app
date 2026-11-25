@@ -16,9 +16,11 @@ export function inSessionNow(): boolean {
   return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu'].includes(p.weekday) && m >= 600 && m <= 890;
 }
 
-export async function loadStarta(): Promise<StartaFeed> {
+let lastAt = 0;
+export async function loadStarta(force = false): Promise<StartaFeed> {
   if (busy) return feed;
-  busy = true;
+  if (!force && Date.now() - lastAt < 4000) return feed;
+  busy = true; lastAt = Date.now();
   try {
     const r = await fetch(URL_STOCKS + '?t=' + Date.now(), { cache: 'no-store' });
     if (!r.ok) throw 0;
@@ -36,6 +38,8 @@ export async function loadStarta(): Promise<StartaFeed> {
   busy = false;
   return feed;
 }
+
+export const getFeed = () => feed;
 
 function start() {
   if (timer) return;
