@@ -59,6 +59,7 @@ export function SourcedFair({ k }: { k: string }) {
   const day = (d.as_of === '2026-11-25' ? '25 نوفمبر 2026' : d.as_of);
   return <div className="gd-fv fv6"><style>{CSS}</style>
     <div className="q"><span>السعر العادل</span><span className="tg">تقديري · {day}</span></div>
+    {s.price_label_ar ? <p className="ex" style={{ opacity: .85 }}>الأرقام دي محسوبة على سعر {s.price_label_ar}{num(s.price) ? <> (<bdi dir="ltr">{fx(s.price)}</bdi>)</> : null}، مش على سعر اليوم.</p> : null}
     {aOk ? <div className="big"><bdi dir="ltr">{fx(a.conservative)}</bdi> إلى <bdi dir="ltr">{fx(a.optimistic)}</bdi></div> : <div className="big">{a && a.headline_ar ? 'مفيش رقم مجمّع' : 'غير متوفر'}</div>}
     <p className="ex">{aOk ? <>سعر تقديري من طرق ليها مرجع مكتوب تحت، عشان تقارنه بالسعر في السوق. {num(a.base) ? <>الوسط <bdi dir="ltr">{fx(a.base)}</bdi>. </> : null}{a.label} ({a.n_methods} طريقة). </> : a && a.headline_ar ? <>{tidy(a.headline_ar)} {tidy(a.have_ar)} </> : <>غير متوفر: {(a && a.reason) || 'مفيش تجميع، لأن الطرق الموثوقة أقل من طريقتين.'} الطرق وحالة كل واحدة تحت. </>}السعر الحالي <bdi dir="ltr">{fx(s.price)}</bdi> ({s.price_note}).</p>
     {a && a.noncore_warning_ar ? <div className="ours">{a.noncore_warning_ar}</div> : null}
@@ -81,7 +82,7 @@ export function SourcedFair({ k }: { k: string }) {
       <Srcs l={s.sources_detail_ar} />
     </Fold>
     <hr />
-    <div className="q"><span>السعر المستهدف</span><span className="tg">تجريبي · {day}</span></div>
+    <div className="q"><span>{d.scenarios_heading_ar || 'السيناريوهات (تجريبي)'}</span><span className="tg">تجريبي · {day}</span></div>
     {vis.length ? <div className="vv2">{vis.map((t: any) => <div key={t.key}><small>سيناريو {snum(t.key)}</small><b dir="ltr">{fx(t.value)}</b></div>)}</div> : <div className="big">غير متوفر</div>}
     <p className="ex">{vs.length ? 'سيناريوهين بسيطين بنجرب بيهم سعر ممكن يوصله السهم، كل واحد بمدخلاته المكتوبة تحت. تجريبي ومش وعد.' : 'غير متوفر: السيناريوهين مخفيين لأنهم مش موثوقين.'}{hiddenN && vis.length === 0 ? ' ' + String((ts.find((t: any) => t.status_reason) || {}).status_reason || '') : ''}</p>
     {((a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean)) ? <div className="ours">{(a && a.noncore_warning_ar) || (s.methods || []).map((m: any) => m.noncore_warning_ar).find(Boolean)}</div> : null}
