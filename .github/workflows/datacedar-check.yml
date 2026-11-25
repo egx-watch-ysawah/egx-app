@@ -1,0 +1,18 @@
+name: datacedar-check
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/datacedar-check.yml']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: One call
+        env:
+          DC_KEY: ${{ secrets.DATACEDAR_API_KEY }}
+        run: |
+          curl -s -D /tmp/h1 -o /tmp/s 'https://api.datacedar.com/v3/search?q=GTWL' -H "X-API-Key: $DC_KEY"
+          head -1 /tmp/h1; grep -i '^x-ratelimit' /tmp/h1 || true; head -c 700 /tmp/s; echo
+          SID=$(jq -r '[.data[]? | select((.sid // "") | startswith("egx:"))][0].sid // empty' /tmp/s)
+          echo "sid=$SID"
+          if [ -n "$SID" ]; then curl -s -D /tmp/h2 -o /tmp/b "https://api.datacedar.com/v3/stocks/$SID/bars?timeframe=1d&order=desc&limit=3" -H "X-API-Key: $DC_KEY"; head -1 /tmp/h2; grep -i '^x-ratelimit' /tmp/h2 || true; head -c 900 /tmp/b; echo; fi
