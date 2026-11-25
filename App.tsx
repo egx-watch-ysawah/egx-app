@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { OthersList } from './others';
 import { FileCard, NavLink, Link, Route, Routes, useLocation } from './shim';
-import { DATA } from './data';import { StockGuide } from './guide';
+import { DATA } from './data';import { StockGuide, OnTab } from './guide';
 import { StockChart, Spark, Ring } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { Ex, X } from './explain';
@@ -158,9 +158,8 @@ function Stock({ k }: { k: string }) {
             {s.qualityChecked&&<p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a></p>}
             <PartialHistory s={s}/>
             {s.ok&&<StockGuide s={s} k={k} r={records[k]} chart={chartNode}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
-            <Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det>
-            {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
-                <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
+            <OnTab id="f"><Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det></OnTab>
+            {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> :<OnTab id="t">
 
                 
                 <Det title="افهم الشارت والألوان">
@@ -211,8 +210,8 @@ function Stock({ k }: { k: string }) {
                 
                 
                 <p className="eg-note eg-foot">قراءة تاريخية للسعر والتذبذب، مش نصيحة ولا توقع. السعر ممكن يتخطى أي مستوى بفجوة. المؤشرات مشتقة من نفس الأسعار فمش أدلة مستقلة، وميزة التنبؤ مش مثبتة، والبيانات من مصدر مجاني واحد ممكن يتأخر أو يحتاج تصحيح تقسيمات.</p>
-            </>}
-            <TeamBlock code={k} /><NewsBlock code={k} /><Glossary />
+            </OnTab>}
+            <OnTab id="f"><TeamBlock code={k} /></OnTab><OnTab id="d"><NewsBlock code={k} /></OnTab><OnTab id="t"><Glossary /></OnTab>
         </div>
     </div>;
 }
