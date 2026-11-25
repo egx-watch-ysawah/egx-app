@@ -63,7 +63,7 @@ export function TeamBlock({ code }: { code: string }) {
     {t.team_ar?.length ? <><h4 className="eg-h4">الفريق</h4><ul>{t.team_ar.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></> : null}
     <Src list={t.team_sources} />
     {t.team_confidence_ar ? <p className="eg-note">درجة التأكد: {t.team_confidence_ar}</p> : null}
-    <h4 className="eg-h4">كبار المساهمين</h4><p>{t.holders_ar || 'غير متوفر: لسه ما اتجمعتش من إفصاح ملكية حديث.'}</p>
+    <h4 className="eg-h4">كبار المساهمين</h4>{Array.isArray(t.holders_ar) ? (t.holders_ar.length ? <ul>{t.holders_ar.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul> : <p>غير متوفر: لسه ما اتجمعتش من إفصاح ملكية حديث.</p>) : <p>{t.holders_ar || 'غير متوفر: لسه ما اتجمعتش من إفصاح ملكية حديث.'}</p>}
     {t.followup_ar ? <><h4 className="eg-h4">فترة المتابعة</h4><Use>تعرف آخر قوائم مالية نزلت إمتى وهل البيانات قديمة.</Use><p>{t.followup_ar}</p></> : null}
     <Src list={t.followup_sources} />
   </Det>;
