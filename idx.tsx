@@ -10,6 +10,7 @@ import { useClientStock } from './clientidx';
 import { OtherFacts, OtherLight } from './others';
 import { NewsBlock } from './news';
 import { useStudy, StudyFin, StudyFair } from './studyrest';
+import { WIDE, WideFair, WideFin } from './wide';
 import { StockGuide, OnTab, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -204,8 +205,8 @@ export function IdxStock() {
     <Link className="eg-back" to={back}>← {back === '/others' ? 'باقي الأسهم' : back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
     <div className="eg-in">
       <h2 className="eg-h ix-top">{s.name} <span dir="ltr">({code})</span></h2>
-      <p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</p>
-      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} />
+      <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</p>
+      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={WIDE.includes(code) ? <><WideFin k={code} />{reviewed ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} />
       <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>
       <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>
       
