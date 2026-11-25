@@ -136,23 +136,24 @@ function Stock({ k }: { k: string }) {
     const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
     const v = verdict(s);
     if(invalidCandles(s))return <div className="eg-pad"><Link className="eg-back" to="/">← محفظتي</Link><h2 className="eg-h">{s.name} <L>{k}</L></h2><Price v={s.close}/><DataAge date={s.date}/><section className="holding-context" role="status"><h3>مراجعة جودة بيانات الشموع</h3><p>المصدر فيه جلسات فتحها أو إقفالها خارج الأعلى والأدنى. وقفنا الشموع وATR وADX ومستويات الدخول والوقف والاختبارات المعتمدة عليها لحد تصحيح المصدر. الرسم تحت للإقفال فقط، مش شموع مصححة بالتخمين. اختلاف المصدر لا يعني إن السهم نفسه فيه مشكلة.</p></section><Det title="الشارت" open><StockChart rows={mkRows(s.bars) as any} n={130} t={{sma:true,vol:false,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}} closeOnly/><p className="eg-note">المتوسطات مبنية على الإقفال المتاح، مش تقييم للشركة ولا أمر تداول. بيانات الإقفال نفسها محتاجة مقارنة بتاريخ المصدر قبل الاعتماد.</p></Det><Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det></div>;
+    const chartNode = <Det title="الشارت" open>
+                    <div className="eg-rowlab">مدة الشمعة</div><div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
+                <div className="eg-rowlab">الفترة المعروضة</div><div className="eg-chips">{RANGES[tf].filter(([,b])=>b<=trows.length).concat([['المتاح كله',trows.length]] as [string,number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
+                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} />
+
+                <div className="eg-chips">{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
+    </Det>;
     return <div className="eg-pad">
         <Link className="eg-back" to="/">← محفظتي</Link>
         <div className="eg-in">
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2><MyPosition k={k}/>
             {s.qualityChecked&&<p className="eg-note">إقفال <L>{s.date}</L> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a></p>}
             <PartialHistory s={s}/>
-            {s.ok&&<StockGuide s={s} k={k} r={records[k]}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
+            {s.ok&&<StockGuide s={s} k={k} r={records[k]} chart={chartNode}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
             <Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det>
             {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> : <>
                 <div className="eg-top2"><Price v={s.close} /><span className={'eg-chg ' + (s.chg20 >= 0 ? 'u' : 'd')}>شهر <L>{pc(s.chg20)}</L></span></div>
 
-                <Det title="الشارت" open>
-                    <div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
-                <div className="eg-chips">{RANGES[tf].filter(([,b])=>b<=trows.length).concat([['المتاح كله',trows.length]] as [string,number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
-                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} />
-
-                <div className="eg-chips">{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
                 
                 <Det title="الفريم ومدة المتابعة"><p>التقييم والسيناريو على شمعة يومية بعد الإقفال، أقرب لمتابعة على أيام أو أسابيع، مش مضاربة جوه الجلسة.</p><p>التطبيق مش بيتابع مركزك ولا تاريخ دخولك، والوقف المتحرك مرجع بيتحسب من جديد كل يوم، مش وقف محفوظ.</p></Det>
                 <Det title="سيناريو صفقة محتملة، مش أمر دخول">
@@ -166,7 +167,6 @@ function Stock({ k }: { k: string }) {
                 
 
                 
-                </Det>
                 {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة النهارده: {s.fire.map((f: string) => RULE_AR[f]).join(' + ')}</div>}
                 <Det title="طريقة حساب السيناريو والمخاطرة">
                     <Ex>{X.plan(s)}</Ex>
