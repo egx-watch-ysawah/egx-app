@@ -1,0 +1,134 @@
+{
+ "ASCM": {
+  "price": 44.47,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/ASCM.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "BONY": {
+  "price": 4.08,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (prices.json, Starta Markets)",
+  "pe": null,
+  "pb": null,
+  "chg_pct": -0.73
+ },
+ "BTFH": {
+  "price": 2.17,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/BTFH.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "CCAP": {
+  "price": 5.62,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/CCAP.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "CNFN": {
+  "price": 3.79,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/CNFN.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "EMFD": {
+  "price": 12.03,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/EMFD.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "HRHO": {
+  "price": 26.33,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (prices.json, Starta Markets)",
+  "pe": null,
+  "pb": null,
+  "chg_pct": 0.5
+ },
+ "ISPH": {
+  "price": 10.03,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/ISPH.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "MASR": {
+  "price": 6.23,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (prices.json, Starta Markets)",
+  "pe": null,
+  "pb": null,
+  "chg_pct": -2.04
+ },
+ "MCRO": {
+  "price": 1.3,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/MCRO.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "MPRC": {
+  "price": 36.3,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/MPRC.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "ORHD": {
+  "price": 10.38,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (prices.json, Starta Markets)",
+  "pe": null,
+  "pb": null,
+  "chg_pct": -0.57
+ },
+ "ORWE": {
+  "price": 24.0,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/ORWE.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "PHAR": {
+  "price": 99.49,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (prices.json, Starta Markets)",
+  "pe": null,
+  "pb": null,
+  "chg_pct": -1.49
+ },
+ "PHDC": {
+  "price": 11.35,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/PHDC.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "RMDA": {
+  "price": 5.05,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/RMDA.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "TMGH": {
+  "price": 78.95,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (idx/TMGH.json, Starta Markets)",
+  "pe": null,
+  "pb": null
+ },
+ "UNIP": {
+  "price": 0.292,
+  "price_date": "2026-11-25",
+  "source": "ui_app_close (prices.json, Starta Markets)",
+  "pe": null,
+  "pb": null,
+  "chg_pct": -2.67
+ }
+}
