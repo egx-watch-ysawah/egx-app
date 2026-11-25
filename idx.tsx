@@ -3,15 +3,35 @@ import { Link, useParams } from './shim';
 import { StockChart } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { NoteCard, SourcesBar } from './srcs';
-import { ScenarioBlock, TeamBlock, StudyMeta, Glossary } from './scen';
+import { ScenarioBlock, TeamBlock, StudyMeta, Glossary, stampNote } from './scen';
 import { StockGuide, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
 const cache: Record<string, Promise<any>> = {};
+// Arabic display names for the few companies the data source only lists in English. Short names, checked by the content agent.
+const AR_NAMES: Record<string, string> = {
+  FWRY: 'فوري',
+  RMDA: 'راميدا',
+  EFIH: 'إي فاينانس',
+  VLMRA: 'فالمور القابضة',
+  OFH: 'أو بي المالية القابضة',
+  ISMQ: 'الحديد والصلب للمناجم والمحاجر',
+  MCRO: 'ماكرو جروب',
+  TAQA: 'طاقة عربية',
+  IEEC: 'المشروعات الصناعية والهندسية',
+  ACTF: 'أكت فاينانشال',
+  CNFN: 'كونتكت المالية القابضة',
+  VALU: 'يو للتمويل الاستهلاكي (فاليو)',
+  GDWA: 'جدوى للتنمية الصناعية',
+  BONY: 'بنيان للتنمية والتجارة',
+  GOUR: 'جورميه',
+  PRDC: 'بايونيرز بروبرتيز',
+};
+const arName = (code: string, name: string) => (/[A-Za-z]{3}/.test(String(name || '')) && AR_NAMES[code]) || name;
 const getJson = (p: string) => cache[p] || (cache[p] = fetch(p, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); }));
 function useJson(p: string) {
   const [d, setD] = useState<any>(null); const [e, setE] = useState(false);
-  useEffect(() => { let on = true; getJson(p).then(x => on && setD(x)).catch(() => { delete cache[p]; on && setE(true); }); return () => { on = false; }; }, [p]);
+  useEffect(() => { let on = true; getJson(p).then(x => { if (x && Array.isArray(x.rows)) x.rows.forEach((r: any) => { r.name = arName(r.code, r.name); }); else { const mm = /idx\/([A-Z0-9]+)\.json$/.exec(p); if (x && mm) x.name = arName(mm[1], x.name); } on && setD(x); }).catch(() => { delete cache[p]; on && setE(true); }); return () => { on = false; }; }, [p]);
   return [d, e] as const;
 }
 const L = ({ children }: { children: React.ReactNode }) => <bdi dir="ltr">{children}</bdi>;
@@ -51,7 +71,7 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
       <b className="hb-total" dir="ltr">{x.close.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b>
       <div className={'hb-day ' + cls} dir="ltr"><span>{sg(x.chg_abs, 1)}</span><span>{up ? '▲' : '▼'} {sg(x.chg, 2)}%</span></div>
       <p className="ixs-s">{up ? 'المؤشر طالع النهارده' : 'المؤشر نازل النهارده'}</p>
-      <p className="ixs-t">{at && <>آخر تحديث <bdi dir="ltr">{at}</bdi> · </>}متأخر حتى 20 دقيقة، مش لحظي</p>
+      <p className="ixs-t">{at && <>آخر تحديث <bdi dir="ltr">{at}</bdi> · </>}{stampNote(j.fetched_at_utc)}</p>
     </div>
   </section>;
 }
