@@ -342,22 +342,19 @@
   },
   "MASR": {
    "team_ar": [
-    "الرئيس التنفيذي: عبد الله سلام",
-    "رئيس مجلس الإدارة: غير مؤكد. صفحة المستثمرين بتوصف اللواء م. محمد مصطفى عبد الرحمن لبن كعضو منتدب تنفيذي ورئيس غير تنفيذي بالإنابة للشركة القابضة (مش لمدينة مصر نفسها بشكل واضح)، فمش هكتب اسم"
+    "رئيس مجلس الإدارة (غير تنفيذي): م. محمد حازم عادل بركات",
+    "الرئيس التنفيذي والعضو المنتدب: م. محمد عبد الله نبيل سلام (اسمه على الموقع: عبد الله سلام)",
+    "12 عضو، بينهم 2 مستقلين، ومدة المجلس الحالي لحد 16 أبريل 2027"
    ],
    "team_sources": [
     {
-     "label": "صفحة القيادة في موقع المستثمرين",
-     "url": "https://ir.madinetmasr.com/en/leadership"
-    },
-    {
-     "label": "صفحة من نحن",
-     "url": "https://madinetmasr.com/en/about-us"
+     "label": "إفصاح المادة 30 عن المجلس والمساهمين، الربع الثالث 2026 (11 أكتوبر 2026)",
+     "url": "https://foudalens.com/disclosures/MASR.CA/board_agm/2026-10-11_295792_2.pdf"
     }
    ],
-   "team_confidence_ar": "اسم الرئيس التنفيذي من صفحة الشركة. رئيس المجلس محتاج إفصاح",
-   "holders_ar": "غير متوفر",
-   "followup_ar": "غير متوفر",
+   "team_confidence_ar": "مؤكد من إفصاح رسمي حديث (الاسم بالإنجليزي من الإفصاح، والترجمة العربية للأسماء مني)",
+   "holders_ar": "5% فأكتر (11 أكتوبر 2026): مجموعة BIG Investment Group وأطرافها المرتبطة 30.97% (منها BIG نفسها 20.39%)، الشركة القابضة للتشييد والتنمية 15.56%، صناديق التأمين الاجتماعي مجتمعة 9.43%، عائلة سلام (مجموع المرتبطين) 5.84%. المجموع 61.81% من 2,135 مليون سهم",
+   "followup_ar": "آخر إفصاح ملكية: 11 أكتوبر 2026. القوائم الجاية: السنة المالية 2026، موعدها غير معلن.",
    "followup_sources": []
   },
   "ORAS": {
@@ -384,6 +381,186 @@
      "url": "https://orascom.com/wp-content/uploads/OC-PLC_Preliminary-Unaudited-Results_EN.pdf"
     }
    ]
+  },
+  "FWRY": {
+   "team_ar": [
+    "رئيس مجلس الإدارة (غير تنفيذي): سيف كوتري",
+    "الرئيس التنفيذي والعضو المنتدب: أشرف صبري"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة مجلس الإدارة في موقع الشركة",
+     "url": "https://www.fawry.com/about/board-of-directors/"
+    }
+   ],
+   "team_confidence_ar": "مصدر واحد، موقع الشركة (غير مؤرخ). محتاجة تأكيد",
+   "holders_ar": "غير متوفر: جدول المساهمين ما اتقراش",
+   "followup_ar": "آخر نتائج منشورة قريتها: نشرة نتائج الربع الثاني 2026 بتاريخ 13 أغسطس 2026. القوائم الجاية موعدها غير معلن.",
+   "followup_sources": [
+    {
+     "label": "نشرة نتائج 2Q26",
+     "url": "https://www.fawry.com/wp-content/uploads/2026/08/Fawry-Earnings-Release-2Q26-English-Final.pdf"
+    }
+   ]
+  },
+  "CCAP": {
+   "team_ar": [
+    "رئيس مجلس الإدارة: أحمد هيكل"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة مجلس الإدارة في موقع الشركة",
+     "url": "https://www.qalaaholdings.com/en/board-of-directors"
+    },
+    {
+     "label": "نشرة نتائج الربع الثالث 2026 (17 نوفمبر 2026)",
+     "url": "https://www.qalaaholdings.com/en/newsroom/Qalaa-Holdings-Reports-3Q-2026"
+    }
+   ],
+   "team_confidence_ar": "اسم الرئيس من صفحة الشركة. ما قريتش باقي الأعضاء ولا اسم الرئيس التنفيذي",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "آخر نتائج: الربع الثالث 2026 اتنشرت 17 نوفمبر 2026. القوائم الجاية موعدها غير معلن.",
+   "followup_sources": [
+    {
+     "label": "نشرة نتائج 3Q 2026",
+     "url": "https://www.qalaaholdings.com/en/newsroom/Qalaa-Holdings-Reports-3Q-2026"
+    }
+   ]
+  },
+  "SKPC": {
+   "team_ar": [
+    "رئيس مجلس الإدارة والرئيس التنفيذي: كيميائي/ محمد زكريا الأفندي"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة الإدارة في موقع الشركة (سيدبك)",
+     "url": "https://sidpec.com/Managers.aspx?MenuDID=13&MenuID=2&PositionID=1"
+    },
+    {
+     "label": "Investing.com: منصبه من 2025",
+     "url": "https://www.investing.com/equities/sidi-kerir-pet-company-profile"
+    }
+   ],
+   "team_confidence_ar": "من موقع الشركة وملف تعريفي تجاري. محتاجة تأكيد من إفصاح",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "ISPH": {
+   "team_ar": [
+    "رئيس مجلس الإدارة (غير تنفيذي): عبد العزيز علي",
+    "نائب الرئيس والعضو المنتدب: محسن محجوب",
+    "الرئيسان التنفيذيان المشاركان: محمود عبد الجواد وعمر عبد الجواد"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة فريق الإدارة",
+     "url": "https://ibnsina-pharma.com/management-team/"
+    },
+    {
+     "label": "صفحة من نحن",
+     "url": "https://www.ibnsina-pharma.com/about/"
+    }
+   ],
+   "team_confidence_ar": "موقع الشركة (صفحات غير مؤرخة). محتاجة تأكيد",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "ORHD": {
+   "team_ar": [
+    "رئيس مجلس الإدارة (غير تنفيذي): د. إسكندر طوما (من يوليو 2025)"
+   ],
+   "team_sources": [
+    {
+     "label": "بيان الشركة على Zawya",
+     "url": "https://www.zawya.com/en/press-release/people-in-the-news/orascom-development-egypt-announces-the-appointment-of-eskandar-tooma-as-its-new-chairman-d0nshr1e"
+    }
+   ],
+   "team_confidence_ar": "تصحيح لباتش 5: مفيش رئيس تنفيذي للشركة مكتوب. حازم هلال (بيان 15 يناير 2025) رئيس تنفيذي لثلاث وجهات بس (O West وMakadi Heights وByoum) مش للشركة كلها، فما اتكتبش. ما لقيتش إفصاح بالإدارة التنفيذية",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "BTFH": {
+   "team_ar": [
+    "رئيس مجلس الإدارة: سيد بصر شعيب (وهو كمان الرئيس التنفيذي والعضو المنتدب لـIHC)",
+    "الرئيسة التنفيذية للمجموعة والعضو المنتدب: داليا خورشيد"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة القيادة في موقع الشركة",
+     "url": "https://www.beltoneholding.com/en/leadership"
+    }
+   ],
+   "team_confidence_ar": "مصدر واحد، موقع الشركة (غير مؤرخ). محتاجة تأكيد",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "BONY": {
+   "team_ar": [
+    "رئيس تنفيذي للمجلس (Executive Chairman): شامل أبو الفضل (من 2018) حسب صفحة الشركة",
+    "رئيس غير تنفيذي (Non-Executive Chairman): عمرو الشافعي (من 2024) حسب نفس الصفحة",
+    "الرئيس التنفيذي للشركة: طارق عبد الرحمن (من 2018)"
+   ],
+   "team_sources": [
+    {
+     "label": "صفحة من نحن في موقع الشركة",
+     "url": "https://bonyanegypt.com/about.html"
+    },
+    {
+     "label": "إفصاح المجلس والمساهمين (14 أكتوبر 2026) على foudalens",
+     "url": "https://foudalens.com/en/news/345514"
+    }
+   ],
+   "team_confidence_ar": "تعارض ظاهر في صفحة الشركة نفسها (منصبين لرئاسة المجلس). ما قدرتش أقرأ جدول المجلس في الإفصاح، فمحتاجة تأكيد من الإفصاح قبل كتابة اسم واحد كرئيس",
+   "holders_ar": "من إفصاح 21 يوليو 2026 (فترة 30 يونيو 2026): أسهم الاحتفاظ 82.59% والأسهم حرة التداول 17.40% من 1,704.4 مليون سهم. أسماء المساهمين الكبار ما اتقراتش (النص مش واضح)",
+   "followup_ar": "آخر إفصاح مجلس ومساهمين: 14 أكتوبر 2026. القوائم الجاية موعدها غير معلن.",
+   "followup_sources": [
+    {
+     "label": "إفصاح 21 يوليو 2026",
+     "url": "https://foudalens.com/disclosures/BONY.CA/other/2026-07-21_291793_1.pdf"
+    }
+   ]
+  },
+  "PHAR": {
+   "team_ar": [
+    "رئيس مجلس الإدارة والعضو المنتدب: أحمد كيلاني (إيبيكو)"
+   ],
+   "team_sources": [
+    {
+     "label": "Forbes Middle East، 15 سبتمبر 2026",
+     "url": "https://www.forbesmiddleeast.com/lists/top-healthcare-leaders-2026-executives/ahmed-kelani/"
+    },
+    {
+     "label": "موقع الشركة: خبر 8 أكتوبر 2026",
+     "url": "https://www.eipico.com.eg/NWSDetails.aspx?id=264"
+    }
+   ],
+   "team_confidence_ar": "مصدر صحفي وأخبار الشركة. ما قريتش إفصاح للمجلس. محتاجة تأكيد",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
+  },
+  "UNIP": {
+   "team_ar": [
+    "رئيس مجلس الإدارة: غير مؤكد. مصدر قال ياسر محمد زكي إبراهيم (رئيس تنفيذي ومدير استثمارات) ومصدر تاني سنة 2024 قال مروة محمود"
+   ],
+   "team_sources": [
+    {
+     "label": "WSJ: ياسر إبراهيم",
+     "url": "https://www.wsj.com/market-data/quotes/EG/NILX/UNIP/company-people/executive-profile/86384620"
+    },
+    {
+     "label": "Decypha: الإدارة (2024)",
+     "url": "https://decypha.com/en/company-list/Universal-for-Paper-and-Packaging-Materials-826"
+    }
+   ],
+   "team_confidence_ar": "مصدرين تجاريين متعارضين وغير مؤرخين. مش هكتب اسم. صفحة مجلس الإدارة في موقع الشركة ما فيهاش بيانات قابلة للقراءة. محتاجة إفصاح البورصة",
+   "holders_ar": "غير متوفر",
+   "followup_ar": "غير متوفر",
+   "followup_sources": []
   }
  }
 }
