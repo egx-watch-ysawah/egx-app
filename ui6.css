@@ -33,3 +33,32 @@ html[data-set=on] .eg-h+.eg-priv{margin-block-start:40px}
 
 .eg-sub,.eg-read,.eg-zoom span,.ix-hd,.ix-n1 small,.ix-v span,.ix-lbl,.mp small,.pv-label,.pv-top>span,.pv-up,.pv-down,.hb-chip small{font-size:12px}.ab-i span,.desk-date,.ix-tag,.portfolio-values small{font-size:12px}.eg-axis,text.eg-tag{font-size:10px}
 .eg-legend a,.eg-card a,.na a,.fv6 a{display:inline-block;min-height:32px;line-height:32px}
+
+.gd{overflow:visible!important}.gd-tabs{position:sticky!important;top:48px!important;z-index:30}.gd-tab{white-space:nowrap}
+
+.eg-back{display:inline-flex!important;align-items:center;justify-content:flex-start;min-height:44px;min-width:44px;padding:0 12px;margin:0 0 4px;font-size:14px}
+.eg-chip,.eg-chips button,.gd-tab,.chart-credit,.eg-pad a,.gd a,.na a,.rf-btn{min-height:44px;min-width:44px;box-sizing:border-box}
+.eg-pad a,.gd a,.na a,.chart-credit{display:inline-flex;align-items:center}
+.eg-sub,.eg-read,.eg-zoom span,.eg-scrub{font-size:13px}
+.eg-w .ok,.eg-legend{font-size:13px}
+.gd .tg,.gd small,.bf-head span,.fin-bar span,.fin-bar b,.pro-chart .eg-note,.eg-pad .eg-note{font-size:12px!important}
+.eg-chip,.eg-chip.eg-sm{min-height:44px!important;height:auto!important;min-width:44px!important}
+.eg-pad .tg,.eg-pad small{font-size:12px!important}
+.bony-fin *,.bf-unit,.tk-at{font-size:12px!important}.bony-fin div>span,.bony-fin div>strong,.bf-unit{font-size:12px!important}
+.tv-one{margin:8px 10px!important;padding:10px 12px!important;min-height:0!important}.tv-one .tv-t{font-size:14px!important;line-height:1.6;display:block}.tv-one::before,.tv-one::after{display:none!important}
+/* Batch A: stock page layout */
+.eg-card-root:has(.gd) .eg-top{display:none}
+.eg-card-root:has(.gd) .eg-pad{padding-top:50px}
+.eg-card-root:has(.gd) .eg-back{border:0;background:none;box-shadow:none;margin:0;min-height:44px;padding:0 4px;position:static}
+.eg-exb:has(> .eg-rowlab){display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;align-items:center}
+.eg-exb:has(> .eg-rowlab) > *{grid-column:1 / -1}
+.eg-exb:has(> .eg-rowlab) > .eg-rowlab{grid-column:1;margin:0;white-space:nowrap;font-size:13px}
+.eg-exb:has(> .eg-rowlab) > .eg-rowlab + .eg-chips{grid-column:2;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0}
+.eg-exb:has(> .eg-rowlab) > .eg-rowlab + .eg-chips .eg-chip{flex:0 0 auto}
+.eg-card-root:has(.gd) .eg-pad{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:4px;padding-top:50px}
+.eg-card-root:has(.gd) .eg-in{display:contents}
+.eg-card-root:has(.gd) .eg-pad>*,.eg-card-root:has(.gd) .eg-in>*{grid-column:1/-1;min-width:0}
+.eg-card-root:has(.gd) .eg-pad>.eg-back{grid-column:1;grid-row:1}
+.eg-card-root:has(.gd) .eg-in>.eg-h{grid-column:2;grid-row:1;margin:0;font-size:22px}
+.eg-card-root:has(.gd) .eg-pad>.eg-back,.eg-card-root:has(.gd) .eg-in>.eg-h{align-self:center}
+.tv-one{flex-wrap:wrap}.tv-one .tv-nt{display:block;width:100%;margin-top:4px;font-size:12.5px;color:#9aa6bd;font-weight:400}
