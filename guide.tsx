@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { SourcedFair, SIX } from './fv6';
+import { SourcedFair, SIX, SummaryWorry } from './fv6';
 
 const iso = (t: string) => '\u2066' + t + '\u2069';
 const PER: any = { CLHO: { lab: '6 شهور', until: '30 يونيو 2026', fac: 1, mult: 'ستة شهور' }, EGAL: { lab: 'سنة مالية 2025/26', until: '30 يونيو 2026', fac: 1, mult: 'سنة كاملة', ttl: 'سنة مالية 2025/26' } };
 const per = (k?: string) => PER[k || ''] || { lab: '9 شهور', until: '30 سبتمبر 2026', fac: 4 / 3 };
-const f = (v: number) => iso(v >= 10 ? v.toFixed(2) : v.toFixed(3));
+const f = (v: number) => iso(v >= 1 ? v.toFixed(2) : v.toFixed(3));
 const p1 = (v: number) => iso((v > 0 ? '+' : '') + v.toFixed(1) + '%');
 const n1 = (n: number) => iso(n.toLocaleString('en-GB', { maximumFractionDigits: 1 }));
 
@@ -65,7 +65,7 @@ function techItems(s: any): Item[] {
   });
   o.push({
     label: 'الهزة اليومية (ATR)', value: p.atrpct + '%', tone: 'mid',
-    mean: 'متوسط المسافة اللي السهم بيتحركها في اليوم الواحد من أعلى سعر لأقل سعر، بالنسبة المئوية من سعر الإقفال، متوسط المدى الحقيقي لآخر 14 جلسة بطريقة Wilder (ممهَّد)، ويشمل الفجوات بين الإقفال والفتح. زي "المشوار اليومي" للسهم. بيقيس الهزة مش الاتجاه.',
+    mean: 'متوسط المسافة اللي السهم بيتحركها في اليوم الواحد من أعلى سعر لأقل سعر، بالنسبة المئوية من سعر الإقفال، متوسط المدى الحقيقي لآخر 14 جلسة بطريقة ويلدر (ممهَّد)، ويشمل الفجوات بين الإقفال والفتح. زي "المشوار اليومي" للسهم. بيقيس الهزة مش الاتجاه.',
     effect: p.atrpct >= 4 ? 'السهم بيهتز كتير في اليوم، يعني ممكن يتحرك 4% أو أكتر في يوم عادي. فأي مستوى قريب من السعر بيتكسر بسهولة.' : 'هزة يومية معتدلة، يعني حركة اليوم العادية مش كبيرة.'
   });
   if (p.res && p.sup) {
@@ -100,7 +100,7 @@ function finSummary(k: string, r: any): string {
   const g = r.prior ? (r.revenue / r.prior - 1) * 100 : null;
   if (r.norev) return 'ربح مساهمي الأم ' + n1(r.profit) + (k === 'VLMRA' ? ' م دولار' : ' م') + ' في ' + per(k).lab + '. القوائم مش بتعرض بند إيراد واحد، فالأرقام التفصيلية تحت.';
   if (g != null) return 'إيراد ' + per(k).lab + ' ' + (g >= 0 ? 'زاد ' : 'نزل ') + iso(Math.abs(g).toFixed(1) + '%') + ' عن نفس الفترة السنة اللي فاتت، وربح مساهمي الأم حوالي ' + iso(nm(r) + '%') + ' من الإيراد.';
-  return 'الشركة حققت إيراد ' + n1(r.revenue) + (k === 'VLMRA' ? ' م دولار' : ' م') + ' وربح مساهمي الأم ' + n1(r.profit) + (k === 'VLMRA' ? ' م دولار' : ' م') + ' في ' + per(k).lab + '، يعني حوالي ' + iso(nm(r) + '%') + ' من الإيراد.';
+  return 'الشركة حققت إيراد ' + n1(r.revenue) + (k === 'VLMRA' ? ' م دولار' : ' م') + ' وربح مساهمي الأم' + (k === 'MASR' ? ' قبل نصيب العاملين والمجلس (بعده 1,588.0 م)' : '') + ' ' + n1(r.profit) + (k === 'VLMRA' ? ' م دولار' : ' م') + ' في ' + per(k).lab + '، يعني حوالي ' + iso(nm(r) + '%') + ' من الإيراد.';
 }
 
 const Det = ({ children }: { children: React.ReactNode }) => <details className="gd-det"><summary>التفاصيل</summary>{children}</details>;
@@ -382,7 +382,7 @@ SWDY: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '3 م
     ['S&P Global Market Intelligence (عن stockanalysis.com)', '3 محللين. متوسط الهدف 6.27 (من 5.75 لـ6.64)', 'تاريخ التوقع غير منشور؛ آخر سعر على الصفحة 24 سبتمبر 2026'],
     ['TradingView', 'محللين اتنين خلال آخر 3 شهور. الأهداف من 5.23 لـ6.64', 'تاريخ التوصيات غير منشور. المصدرين مش متفقين في الحد الأدنى (5.23 عند TradingView، 5.75 عند S&P)'] ] },
   PHAR: { rows: [
-    ['EFG Hermes Research', 'هدف 100 جنيه', 'سعر الإقفال المرجعي 24 فبراير 2026 (81.6). نسخة من تقرير EFG Hermes مؤرخة 28 أبريل 2026. السعر الحالي حوالي 101، يعني الهدف تحت السوق والتقرير قديم'],
+    ['EFG Hermes Research', 'هدف 100 جنيه', 'سعر الإقفال المرجعي 24 فبراير 2026 (81.6). نسخة من تقرير EFG Hermes مؤرخة 28 أبريل 2026. الهدف تحت سعر السوق الحالي والتقرير قديم'],
     ['S&P Global Market Intelligence (عن stockanalysis.com)', 'محللين اتنين. متوسط الهدف 108.20 (من 100.00 لـ116.40)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور'] ] },
   UNIP: { rows: [] },
 };
@@ -401,10 +401,10 @@ function DecisionCard({ s, k }: { s: any; k: string }) {
   return <div>
     <p className="gd-lead">ملخص من الأرقام، القرار يرجعلك.</p>
     <div className="gd-it ok"><div className="gd-h"><span>اللي في صالح السهم</span></div>{d.up.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
-    <div className="gd-it no"><div className="gd-h"><span>اللي بيقلق</span></div>{d.down.map((t: string, i: number) => <p key={i}>• {t}</p>)}</div>
+    <div className="gd-it no"><div className="gd-h"><span>اللي بيقلق</span></div>{d.down.map((t: string, i: number) => <p key={i}>• {t}</p>)}<SummaryWorry k={k} /></div>
     <div className="gd-it mid"><div className="gd-h"><span>إيه اللي يغير الصورة</span></div><p>{d.flip}</p></div>
     <div className="gd-it mid"><div className="gd-h"><span>أرقام السعر دلوقتي</span></div>
-      <p>السعر {f(s.close)} ويبعد {p1(a)} عن أعلى إقفال في سنة. المدى اليومي المعتاد (ATR، متوسط آخر 14 جلسة بطريقة Wilder) حوالي {p.atrpct}% من السعر (مش خسارة متوقعة). السيولة: وسيط قيمة التداول اليومي (تقريبًا سعر الإقفال × حجم التداول) في آخر 60 جلسة حوالي {p.tv} مليون جنيه{p.tv < 5 ? '، وده قليل: الدخول والخروج بكميات كبيرة صعب.' : '.'}</p></div>
+      <p>السعر {f(s.close)} ويبعد {p1(a)} عن أعلى إقفال في سنة. المدى اليومي المعتاد (ATR، متوسط آخر 14 جلسة بطريقة ويلدر) حوالي {p.atrpct}% من السعر (مش خسارة متوقعة). السيولة: وسيط قيمة التداول اليومي (تقريبًا سعر الإقفال × حجم التداول) في آخر 60 جلسة حوالي {p.tv} مليون جنيه{p.tv < 5 ? '، وده قليل: الدخول والخروج بكميات كبيرة صعب.' : '.'}</p></div>
     <CoverageBox k={k} />
     <div className="gd-it mid"><div className="gd-h"><span>اسأل نفسك قبل أي قرار</span></div>
       <p>• المدة: هتتابع السهم كام يوم أو أسبوع؟ الشارت مبني على أيام وأسابيع.</p>
