@@ -2,7 +2,7 @@ import json,sys,time,datetime,urllib.request
 import numpy as np,pandas as pd
 from pathlib import Path
 from zoneinfo import ZoneInfo
-from egx import ind,quality
+from egx import ind,quality,RULES
 TV='https://scanner.tradingview.com/egypt/scan'
 PORT=['MASR','BONY','HRHO','UNIP','PHAR','ORHD']
 def post(body):
@@ -30,6 +30,22 @@ def hist(k):
         rows.append([d,o,h,l,c,v])
     df=pd.DataFrame(rows,columns=['date','open','high','low','close','volume']);df.index=pd.to_datetime(df.pop('date'));df=df.sort_index()
     return df[df.index>=pd.Timestamp(now.date())-pd.DateOffset(years=3)]
+def mkplan(df,votes,P,atr,res,sup):
+    # Same rules as mkdata.py (no new logic): entry/stop/target/trail from ATR, EMA20 and 20d range.
+    ema20=float(df.close.ewm(span=20,adjust=False).mean().iloc[-1])
+    fire=[r for r in RULES if bool(RULES[r](df).iloc[-1])]
+    w={'trend':25,'mid':20,'macd':20,'rsi':15,'vol':10}
+    strength=int(sum(w[a]*int(b) for a,b in votes.items())+(10 if fire else 0))
+    if P>ema20*1.005: mode='pullback';entry=ema20
+    else: mode='breakout';entry=res
+    stop=entry-2.5*atr;target=entry+3*atr
+    hh=float(df.close.tail(22).max());trail=hh-3*atr
+    z=df.close*df.volume;tv=float(z.tail(60).median())
+    ext=float((P-float(df.close.iloc[-21]))/atr)
+    sizepct=round(min(25.0,1.0/abs(stop/entry-1)),1)
+    plan=dict(trail=round(trail,4),tv=round(tv/1e6,1),ext=round(ext,1),sizepct=sizepct,mode=mode,entry=round(entry,4),stop=round(stop,4),target=round(target,4),atr=round(atr,4),atrpct=round(atr/P*100,1),
+      entry_pct=round((entry/P-1)*100,1),stop_pct=round((stop/entry-1)*100,1),target_pct=round((target/entry-1)*100,1),res=round(res,4),sup=round(sup,4),ema20=round(ema20,4),strength=strength)
+    return plan,fire
 Path('idx').mkdir(exist_ok=True)
 summary=[];errors={}
 for k in allc:
@@ -46,8 +62,9 @@ for k in allc:
             votes=dict(trend=int(last.close>last.sma200),mid=int(last.close>last.sma50),macd=int(last.macd>last.sig),rsi=int(40<=last.rsi<=70),vol=int(last.volume>last.vavg and last.close>df.close.iloc[-2]))
             chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
             res=float(df.high.tail(20).max());sup=float(df.low.tail(20).min())
+            plan,fire=mkplan(df,votes,P,atr,res,sup)
             s=dict(name=row['name'],ok=True,close=round(P,3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),rsi=round(float(last.rsi),0),votes=votes,volx=round(float(last.volume/last.vavg),1),
-              plan=dict(atrpct=round(atr/P*100,1),res=round(res,4),sup=round(sup,4),entry=0,stop=0,target=0,trail=0),
+              plan=plan,fire=fire,
               bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(420).iterrows()],
               hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),historyCount=len(df),source='https://startamarkets.com/symbol/'+k+'/history',sourceName='Starta Markets',qualityChecked=True,auto=True)
             Path('idx/'+k+'.json').write_text(json.dumps(s,ensure_ascii=False,separators=(',',':'),allow_nan=False))
