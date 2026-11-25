@@ -6,6 +6,7 @@ import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { Ex, X } from './explain';
 import { HomeBoard } from './homeboard';
 import { IndexList, IdxStock } from './idx';
+import { TeamBlock } from './scen';
 
 
 const KEYS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
@@ -182,6 +183,7 @@ function Stock({ k }: { k: string }) {
                 
                 <p className="eg-note eg-foot">مش نصيحة استثمار ولا ضمان. السعر ممكن يكسر الوقف بفجوة. المؤشرات مشتقة من نفس الأسعار فمش أدلة مستقلة، وميزة التنبؤ مش مثبتة، والبيانات من مصدر مجاني واحد ممكن يتأخر أو يحتاج تصحيح تقسيمات.</p>
             </>}
+            <TeamBlock code={k} />
         </div>
     </div>;
 }
