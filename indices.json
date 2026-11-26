@@ -4,10 +4,10 @@
  "indices": {
   "egx30": {
    "name": "EGX 30",
-   "close": 50245.8,
-   "chg": -0.58,
-   "chg_abs": -292.9
+   "close": 50222.9,
+   "chg": -0.62,
+   "chg_abs": -315.8
   }
  },
- "fetched_at_utc": "2026-11-26T08:57:12Z"
+ "fetched_at_utc": "2026-11-26T10:08:22Z"
 }
