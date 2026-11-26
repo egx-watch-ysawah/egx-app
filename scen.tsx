@@ -8,7 +8,7 @@ const pc = (v: number) => (v > 0 ? '+' : '') + v.toFixed(1) + '%';
 const Det = ({ title, children, open }: { title: string; children: React.ReactNode; open?: boolean }) => <details className="eg-ex" open={open}><summary>{title}</summary><div className="eg-exb">{children}</div></details>;
 const RULE_AR: Record<string, string> = {
   'RSI<30 (oversold bounce)': 'RSI نزل تحت 30 (احتمال ارتداد)',
-  'MACD cross up': 'تقاطع MACD لأعلى والسعر فوق متوسط 200',
+  'MACD cross up': 'تقاطع مؤشر الزخم (ماكد) لأعلى والسعر فوق متوسط 200',
   '20d breakout + volume x1.5': 'إقفال أعلى من أعلى إقفال في 20 جلسة قبله، بحجم أعلى من المعتاد بـ50% أو أكتر',
   'SMA50 cross above SMA200': 'متوسط 50 قطع متوسط 200 لأعلى',
 };
