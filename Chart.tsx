@@ -1,6 +1,7 @@
+import { NEW, hashCode } from './page';
 import React from 'react';
 import { createChart, CandlestickSeries, LineSeries, HistogramSeries, ColorType, CrosshairMode } from 'lightweight-charts';
-const hideOpen = () => /MTIE\?new/.test(location.hash);
+const hideOpen = () => NEW(hashCode());
 
 type Row = [string, number, number, number, number, number, number | null, number | null, number, number, number, number | null, number | null];
 export type Toggles = { sma: boolean; vol: boolean; rsi: boolean; macd: boolean; plan: boolean; bb: boolean };
