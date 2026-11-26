@@ -18,6 +18,22 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
   const small = (n: any, key: any) => n.text_ar
     ? <React.Fragment key={key}><p className="eg-note">{n.text_ar}</p>{n.standalone_line ? <p className="eg-note v7-s"><b>{n.standalone_line.label_ar}:</b> <bdi>{n.standalone_line.value}</bdi> {n.standalone_line.unit_ar}{n.standalone_line.as_of_ar ? ' (' + n.standalone_line.as_of_ar + ')' : ''}</p> : null}{n.standalone_line && n.standalone_line.tap_ar ? <p className="eg-note">{n.standalone_line.tap_ar}</p> : null}{paras(n.auditor_note_ar, 'an')}</React.Fragment>
     : <React.Fragment key={key}><p className="eg-note v7-s"><b>{n.label_ar}:</b> <bdi>{n.value}</bdi> {n.unit_ar}{n.as_of_ar ? ' (' + n.as_of_ar + ')' : ''}</p>{n.caveat_line_ar ? <p className="eg-note v7-s"><b>تنبيه:</b> {n.caveat_line_ar}</p> : null}{n.tap_ar ? <p className="eg-note">{n.tap_ar}</p> : null}</React.Fragment>;
+  const sc: any[] = d.scenarios || [];
+  const v15Node = d.market_assumption ? <div className="eg-exb v7-in">
+      {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
+      {d.market_price ? <p className="eg-note v7-s"><b>{d.market_price.label_ar}:</b> <bdi>{d.market_price.value}</bdi> {d.market_price.unit_ar}{d.market_price.as_of_ar ? ' · ' + d.market_price.as_of_ar : ''}</p> : null}
+      {d.analyst ? big(d.analyst, 'a') : null}
+      {sc[0] ? big(sc[0], 's0') : null}
+      {d.scenarios_note_ar ? <p className="eg-note">{d.scenarios_note_ar}</p> : null}
+      {(d.why_ar || []).map((t: string, i: number) => <p key={'w' + i} className="eg-note">{t}</p>)}
+      {d.stake_line_ar ? <p className="eg-note">{d.stake_line_ar}</p> : null}
+      {sc.slice(1).length ? <div className="v7-sub">{sc.slice(1).map((n: any, i: number) => big(n, 'c' + i))}</div> : null}
+      {big(d.market_assumption, 'm')}
+      {d.market_assumption.no_solution_ar ? <p className="eg-note">{d.market_assumption.no_solution_ar}</p> : null}
+      {d.book_value ? small(d.book_value, 'b') : null}
+      {paras(d.auditor_note_ar, 'dn')}
+      {d.risks_ar && d.risks_ar.length ? <div className="v7-u"><b>نقاط محتاجة انتباه</b>{d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)}</div> : null}
+    </div> : null;
   const bodyNode = <div className="eg-exb v7-in">
       {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
       {d.analyst ? big(d.analyst, 'a') : null}
@@ -30,7 +46,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.unavailable && d.unavailable.length && !(fair && (d.scenarios || []).some((n: any) => n.text_ar)) ? <div className="v7-u"><b>غير متوفر</b>{d.unavailable.map((u: any, i: number) => <p key={i} className="eg-note">{u.item_ar}: {u.reason_ar}</p>)}</div> : null}
       {d.risks_ar && d.risks_ar.length ? (fair ? <div className="v7-u"><b>نقاط محتاجة انتباه</b>{d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)}</div> : d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)) : null}
     </div>;
-  if (fair) return <div className="v7-fair"><div className="v7-fh"><b>السعر العادل</b> <span className="tg">{d.tag_ar}</span></div>{bodyNode}</div>;
+  if (fair) return <div className="v7-fair"><div className="v7-fh"><b>السعر العادل</b> <span className="tg">{d.tag_ar}</span></div>{v15Node || bodyNode}</div>;
   return <details className="eg-ex v7"><summary>الأرقام المراجَعة ({d.tag_ar})</summary>
     {bodyNode}</details>;
 }
