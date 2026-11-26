@@ -27,9 +27,15 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.scenarios_note_ar ? <p className="eg-note">{d.scenarios_note_ar}</p> : null}
       {(d.why_ar || []).map((t: string, i: number) => <p key={'w' + i} className="eg-note">{t}</p>)}
       {d.stake_line_ar ? <p className="eg-note">{d.stake_line_ar}</p> : null}
+      {d.range_note_ar ? <p className="eg-note">{d.range_note_ar}</p> : null}
+      {d.rate_explain_ar ? <p className="eg-note">{d.rate_explain_ar}</p> : null}
+      {d.eps_table_ar && d.eps_table_ar.length ? <table className="v7-tbl"><tbody>{d.eps_table_ar.map((r: any, i: number) => <tr key={i}><td>{r.label}</td><td><bdi>{r.value}</bdi></td></tr>)}</tbody></table> : null}
+      {d.items_ar ? <p className="eg-note">{d.items_ar}</p> : null}
       {sc.slice(1).length ? <div className="v7-sub">{sc.slice(1).map((n: any, i: number) => big(n, 'c' + i))}</div> : null}
       {big(d.market_assumption, 'm')}
       {d.market_assumption.no_solution_ar ? <p className="eg-note">{d.market_assumption.no_solution_ar}</p> : null}
+      {d.price_to_book_ar ? <p className="eg-note">{d.price_to_book_ar}</p> : null}
+      {d.liquidity_ar ? <p className="eg-note">{d.liquidity_ar}</p> : null}
       {d.book_value ? small(d.book_value, 'b') : null}
       {paras(d.auditor_note_ar, 'dn')}
       {d.risks_ar && d.risks_ar.length ? <div className="v7-u"><b>نقاط محتاجة انتباه</b>{d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)}</div> : null}
