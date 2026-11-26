@@ -12,6 +12,7 @@ import { NewsBlock } from './news';
 import { useStudy, StudyFin, StudyFair } from './studyrest';
 import { WIDE, WideFair, WideFin } from './wide';
 import { V7Card, isV7, useFairNew } from './v7';
+import { NEW, PVN, usePage, usePageGate } from './page';
 import { StockGuide, OnTab, isReviewed, reviewedRec } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -174,11 +175,19 @@ function AutoFair({ f, close }: { f: any; close: number }) {
 
 export function IdxStock() {
   const { code: kc = '' } = useParams();
+  const okp = usePageGate(kc);
+  if (!okp) return <p className="eg-note">بحمّل...</p>;
   return <IdxStockInner key={kc} />;
 }
 
-function IdxStockInner() {
-  const { code = '' } = useParams();
+export function PageSwitch({ k, old }: { k: string; old: React.ReactElement }) {
+  const ok = usePageGate(k); usePage(k);
+  if (!ok) return <p className="eg-note">بحمّل...</p>;
+  return NEW(k) ? <IdxStockInner key={k} code={k} /> : old;
+}
+function IdxStockInner({ code: codeP }: { code?: string }) {
+  const prm = useParams();
+  const code = codeP || prm.code || '';
   const [s1, err1] = useJson('idx/' + code + '.json');
   const cl = useClientStock(code, !!err1);
   const s = s1 || cl.s;
@@ -190,8 +199,9 @@ function IdxStockInner() {
   const sf = useStarta();
   const ix = React.useMemo(() => overlay(ix0, sf), [ix0, sf]);
   const reviewed = isReviewed(code);
-  const v7NR = isV7(code) && !reviewed;
+  const v7NR = isV7(code) && !reviewed && !NEW(code);
   const fairNew = useFairNew(code);
+  const pgT = usePage(code);
   const [tf, setTf] = useState<TF>('D'); const [n, setN] = useState(130);
   const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: false, bb: false });
   const trows = React.useMemo(() => s ? mkRows(resample(s.bars, tf)) : [], [s, tf]);
@@ -212,9 +222,9 @@ function IdxStockInner() {
   return <div className="eg-pad">
     <Link className="eg-back" to={back}>← {back === '/others' ? 'باقي الأسهم' : back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
     <div className="eg-in">
-      <h2 className="eg-h ix-top">{code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash) ? <><bdi dir="ltr">MM Group for Industry &amp; International Trade</bdi> (إم إم جروب)</> : s.name} <span dir="ltr">({code})</span></h2>
-      <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة{code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash) ? ' (آخر 3 سنين)' : ''} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
-      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} />
+      <h2 className="eg-h ix-top">{NEW(code) && pgT && pgT.title_en ? <><bdi dir="ltr">{pgT.title_en}</bdi> ({pgT.title_ar_short})</> : s.name} <span dir="ltr">({code})</span></h2>
+      <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة{code === 'MTIE' && PVN() ? ' (آخر 3 سنين)' : ''} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
+      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} />
       {fairNew ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
       {fairNew ? <><style>{'.gd-fv{display:none}'}</style><OnTab id="v"><V7Card k={code} fair /></OnTab></> : null}
       <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>
