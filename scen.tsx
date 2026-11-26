@@ -71,11 +71,11 @@ export function TeamBlock({ code }: { code: string }) {
 export function StudyMeta({ code }: { code: string }) {
   const m: any = (META as any).studies[code];
   if (!m) return null;
-  return <Det title="بطاقة الدراسة"><Use>تعرف تاريخ الدراسة وفترتها، وإن القيمة تقديرية مش سعر مستهدف.</Use>
+  return <Det title="بطاقة الدراسة"><Use>تعرف تاريخ الدراسة وفترتها، وإن القيمة تقدير تجريبي منا.</Use>
     <ul>
       <li>تاريخ الدراسة: <bdi dir="ltr">{m.study_date}</bdi></li>
       {m.period_ar ? <li>الفترة: {m.period_ar}</li> : null}
-      {m.fv_label_ar ? <li>القيمة العادلة: {m.fv_label_ar}</li> : null}
+      {m.fv_label_ar ? <li>تقدير تجريبي منا</li> : null}
       {m.price_label_ar ? <li>{m.price_label_ar}</li> : null}
       {m.estimated_items ? <li>{m.estimated_items}</li> : null}
       {m.unconfirmed_items ? <li>{m.unconfirmed_items}</li> : null}
