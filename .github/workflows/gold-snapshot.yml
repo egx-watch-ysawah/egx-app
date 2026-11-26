@@ -1,0 +1,36 @@
+name: gold-snapshot
+# Gold only. Appends one spot snapshot per day (17:00 New York). Never edits existing lines.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 21,22 * * 1-5"   # 17:05 New York in both DST states; the script keeps only the run that falls in the 17:xx NY hour
+permissions:
+  contents: write
+concurrency:
+  group: gold-snapshot
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Append snapshot (append-only)
+        run: |
+          set -e
+          H=$(TZ=America/New_York date +%H)
+          if [ "$H" != "17" ]; then echo "NY hour is $H, not 17: no record written"; exit 0; fi
+          D=$(TZ=America/New_York date +%F)
+          touch gold/history.jsonl
+          if grep -q "\"nyDate\":\"$D\"" gold/history.jsonl; then echo "already have $D"; exit 0; fi
+          R=$(curl -fsS --max-time 20 https://api.gold-api.com/price/XAU)
+          P=$(echo "$R" | python3 -c 'import sys,json;d=json.load(sys.stdin);print(d["price"])')
+          T=$(echo "$R" | python3 -c 'import sys,json;d=json.load(sys.stdin);print(d["updatedAt"])')
+          cp gold/history.jsonl /tmp/old.jsonl
+          echo "{\"nyDate\":\"$D\",\"price\":$P,\"quoteTime\":\"$T\",\"kind\":\"سعر لحظي وقت اللقطة\",\"source\":\"https://api.gold-api.com/price/XAU\"}" >> gold/history.jsonl
+          # append-only check: old content must be an exact prefix
+          cmp -n $(wc -c < /tmp/old.jsonl) /tmp/old.jsonl gold/history.jsonl
+          python3 - <<'PY'
+          import json
+          print(json.dumps({"latest": [json.loads(l) for l in open("gold/history.jsonl")][-1]}))
+          PY
+          git config user.name "gold-snapshot"; git config user.email "actions@users.noreply.github.com"
+          git add gold/history.jsonl; git commit -m "gold snapshot $D"; git push
