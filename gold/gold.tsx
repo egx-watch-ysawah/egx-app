@@ -200,7 +200,7 @@ const STATUS: Record<string, string> = { verified: 'متحقق منه', gap: 'ف
 
 
 // v2 preview (bigger chart + inner tabs). Open with #/gold?v2=1. Public tab is unchanged until V2_LIVE = true.
-export const V2_LIVE = false;
+export const V2_LIVE = true;
 function v2On(): boolean { if (V2_LIVE) return true; try { return /[?&]v2=1/.test(location.hash + location.search); } catch (e) { return false; } }
 const DISCLAIMER = 'الاستثمار (في الأسهم أو الذهب) فيه مخاطر.';
 const TABS: { id: string; label: string }[] = [{ id: 'ov', label: 'نظرة عامة' }, { id: 'news', label: 'أخبار' }, { id: 'ana', label: 'تحليل' }, { id: 'ops', label: 'آراء المحللين' }, { id: 'fc', label: 'التوقعات' }];
@@ -341,7 +341,7 @@ export function GoldTab() {
   return <div className="eg-pad gold" dir="rtl">
     <P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P>
     <section className="gd-hero"><small>من {g.peak.label} (أعلى إقفال)</small><div className="gd-count">{d}</div><b>يوم من القمة ولسه ما رجعش لقمته</b><small className="gd-asof">العدد لحد {todayLabel()} (توقيت القاهرة) · من 28 يناير حسب <bdi dir="ltr">goldprice.dev</bdi></small>
-      <P>العداد بيمشي من ساعة جهازك. أعمق نزول: حوالي <bdi dir="ltr">34.5%</bdi> إلى <bdi dir="ltr">{g.fallPct}%</bdi> <bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>(goldprice.dev)</bdi> حسب المصدر (تقريبي، المصادر مختلفة). رقم <bdi dir="ltr">{g.fallPct}%</bdi> من جدول goldprice.dev لحد 23 نوفمبر 2026 (إقفال <bdi dir="ltr">${nf(g.peak.close)}</bdi> لحد <bdi dir="ltr">${nf(g.low.close)}</bdi> يوم {g.low.label}، يعني 296 يوم من القمة للقاع). الأساس: الإقفال اليومي. أعلى سعر خلال اليوم ممكن يكون مختلف.</P>
+      <P>العداد بيمشي من ساعة جهازك. أعمق نزول: حوالي <bdi dir="ltr">34.5%</bdi> إلى <bdi dir="ltr">{g.fallPct}%</bdi> (<bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>{g.fallPct}% goldprice.dev</bdi>، <bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>34.5% GoldPrice.com</bdi>) حسب المصدر (تقريبي، المصادر مختلفة). رقم <bdi dir="ltr">{g.fallPct}%</bdi> من جدول goldprice.dev لحد 23 نوفمبر 2026 (إقفال <bdi dir="ltr">${nf(g.peak.close)}</bdi> لحد <bdi dir="ltr">${nf(g.low.close)}</bdi> يوم {g.low.label}، يعني 296 يوم من القمة للقاع). الأساس: الإقفال اليومي. أعلى سعر خلال اليوم ممكن يكون مختلف.</P>
       <P className="gd-ref">سعر مرجعي: <b>{STATUS[g.price.status]}</b>{g.price.value ? ' ' + g.price.value : ''} · اللقطة مش متاخدة، فمفيش سعر معروض. بنعرض السعر بس لما يكون له مصدر وتوقيت.</P></section>
     {v2 ? <><TVChart h={Math.max(480, Math.round(window.innerHeight * 0.72))} /><GoldTabsV2 overview={<>
     <Sand />
