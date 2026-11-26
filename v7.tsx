@@ -4,6 +4,7 @@ const loadP = (): Promise<any> => pcache || (pcache = fetch('studies_rest/studie
 let pcache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/egx14_v7.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
 export const V7_CODES = ['MASR', 'BONY', 'HRHO', 'UNIP', 'SWDY', 'TMGH', 'ORHD', 'MTIE', 'JUFO', 'PHAR', 'AMOC', 'CLHO', 'ETEL', 'EGAL', 'ABUK', 'MFPC', 'EAST', 'MCQE', 'PHDC', 'RMDA', 'FWRY', 'EFID', 'MBSC', 'MPRC', 'ISPH', 'ELKA', 'ETRS', 'EFIH', 'ATQA', 'OCDI', 'SCEM', 'ORAS', 'LCSW', 'RAYA'];
+export const loadPilotM = (): Promise<any> => loadP().then((p: any) => (p && p.stocks && p.stocks.MTIE) || null).catch(() => null);
 export const isV7 = (k: string) => V7_CODES.includes(k);
 export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
   const [d, setD] = useState<any>(null);
@@ -21,6 +22,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
   const sc: any[] = d.scenarios || [];
   const v15Node = d.market_assumption ? <div className="eg-exb v7-in">
       {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
+      {d.study_card_date_ar ? <p className="eg-note v7-s">{d.study_card_date_ar}</p> : null}
       {d.market_price ? <p className="eg-note v7-s"><b>{d.market_price.label_ar}:</b> <bdi>{d.market_price.value}</bdi> {d.market_price.unit_ar}{d.market_price.as_of_ar ? ' · ' + d.market_price.as_of_ar : ''}</p> : null}
       {d.analyst ? big(d.analyst, 'a') : null}
       {sc[0] ? big(sc[0], 's0') : null}
