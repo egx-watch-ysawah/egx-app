@@ -118,12 +118,12 @@ function TVChart({ h = 420 }: { h?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current; if (!el) return; el.innerHTML = '';
-    const w = document.createElement('div'); w.className = 'tradingview-widget-container__widget'; w.style.height = '100%'; w.style.width = '100%'; el.appendChild(w);
+    const w = document.createElement('div'); w.className = 'tradingview-widget-container__widget'; w.style.height = h + 'px'; w.style.width = '100%'; el.appendChild(w);
     const s = document.createElement('script'); s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'; s.async = true;
-    s.innerHTML = JSON.stringify({ autosize: true, symbol: 'OANDA:XAUUSD', interval: 'D', timezone: 'Africa/Cairo', theme: 'dark', style: '1', locale: 'ar_AE', allow_symbol_change: false, hide_side_toolbar: true, support_host: 'https://www.tradingview.com' });
+    s.innerHTML = JSON.stringify({ autosize: true, symbol: 'OANDA:XAUUSD', interval: 'D', timezone: 'Africa/Cairo', theme: 'dark', style: '1', locale: 'ar_AE', allow_symbol_change: false, hide_side_toolbar: true, hide_top_toolbar: true, support_host: 'https://www.tradingview.com' });
     el.appendChild(s);
-  }, []);
-  return <div className="gd-chart"><div className="tradingview-widget-container" ref={ref} style={{ height: h, width: '100%' }} />
+  }, [h]);
+  return <div className="gd-chart"><div style={{ height: h, width: '100%' }}><div className="tradingview-widget-container" ref={ref} style={{ height: '100%', width: '100%' }} /></div>
     <P className="gd-note"><span dir="ltr">Indicative data · OANDA:XAUUSD</span> · بيانات إرشادية، قد تتأخر ومش سعر تنفيذ · التوقيت: القاهرة · <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">Chart by TradingView</a></P></div>;
 }
 
@@ -341,9 +341,17 @@ export function GoldTab() {
   return <div className="eg-pad gold" dir="rtl">
     <P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P>
     <section className="gd-hero"><small>من {g.peak.label} (أعلى إقفال)</small><div className="gd-count">{d}</div><b>يوم من القمة ولسه ما رجعش لقمته</b><small className="gd-asof">العدد لحد {todayLabel()} (توقيت القاهرة) · من 28 يناير حسب <bdi dir="ltr">goldprice.dev</bdi></small>
-      <P>العداد بيمشي من ساعة جهازك. أعمق نزول: حوالي <bdi dir="ltr">34.5%</bdi> إلى <bdi dir="ltr">{g.fallPct}%</bdi> (<bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>{g.fallPct}% goldprice.dev</bdi>، <bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>34.5% GoldPrice.com</bdi>) حسب المصدر (تقريبي، المصادر مختلفة). رقم <bdi dir="ltr">{g.fallPct}%</bdi> من جدول goldprice.dev لحد 23 نوفمبر 2026 (إقفال <bdi dir="ltr">${nf(g.peak.close)}</bdi> لحد <bdi dir="ltr">${nf(g.low.close)}</bdi> يوم {g.low.label}، يعني 296 يوم من القمة للقاع). الأساس: الإقفال اليومي. أعلى سعر خلال اليوم ممكن يكون مختلف.</P>
-      <P className="gd-ref">سعر مرجعي: <b>{STATUS[g.price.status]}</b>{g.price.value ? ' ' + g.price.value : ''} · اللقطة مش متاخدة، فمفيش سعر معروض. بنعرض السعر بس لما يكون له مصدر وتوقيت.</P></section>
-    {v2 ? <><TVChart h={Math.max(480, Math.round(window.innerHeight * 0.72))} /><GoldTabsV2 overview={<>
+      <details className="gd-more"><summary>تفاصيل النزول والسعر المرجعي</summary>
+      <ul className="gd-bl">
+        <li>{Rng('العداد بيعدّ الأيام من أعلى إقفال (28 يناير 2026) لحد النهارده.')}</li>
+        <li>{Rng('السعر نزل من 5,513.43 $ لـ 3,539.37 $ (إقفال 20 نوفمبر). يعني نزول حوالي 35.8%.')}</li>
+        <li>{Rng('مصدر تاني (GoldPrice.com) بيحسب حوالي 34.5%. الفرق من اختلاف طريقة حساب الإقفال بين المواقع.')}</li>
+        <li>{Rng('الأرقام من جدول goldprice.dev لحد 23 نوفمبر. أعلى سعر خلال اليوم ممكن يكون مختلف.')}</li>
+        <li className="gd-ref">سعر مرجعي: <b>{STATUS[g.price.status]}</b>{g.price.value ? ' ' + g.price.value : ''}</li>
+        <li>اللقطة مش متاخدة، فمفيش سعر معروض.</li>
+        <li>بنعرض السعر بس لما يكون له مصدر وتوقيت.</li>
+      </ul></details></section>
+    {v2 ? <><TVChart h={Math.max(420, Math.round(window.innerHeight * 0.62))} /><GoldTabsV2 overview={<>
     <Sand />
     <Waits />
     <WeeklyCard />
@@ -369,6 +377,9 @@ const GOLD_CSS = `.gold{max-width:560px;margin:0 auto;color:#dfe6f2}
 .gd-hero small{color:#9fb0c8}.gd-count{font-size:76px;line-height:1;font-weight:700;color:#e8c14a;direction:ltr}
 .gd-hero p{font-size:12.5px;color:#aab6c9;margin:6px 0}.gd-ref b{color:#e8c14a}
 .gd-card,.gd-chart{background:#141b29;border-radius:14px;padding:12px;margin:10px 0}
+.gd-more summary{cursor:pointer;color:#e8c14a;font-size:13px;padding:8px 0;list-style:none}.gd-more summary::-webkit-details-marker{display:none}
+.gd-bl{text-align:start;margin:4px 0 8px;padding-inline-start:18px;font-size:13px;line-height:1.8;color:#c3cddd}.gd-bl li{margin:3px 0}
+@media (max-width:700px){.eg-pad.gold{overflow-x:visible!important}.gold .gd-chart{max-width:none;margin:10px -14px!important;border-radius:0;padding:0!important;box-sizing:border-box;overflow:hidden;direction:ltr}.gold .gd-chart .gd-note{direction:rtl}.gold .gd-chart .gd-note{padding:4px 12px 8px;margin:0}}
 .gd-card h3{color:#e8c14a;margin:0 0 4px}.gd-note{font-size:12px;color:#9fb0c8}
 .gd-note a{color:#9fb0c8}
 .gd-row{margin:10px 0}.gd-rl{font-size:13px;margin-bottom:4px}.gd-rs{font-size:11.5px;color:#8c9bb3;margin-top:4px}
