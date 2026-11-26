@@ -4,6 +4,7 @@ import { useStudy, StudyLight, StudyLightFair } from './studyrest';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
+import { NEW } from './page';
 // "باقي الأسهم": Starta symbols that are not in EGX 30, EGX 70 or the portfolio pages. Automatic data only, no review, no verdict.
 const URL_STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const URL_HIST = 'https://startamarkets.com/api/v1/egx/history/';
@@ -98,6 +99,7 @@ function HistChart({ code }: { code: string }) {
 
 const NA = (why: string) => <span className="na">غير متوفر <small>({why})</small></span>;
 export function OtherFacts({ row: r }: { row: any }) {
+  const own = !!(r && r.symbol && NEW(r.symbol));
   const m = (k: string, v: React.ReactNode, i?: React.ReactNode) => <div className="eg-m"><span>{k}</span><b>{v}</b>{i ? <i>{i}</i> : null}</div>;
   const in52 = r.high_52w && r.low_52w && r.high_52w > r.low_52w ? Math.round(100 * (r.last_price - r.low_52w) / (r.high_52w - r.low_52w)) : null;
   return <details className="eg-ex" open={false}><summary>أرقام السوق من المصدر · آلي، مش مراجَع</summary><div className="eg-exb">
@@ -109,9 +111,9 @@ export function OtherFacts({ row: r }: { row: any }) {
       {m('أعلى / أقل اليوم', <L>{fmt(r.high)} / {fmt(r.low)}</L>)}
       {m('نطاق 52 أسبوع', r.high_52w && r.low_52w ? <L>{fmt(r.low_52w)} - {fmt(r.high_52w)}</L> : NA('المصدر مش بيدي النطاق'), in52 != null ? 'السعر عند ' + in52 + '% من النطاق' : undefined)}
       {m('القيمة السوقية', r.market_cap ? <L>{big(r.market_cap)}</L> : NA('المصدر مش بيدي القيمة السوقية للسهم ده'), r.market_cap ? 'جنيه' : undefined)}
-      {m('مضاعف الربحية P/E', r.pe_ratio != null ? <L>{(+r.pe_ratio).toFixed(1)}×</L> : NA('المصدر مش بيدي المضاعف'))}
-      {m('السعر ÷ القيمة الدفترية P/B', r.pb_ratio != null ? <L>{(+r.pb_ratio).toFixed(2)}×</L> : NA('المصدر مش بيدي المضاعف'))}
-      {m('القطاع (بالمصدر)', r.sector_name ? <L>{r.sector_name}</L> : NA('المصدر مش بيحدده'))}
+      {own ? null : m('مضاعف الربحية P/E', r.pe_ratio != null ? <L>{(+r.pe_ratio).toFixed(1)}×</L> : NA('المصدر مش بيدي المضاعف'))}
+      {own ? null : m('السعر ÷ القيمة الدفترية P/B', r.pb_ratio != null ? <L>{(+r.pb_ratio).toFixed(2)}×</L> : NA('المصدر مش بيدي المضاعف'))}
+      {own ? null : m('القطاع (بالمصدر)', r.sector_name ? <L>{r.sector_name}</L> : NA('المصدر مش بيحدده'))}
     </div>
     <p className="eg-note">الأرقام دي من Starta Markets زي ما هي. مفيش مراجعة ولا مقارنة بقوائم الشركة.</p>
   </div></details>;
