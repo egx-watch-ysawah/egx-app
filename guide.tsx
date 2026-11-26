@@ -489,7 +489,7 @@ export function FinCards({ k, r }: { k: string; r: any }) {
 let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
 const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
 // Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
-export const HELD = ['ABUK', 'ADIB', 'AIH', 'AMER', 'AMIA', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EAST', 'EFID', 'EFIH', 'EHDR', 'ELKA', 'ELSH', 'EMFD', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'FWRY', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'ISPH', 'JUFO', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MFPC', 'MPCI', 'MPRC', 'OBRI', 'OCDI', 'ORAS', 'ORWE', 'PHDC', 'POUL', 'PRDC', 'RAYA', 'RMDA', 'SCEM', 'SKPC', 'TAQA', 'UEGC', 'VLMR', 'ZMID'];
+export const HELD = ['ABUK', 'ADIB', 'AIH', 'AMER', 'AMIA', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EAST', 'EFID', 'EFIH', 'EHDR', 'ELKA', 'ELSH', 'EMFD', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'FWRY', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'ISPH', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MFPC', 'MPCI', 'MPRC', 'OBRI', 'OCDI', 'ORAS', 'ORWE', 'PHDC', 'POUL', 'PRDC', 'RAYA', 'RMDA', 'SCEM', 'SKPC', 'TAQA', 'UEGC', 'VLMR', 'ZMID'];
 export const HELD_MSG = 'الصفحة دي لسه تحت المراجعة ومش جاهزة للعرض.';
 export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
   const [, tick] = useState(0);
