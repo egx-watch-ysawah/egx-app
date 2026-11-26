@@ -85,3 +85,4 @@ body:has(.set-btn) .eg-card-root:has(.gd) .eg-pad{padding-top:106px}
 .v7-ct{display:block;opacity:.75;margin:2px 0}
 
 .v7-sub{margin:6px 0;padding-inline-start:12px;border-inline-start:2px solid #2a3a55}.v7-sub .v7-n{border-top:0;padding:8px 0}
+.v7-tbl{width:100%;border-collapse:collapse;margin:6px 0;font-size:13px}.v7-tbl td{padding:6px 4px;border-top:1px solid #1f2a3d;vertical-align:top}.v7-tbl td:last-child{white-space:nowrap;font-weight:700;text-align:left}
