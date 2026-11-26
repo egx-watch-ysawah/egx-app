@@ -1,5 +1,5 @@
 {
- "fetched_at_utc": "2026-11-25T16:32:46Z",
+ "fetched_at_utc": "2026-11-26T16:29:02Z",
  "not_found": [],
  "note": "بيانات آلية غير مراجَعة من القوائم الأصلية، قد تكون متأخرة",
  "source": "https://scanner.tradingview.com/egypt/scan",
@@ -7,7 +7,7 @@
   "ABUK": {
    "derived": {
     "bvps": 25.56,
-    "pb": 2.88,
+    "pb": 2.87,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -19,7 +19,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -34,10 +34,10 @@
    },
    "industry": "Chemicals: Agricultural",
    "label": "مراجَع",
-   "market_cap": 93012859082,
+   "market_cap": 92823575796,
    "name": "Abou Kir Fertilizers & Chemical Industries Co.",
    "period": "2026-Q3",
-   "price": 73.56,
+   "price": 73.49,
    "release_date": 1793275200,
    "reviewed": true,
    "sector": "Process Industries",
@@ -60,7 +60,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش قيمة دفترية متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -70,7 +70,7 @@
    "market_cap": 2490805486,
    "name": "Act Financial",
    "period": "2026-H1",
-   "price": 2.19,
+   "price": 2.14,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -82,7 +82,7 @@
    "derived": {
     "bvps": 31.61,
     "pb": 1.45,
-    "pe": 4.19,
+    "pe": 4.2,
     "roe_ttm_pct": 31.0
    },
    "fair_value": {
@@ -93,7 +93,7 @@
      1.1,
      1.5
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -115,10 +115,10 @@
    },
    "industry": "Regional Banks",
    "label": "مراجَع",
-   "market_cap": 69225002289,
+   "market_cap": 68895000458,
    "name": "Abu Dhabi Islamic Bank-Egypt",
    "period": "2026-Q3",
-   "price": 45.93,
+   "price": 45.98,
    "release_date": 1793707200,
    "reviewed": true,
    "sector": "Finance",
@@ -129,7 +129,7 @@
   "AIFI": {
    "derived": {
     "bvps": 0.14,
-    "pb": 17.15,
+    "pb": 17.57,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -141,7 +141,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -154,10 +154,10 @@
    },
    "industry": "Agricultural Commodities/Milling",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2832162129,
+   "market_cap": 2809136443,
    "name": "Atlas for Investment & Food Industries SAE",
    "period": "2026-Q1",
-   "price": 2.44,
+   "price": 2.5,
    "release_date": null,
    "reviewed": false,
    "sector": "Process Industries",
@@ -168,7 +168,7 @@
   "AIH": {
    "derived": {
     "bvps": 0.13,
-    "pb": 6.0,
+    "pb": 5.97,
     "pe": null,
     "roe_ttm_pct": -75.6
    },
@@ -184,7 +184,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -202,10 +202,10 @@
    },
    "industry": "Financial Conglomerates",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1269874955,
+   "market_cap": 1223131136,
    "name": "Arabia Investments Holding SAE",
    "period": "2026-Q2",
-   "price": 0.79,
+   "price": 0.78,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -216,8 +216,8 @@
   "ALCN": {
    "derived": {
     "bvps": 2.72,
-    "pb": 11.49,
-    "pe": 14.45,
+    "pb": 11.35,
+    "pe": 14.27,
     "roe_ttm_pct": 79.5
    },
    "fair_value": {
@@ -228,7 +228,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -251,10 +251,10 @@
    },
    "industry": "Other Transportation",
    "label": "مراجَع",
-   "market_cap": 93943852583,
+   "market_cap": 93139384373,
    "name": "Alexandria Containers & Goods",
    "period": "2026-Q2",
-   "price": 31.26,
+   "price": 30.87,
    "release_date": 1779710400,
    "reviewed": true,
    "sector": "Transportation",
@@ -265,7 +265,7 @@
   "AMER": {
    "derived": {
     "bvps": 2.15,
-    "pb": 1.64,
+    "pb": 1.6,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -281,7 +281,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -294,10 +294,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 3286154733,
+   "market_cap": 3177820061,
    "name": "Amer Group Holding",
    "period": "2026-Q2",
-   "price": 3.52,
+   "price": 3.45,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -308,8 +308,8 @@
   "AMIA": {
    "derived": {
     "bvps": 3.4,
-    "pb": 4.52,
-    "pe": 18.77,
+    "pb": 4.54,
+    "pe": 18.85,
     "roe_ttm_pct": 19.1
    },
    "fair_value": {
@@ -324,7 +324,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -347,10 +347,10 @@
    },
    "industry": "Finance/Rental/Leasing",
    "label": "آلي، غير مراجَع",
-   "market_cap": 8036380445,
+   "market_cap": 7852575220,
    "name": "Arab Moltaqa Investments Company",
    "period": "2026-Q2",
-   "price": 15.38,
+   "price": 15.45,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -361,8 +361,8 @@
   "AMOC": {
    "derived": {
     "bvps": 4.7,
-    "pb": 2.53,
-    "pe": 6.21,
+    "pb": 2.55,
+    "pe": 6.27,
     "roe_ttm_pct": 40.3
    },
    "fair_value": {
@@ -373,7 +373,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -396,10 +396,10 @@
    },
    "industry": "Oil Refining/Marketing",
    "label": "مراجَع",
-   "market_cap": 15820875000,
+   "market_cap": 15368849507,
    "name": "Alexandria Mineral Oils Co.",
    "period": "2026-Q2",
-   "price": 11.9,
+   "price": 12,
    "release_date": 1786881600,
    "reviewed": true,
    "sector": "Energy Minerals",
@@ -426,7 +426,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -475,7 +475,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -485,10 +485,10 @@
    },
    "industry": "Construction Materials",
    "label": "آلي، غير مراجَع",
-   "market_cap": 25127363485,
+   "market_cap": 24722505973,
    "name": "Arabian Cement Company",
    "period": "2026-Q2",
-   "price": 65.95,
+   "price": 66.24,
    "release_date": 1748433600,
    "reviewed": false,
    "sector": "Non-Energy Minerals",
@@ -511,7 +511,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -524,10 +524,10 @@
    },
    "industry": "Construction Materials",
    "label": "مراجَع",
-   "market_cap": 2435399933,
+   "market_cap": 2445850067,
    "name": "ASEC Co. for Mining",
    "period": "2026-Q2",
-   "price": 44.41,
+   "price": 44.01,
    "release_date": null,
    "reviewed": true,
    "sector": "Non-Energy Minerals",
@@ -538,7 +538,7 @@
   "ASPI": {
    "derived": {
     "bvps": 0.37,
-    "pb": 0.84,
+    "pb": 0.83,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -554,7 +554,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -567,7 +567,7 @@
    },
    "industry": "Investment Banks/Brokers",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1228499991,
+   "market_cap": 1197300044,
    "name": "Aspire Capital Holding for Financial Investments",
    "period": "2026-Q2",
    "price": 0.31,
@@ -581,7 +581,7 @@
   "ATLC": {
    "derived": {
     "bvps": 3.35,
-    "pb": 1.52,
+    "pb": 1.56,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -597,7 +597,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -612,10 +612,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2079999924.0000002,
+   "market_cap": 2031999969,
    "name": "Al Tawfeek Leasing Company-A.T.LEASE",
    "period": "2026-Q2",
-   "price": 5.08,
+   "price": 5.24,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -626,7 +626,7 @@
   "ATQA": {
    "derived": {
     "bvps": 2.06,
-    "pb": 4.74,
+    "pb": 4.63,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -638,7 +638,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -651,10 +651,10 @@
    },
    "industry": "Metal Fabrication",
    "label": "آلي، غير مراجَع",
-   "market_cap": 11891999817,
+   "market_cap": 11687999725,
    "name": "Misr National Steel",
    "period": "2026-Q2",
-   "price": 9.74,
+   "price": 9.52,
    "release_date": null,
    "reviewed": false,
    "sector": "Producer Manufacturing",
@@ -677,7 +677,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -687,10 +687,10 @@
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 7705607059,
+   "market_cap": 7649361361,
    "name": "Bonyan for Development and Trade",
    "period": "2026-Q2",
-   "price": 4.08,
+   "price": 4.1,
    "release_date": null,
    "reviewed": true,
    "sector": "Finance",
@@ -713,7 +713,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -736,7 +736,7 @@
    },
    "industry": "Investment Banks/Brokers",
    "label": "مراجَع",
-   "market_cap": 23151112951,
+   "market_cap": 23258293923,
    "name": "Beltone Holding",
    "period": "2026-Q2",
    "price": 2.17,
@@ -762,7 +762,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -777,10 +777,10 @@
    },
    "industry": "Investment Managers",
    "label": "مراجَع",
-   "market_cap": 18269564135,
+   "market_cap": 18076575960,
    "name": "QALA For Financial Investments",
    "period": "2026-Q2",
-   "price": 5.62,
+   "price": 5.52,
    "release_date": 1770120000,
    "reviewed": true,
    "sector": "Finance",
@@ -792,7 +792,7 @@
    "derived": {
     "bvps": 19.28,
     "pb": 1.18,
-    "pe": 4.47,
+    "pe": 4.46,
     "roe_ttm_pct": 26.5
    },
    "fair_value": {
@@ -803,7 +803,7 @@
      1.1,
      1.5
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -825,10 +825,10 @@
    },
    "industry": "Major Banks",
    "label": "مراجَع",
-   "market_cap": 28987500668,
+   "market_cap": 28362500668,
    "name": "Credit Agricole Egypt",
    "period": "2026-Q3",
-   "price": 22.83,
+   "price": 22.8,
    "release_date": 1793188800,
    "reviewed": true,
    "sector": "Finance",
@@ -839,8 +839,8 @@
   "CLHO": {
    "derived": {
     "bvps": 2.61,
-    "pb": 5.44,
-    "pe": 41.9,
+    "pb": 5.52,
+    "pe": 42.49,
     "roe_ttm_pct": 11.5
    },
    "fair_value": {
@@ -851,7 +851,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -872,10 +872,10 @@
    },
    "industry": "Hospital/Nursing Management",
    "label": "مراجَع",
-   "market_cap": 20989739977,
+   "market_cap": 20842958021,
    "name": "Cleopatra Hospital Company",
    "period": "2026-Q2",
-   "price": 14.2,
+   "price": 14.4,
    "release_date": 1788696000,
    "reviewed": true,
    "sector": "Health Services",
@@ -898,7 +898,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -908,10 +908,10 @@
    },
    "industry": "Finance/Rental/Leasing",
    "label": "مراجَع",
-   "market_cap": 4584410325,
+   "market_cap": 4536531411,
    "name": "Contact Financial Holding SAE",
    "period": "2026-Q2",
-   "price": 3.77,
+   "price": 3.84,
    "release_date": null,
    "reviewed": true,
    "sector": "Finance",
@@ -922,8 +922,8 @@
   "COMI": {
    "derived": {
     "bvps": 75.89,
-    "pb": 1.66,
-    "pe": 6.26,
+    "pb": 1.64,
+    "pe": 6.18,
     "roe_ttm_pct": 26.4
    },
    "fair_value": {
@@ -934,7 +934,7 @@
      1.1,
      1.5
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -956,10 +956,10 @@
    },
    "industry": "Regional Banks",
    "label": "مراجَع",
-   "market_cap": 430647861112,
+   "market_cap": 429047441895,
    "name": "Commercial International Bank - Egypt (CIB) S.A.E.",
    "period": "2026-Q3",
-   "price": 126,
+   "price": 124.25,
    "release_date": 1794294000,
    "reviewed": true,
    "sector": "Finance",
@@ -970,7 +970,7 @@
   "COSG": {
    "derived": {
     "bvps": 0.73,
-    "pb": 1.87,
+    "pb": 1.83,
     "pe": null,
     "roe_ttm_pct": -9.4
    },
@@ -982,7 +982,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1005,10 +1005,10 @@
    },
    "industry": "Household/Personal Care",
    "label": "آلي، غير مراجَع",
-   "market_cap": 829920027,
+   "market_cap": 854880003,
    "name": "Cairo Oils & Soap",
    "period": "2026-Q2",
-   "price": 1.37,
+   "price": 1.34,
    "release_date": null,
    "reviewed": false,
    "sector": "Consumer Non-Durables",
@@ -1019,7 +1019,7 @@
   "CSAG": {
    "derived": {
     "bvps": 7.4,
-    "pb": 5.14,
+    "pb": 5.16,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1031,7 +1031,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1044,10 +1044,10 @@
    },
    "industry": "Other Transportation",
    "label": "آلي، غير مراجَع",
-   "market_cap": 11433000183,
+   "market_cap": 11408999634,
    "name": "Canal Shipping Agencies Co.",
    "period": "2026-Q4",
-   "price": 38.03,
+   "price": 38.18,
    "release_date": null,
    "reviewed": false,
    "sector": "Transportation",
@@ -1058,7 +1058,7 @@
   "DAPH": {
    "derived": {
     "bvps": 27.58,
-    "pb": 2.97,
+    "pb": 2.94,
     "pe": null,
     "roe_ttm_pct": -8.9
    },
@@ -1074,7 +1074,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -1096,10 +1096,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1952123918,
+   "market_cap": 1928836792,
    "name": "Development & Engineering Consultants",
    "period": "2026-Q2",
-   "price": 82,
+   "price": 81.1,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -1122,17 +1122,17 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
    "fields": {},
    "industry": "Apparel/Footwear",
    "label": "مراجَع",
-   "market_cap": 3859153044,
+   "market_cap": 3778753783,
    "name": "Dice Sports & Casual Wear Manufacturers SAE",
    "period": "2026-Q2",
-   "price": 1.41,
+   "price": 1.42,
    "release_date": null,
    "reviewed": true,
    "sector": "Consumer Non-Durables",
@@ -1155,7 +1155,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1178,7 +1178,7 @@
    },
    "industry": "Tobacco",
    "label": "مراجَع",
-   "market_cap": 101399997711,
+   "market_cap": 99089996338,
    "name": "Eastern Company",
    "period": "2026-Q3",
    "price": 33.03,
@@ -1192,8 +1192,8 @@
   "EFID": {
    "derived": {
     "bvps": 3.32,
-    "pb": 6.23,
-    "pe": 12.46,
+    "pb": 6.41,
+    "pe": 12.82,
     "roe_ttm_pct": 47.5
    },
    "fair_value": {
@@ -1204,7 +1204,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1227,10 +1227,10 @@
    },
    "industry": "Food: Specialty/Candy",
    "label": "مراجَع",
-   "market_cap": 43943402962,
+   "market_cap": 43356934923,
    "name": "Edita Food Industries SAE",
    "period": "2026-Q3",
-   "price": 20.7,
+   "price": 21.3,
    "release_date": 1794830400,
    "reviewed": true,
    "sector": "Consumer Non-Durables",
@@ -1241,7 +1241,7 @@
   "EFIH": {
    "derived": {
     "bvps": 2.88,
-    "pb": 8.69,
+    "pb": 8.56,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1253,7 +1253,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1268,10 +1268,10 @@
    },
    "industry": "Packaged Software",
    "label": "مراجَع",
-   "market_cap": 87672005232,
+   "market_cap": 86666668701,
    "name": "e-finance for Digital and Financial Investments S.A.E.",
    "period": "2026-Q2",
-   "price": 25,
+   "price": 24.61,
    "release_date": 1723723200,
    "reviewed": true,
    "sector": "Technology Services",
@@ -1282,8 +1282,8 @@
   "EGAL": {
    "derived": {
     "bvps": 82.16,
-    "pb": 3.57,
-    "pe": 7.81,
+    "pb": 3.56,
+    "pe": 7.79,
     "roe_ttm_pct": 45.7
    },
    "fair_value": {
@@ -1294,7 +1294,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1317,10 +1317,10 @@
    },
    "industry": "Aluminum",
    "label": "مراجَع",
-   "market_cap": 122925000000,
+   "market_cap": 121006877518,
    "name": "Egypt Aluminum",
    "period": "2026-Q4",
-   "price": 293.35,
+   "price": 292.5,
    "release_date": 1716465600,
    "reviewed": true,
    "sector": "Non-Energy Minerals",
@@ -1331,7 +1331,7 @@
   "EGCH": {
    "derived": {
     "bvps": 21.64,
-    "pb": 0.45,
+    "pb": 0.47,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1343,7 +1343,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1356,10 +1356,10 @@
    },
    "industry": "Chemicals: Agricultural",
    "label": "آلي، غير مراجَع",
-   "market_cap": 19726729873,
+   "market_cap": 19249949478,
    "name": "Egyptian Chemical Industries",
    "period": "2026-Q4",
-   "price": 9.69,
+   "price": 10.11,
    "release_date": 1720008000,
    "reviewed": false,
    "sector": "Process Industries",
@@ -1370,7 +1370,7 @@
   "EGTS": {
    "derived": {
     "bvps": 0.47,
-    "pb": 25.3,
+    "pb": 25.05,
     "pe": null,
     "roe_ttm_pct": -21.0
    },
@@ -1382,7 +1382,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1405,10 +1405,10 @@
    },
    "industry": "Electric Utilities",
    "label": "آلي، غير مراجَع",
-   "market_cap": 13030499840,
+   "market_cap": 12568500280,
    "name": "Egyptian for Tourism Resorts",
    "period": "2026-Q1",
-   "price": 11.97,
+   "price": 11.85,
    "release_date": null,
    "reviewed": false,
    "sector": "Utilities",
@@ -1435,7 +1435,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -1448,7 +1448,7 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1384319962,
+   "market_cap": 1350719994,
    "name": "Egyptians Housing Development & Reconstruction",
    "period": "2026-Q3",
    "price": 2.01,
@@ -1474,17 +1474,17 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {},
    "industry": "Electrical Products",
    "label": "آلي، غير مراجَع",
-   "market_cap": 5102851910,
+   "market_cap": 5069716538,
    "name": "Electro Cable Egypt",
    "period": "2026-Q2",
-   "price": 1.53,
+   "price": 1.54,
    "release_date": null,
    "reviewed": false,
    "sector": "Producer Manufacturing",
@@ -1507,7 +1507,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1520,10 +1520,10 @@
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 2636605548,
+   "market_cap": 2580902665,
    "name": "El Kahera Housing",
    "period": "2026-Q2",
-   "price": 1.39,
+   "price": 1.4,
    "release_date": null,
    "reviewed": true,
    "sector": "Finance",
@@ -1534,7 +1534,7 @@
   "ELSH": {
    "derived": {
     "bvps": 5.93,
-    "pb": 1.76,
+    "pb": 1.75,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1550,7 +1550,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -1563,10 +1563,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2375381311,
+   "market_cap": 2368574905,
    "name": "El-Shams Housing & Development SA",
    "period": "2026-Q2",
-   "price": 10.44,
+   "price": 10.37,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -1577,7 +1577,7 @@
   "EMFD": {
    "derived": {
     "bvps": 13.59,
-    "pb": 0.88,
+    "pb": 0.9,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1589,7 +1589,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1602,10 +1602,10 @@
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 66452541149,
+   "market_cap": 65526562686,
    "name": "Emaar Misr for Development SAE",
    "period": "2026-Q1",
-   "price": 12.03,
+   "price": 12.25,
    "release_date": 1723636800,
    "reviewed": true,
    "sector": "Finance",
@@ -1628,7 +1628,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1638,10 +1638,10 @@
    },
    "industry": "Building Products",
    "label": "آلي، غير مراجَع",
-   "market_cap": 5598839933,
+   "market_cap": 5383500000,
    "name": "Industrial Engineering Co. for Construction & Development",
    "period": "2026-Q2",
-   "price": 37,
+   "price": 36.6,
    "release_date": null,
    "reviewed": false,
    "sector": "Producer Manufacturing",
@@ -1652,8 +1652,8 @@
   "ETEL": {
    "derived": {
     "bvps": 48.45,
-    "pb": 2.87,
-    "pe": 7.93,
+    "pb": 2.8,
+    "pe": 7.74,
     "roe_ttm_pct": 36.2
    },
    "fair_value": {
@@ -1664,7 +1664,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1687,10 +1687,10 @@
    },
    "industry": "Major Telecommunications",
    "label": "مراجَع",
-   "market_cap": 240697103394,
+   "market_cap": 237624369204,
    "name": "Telecom Egypt",
    "period": "2026-Q3",
-   "price": 139.2,
+   "price": 135.9,
    "release_date": 1794484800,
    "reviewed": true,
    "sector": "Communications",
@@ -1700,50 +1700,50 @@
   },
   "ETRS": {
    "derived": {
-    "bvps": 4.89,
-    "pb": 2.28,
-    "pe": 11.29,
-    "roe_ttm_pct": 18.0
+    "bvps": 5.36,
+    "pb": 2.06,
+    "pe": 13.64,
+    "roe_ttm_pct": 16.5
    },
    "fair_value": {
     "basis": "P/E",
     "low_base_high": [
-     4.94,
-     6.91,
-     8.89
+     4.04,
+     5.66,
+     7.28
     ],
     "multiples": [
      5,
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
    "fields": {
-    "book_value_per_share_fq": 4.8938,
-    "cash_f_operating_activities_ttm": 156852017,
-    "earnings_per_share_basic_ttm": 0.9878,
-    "free_cash_flow_ttm": 38243480,
-    "gross_margin_ttm": 29.0749,
-    "net_income_fq": 14632663,
+    "book_value_per_share_fq": 5.3594,
+    "cash_f_operating_activities_ttm": 218236300,
+    "earnings_per_share_basic_ttm": 0.8086,
+    "free_cash_flow_ttm": 98576020,
+    "gross_margin_ttm": 27.9905,
+    "net_income_fq": 95457102,
     "net_income_fy": 129799417,
-    "net_income_ttm": 197895240,
-    "net_margin_ttm": 13.7139,
-    "operating_margin_ttm": 13.184,
-    "total_debt_fq": 153302473,
-    "total_equity_fq": 1101542773,
-    "total_revenue_fq": 433531810,
+    "net_income_ttm": 199003635,
+    "net_margin_ttm": 11.5139,
+    "operating_margin_ttm": 13.5925,
+    "total_debt_fq": 241359004,
+    "total_equity_fq": 1206248598,
+    "total_revenue_fq": 599215346,
     "total_revenue_fy": 1228391710,
-    "total_revenue_ttm": 1443022568
+    "total_revenue_ttm": 1728372544
    },
    "industry": "Other Transportation",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2485695486,
+   "market_cap": 2508190339,
    "name": "Egyptian Transport And Commercial Services Co. (Egytrans Nosco)",
-   "period": "2026-Q2",
-   "price": 11.15,
+   "period": "2026-Q3",
+   "price": 11.03,
    "release_date": null,
    "reviewed": false,
    "sector": "Transportation",
@@ -1754,8 +1754,8 @@
   "EXPA": {
    "derived": {
     "bvps": 15.82,
-    "pb": 0.91,
-    "pe": 3.96,
+    "pb": 0.9,
+    "pe": 3.91,
     "roe_ttm_pct": 23.0
    },
    "fair_value": {
@@ -1766,7 +1766,7 @@
      1.1,
      1.5
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1786,10 +1786,10 @@
    },
    "industry": "Regional Banks",
    "label": "مراجَع",
-   "market_cap": 25974000549,
+   "market_cap": 25956000137,
    "name": "Export Development Bank of Egypt",
    "period": "2026-Q3",
-   "price": 14.42,
+   "price": 14.23,
    "release_date": null,
    "reviewed": true,
    "sector": "Finance",
@@ -1800,8 +1800,8 @@
   "FWRY": {
    "derived": {
     "bvps": 2.98,
-    "pb": 5.79,
-    "pe": 16.58,
+    "pb": 5.78,
+    "pe": 16.53,
     "roe_ttm_pct": 33.7
    },
    "fair_value": {
@@ -1812,7 +1812,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1835,10 +1835,10 @@
    },
    "industry": "Packaged Software",
    "label": "مراجَع",
-   "market_cap": 59409766311,
+   "market_cap": 58762525085,
    "name": "Fawry For Banking Technology And Electronic Payment",
    "period": "2026-Q3",
-   "price": 17.25,
+   "price": 17.2,
    "release_date": 1794830400,
    "reviewed": true,
    "sector": "Technology Services",
@@ -1849,7 +1849,7 @@
   "GBCO": {
    "derived": {
     "bvps": 27.57,
-    "pb": 0.79,
+    "pb": 0.78,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1861,7 +1861,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -1876,10 +1876,10 @@
    },
    "industry": "Wholesale Distributors",
    "label": "مراجَع",
-   "market_cap": 23989550414,
+   "market_cap": 23663899172,
    "name": "GB Corp",
    "period": "2026-Q1",
-   "price": 21.8,
+   "price": 21.47,
    "release_date": 1786568400,
    "reviewed": true,
    "sector": "Distribution Services",
@@ -1902,7 +1902,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1912,7 +1912,7 @@
    },
    "industry": "Industrial Machinery",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2740612880,
+   "market_cap": 2719201800,
    "name": "Gadwa For Industrial Development",
    "period": "2026-Q2",
    "price": 0.51,
@@ -1938,7 +1938,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -1948,10 +1948,10 @@
    },
    "industry": "Food Retail",
    "label": "آلي، غير مراجَع",
-   "market_cap": 5512000000,
+   "market_cap": 5348000000,
    "name": "Gourmet Egypt.Com Foods",
    "period": null,
-   "price": 13.37,
+   "price": 13.42,
    "release_date": null,
    "reviewed": false,
    "sector": "Retail Trade",
@@ -1962,7 +1962,7 @@
   "GPIM": {
    "derived": {
     "bvps": 0.12,
-    "pb": 13.33,
+    "pb": 13.41,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -1978,7 +1978,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -1991,10 +1991,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2585454438,
+   "market_cap": 2519999955,
    "name": "GPI For Urban Growth",
    "period": "2026-Q3",
-   "price": 1.54,
+   "price": 1.55,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -2005,8 +2005,8 @@
   "HDBK": {
    "derived": {
     "bvps": 43.91,
-    "pb": 2.34,
-    "pe": 5.48,
+    "pb": 2.28,
+    "pe": 5.35,
     "roe_ttm_pct": 42.4
    },
    "fair_value": {
@@ -2017,7 +2017,7 @@
      1.1,
      1.5
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2039,10 +2039,10 @@
    },
    "industry": "Regional Banks",
    "label": "مراجَع",
-   "market_cap": 110319129141,
+   "market_cap": 109129014250,
    "name": "Housing & Development Bank",
    "period": "2026-Q2",
-   "price": 102.7,
+   "price": 100.27,
    "release_date": 1771156800,
    "reviewed": true,
    "sector": "Finance",
@@ -2053,7 +2053,7 @@
   "HELI": {
    "derived": {
     "bvps": 2.61,
-    "pb": 2.39,
+    "pb": 2.41,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2065,7 +2065,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2078,10 +2078,10 @@
    },
    "industry": "Homebuilding",
    "label": "مراجَع",
-   "market_cap": 25433372775,
+   "market_cap": 24952742559,
    "name": "Heliopolis Housing",
    "period": "2026-Q3",
-   "price": 6.23,
+   "price": 6.3,
    "release_date": 1792411200,
    "reviewed": true,
    "sector": "Consumer Durables",
@@ -2092,7 +2092,7 @@
   "HRHO": {
    "derived": {
     "bvps": 25.16,
-    "pb": 1.05,
+    "pb": 1.07,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2104,7 +2104,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2119,10 +2119,10 @@
    },
    "industry": "Investment Banks/Brokers",
    "label": "مراجَع",
-   "market_cap": 37620396237,
+   "market_cap": 37807061115,
    "name": "EFG Holding S.A.E.",
    "period": "2026-Q2",
-   "price": 26.33,
+   "price": 26.98,
    "release_date": 1679486400,
    "reviewed": true,
    "sector": "Finance",
@@ -2145,7 +2145,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2155,10 +2155,10 @@
    },
    "industry": "Chemicals: Agricultural",
    "label": "آلي، غير مراجَع",
-   "market_cap": 3099208647,
+   "market_cap": 3129569952,
    "name": "International Co. for Fertilizers & Chemicals",
    "period": "2026-Q2",
-   "price": 26.8,
+   "price": 27.65,
    "release_date": null,
    "reviewed": false,
    "sector": "Process Industries",
@@ -2169,7 +2169,7 @@
   "IDRE": {
    "derived": {
     "bvps": 4.14,
-    "pb": 9.26,
+    "pb": 9.34,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2185,7 +2185,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -2198,10 +2198,10 @@
    },
    "industry": "Homebuilding",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1470214368,
+   "market_cap": 1410167989,
    "name": "Ismailia Development & Real Estate Co.",
    "period": "2026-Q1",
-   "price": 38.28,
+   "price": 38.63,
    "release_date": null,
    "reviewed": false,
    "sector": "Consumer Durables",
@@ -2212,8 +2212,8 @@
   "IEEC": {
    "derived": {
     "bvps": 0.25,
-    "pb": 2.5,
-    "pe": 43.38,
+    "pb": 2.57,
+    "pe": 44.65,
     "roe_ttm_pct": 5.8
    },
    "fair_value": {
@@ -2228,7 +2228,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -2251,10 +2251,10 @@
    },
    "industry": "Engineering & Construction",
    "label": "آلي، غير مراجَع",
-   "market_cap": 912708000,
+   "market_cap": 898128000,
    "name": "Industrial & Engineering Enterprises Co.",
    "period": "2026-Q3",
-   "price": 0.62,
+   "price": 0.63,
    "release_date": null,
    "reviewed": false,
    "sector": "Industrial Services",
@@ -2265,7 +2265,7 @@
   "ISMA": {
    "derived": {
     "bvps": 2.33,
-    "pb": 8.08,
+    "pb": 8.0,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2277,7 +2277,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2290,10 +2290,10 @@
    },
    "industry": "Agricultural Commodities/Milling",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1760288674,
+   "market_cap": 1693794891,
    "name": "Ismailia Misr Poultry",
    "period": "2026-Q2",
-   "price": 18.85,
+   "price": 18.67,
    "release_date": null,
    "reviewed": false,
    "sector": "Process Industries",
@@ -2316,17 +2316,17 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {},
    "industry": "Steel",
    "label": "آلي، غير مراجَع",
-   "market_cap": 6349669647,
+   "market_cap": 6300825848,
    "name": "Iron & Steel for Mines & Quarries",
    "period": "2026-Q4",
-   "price": 6.45,
+   "price": 6.4,
    "release_date": null,
    "reviewed": false,
    "sector": "Non-Energy Minerals",
@@ -2337,8 +2337,8 @@
   "ISPH": {
    "derived": {
     "bvps": 3.11,
-    "pb": 3.22,
-    "pe": 11.62,
+    "pb": 3.25,
+    "pe": 11.7,
     "roe_ttm_pct": 27.7
    },
    "fair_value": {
@@ -2349,7 +2349,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2372,10 +2372,10 @@
    },
    "industry": "Medical Distributors",
    "label": "مراجَع",
-   "market_cap": 11177599487,
+   "market_cap": 11233599701,
    "name": "Ibnsina Pharma",
    "period": "2026-Q2",
-   "price": 10.03,
+   "price": 10.1,
    "release_date": 1786536000,
    "reviewed": true,
    "sector": "Distribution Services",
@@ -2386,8 +2386,8 @@
   "JUFO": {
    "derived": {
     "bvps": 5.94,
-    "pb": 3.68,
-    "pe": 14.39,
+    "pb": 3.66,
+    "pe": 14.31,
     "roe_ttm_pct": 25.5
    },
    "fair_value": {
@@ -2398,7 +2398,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2421,10 +2421,10 @@
    },
    "industry": "Food: Meat/Fish/Dairy",
    "label": "مراجَع",
-   "market_cap": 32640282687,
+   "market_cap": 32140160974,
    "name": "Juhayna Food Industries",
    "period": "2026-Q2",
-   "price": 21.85,
+   "price": 21.72,
    "release_date": 1785931200,
    "reviewed": true,
    "sector": "Consumer Non-Durables",
@@ -2447,7 +2447,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2457,7 +2457,7 @@
    "market_cap": 4376376846,
    "name": "El Nasr Clothing & Textiles Co.",
    "period": "2026-Q4",
-   "price": 7.75,
+   "price": 7.5,
    "release_date": null,
    "reviewed": false,
    "sector": "Consumer Non-Durables",
@@ -2467,10 +2467,10 @@
   },
   "LCSW": {
    "derived": {
-    "bvps": 50.9,
-    "pb": 0.81,
-    "pe": 22.57,
-    "roe_ttm_pct": 3.5
+    "bvps": 51.81,
+    "pb": 0.84,
+    "pe": 43.29,
+    "roe_ttm_pct": 1.9
    },
    "fair_value": {
     "basis": "P/E",
@@ -2480,34 +2480,34 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
    "fields": {
-    "book_value_per_share_fq": 50.8984,
-    "cash_f_operating_activities_ttm": -125262778,
-    "earnings_per_share_basic_ttm": 1.8338,
-    "free_cash_flow_ttm": -483915430,
-    "gross_margin_ttm": 19.803,
-    "net_income_fq": 47639956,
+    "book_value_per_share_fq": 51.8075,
+    "cash_f_operating_activities_ttm": -793249729,
+    "earnings_per_share_basic_ttm": 1.0012,
+    "free_cash_flow_ttm": -1121606140,
+    "gross_margin_ttm": 18.37,
+    "net_income_fq": 54318690,
     "net_income_fy": 244075897,
-    "net_income_ttm": 146706206,
-    "net_margin_ttm": 1.7009,
-    "operating_margin_ttm": 9.3864,
-    "total_debt_fq": 3033886647,
-    "total_equity_fq": 4209551265,
-    "total_revenue_fq": 2433070954,
+    "net_income_ttm": 80099982,
+    "net_margin_ttm": 0.8867,
+    "operating_margin_ttm": 8.283,
+    "total_debt_fq": 3354297235,
+    "total_equity_fq": 4294901177.0,
+    "total_revenue_fq": 2582877498,
     "total_revenue_fy": 7803673428,
-    "total_revenue_ttm": 8625435954
+    "total_revenue_ttm": 9033864567
    },
    "industry": "Building Products",
    "label": "مراجَع",
-   "market_cap": 3447500016,
+   "market_cap": 3449166721,
    "name": "Lecico Egypt SAE",
-   "period": "2026-Q2",
-   "price": 41.39,
-   "release_date": 1716724800,
+   "period": "2026-Q3",
+   "price": 43.34,
+   "release_date": 1794744000,
    "reviewed": true,
    "sector": "Producer Manufacturing",
    "shares": 83333300,
@@ -2517,8 +2517,8 @@
   "MASR": {
    "derived": {
     "bvps": 6.26,
-    "pb": 0.99,
-    "pe": 4.33,
+    "pb": 1.01,
+    "pe": 4.42,
     "roe_ttm_pct": 22.9
    },
    "fair_value": {
@@ -2529,7 +2529,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2537,6 +2537,7 @@
     "cash_f_operating_activities_ttm": 904180413,
     "earnings_per_share_basic_ttm": 1.438,
     "free_cash_flow_ttm": 471767340,
+    "gross_margin_ttm": 59.6957,
     "net_income_fq": 790365400,
     "net_income_fy": 3157409001,
     "net_income_ttm": 3065745111,
@@ -2544,14 +2545,16 @@
     "operating_margin_ttm": 40.9297,
     "total_debt_fq": 7868961700,
     "total_equity_fq": 13368462400,
-    "total_revenue_fy": 12739155352
+    "total_revenue_fq": 3357311000,
+    "total_revenue_fy": 12739155352,
+    "total_revenue_ttm": 12986384824
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 13578600285,
+   "market_cap": 13301050041,
    "name": "Madinet Masr for Housing & Development",
    "period": "2026-Q3",
-   "price": 6.23,
+   "price": 6.35,
    "release_date": 1794225600,
    "reviewed": true,
    "sector": "Finance",
@@ -2562,7 +2565,7 @@
   "MBSC": {
    "derived": {
     "bvps": 90.96,
-    "pb": 3.67,
+    "pb": 3.63,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2574,7 +2577,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2587,10 +2590,10 @@
    },
    "industry": "Construction Materials",
    "label": "آلي، غير مراجَع",
-   "market_cap": 17819534534,
+   "market_cap": 17527799434,
    "name": "Misr Beni Suef Cement Co. SAE",
    "period": "2026-Q3",
-   "price": 333.45,
+   "price": 330,
    "release_date": 1794398400,
    "reviewed": false,
    "sector": "Non-Energy Minerals",
@@ -2601,8 +2604,8 @@
   "MCQE": {
    "derived": {
     "bvps": 44.38,
-    "pb": 3.93,
-    "pe": 6.55,
+    "pb": 3.91,
+    "pe": 6.52,
     "roe_ttm_pct": 47.7
    },
    "fair_value": {
@@ -2613,7 +2616,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2636,10 +2639,10 @@
    },
    "industry": "Construction Materials",
    "label": "مراجَع",
-   "market_cap": 16886399414,
+   "market_cap": 16733759766,
    "name": "Misr Cement Co. (Qena)",
    "period": "2026-Q3",
-   "price": 174.31,
+   "price": 173.49,
    "release_date": 1794484800,
    "reviewed": true,
    "sector": "Non-Energy Minerals",
@@ -2662,7 +2665,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2675,7 +2678,7 @@
    },
    "industry": "Pharmaceuticals: Major",
    "label": "آلي، غير مراجَع",
-   "market_cap": 4368817402,
+   "market_cap": 4437080111,
    "name": "Macro Group Pharmaceutical S.A.E.",
    "period": "2026-Q2",
    "price": 1.3,
@@ -2689,7 +2692,7 @@
   "MEPA": {
    "derived": {
     "bvps": 0.34,
-    "pb": 3.77,
+    "pb": 3.74,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2701,7 +2704,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2714,10 +2717,10 @@
    },
    "industry": "Containers/Packaging",
    "label": "آلي، غير مراجَع",
-   "market_cap": 851499969,
+   "market_cap": 844949975,
    "name": "Medical Packaging Company",
    "period": "2026-Q2",
-   "price": 1.29,
+   "price": 1.28,
    "release_date": null,
    "reviewed": false,
    "sector": "Process Industries",
@@ -2728,8 +2731,8 @@
   "MFPC": {
    "derived": {
     "bvps": 16.48,
-    "pb": 2.25,
-    "pe": 6.78,
+    "pb": 2.23,
+    "pe": 6.74,
     "roe_ttm_pct": 33.1
    },
    "fair_value": {
@@ -2740,7 +2743,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -2763,10 +2766,10 @@
    },
    "industry": "Chemicals: Agricultural",
    "label": "مراجَع",
-   "market_cap": 105547554843,
+   "market_cap": 106149861646,
    "name": "Misr Fertilizers Production Company MOPCO",
    "period": "2026-Q3",
-   "price": 37.01,
+   "price": 36.79,
    "release_date": 1794830400,
    "reviewed": true,
    "sector": "Process Industries",
@@ -2777,7 +2780,7 @@
   "MOED": {
    "derived": {
     "bvps": 0.12,
-    "pb": 3.86,
+    "pb": 3.77,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2789,7 +2792,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2802,10 +2805,10 @@
    },
    "industry": "Miscellaneous Commercial Services",
    "label": "آلي، غير مراجَع",
-   "market_cap": 482399989,
+   "market_cap": 473354986,
    "name": "Egyptian Modern Education Systems",
    "period": "2026-Q3",
-   "price": 0.47,
+   "price": 0.46,
    "release_date": null,
    "reviewed": false,
    "sector": "Commercial Services",
@@ -2816,8 +2819,8 @@
   "MPCI": {
    "derived": {
     "bvps": 35.9,
-    "pb": 9.33,
-    "pe": 14.7,
+    "pb": 8.76,
+    "pe": 13.8,
     "roe_ttm_pct": 63.5
    },
    "fair_value": {
@@ -2832,7 +2835,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -2855,10 +2858,10 @@
    },
    "industry": "Pharmaceuticals: Major",
    "label": "آلي، غير مراجَع",
-   "market_cap": 7708155167,
+   "market_cap": 7621250000,
    "name": "Memphis Pharmaceutical & Chemical Industries",
    "period": "2026-Q3",
-   "price": 335,
+   "price": 314.33,
    "release_date": null,
    "reviewed": false,
    "sector": "Health Technology",
@@ -2869,7 +2872,7 @@
   "MPCO": {
    "derived": {
     "bvps": 0.23,
-    "pb": 8.04,
+    "pb": 7.99,
     "pe": null,
     "roe_ttm_pct": -72.8
    },
@@ -2881,7 +2884,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2904,10 +2907,10 @@
    },
    "industry": "Agricultural Commodities/Milling",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1940000057,
+   "market_cap": 1879999995,
    "name": "Mansourah Poultry Co.",
    "period": "2026-Q2",
-   "price": 1.88,
+   "price": 1.87,
    "release_date": null,
    "reviewed": false,
    "sector": "Process Industries",
@@ -2918,7 +2921,7 @@
   "MPRC": {
    "derived": {
     "bvps": 21.75,
-    "pb": 1.67,
+    "pb": 1.69,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2930,7 +2933,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2945,10 +2948,10 @@
    },
    "industry": "Movies/Entertainment",
    "label": "آلي، غير مراجَع",
-   "market_cap": 7040962284,
+   "market_cap": 6883569033,
    "name": "Egyptian Media Production City",
    "period": "2026-Q3",
-   "price": 36.3,
+   "price": 36.71,
    "release_date": null,
    "reviewed": false,
    "sector": "Consumer Services",
@@ -2959,7 +2962,7 @@
   "MTIE": {
    "derived": {
     "bvps": 2.23,
-    "pb": 3.02,
+    "pb": 2.97,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -2971,7 +2974,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -2986,10 +2989,10 @@
    },
    "industry": "Electronics Distributors",
    "label": "آلي، غير مراجَع",
-   "market_cap": 14955138944,
+   "market_cap": 15295028687,
    "name": "MM Group for Industry & International Trade",
    "period": "2026-Q2",
-   "price": 6.75,
+   "price": 6.62,
    "release_date": 1774526400,
    "reviewed": false,
    "sector": "Distribution Services",
@@ -2999,8 +3002,8 @@
   },
   "NCCW": {
    "derived": {
-    "bvps": 1.27,
-    "pb": 4.09,
+    "bvps": 1.3,
+    "pb": 3.97,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -3012,23 +3015,23 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {
-    "book_value_per_share_fq": 1.2706,
-    "net_income_fq": -7429934,
-    "total_debt_fq": 933444,
-    "total_equity_fq": 320192786,
-    "total_revenue_fq": 76828781
+    "book_value_per_share_fq": 1.3009,
+    "net_income_fq": 7642767,
+    "total_debt_fq": 773001,
+    "total_equity_fq": 327835553,
+    "total_revenue_fq": 77739914
    },
    "industry": "Engineering & Construction",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1335600048,
+   "market_cap": 1302840019,
    "name": "Nasr Co. for Civil Works",
-   "period": "2026-Q2",
-   "price": 5.2,
+   "period": "2026-Q3",
+   "price": 5.17,
    "release_date": null,
    "reviewed": false,
    "sector": "Industrial Services",
@@ -3039,8 +3042,8 @@
   "NIPH": {
    "derived": {
     "bvps": 22.84,
-    "pb": 12.13,
-    "pe": 44.5,
+    "pb": 12.09,
+    "pe": 44.34,
     "roe_ttm_pct": 21.0
    },
    "fair_value": {
@@ -3055,7 +3058,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -3078,10 +3081,10 @@
    },
    "industry": "Pharmaceuticals: Major",
    "label": "آلي، غير مراجَع",
-   "market_cap": 14450000000,
+   "market_cap": 13851499939,
    "name": "El-Nile Co. for Pharmaceuticals & Chemical Industries",
    "period": "2027-Q1",
-   "price": 277.03,
+   "price": 276,
    "release_date": null,
    "reviewed": false,
    "sector": "Health Technology",
@@ -3092,8 +3095,8 @@
   "OBRI": {
    "derived": {
     "bvps": 8.47,
-    "pb": 2.53,
-    "pe": 10.44,
+    "pb": 2.51,
+    "pe": 10.36,
     "roe_ttm_pct": 24.3
    },
    "fair_value": {
@@ -3108,7 +3111,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -3131,10 +3134,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 868000031,
+   "market_cap": 858000031,
    "name": "El Obour Real Estate Investment",
    "period": "2026-Q2",
-   "price": 21.45,
+   "price": 21.3,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -3145,8 +3148,8 @@
   "OCDI": {
    "derived": {
     "bvps": 12.93,
-    "pb": 1.81,
-    "pe": 7.51,
+    "pb": 1.83,
+    "pe": 7.58,
     "roe_ttm_pct": 24.0
    },
    "fair_value": {
@@ -3157,7 +3160,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3178,10 +3181,10 @@
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 30659402196,
+   "market_cap": 30427328959,
    "name": "Six of October Development & Investment (SODIC)",
    "period": "2026-Q2",
-   "price": 23.4,
+   "price": 23.6,
    "release_date": 1675944000,
    "reviewed": true,
    "sector": "Finance",
@@ -3204,7 +3207,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش قيمة دفترية متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -3214,10 +3217,10 @@
    },
    "industry": "Financial Conglomerates",
    "label": "آلي، غير مراجَع",
-   "market_cap": 3148601102,
+   "market_cap": 3117426705,
    "name": "O B Financial Holding",
    "period": "2026-Q2",
-   "price": 0.7,
+   "price": 0.69,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -3228,7 +3231,7 @@
   "OIH": {
    "derived": {
     "bvps": 0.22,
-    "pb": 6.93,
+    "pb": 7.11,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -3240,7 +3243,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -3256,7 +3259,7 @@
    "market_cap": 8183276770,
    "name": "Orascom Investment Holding SAE",
    "period": "2026-Q3",
-   "price": 1.56,
+   "price": 1.6,
    "release_date": null,
    "reviewed": false,
    "sector": "Communications",
@@ -3267,8 +3270,8 @@
   "ORAS": {
    "derived": {
     "bvps": 518.36,
-    "pb": 1.47,
-    "pe": 5.68,
+    "pb": 1.52,
+    "pe": 5.88,
     "roe_ttm_pct": 25.0
    },
    "fair_value": {
@@ -3279,7 +3282,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3302,10 +3305,10 @@
    },
    "industry": "Engineering & Construction",
    "label": "مراجَع",
-   "market_cap": 93561390046.09091,
+   "market_cap": 90934944900.50279,
    "name": "Orascom Construction Plc",
    "period": "2026-Q3",
-   "price": 763,
+   "price": 790,
    "release_date": null,
    "reviewed": true,
    "sector": "Industrial Services",
@@ -3316,8 +3319,8 @@
   "ORHD": {
    "derived": {
     "bvps": 5.21,
-    "pb": 1.99,
-    "pe": 7.07,
+    "pb": 2.01,
+    "pe": 7.12,
     "roe_ttm_pct": 26.2
    },
    "fair_value": {
@@ -3328,7 +3331,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3349,10 +3352,10 @@
    },
    "industry": "Homebuilding",
    "label": "مراجَع",
-   "market_cap": 38107362091,
+   "market_cap": 37888356204,
    "name": "Orascom Development Egypt (S.A.E)",
    "period": "2026-Q2",
-   "price": 10.38,
+   "price": 10.45,
    "release_date": 1731326400,
    "reviewed": true,
    "sector": "Consumer Durables",
@@ -3362,10 +3365,10 @@
   },
   "ORWE": {
    "derived": {
-    "bvps": null,
-    "pb": null,
-    "pe": null,
-    "roe_ttm_pct": null
+    "bvps": 32.69,
+    "pb": 0.73,
+    "pe": 6.3,
+    "roe_ttm_pct": 10.8
    },
    "fair_value": {
     "basis": "P/E",
@@ -3375,19 +3378,32 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
    "fields": {
+    "book_value_per_share_fq": 32.693,
+    "cash_f_operating_activities_ttm": 4549844501,
+    "earnings_per_share_basic_ttm": 3.8108,
+    "free_cash_flow_ttm": 2652367500,
+    "gross_margin_ttm": 12.5968,
+    "net_income_fq": 858468685,
     "net_income_fy": 2189343558,
-    "total_revenue_fy": 26622797999
+    "net_income_ttm": 2534556244,
+    "net_margin_ttm": 9.3286,
+    "operating_margin_ttm": 8.0547,
+    "total_debt_fq": 9271848335,
+    "total_equity_fq": 23544180760,
+    "total_revenue_fq": 6944811444,
+    "total_revenue_fy": 26622797999,
+    "total_revenue_ttm": 27169769434
    },
    "industry": "Home Furnishings",
    "label": "مراجَع",
-   "market_cap": 16428149304.999998,
+   "market_cap": 15962573730,
    "name": "Oriental Weavers Carpet",
-   "period": "2026-Q2",
+   "period": "2026-Q1",
    "price": 24,
    "release_date": 1723636800,
    "reviewed": true,
@@ -3400,8 +3416,8 @@
    "derived": {
     "bvps": 37.15,
     "pb": 2.68,
-    "pe": 11.39,
-    "roe_ttm_pct": 22.4
+    "pe": 15.4,
+    "roe_ttm_pct": 17.4
    },
    "fair_value": {
     "basis": "P/E",
@@ -3411,33 +3427,33 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
    "fields": {
     "book_value_per_share_fq": 37.1548,
-    "cash_f_operating_activities_ttm": -265788473,
-    "earnings_per_share_basic_ttm": 8.7377,
-    "free_cash_flow_ttm": -1742369330,
-    "gross_margin_ttm": 42.9579,
+    "cash_f_operating_activities_ttm": -23899023.0,
+    "earnings_per_share_basic_ttm": 6.4561,
+    "free_cash_flow_ttm": -867605680,
+    "gross_margin_ttm": 40.7442,
     "net_income_fq": 166938934,
     "net_income_fy": 1441657700,
-    "net_income_ttm": 1407047729,
-    "net_margin_ttm": 14.5441,
-    "operating_margin_ttm": 24.2293,
+    "net_income_ttm": 1089499408,
+    "net_margin_ttm": 11.2632,
+    "operating_margin_ttm": 20.1783,
     "total_debt_fq": 10446002098,
     "total_equity_fq": 6274624963,
     "total_revenue_fq": 2335777604,
     "total_revenue_fy": 9441379305,
-    "total_revenue_ttm": 9674322397
+    "total_revenue_ttm": 9673106931
    },
    "industry": "Pharmaceuticals: Other",
    "label": "مراجَع",
-   "market_cap": 17042643091.000002,
+   "market_cap": 16789509462.000002,
    "name": "Egyptian International Pharmaceutical Industries Co.",
    "period": "2026-Q3",
-   "price": 99.49,
+   "price": 99.4,
    "release_date": 1794744000,
    "reviewed": true,
    "sector": "Health Technology",
@@ -3460,7 +3476,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3475,10 +3491,10 @@
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 32889014526,
+   "market_cap": 32460028471,
    "name": "Palm Hills Development Co.",
    "period": "2026-Q3",
-   "price": 11.35,
+   "price": 11.34,
    "release_date": 1794830400,
    "reviewed": true,
    "sector": "Finance",
@@ -3501,17 +3517,17 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {},
    "industry": "Agricultural Commodities/Milling",
    "label": "آلي، غير مراجَع",
-   "market_cap": 12274950283,
+   "market_cap": 12042334407,
    "name": "Cairo Poultry Co.",
    "period": "2026-Q2",
-   "price": 6.73,
+   "price": 6.83,
    "release_date": 1723636800,
    "reviewed": false,
    "sector": "Process Industries",
@@ -3534,7 +3550,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -3547,10 +3563,10 @@
    },
    "industry": "Specialty Stores",
    "label": "آلي، غير مراجَع",
-   "market_cap": 885936156,
+   "market_cap": 901549557,
    "name": "General Co. for Ceramic & Porcelain Products",
    "period": "2026-Q3",
-   "price": 17.9,
+   "price": 17.81,
    "release_date": null,
    "reviewed": false,
    "sector": "Retail Trade",
@@ -3577,7 +3593,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -3600,7 +3616,7 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 6320610559,
+   "market_cap": 6249706581,
    "name": "Pioneers Properties for Urban Development",
    "period": "2026-Q2",
    "price": 6.17,
@@ -3614,8 +3630,8 @@
   "RAYA": {
    "derived": {
     "bvps": 1.55,
-    "pb": 3.72,
-    "pe": 10.12,
+    "pb": 3.92,
+    "pe": 10.64,
     "roe_ttm_pct": 25.7
    },
    "fair_value": {
@@ -3626,7 +3642,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3649,10 +3665,10 @@
    },
    "industry": "Information Technology Services",
    "label": "مراجَع",
-   "market_cap": 25730601068,
+   "market_cap": 24660276605,
    "name": "Raya Holding for Financial Investments SAE",
    "period": "2026-Q2",
-   "price": 5.76,
+   "price": 6.06,
    "release_date": 1786622400,
    "reviewed": true,
    "sector": "Technology Services",
@@ -3663,8 +3679,8 @@
   "RMDA": {
    "derived": {
     "bvps": 1.24,
-    "pb": 4.06,
-    "pe": 27.02,
+    "pb": 4.03,
+    "pe": 26.81,
     "roe_ttm_pct": 14.5
    },
    "fair_value": {
@@ -3675,7 +3691,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3698,10 +3714,10 @@
    },
    "industry": "Pharmaceuticals: Major",
    "label": "مراجَع",
-   "market_cap": 10408024767,
+   "market_cap": 10265728171,
    "name": "Tenth of Ramadan Pharmaceutical Industries & Diagnostic-Rameda",
    "period": "2026-Q3",
-   "price": 5.05,
+   "price": 5.01,
    "release_date": 1794744000,
    "reviewed": true,
    "sector": "Health Technology",
@@ -3712,8 +3728,8 @@
   "SCEM": {
    "derived": {
     "bvps": 29.01,
-    "pb": 3.36,
-    "pe": 8.24,
+    "pb": 3.33,
+    "pe": 8.15,
     "roe_ttm_pct": 40.8
    },
    "fair_value": {
@@ -3728,7 +3744,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -3751,10 +3767,10 @@
    },
    "industry": "Construction Materials",
    "label": "آلي، غير مراجَع",
-   "market_cap": 25731759194,
+   "market_cap": 25431824456,
    "name": "Sinai Cement Co.",
    "period": "2026-Q2",
-   "price": 97.51,
+   "price": 96.53,
    "release_date": null,
    "reviewed": false,
    "sector": "Non-Energy Minerals",
@@ -3765,7 +3781,7 @@
   "SDTI": {
    "derived": {
     "bvps": 9.63,
-    "pb": 8.68,
+    "pb": 8.73,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -3777,7 +3793,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -3790,10 +3806,10 @@
    },
    "industry": "Hotels/Resorts/Cruise lines",
    "label": "آلي، غير مراجَع",
-   "market_cap": 4504294254,
+   "market_cap": 4428525027,
    "name": "Sharm Dreams Co. for Tourism Investment",
    "period": "2026-Q2",
-   "price": 83.58,
+   "price": 84.08,
    "release_date": null,
    "reviewed": false,
    "sector": "Consumer Services",
@@ -3804,7 +3820,7 @@
   "SIPC": {
    "derived": {
     "bvps": 0.43,
-    "pb": 10.89,
+    "pb": 11.01,
     "pe": null,
     "roe_ttm_pct": -3.7
    },
@@ -3816,7 +3832,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -3839,10 +3855,10 @@
    },
    "industry": "Pharmaceuticals: Major",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1217499971,
+   "market_cap": 1164999962,
    "name": "Sabaa International Company for Pharmaceutial and Chemical Industry",
    "period": "2026-Q3",
-   "price": 4.66,
+   "price": 4.71,
    "release_date": null,
    "reviewed": false,
    "sector": "Health Technology",
@@ -3852,8 +3868,8 @@
   },
   "SKPC": {
    "derived": {
-    "bvps": 5.7,
-    "pb": 2.59,
+    "bvps": 5.99,
+    "pb": 2.45,
     "pe": null,
     "roe_ttm_pct": null
    },
@@ -3865,26 +3881,26 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
    "fields": {
-    "book_value_per_share_fq": 5.7047,
-    "net_income_fq": 159426000,
+    "book_value_per_share_fq": 5.9898,
+    "net_income_fq": 285369000,
     "net_income_fy": 1000865311,
-    "total_debt_fq": 2647642958,
-    "total_equity_fq": 6469180296,
-    "total_revenue_fq": 3787504046,
+    "total_debt_fq": 2382061814,
+    "total_equity_fq": 6792423398,
+    "total_revenue_fq": 4746706508,
     "total_revenue_fy": 14412587014
    },
    "industry": "Chemicals: Specialty",
    "label": "مراجَع",
-   "market_cap": 16941959524.000002,
+   "market_cap": 16737840260,
    "name": "Sidi Kerir Petrochemicals",
-   "period": "2026-Q1",
-   "price": 14.76,
-   "release_date": 1788350400,
+   "period": "2026-Q2",
+   "price": 14.7,
+   "release_date": 1785412800,
    "reviewed": true,
    "sector": "Process Industries",
    "shares": 1134000000,
@@ -3906,7 +3922,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -3919,10 +3935,10 @@
    },
    "industry": "Construction Materials",
    "label": "آلي، غير مراجَع",
-   "market_cap": 8275527231,
+   "market_cap": 8159785701,
    "name": "South Valley Cement Co.",
    "period": "2026-Q2",
-   "price": 8.46,
+   "price": 8.45,
    "release_date": null,
    "reviewed": false,
    "sector": "Non-Energy Minerals",
@@ -3934,7 +3950,7 @@
    "derived": {
     "bvps": 32.88,
     "pb": 3.53,
-    "pe": 15.23,
+    "pe": 15.22,
     "roe_ttm_pct": 21.4
    },
    "fair_value": {
@@ -3945,7 +3961,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -3968,10 +3984,10 @@
    },
    "industry": "Electrical Products",
    "label": "مراجَع",
-   "market_cap": 253535050105,
+   "market_cap": 248208042628,
    "name": "El Sewedy Electric Company",
    "period": "2026-Q2",
-   "price": 116.02,
+   "price": 115.93,
    "release_date": 1794484800,
    "reviewed": true,
    "sector": "Producer Manufacturing",
@@ -3994,17 +4010,17 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {},
    "industry": "Electric Utilities",
    "label": "آلي، غير مراجَع",
-   "market_cap": 18567816503,
+   "market_cap": 18162111406,
    "name": "TAQA Arabia",
    "period": "2026-Q2",
-   "price": 13.43,
+   "price": 13.5,
    "release_date": 1762948800,
    "reviewed": false,
    "sector": "Utilities",
@@ -4016,7 +4032,7 @@
    "derived": {
     "bvps": null,
     "pb": null,
-    "pe": 9.9,
+    "pe": 9.93,
     "roe_ttm_pct": null
    },
    "fair_value": {
@@ -4027,7 +4043,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -4044,10 +4060,10 @@
    },
    "industry": "Real Estate Development",
    "label": "مراجَع",
-   "market_cap": 160854631268,
+   "market_cap": 162688611900,
    "name": "Talaat Moustafa Group Holding",
    "period": "2026-Q3",
-   "price": 78.95,
+   "price": 79.24,
    "release_date": 1786622400,
    "reviewed": true,
    "sector": "Finance",
@@ -4070,14 +4086,14 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {},
    "industry": "Engineering & Construction",
    "label": "آلي، غير مراجَع",
-   "market_cap": 1036693312.0000001,
+   "market_cap": 1022092011,
    "name": "El-Saeed Contracting & Real Estate Investment Co. SCCD",
    "period": "2026-Q2",
    "price": 1.4,
@@ -4103,7 +4119,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -4116,7 +4132,7 @@
    },
    "industry": "Pulp & Paper",
    "label": "مراجَع",
-   "market_cap": 687432742,
+   "market_cap": 669101166,
    "name": "Universal Co. for Paper & Packaging Materials-Unipack",
    "period": "2026-Q2",
    "price": 0.29,
@@ -4142,7 +4158,7 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
@@ -4155,7 +4171,7 @@
    "market_cap": 19483797119,
    "name": "U Consumer Finance S.A.E",
    "period": "2026-Q2",
-   "price": 9.25,
+   "price": 9.26,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
@@ -4182,7 +4198,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -4205,10 +4221,10 @@
    },
    "industry": "Financial Conglomerates",
    "label": "آلي، غير مراجَع",
-   "market_cap": 29705765120.85125,
+   "market_cap": 30030933466.072853,
    "name": "Valmore Holding",
    "period": "2026-Q1",
-   "price": 0.65,
+   "price": 0.64,
    "release_date": 1787054400,
    "reviewed": false,
    "sector": "Finance",
@@ -4219,8 +4235,8 @@
   "VLMRA": {
    "derived": {
     "bvps": 26.9,
-    "pb": 0.95,
-    "pe": 4.9,
+    "pb": 0.96,
+    "pe": 4.97,
     "roe_ttm_pct": 20.0
    },
    "fair_value": {
@@ -4231,7 +4247,7 @@
      0.9,
      1.2
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "الدراسة المراجَعة هي المرجع",
     "status": "راجع الدراسة المراجَعة"
    },
@@ -4254,10 +4270,10 @@
    },
    "industry": "Financial Conglomerates",
    "label": "مراجَع",
-   "market_cap": 29705764855.875828,
+   "market_cap": 30030933351.955307,
    "name": "Valmore Holding",
    "period": "2026-Q1",
-   "price": 25.55,
+   "price": 25.9,
    "release_date": 1787054400,
    "reviewed": true,
    "sector": "Finance",
@@ -4280,17 +4296,17 @@
      7,
      9
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": "مفيش ربحية سنوية موجبة متاحة",
     "status": "مفيش بيانات كفاية"
    },
    "fields": {},
    "industry": "Agricultural Commodities/Milling",
    "label": "آلي، غير مراجَع",
-   "market_cap": 2518000031,
+   "market_cap": 2662000084,
    "name": "Extracted Oils & Derivatives Co.",
    "period": "2026-Q4",
-   "price": 13.31,
+   "price": 12.77,
    "release_date": null,
    "reviewed": false,
    "sector": "Process Industries",
@@ -4301,8 +4317,8 @@
   "ZMID": {
    "derived": {
     "bvps": 2.64,
-    "pb": 2.31,
-    "pe": 8.84,
+    "pb": 2.38,
+    "pe": 9.11,
     "roe_ttm_pct": 26.1
    },
    "fair_value": {
@@ -4317,7 +4333,7 @@
      0.9,
      1.3
     ],
-    "note": "مضاعفات عامة افتراضية، تقدير تجريبي منا",
+    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
     "reason": null,
     "status": "تقدير آلي"
    },
@@ -4340,10 +4356,10 @@
    },
    "industry": "Real Estate Development",
    "label": "آلي، غير مراجَع",
-   "market_cap": 6230000019,
+   "market_cap": 6090000153,
    "name": "Zahraa Maadi Investment & Development",
    "period": "2026-Q2",
-   "price": 6.09,
+   "price": 6.28,
    "release_date": null,
    "reviewed": false,
    "sector": "Finance",
