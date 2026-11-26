@@ -7,7 +7,7 @@ import { StockChart, Spark, Ring } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { Ex, X } from './explain';
 import { HomeBoard } from './homeboard';
-import { IndexList, IdxStock } from './idx';
+import { IndexList, IdxStock, PageSwitch } from './idx';
 import { TeamBlock, Use, Glossary } from './scen';
 import { NewsBlock } from './news';
 import { FinVal6 } from './fv6';
@@ -413,6 +413,6 @@ function Info() {
 export function App() {
     return <FileCard lang="ar" dir="rtl">
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">محفظتي · بيانات يومية</span></div>
-        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<Stock key={k} k={k}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/><Route path="/others" element={<OthersList/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="*" element={<Portfolio/>}/></Routes>
+        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/><Route path="/others" element={<OthersList/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="*" element={<Portfolio/>}/></Routes>
     </FileCard>;
 }
