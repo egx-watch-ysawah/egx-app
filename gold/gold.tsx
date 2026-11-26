@@ -44,7 +44,8 @@ const GOLD: any = {
   ]
 };
 // Final texts from the gold team (checker PASS). Do not reword.
-const L = (u: string, t?: string) => <a href={u} target="_blank" rel="noreferrer" dir="ltr">{t || u}</a>;
+const shortLabel = (u: string) => { try { const x = new URL(u); const h = x.hostname.replace(/^www\./, ''); const last = x.pathname.split('/').filter(Boolean).pop() || ''; return h.indexOf('fred') === 0 ? h + ' · ' + last : h; } catch (e) { return u; } };
+const L = (u: string, t?: string) => <a href={u} target="_blank" rel="noreferrer" dir="ltr">{t || shortLabel(u)}</a>;
 const TAG = 'ذهب عالمي · مش مرتبط بالبورصة المصرية';
 
 export function CorrelationCard() {
@@ -83,7 +84,7 @@ export function ForecastCards() {
       <Cond>{NOTE_PATTERN}</Cond>
       <Cond>الأفق: لقطة 4 ديسمبر 17:00 نيويورك. الموعد: {L('https://www.bls.gov/schedule/2026/12_sched.htm')}</Cond></ul></section>
     <section className="gd-card"><H3>كارت 2 · الفيدرالي، 8-9 ديسمبر</H3><ul>
-      <Cond>خلفية مؤرّخة، مش تسعير حالي: لحد اجتماع أكتوبر، من محضر 18 نوفمبر: تقريبا كل المشاركين شايفين إن رفع تاني للفايدة غالبا هيكون مناسب. الفايدة وقتها 3.75-4%. {L('https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm')}</Cond>
+      <Cond>خلفية مؤرّخة، مش تسعير حالي: لحد اجتماع أكتوبر، من محضر 18 نوفمبر: تقريبا كل المشاركين شايفين إن رفع تاني للفايدة غالبا هيكون مناسب. الفايدة وقتها من 3.75% لـ 4%. {L('https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm')}</Cond>
       <Cond>تعريف بالرقم: يوم 8 ديسمبر نسجّل من مصدر مقروء ومؤرّخ احتمال رفع 25 نقطة أساس في اجتماع ديسمبر. "أكثر تشددا" = القرار رفع واحتمال الرفع المسجّل أقل من 50%. "أقل تشددا" = القرار تثبيت واحتمال الرفع المسجّل أكتر من 50%. غير كده = "زي المتوقع"، ما يتحسبش. لو ما لقيناش مصدر مقروء بالاحتمال: "غير متاح" والكارت ما يتحسبش. <b>(الـ50% تعريف تصميم مننا.)</b></Cond>
       <Cond>السيناريو: لو القرار أو البيان أكثر تشددا من التسعير المسجّل، عادة العوائد والدولار بيرتفعوا والذهب بيتضغط. لو أقل تشددا، العكس. وفي حالات كتير حصل العكس.</Cond>
       <Cond>{NOTE_PATTERN} التثبيت لوحده مش بيتصنف تشديد.</Cond>
@@ -139,7 +140,9 @@ function Sand() {
 
 function Waits() {
   return <section className="gd-card"><P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P><H3>المدة لحد أول إقفال أعلى</H3>
-    <P>في الحالات الخمسة اللي فاتت (نزول 20% أو أكتر: 2011-2015، 1996-1999، 2008، 2006، 2020-2022) المدة من القمة لحد أول إقفال أعلى كانت: 3,261 / 2,888 / 549 / 495 / 1,212 يوم. الحالة الحالية لسه ما رجعتش لقمتها ({daysSincePeak()} يوم لحد {todayLabel()}).</P>
+    <P>في الحالات الخمسة اللي فاتت (نزول 20% أو أكتر)، المدة من القمة لحد أول إقفال أعلى كانت:</P>
+    <ul>{(GOLD as any).falls.map((f: any) => <Li key={f.id}>{f.label}: {f.days.toLocaleString('en-US')} يوم</Li>)}</ul>
+    <P>الحالة الحالية لسه ما رجعتش لقمتها ({daysSincePeak()} يوم لحد {todayLabel()}).</P>
     <P className="gd-note">الأساس: الإقفال اليومي. حالات قليلة، ومفيش متوسط ولا "عادة". المصدر: <a href="https://goldprice.dev/blog/gold-drawdowns-since-1996" target="_blank" rel="noreferrer">goldprice.dev</a> (تواريخ المصدر مش متسقة، والمطابقة لسه معلّقة). أعلى سعر خلال اليوم ممكن يكون مختلف.</P></section>;
 }
 
@@ -164,7 +167,7 @@ function WeeklyCard() {
       <Li>آخر 40 أسبوع: <N>4,371</N></Li>
       <Li>الأسبوع الحالي (أسبوع 23 نوفمبر، لسه ماخلصش، ممكن يتغير): <N>3,584</N></Li></ul>
     <P>كلها متوسطات أسبوعية، فالأرقام تقريبية. الحركة الفعلية جوه الأسبوع أكبر.</P>
-    <P className="gd-note">أعلى سعر لحظي: 5,594.82 في 29 يناير 2026 (رويترز، سعر فوري): <a href="https://www.reuters.com/world/china/asia-gold-india-gold-premiums-decadal-high-china-demand-undeterred-by-price-rise-2026-01-30/" target="_blank" rel="noreferrer" dir="ltr">https://www.reuters.com/world/china/asia-gold-india-gold-premiums-decadal-high-china-demand-undeterred-by-price-rise-2026-01-30/</a><br />أعلى متوسط أسبوعي: 5,213 (أسبوع 23 فبراير 2026). المقياسين مختلفين ومينفعش يتقارنوا.</P>
+    <P className="gd-note">أعلى سعر لحظي: 5,594.82 في 29 يناير 2026 (رويترز، سعر فوري): <a href="https://www.reuters.com/world/china/asia-gold-india-gold-premiums-decadal-high-china-demand-undeterred-by-price-rise-2026-01-30/" target="_blank" rel="noreferrer" dir="ltr">reuters.com</a><br />أعلى متوسط أسبوعي: 5,213 (أسبوع 23 فبراير 2026). المقياسين مختلفين ومينفعش يتقارنوا.</P>
     <P className="gd-note">بيانات لحد أسبوع 23 نوفمبر 2026.<br />المصدر: {WK_SRC}</P>
     <P><b>ده سياق مش توقع.</b></P></section>;
 }
@@ -193,7 +196,7 @@ export function GoldTab() {
     <P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P>
     <section className="gd-hero"><small>من {g.peak.label} (أعلى إقفال)</small><div className="gd-count">{d}</div><b>يوم من القمة ولسه ما رجعش لقمته</b><small className="gd-asof">العدد لحد {todayLabel()} (توقيت القاهرة)</small>
       <P>العداد بيمشي من ساعة جهازك. أعمق نزول لحد آخر إقفال في المصدر (23 نوفمبر 2026): <bdi dir="ltr">{g.fallPct}%</bdi> (إقفال <bdi dir="ltr">${nf(g.peak.close)}</bdi> لحد <bdi dir="ltr">${nf(g.low.close)}</bdi> يوم {g.low.label}، يعني 296 يوم من القمة للقاع). الأساس: الإقفال اليومي. أعلى سعر خلال اليوم ممكن يكون مختلف.</P>
-      <P className="gd-ref">سعر مرجعي: <b>{STATUS[g.price.status]}</b>{g.price.value ? ' ' + g.price.value : ''} · بنعرض السعر بس لما يكون له مصدر وتوقيت.</P></section>
+      <P className="gd-ref">سعر مرجعي: <b>{STATUS[g.price.status]}</b>{g.price.value ? ' ' + g.price.value : ''} · اللقطة مش متاخدة، فمفيش سعر معروض. بنعرض السعر بس لما يكون له مصدر وتوقيت.</P></section>
     <TVChart />
     <Sand />
     <Waits />
