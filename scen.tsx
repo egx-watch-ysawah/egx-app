@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { loadPilotM } from './v7';
 import { Ex, X } from './explain';
 import TEAM from './team.json';
 import META from './study_meta.json';
@@ -71,10 +72,12 @@ export function TeamBlock({ code }: { code: string }) {
 }
 export function StudyMeta({ code }: { code: string }) {
   const m: any = (META as any).studies[code];
+  const [pm, setPm] = useState<any>(null);
+  useEffect(() => { let on = true; if (code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash)) loadPilotM().then(x => on && setPm(x)); return () => { on = false; }; }, [code]);
   if (!m) return null;
   return <Det title="بطاقة الدراسة"><Use>تعرف تاريخ الدراسة وفترتها، وإن القيمة تقدير تجريبي منا.</Use>
     <ul>
-      <li>تاريخ الدراسة: <bdi dir="ltr">{m.study_date}</bdi></li>
+      {code === 'MTIE' && pm && pm.study_card_date_ar ? <li>{pm.study_card_date_ar}</li> : <li>تاريخ الدراسة: <bdi dir="ltr">{m.study_date}</bdi></li>}
       {m.period_ar ? <li>الفترة: {m.period_ar}</li> : null}
       {m.fv_label_ar ? <li>تقدير تجريبي منا</li> : null}
       {m.price_label_ar ? <li>{m.price_label_ar}</li> : null}
