@@ -7,7 +7,9 @@ const PER: any = { CLHO: { lab: '6 شهور', until: '30 يونيو 2026', fac: 
 const per = (k?: string) => PER[k || ''] || { lab: '9 شهور', until: '30 سبتمبر 2026', fac: 4 / 3 };
 const f = (v: number) => iso(v >= 1 ? v.toFixed(2) : v.toFixed(3));
 const p1 = (v: number) => iso((v > 0 ? '+' : '') + v.toFixed(1) + '%');
-const n1 = (n: number) => iso(n.toLocaleString('en-GB', { maximumFractionDigits: 1 }));
+const PVN = () => /[?&]new(=|&|$)/.test(location.hash);
+const n1 = (n: number) => iso(n.toLocaleString('en-GB', { maximumFractionDigits: PVN() && Math.abs(n) < 1 ? 2 : 1 }));
+const pvDec = (k: string) => { const d = DEC[k]; return PVN() && k === 'MTIE' && d && d.up ? { ...d, up: d.up.map((x: string) => (x === 'تقرير مراجع غير متحفظ' ? 'فحص محدود من غير تحفظات' : x)) } : d; };
 
 type Item = { label: string; value: string; mean: string; effect: string; tone?: 'ok' | 'no' | 'mid' };
 
@@ -399,7 +401,7 @@ function CoverageBox({ k }: { k: string }) {
 }
 
 function DecisionCard({ s, k }: { s: any; k: string }) {
-  const d = DEC[k]; const p = s.plan || {};
+  const d = pvDec(k); const p = s.plan || {};
   const a = (s.close / s.hi52 - 1) * 100;
   return <div>
     <p className="gd-lead">ملخص من الأرقام، القرار يرجعلك.</p>
@@ -433,7 +435,7 @@ function TrendVerdict({ s }: { s: any }) {
 }
 
 function DecSum({ s, k }: { s: any; k: string }) {
-  const d = DEC[k];
+  const d = pvDec(k);
   let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
   if (SIX.includes(k)) rng = 'نطاق السعر العادل ومصادر كل طريقة: راجع تبويب السعر العادل.';
   else if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.51 / 7.20 / 7.89 (تقديري).';
