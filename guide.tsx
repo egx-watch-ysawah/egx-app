@@ -489,7 +489,7 @@ export function FinCards({ k, r }: { k: string; r: any }) {
 let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
 const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
 // Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
-export const HELD = ['ADIB', 'AIH', 'AMER', 'AMIA', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EHDR', 'ELKA', 'ELSH', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'ISPH', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MPCI', 'MPRC', 'OBRI', 'POUL', 'PRDC', 'RAYA', 'SCEM', 'TAQA', 'UEGC', 'ZMID'];
+export const HELD = ['ADIB', 'AIH', 'AMER', 'AMIA', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EHDR', 'ELKA', 'ELSH', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MPCI', 'MPRC', 'OBRI', 'POUL', 'PRDC', 'RAYA', 'SCEM', 'TAQA', 'UEGC', 'ZMID'];
 export const HELD_MSG = 'الصفحة دي لسه تحت المراجعة ومش جاهزة للعرض.';
 export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
   const [, tick] = useState(0);
