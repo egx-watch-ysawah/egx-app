@@ -489,7 +489,7 @@ export function FinCards({ k, r }: { k: string; r: any }) {
 let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
 const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
 // Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
-export const HELD = ['AIH', 'AMIA', 'ASPI', 'ATLC', 'BTFH', 'CIEB', 'CLHO', 'CNFN', 'DAPH', 'LCSW', 'MBSC', 'MPCI', 'POUL', 'RAYA', 'SCEM', 'TAQA', 'ZMID'];
+export const HELD = ['AIH', 'AMIA', 'ASPI', 'ATLC', 'BTFH', 'CIEB', 'CLHO', 'CNFN', 'DAPH', 'LCSW', 'MBSC', 'MPCI', 'POUL', 'SCEM', 'TAQA', 'ZMID'];
 export const HELD_MSG = 'الصفحة دي لسه تحت المراجعة ومش جاهزة للعرض.';
 export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
   const [, tick] = useState(0);
