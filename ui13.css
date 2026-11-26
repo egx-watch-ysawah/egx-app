@@ -1,0 +1,9 @@
+.ck-title{margin:10px 0 6px;font-size:14px;font-weight:700;color:#e6edf7;line-height:1.5}
+.ck-bar{margin:0 0 8px}
+.ck-bar .eg-chip{min-height:36px;padding:0 12px;font-size:13px;opacity:.8}
+.ck-bar .eg-chip.on{opacity:1;font-weight:700;border-color:#7db0ff;box-shadow:0 0 0 2px #4a86ee66}
+.ck-ov{position:absolute;inset:0;pointer-events:none}
+.ck-pt{position:absolute;right:56px;left:6px;display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:#cfd8e8;z-index:5;direction:rtl}
+.ck-pt b{color:#e6edf7;font-weight:700}
+.ck-k{display:inline-flex;align-items:center;gap:4px}
+.ck-k i{display:inline-block;width:14px;height:3px;border-radius:2px}
