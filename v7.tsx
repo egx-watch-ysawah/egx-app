@@ -22,6 +22,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
       {d.analyst ? big(d.analyst, 'a') : null}
       {(d.scenarios || []).map((n: any, i: number) => big(n, 's' + i))}
+      {d.scenarios_note_ar ? <p className="eg-note">{d.scenarios_note_ar}</p> : null}
       {shared ? <div className="v7-sh">{scs[0].note_ar ? <p className="eg-note">{scs[0].note_ar}</p> : null}{scs[0].note2_ar ? <p className="eg-note">{scs[0].note2_ar}</p> : null}</div> : null}
       {d.book_value ? small(d.book_value, 'b') : null}
       {paras(d.auditor_note_ar, 'dn')}
