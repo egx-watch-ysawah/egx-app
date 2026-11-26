@@ -230,7 +230,7 @@ function FcRow({ r, open }: { r: any; open: boolean }) {
   const res = FC_RESULTS.find((x: any) => x.record_sha256 === r.sha256);
   const tp = r.kind === 'third_party';
   return <section className="gd-card" id={'fc-' + r.id}>
-    <div className="gld-head"><H3>{r.title_ar}</H3><span className="gld-chip">{r.horizon_days <= 90 ? 'مضارب' : 'مستثمر'}</span></div>
+    <div className="gld-head"><h3>{String(r.title_ar).split(/(\d+-\d+)/).map((x: string, i: number) => i % 2 ? <bdi key={i} dir="ltr">{x}</bdi> : <React.Fragment key={i}>{fixNums(x)}</React.Fragment>)}</h3><span className="gld-chip">{r.horizon_days <= 90 ? 'مضارب' : 'مستثمر'}</span></div>
     {tp && <ul>{r.targets.map((t: any, i: number) => <Li key={i}>{t.label_ar}: <bdi dir="ltr">{nfu(t.value_usd)}</bdi></Li>)}</ul>}
     {!tp && <P>{r.pattern_ar}</P>}
     <div className="gd-rs">{tp ? <>{fixNums(r.via_ar)} · {ar(r.source_published_at)} · <a href={r.source_url} target="_blank" rel="noreferrer" dir="ltr">المصدر</a>{r.unconfirmed ? ' · غير مؤكد' : ''}</> : <>{fixNums(r.condition.reference_source)}</>}</div>
