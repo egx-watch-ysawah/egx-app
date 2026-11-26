@@ -20,7 +20,7 @@ const H4 = (p: any) => <h4 {...p}>{fixNums(p.children)}</h4>;
 const Li = (p: any) => <li {...p}>{fixNums(p.children)}</li>;
 // Gold tab feature flag. Staging: open the app once with #/gold?gold=1 or set localStorage egx-gold=1.
 // Live: set GOLD_LIVE = true to show the tab for everyone.
-export const GOLD_LIVE = false;
+export const GOLD_LIVE = true;
 export function goldOn(): boolean {
   if (GOLD_LIVE) return true;
   try { if (localStorage.getItem('egx-gold') === '1') return true; if (/[?&]gold=1/.test(location.hash + location.search)) { localStorage.setItem('egx-gold', '1'); return true; } } catch (e) {}
