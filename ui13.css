@@ -7,3 +7,5 @@
 .ck-pt b{color:#e6edf7;font-weight:700}
 .ck-k{display:inline-flex;align-items:center;gap:4px}
 .ck-k i{display:inline-block;width:14px;height:3px;border-radius:2px}
+
+.ck-na{display:block;position:absolute;left:0;right:0;top:44px;text-align:center;font-style:normal;font-size:13px;color:#9aa9bd;white-space:nowrap}
