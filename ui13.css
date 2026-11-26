@@ -9,3 +9,6 @@
 .ck-k i{display:inline-block;width:14px;height:3px;border-radius:2px}
 
 .ck-na{display:block;position:absolute;left:0;right:0;top:44px;text-align:center;font-style:normal;font-size:13px;color:#9aa9bd;white-space:nowrap}
+
+/* fair tab: long unbroken tokens must wrap on 390px */
+.v7-fair,.v7-fair .v7-in,.v7-fair .eg-exb,.v7-fair p.eg-note{min-width:0;max-width:100%;overflow-wrap:anywhere}
