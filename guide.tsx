@@ -489,13 +489,15 @@ export function FinCards({ k, r }: { k: string; r: any }) {
 let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
 const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
 // Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
+export const HELD = ['PHAR', 'MASR', 'BONY', 'HRHO', 'UNIP'];
+export const HELD_MSG = 'الصفحة دي لسه تحت المراجعة ومش جاهزة للعرض.';
 export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
   const [, tick] = useState(0);
   React.useEffect(() => { const f = () => tick(x => x + 1); guideSubs.add(f); f(); return () => { guideSubs.delete(f); }; }, []);
   return !guideOn || guideTab === id ? <>{children}</> : null;
 }
 
-export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart }: { s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
+export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart, fairNew }: { fairNew?: boolean; s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
   const [tab, setTab0] = useState<'t' | 'f' | 'v' | 'd'>('t');
   const setTab = (t: 't' | 'f' | 'v' | 'd') => { setTab0(t); setGuide(t, true); };
   React.useEffect(() => { setGuide('t', true); return () => setGuide('t', false); }, [k]);
@@ -515,7 +517,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && tab === 'd' && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
-      {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
+      {HELD.includes(k) && tab !== 't' ? <p className="gd-sum">{HELD_MSG}</p> : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
         <p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className={'gd-h' + (PVN() ? ' gd-h2' : '')}><span>{it.label}</span>{PVN() && String(it.value).indexOf(' · ') > 0 ? <Val1 v={String(it.value).split(' · ')[0]} /> : <Val v={it.value} />}</div>{PVN() && String(it.value).indexOf(' · ') > 0 ? <p className="gd-sub">{String(it.value).split(' · ').slice(1).join(' · ')}</p> : null}
