@@ -210,7 +210,7 @@ function ItemList({ id }: { id: string }) {
   return <section className="gd-card">
     {id === 'ops' && <P className="gd-note">آراء منشورة من جهات تانية، بأرقامها وكلامها زي ما اتنشرت. مش رأينا ومش توصية.</P>}
     {items.length === 0 && <P>لسه مفيش عناصر متأكدة هنا.</P>}
-    {items.map((it: any, i: number) => <div key={i} className="gd-item">
+    {items.map((it: any, i: number) => <div key={i} className="gld-item">
       <b>{it.title}</b>
       <div className="gd-rs">{id === 'ops' ? 'رأي منشور من جهة تانية: ' : ''}{it.source} · {it.date} {it.time} (توقيت القاهرة){it.unconfirmed ? ' · غير مؤكد' : ''}</div>
       <a href={it.url} target="_blank" rel="noreferrer" dir="ltr">{it.linkLabel || it.source}</a></div>)}
@@ -227,7 +227,7 @@ function ForecastsV2() {
 function GoldTabsV2({ overview }: { overview: any }) {
   const [t, setT] = React.useState('ov');
   return <>
-    <div className="gd-tabs" role="tablist">{TABS.map(x => <button key={x.id} role="tab" aria-selected={t === x.id} className={t === x.id ? 'on' : ''} onClick={() => setT(x.id)}>{x.label}</button>)}</div>
+    <div className="gld-tabs" role="tablist">{TABS.map(x => <button key={x.id} role="tab" aria-selected={t === x.id} className={t === x.id ? 'on' : ''} onClick={() => setT(x.id)}>{x.label}</button>)}</div>
     {t === 'ov' ? overview : t === 'fc' ? <ForecastsV2 /> : <ItemList id={t} />}</>;
 }
 
@@ -279,7 +279,7 @@ const GOLD_CSS = `.gold{max-width:560px;margin:0 auto;color:#dfe6f2}
 .gold ul{padding:0 18px 0 0;margin:6px 0}.gold li{margin:6px 0;font-size:13.5px;line-height:1.7}
 .gold p{font-size:13.5px;line-height:1.7}.gold h4{margin:8px 0 2px;color:#e8c14a;font-size:13px}
 .gd-card .gd-tag{text-align:right;margin:0 0 4px}
-.gd-tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0;padding:2px}.gd-tabs button{flex:1 0 auto;background:#141b29;color:#9fb0c8;border:1px solid #243049;border-radius:999px;padding:8px 14px;font:inherit;font-size:13.5px;cursor:pointer}.gd-tabs button.on{background:#e8c14a;color:#1a1500;border-color:#e8c14a;font-weight:700}
-.gd-item{padding:10px 0;border-top:1px solid #243049}.gd-item:first-of-type{border-top:0}
+.gld-tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0;padding:2px}.gld-tabs button{flex:1 0 auto;background:#141b29;color:#9fb0c8;border:1px solid #243049;border-radius:999px;padding:8px 14px;font:inherit;font-size:13.5px;cursor:pointer}.gld-tabs button.on{background:#e8c14a;color:#1a1500;border-color:#e8c14a;font-weight:700}
+.gld-item{padding:10px 0;border-top:1px solid #243049}.gld-item:first-of-type{border-top:0}
 `;
 function injectGoldCss() { if (!document.getElementById('gold-css')) { const st = document.createElement('style'); st.id = 'gold-css'; st.textContent = GOLD_CSS; document.head.appendChild(st); } }
