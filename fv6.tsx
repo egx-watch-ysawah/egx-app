@@ -9,7 +9,7 @@ export const noCodes: any = (x: any) => typeof x === 'string' ? x.replace(/\bT1\
 const STALE_AN = 'أهداف الجهات الخارجية من صفحات stockanalysis وغالبًا محسوبة على أسعار أقدم من سعر النهارده، فنسبة الفرق عن السعر الحالي مش دقيقة.';
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
-const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور×4/3: الأساس مش متطابق.';
+const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور محوّلة لسنة كاملة: الأساس مش متطابق.';
 export const tidy = (x: any) => String(x == null ? '' : x).replace(/((?:مكاسب|مكسب|خسائر|خسارة|أرباح|ربح|فروق|فرق|تغير|التغير|إعادة تقييم)(?:\s+(?:في|ال))?\s*)((?:ال)?قيمة العادلة|(?:ال)?قيمة عادلة)/g, (_m: string, a: string, b: string) => a + b.replace(/ /g, '\u00A0')).replace(/القيمة العادلة/g, 'السعر العادل').replace(/قيمة عادلة/g, 'سعر عادل').replace(/([.،؛:])(\s*[.،؛:])+/g, (m: string) => { const c = m.replace(/[\s]/g, ''); return c[c.length - 1]; }).replace(/(^|\s)([\u0600-\u06FF]{3,})\s+\2(?=\s|[.،؛:]|$)/g, '$1$2').replace(/ {2,}/g, ' ').replace(/\u00A0/g, ' ');
 const isPeer = (m: any) => m && (m.method_key === 'PE' || m.method_key === 'PB' || /شركات شبهها|شركات مشابهة|أقران/.test(String(m.name_ar || m.label_ar || '')));
 const Cell = ({ l, v, t }: { l: string; v: any; t?: string }) => <div><small>{l}</small>{num(v) ? <b dir="ltr">{fx(v)}</b> : t ? <b className="mid">{t}</b> : <b dir="ltr">—</b>}</div>;
