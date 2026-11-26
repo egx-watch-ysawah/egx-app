@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { loadPilotM } from './v7';
 
 // "آخر الأخبار": reads news.json (written by the news agent, pushed by the app owner). Facts only, no interpretation.
 type Item = { code: string; title: string; source: string; url?: string | null; published_at: string; status: 'confirmed' | 'reported'; note?: string | null };
@@ -10,10 +11,12 @@ const when = (iso: string) => { try { const d = new Date(iso); return d.toLocale
 
 export function NewsBlock({ code }: { code: string }) {
   const [d, setD] = useState<any>(undefined);
+  const [pm, setPm] = useState<any>(null);
+  useEffect(() => { let on = true; if (code === 'MTIE') loadPilotM().then(x => on && setPm(x)); return () => { on = false; }; }, [code]);
   useEffect(() => { let on = true; load().then(x => on && setD(x)).catch(() => on && setD(null)); return () => { on = false; }; }, []);
   const now = Date.now();
   const items: Item[] = d && Array.isArray(d.items) ? d.items.filter((x: Item) => x.code === code && now - Date.parse(x.published_at) <= HOURS * 3600e3 && Date.parse(x.published_at) <= now + 3600e3).sort((a: Item, b: Item) => Date.parse(b.published_at) - Date.parse(a.published_at)) : [];
-  if (code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash)) return <details className="eg-ex"><summary>آخر الأخبار</summary><div className="eg-exb"><p className="eg-note">{d && d.as_of ? <>آخر تحديث لملف الأخبار: <bdi dir="ltr">{when(d.as_of)}</bdi>. مفيش فيه خبر للسهم ده في آخر 48 ساعة قبل التحديث ده (الفحص بالاسم، ممكن يفوت خبر). قرأنا الإفصاح الرسمي: اجتماع مجلس الإدارة 15 نوفمبر (خطاب 15/11)، مفيهوش توزيعات ولا أسهم مجانية ولا تغيير رأس مال ولا شراء أسهم خزينة.</> : 'ملف الأخبار مش متاح دلوقتي.'}</p></div></details>;
+  if (code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash)) return <details className="eg-ex"><summary>آخر الأخبار</summary><div className="eg-exb"><p className="eg-note">{pm && pm.news_as_of_ar ? <>{pm.news_as_of_ar}. قرأنا الإفصاح الرسمي: اجتماع مجلس الإدارة 15 نوفمبر (خطاب 15/11)، مفيهوش توزيعات ولا أسهم مجانية ولا تغيير رأس مال ولا شراء أسهم خزينة.</> : d && d.as_of ? <>آخر تحديث لملف الأخبار: <bdi dir="ltr">{when(d.as_of)}</bdi>. مفيش فيه خبر للسهم ده في آخر 48 ساعة قبل التحديث ده (الفحص بالاسم، ممكن يفوت خبر). قرأنا الإفصاح الرسمي: اجتماع مجلس الإدارة 15 نوفمبر (خطاب 15/11)، مفيهوش توزيعات ولا أسهم مجانية ولا تغيير رأس مال ولا شراء أسهم خزينة.</> : 'ملف الأخبار مش متاح دلوقتي.'}</p>{pm && pm.news_checks_ar ? pm.news_checks_ar.map((t: string, j: number) => <p key={'nc' + j} className="eg-note">{t}</p>) : null}</div></details>;
   return <details className="eg-ex"><summary>آخر الأخبار</summary><div className="eg-exb">
     <p className="eg-use"><b>ده بيفيدك في إيه؟</b> تشوف اللي اتنشر عن الشركة في آخر 48 ساعة ومصدره، من غير تفسير.</p>
     {d === undefined ? <p className="eg-note">بحمّل الأخبار...</p>
