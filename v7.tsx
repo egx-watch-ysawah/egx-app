@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { loadPage, NEW as NEWP, READY, usePage } from './page';
 let cache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/egx14_v7.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
-export const V7_CODES = ['MASR', 'BONY', 'HRHO', 'UNIP', 'SWDY', 'TMGH', 'ORHD', 'MTIE', 'JUFO', 'PHAR', 'AMOC', 'CLHO', 'ETEL', 'EGAL', 'ABUK', 'MFPC', 'EAST', 'MCQE', 'PHDC', 'RMDA', 'FWRY', 'EFID', 'MBSC', 'MPRC', 'ISPH', 'ELKA', 'ETRS', 'EFIH', 'ATQA', 'OCDI', 'SCEM', 'ORAS', 'LCSW', 'RAYA'];
+export const V7_CODES = ['ADIB', 'ENGC', 'ARCC', 'HDBK', 'UEGC', 'ATQA', 'ALCN', 'MCRO', 'DSCW', 'EGAS', 'AMER', 'COMI', 'ELSH', 'CCAP', 'ELEC', 'MASR', 'BONY', 'HRHO', 'UNIP', 'SWDY', 'TMGH', 'ORHD', 'MTIE', 'JUFO', 'PHAR', 'AMOC', 'CLHO', 'ETEL', 'EGAL', 'ABUK', 'MFPC', 'EAST', 'MCQE', 'PHDC', 'RMDA', 'FWRY', 'EFID', 'MBSC', 'MPRC', 'ISPH', 'ELKA', 'ETRS', 'EFIH', 'ATQA', 'OCDI', 'SCEM', 'ORAS', 'LCSW', 'RAYA'];
 export { loadPilotM } from './page';
 export const isV7 = (k: string) => V7_CODES.includes(k) || READY().includes(k);
 const wd = (x: any): any => typeof x === 'string' ? x.replace(/[\u0660-\u0669]/g, (c: string) => String(c.charCodeAt(0) - 0x660)) : Array.isArray(x) ? x.map(wd) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, y]) => [k, wd(y)])) : x;
