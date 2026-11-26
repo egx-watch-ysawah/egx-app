@@ -16,7 +16,7 @@ export type Built = { s: any } | { fail: string };
 export function buildStock(code: string, name: string, raw: any[]): Built {
   const now = new Date(); const p: any = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(x => [x.type, x.value]));
   const today = p.year + '-' + p.month + '-' + p.day; const done = +p.hour >= 15;
-  let rows = raw.filter(x => x && x.date && (x.date < today || (x.date === today && done)))
+  let rows = raw.filter(x => x && x.date && x.date < today)
     .map(x => [x.date, +x.open, +x.high, +x.low, +x.close, +x.volume] as [string, number, number, number, number, number])
     .filter(([, o, h, l, c, v]) => l > 0 && l <= Math.min(o, c) && Math.max(o, c) <= h && v >= 0);
   rows.sort((a, b) => a[0] < b[0] ? -1 : 1);
