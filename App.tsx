@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { OthersList } from './others';
 import { FileCard, NavLink, Link, Route, Routes, useLocation } from './shim';
-import { DATA } from './data';import { StockGuide, OnTab } from './guide';
+import { DATA } from './data';import { V7Card } from './v7';
+import { StockGuide, OnTab } from './guide';
 import { StockChart, Spark, Ring } from './Chart';
 import { rows as mkRows, resample, RANGES, TF_AR, TF } from './indic';
 import { Ex, X } from './explain';
@@ -213,6 +214,7 @@ function Stock({ k }: { k: string }) {
                 
                 <p className="eg-note eg-foot">قراءة تاريخية للسعر والتذبذب، مش نصيحة ولا توقع. السعر ممكن يتخطى أي مستوى بفجوة. المؤشرات مشتقة من نفس الأسعار فمش أدلة مستقلة، وميزة التنبؤ مش مثبتة، والبيانات من مصدر مجاني واحد ممكن يتأخر أو يحتاج تصحيح تقسيمات.</p>
             </OnTab>}
+            <OnTab id="f"><V7Card k={k} /></OnTab>
             <OnTab id="f"><TeamBlock code={k} /></OnTab><OnTab id="d"><NewsBlock code={k} /></OnTab><OnTab id="t"><Glossary /></OnTab>
         </div>
     </div>;
