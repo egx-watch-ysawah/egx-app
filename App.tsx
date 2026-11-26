@@ -415,5 +415,6 @@ export function App() {
     return <FileCard lang="ar" dir="rtl">
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">محفظتي · بيانات يومية</span></div>
         <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/>{goldOn()&&<Route path="/gold" element={<GoldTab/>}/>}<Route path="/others" element={<OthersList/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="*" element={<Portfolio/>}/></Routes>
+        <p className="eg-disc" style={{ fontSize: 13, lineHeight: 1.9, color: '#9aa7bd', margin: '18px 0 8px', padding: '10px 0 0', borderTop: '1px solid #253144' }}>تنبيه مهم: التطبيق ده مش تابع لجهة مرخصة من الهيئة العامة للرقابة المالية ولا معتمد منها. اللي هنا معلومات وقراءات مبنية على أرقام مجانية منشورة ممكن تتأخر أو تتغير، مش نصيحة استثمار ومش توصية بشراء أو بيع، ومفيش أي وعد بربح. الاستثمار في الأسهم فيه مخاطر وممكن تخسر جزء من فلوسك أو كلها. القرار النهائي قرارك لوحدك ومسؤوليتك.</p>
     </FileCard>;
 }
