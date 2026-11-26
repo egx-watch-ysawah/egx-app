@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { loadPilotM } from './v7';
 import { SourcedFair, SIX, SummaryWorry } from './fv6';
 import { WIDE, WideFair } from './wide';
 
@@ -498,6 +499,8 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
   const [tab, setTab0] = useState<'t' | 'f' | 'v' | 'd'>('t');
   const setTab = (t: 't' | 'f' | 'v' | 'd') => { setTab0(t); setGuide(t, true); };
   React.useEffect(() => { setGuide('t', true); return () => setGuide('t', false); }, [k]);
+  const [pmS, setPmS] = useState<any>(null);
+  useEffect(() => { let on = true; if (k === 'MTIE' && PVN()) loadPilotM().then(x => on && setPmS(x)); return () => { on = false; }; }, [k]);
   const tech = techItems(s);
   const fin = light ? [] : k === 'BONY' ? BONY_ITEMS : finItems(r, k);
   const items = tab === 'f' ? fin : tech;
@@ -513,7 +516,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
       {nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
-        <p className="gd-sum">{tab === 'f' ? finSummary(k, r) : techSummary(s)}<small>{tab === 'f' ? 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.' : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
+        <p className="gd-sum">{tab === 'f' ? finSummary(k, r) : techSummary(s)}<small>{tab === 'f' ? (k === 'MTIE' && PVN() && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className={'gd-h' + (PVN() ? ' gd-h2' : '')}><span>{it.label}</span>{PVN() && String(it.value).indexOf(' · ') > 0 ? <Val1 v={String(it.value).split(' · ')[0]} /> : <Val v={it.value} />}</div>{PVN() && String(it.value).indexOf(' · ') > 0 ? <p className="gd-sub">{String(it.value).split(' · ').slice(1).join(' · ')}</p> : null}
           <p><em>يعني إيه: </em>{it.mean}</p>
