@@ -19,7 +19,7 @@ export const loadIndex = () => {
 export const loadPage = (code: string): Promise<any> => {
   if (!code) return Promise.resolve(null);
   if (asked[code]) return Promise.resolve(pages[code] || null); asked[code] = true;
-  return fetch('studies_rest/studies_rest/pages/' + code + '.json?t=' + bust(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(p => { if (p && p.stocks && p.stocks[code]) pages[code] = wd({ ...p.stocks[code], footer: p.footer_ar, footer_ar: p.footer_ar }); }).catch(() => {}).then(() => { done[code] = true; bump(); return pages[code] || null; });
+  return fetch('studies_rest/studies_rest/pages/' + code + '.json?t=' + bust(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(p => { if (p && p.stocks && p.stocks[code]) pages[code] = wd({ ...p.stocks[code], footer: p.footer_ar, footer_ar: p.footer_ar, top_warning_ar: p.stocks[code].top_warning_ar || p.top_warning_ar }); }).catch(() => {}).then(() => { done[code] = true; bump(); return pages[code] || null; });
 };
 export const pageOf = (code: string) => pages[code] || null;
 export const NEW = (code: string): boolean => !!pages[code] && (preview() || ready.includes(code));
