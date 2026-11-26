@@ -10,7 +10,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
   useEffect(() => { if (!isV7(k)) return; const ok = (x: any) => x && x.stocks && x.stocks[k] ? { ...x.stocks[k], footer: x.footer_ar } : null; (fair ? loadP().then(p => ok(p) || load().then(ok)) : load().then(ok)).then(setD); }, [k, fair]);
   if (!isV7(k) || !d) return null;
   const big = (n: any, key: any) => n.text_ar
-    ? <p key={key} className="eg-note">{n.text_ar}</p>
+    ? (fair && String(key).startsWith('s') ? <div key={key} className="v7-n"><b>السيناريو</b><p className="eg-note">{n.text_ar}</p></div> : <p key={key} className="eg-note">{n.text_ar}</p>)
     : <div key={key} className="v7-n"><b>{n.label_ar}</b><div className="v7-v"><bdi>{n.value}</bdi> {n.unit_ar}</div>{n.as_of_ar ? <small>{n.as_of_ar}</small> : null}{n.status_ar ? <p className="eg-note">{n.status_ar}</p> : null}{n.source_ar ? <p className="eg-note">{n.source_ar}</p> : null}{n.tap_ar ? <p className="eg-note">{n.tap_ar}</p> : null}{n.assumptions_ar && n.assumptions_ar.length ? <details className="v7-as"><summary>الافتراضات</summary><ul>{n.assumptions_ar.map((a: string, j: number) => <li key={j}>{a}</li>)}</ul>{n.assumptions_more_ar && n.assumptions_more_ar.length ? <details className="v7-as"><summary>{n.more_label_ar || 'عرض المزيد'}</summary><ul>{n.assumptions_more_ar.map((a: string, j: number) => <li key={j}>{a}</li>)}</ul></details> : null}</details> : null}</div>;
   const paras = (t: any, key: any) => typeof t === 'string' && t ? <div key={key}>{t.split('\n').filter((x: string) => x.trim()).map((x: string, j: number) => <p key={j} className="eg-note v7-s">{x}</p>)}</div> : null;
   const small = (n: any, key: any) => n.text_ar
@@ -23,8 +23,8 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.book_value ? small(d.book_value, 'b') : null}
       {paras(d.auditor_note_ar, 'dn')}
       {(d.extra || []).map((n: any, i: number) => small(n, 'x' + i))}
-      {d.unavailable && d.unavailable.length ? <div className="v7-u"><b>غير متوفر</b>{d.unavailable.map((u: any, i: number) => <p key={i} className="eg-note">{u.item_ar}: {u.reason_ar}</p>)}</div> : null}
-      {d.risks_ar && d.risks_ar.length ? d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>) : null}
+      {d.unavailable && d.unavailable.length && !(fair && (d.scenarios || []).some((n: any) => n.text_ar)) ? <div className="v7-u"><b>غير متوفر</b>{d.unavailable.map((u: any, i: number) => <p key={i} className="eg-note">{u.item_ar}: {u.reason_ar}</p>)}</div> : null}
+      {d.risks_ar && d.risks_ar.length ? (fair ? <div className="v7-u"><b>نقاط محتاجة انتباه</b>{d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)}</div> : d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)) : null}
     </div>;
   if (fair) return <div className="v7-fair"><div className="v7-fh"><b>السعر العادل</b> <span className="tg">{d.tag_ar}</span></div>{bodyNode}</div>;
   return <details className="eg-ex v7"><summary>الأرقام المراجَعة ({d.tag_ar})</summary>
