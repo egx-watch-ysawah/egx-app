@@ -173,6 +173,11 @@ function AutoFair({ f, close }: { f: any; close: number }) {
 }
 
 export function IdxStock() {
+  const { code: kc = '' } = useParams();
+  return <IdxStockInner key={kc} />;
+}
+
+function IdxStockInner() {
   const { code = '' } = useParams();
   const [s1, err1] = useJson('idx/' + code + '.json');
   const cl = useClientStock(code, !!err1);
@@ -208,7 +213,7 @@ export function IdxStock() {
     <Link className="eg-back" to={back}>← {back === '/others' ? 'باقي الأسهم' : back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
     <div className="eg-in">
       <h2 className="eg-h ix-top">{code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash) ? <><bdi dir="ltr">MM Group for Industry &amp; International Trade</bdi> (إم إم جروب)</> : s.name} <span dir="ltr">({code})</span></h2>
-      <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة{code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash) ? ' (آخر 3 سنين)' : ''} من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · <span style={{ whiteSpace: 'nowrap' }}>تحليل آلي</span></p>
+      <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة{code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash) ? ' (آخر 3 سنين)' : ''} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed} fin={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} />
       {fairNew ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
       {fairNew ? <><style>{'.gd-fv{display:none}'}</style><OnTab id="v"><V7Card k={code} fair /></OnTab></> : null}
