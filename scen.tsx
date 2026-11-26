@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { loadPilotM } from './v7';
+import { NEW, PVN, usePage } from './page';
 import { Ex, X } from './explain';
 import TEAM from './team.json';
 import META from './study_meta.json';
@@ -25,7 +25,7 @@ export function ScenarioBlock({ s }: { s: any }) {
   const has = Number.isFinite(p.entry) && p.entry > 0 && Number.isFinite(p.stop) && Array.isArray(s.fire);
   const thin = has && (p.tv < 1 || (s.historyCount || 0) < 260);
   return <>
-    <Det title="الفريم ومدة المتابعة"><Use>تعرف تتابع السهم كام يوم أو أسبوع، مش مضاربة جوه الجلسة.</Use><p>{/[?&]new(=|&|$)/.test(location.hash) ? 'الحساب' : 'التقييم'} والسيناريو على شمعة يومية بعد الإقفال، أقرب لمتابعة على أيام أو أسابيع، مش مضاربة جوه الجلسة.</p><p>التطبيق مش بيتابع مركزك ولا تاريخ دخولك، والمرجع المتحرك بيتحسب من جديد كل يوم، مش مستوى محفوظ.</p></Det>
+    <Det title="الفريم ومدة المتابعة"><Use>تعرف تتابع السهم كام يوم أو أسبوع، مش مضاربة جوه الجلسة.</Use><p>{PVN() ? 'الحساب' : 'التقييم'} والسيناريو على شمعة يومية بعد الإقفال، أقرب لمتابعة على أيام أو أسابيع، مش مضاربة جوه الجلسة.</p><p>التطبيق مش بيتابع مركزك ولا تاريخ دخولك، والمرجع المتحرك بيتحسب من جديد كل يوم، مش مستوى محفوظ.</p></Det>
     {!has ? <p className="eg-note">السيناريو لسه مش متاح للسهم ده لحد ما الأرقام تتحدث في التحديث الجاي.</p>
       : thin ? <p className="eg-note eg-warn">السيناريو مش معروض: {p.tv < 1 ? <>السيولة ضعيفة (الرقم الأوسط لقيمة التداول اليومي في آخر 60 جلسة حوالي <bdi dir="ltr">{p.tv}</bdi> مليون جنيه)، فمستويات المراقبة مش موثوقة.</> : 'تاريخ السهم أقصر من الكفاية لحساب مستويات موثوقة.'}</p>
       : <>
@@ -58,7 +58,8 @@ export function Glossary() {
 const Src = ({ list }: { list?: { label: string; url: string | null }[] }) => list && list.length ? <ul>{list.map((x, i) => <li key={i}>{x.url ? <a href={x.url} target="_blank" rel="noreferrer">{x.label}</a> : x.label}</li>)}</ul> : null;
 export function TeamBlock({ code }: { code: string }) {
   const t: any = (TEAM as any).stocks[code];
-  if (!t && code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash)) return <Det title="الفريق وفترة المتابعة"><p className="eg-note">غير متوفر: أسماء الإدارة ومواعيد الإعلان القادم للسهم ده لسه ما اتجمعتش من مصدر رسمي ولا اتراجعت.</p></Det>;
+  const pgT = usePage(code);
+  if (!t && NEW(code) && pgT && pgT.team_missing_ar) return <Det title="الفريق وفترة المتابعة"><p className="eg-note">{pgT.team_missing_ar}</p></Det>;
   if (!t) return <Det title="الفريق وفترة المتابعة"><p className="eg-note">غير متوفر: بيانات الفريق ومواعيد المتابعة للسهم ده لسه ما اتجمعتش ولا اتراجعت من مصادرها.</p></Det>;
   return <Det title="الفريق وفترة المتابعة">
     <Use>تعرف مين بيدير الشركة ومين ماسك نسبة كبيرة منها. التغيير المفاجئ في ده ممكن يكون سبب تدقق فيه.</Use>
@@ -73,11 +74,12 @@ export function TeamBlock({ code }: { code: string }) {
 export function StudyMeta({ code }: { code: string }) {
   const m: any = (META as any).studies[code];
   const [pm, setPm] = useState<any>(null);
-  useEffect(() => { let on = true; if (code === 'MTIE' && /[?&]new(=|&|$)/.test(location.hash)) loadPilotM().then(x => on && setPm(x)); return () => { on = false; }; }, [code]);
+  const pgS = usePage(code);
+  useEffect(() => { setPm(NEW(code) ? pgS : null); }, [pgS, code]);
   if (!m) return null;
   return <Det title="بطاقة الدراسة"><Use>تعرف تاريخ الدراسة وفترتها، وإن القيمة تقدير تجريبي منا.</Use>
     <ul>
-      {code === 'MTIE' && pm && pm.study_card_date_ar ? <li>{pm.study_card_date_ar}</li> : <li>تاريخ الدراسة: <bdi dir="ltr">{m.study_date}</bdi></li>}
+      {NEW(code) && pm && pm.study_card_date_ar ? <li>{pm.study_card_date_ar}</li> : <li>تاريخ الدراسة: <bdi dir="ltr">{m.study_date}</bdi></li>}
       {m.period_ar ? <li>الفترة: {m.period_ar}</li> : null}
       {m.fv_label_ar ? <li>تقدير تجريبي منا</li> : null}
       {m.price_label_ar ? <li>{m.price_label_ar}</li> : null}
