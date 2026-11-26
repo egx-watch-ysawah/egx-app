@@ -9,6 +9,13 @@ const HOURS = 48;
 const wd = (x: string) => (x || '').replace(/[٠-٩]/g, c => String('٠١٢٣٤٥٦٧٨٩'.indexOf(c))).replace(/٫/g, '.').replace(/٬/g, ',');
 const when = (iso: string) => { try { const d = new Date(iso); return d.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return ''; } };
 
+const outlet = (l: string) => { const g = /^خبر\s+(.+?)\s+عن\s/.exec(l); if (g) return g[1].trim(); const m = /\(([^()]+)\)\s*$/.exec(l); return m && !/\d/.test(m[1]) && m[1].length < 30 ? m[1].trim() : ''; };
+const NC = ({ t, src }: { t: any; src?: any[] }) => {
+  const txt: string = typeof t === 'string' ? t : (t && (t.text || t.text_ar)) || '';
+  const own: string | null = t && typeof t === 'object' && typeof t.url === 'string' && /^https:\/\//.test(t.url) ? t.url : null;
+  const links = own ? [{ label: 'المصدر', url: own }] : (typeof t === 'string' ? (src || []).filter((s: any) => s && s.url && /^https:\/\//.test(s.url) && outlet(s.label || '') && txt.indexOf(outlet(s.label)) >= 0) : []);
+  return <><p className="eg-note">{txt}</p>{links.length ? <p className="eg-note v7-s">{links.map((l: any, i: number) => <React.Fragment key={i}>{i ? ' · ' : 'المصدر: '}<a href={l.url} target="_blank" rel="noreferrer noopener">{own ? 'الرابط' : outlet(l.label)}</a></React.Fragment>)}</p> : null}</>;
+};
 export function NewsBlock({ code }: { code: string }) {
   const [d, setD] = useState<any>(undefined);
   const [pm, setPm] = useState<any>(null);
@@ -17,7 +24,7 @@ export function NewsBlock({ code }: { code: string }) {
   useEffect(() => { let on = true; load().then(x => on && setD(x)).catch(() => on && setD(null)); return () => { on = false; }; }, []);
   const now = Date.now();
   const items: Item[] = d && Array.isArray(d.items) ? d.items.filter((x: Item) => x.code === code && now - Date.parse(x.published_at) <= HOURS * 3600e3 && Date.parse(x.published_at) <= now + 3600e3).sort((a: Item, b: Item) => Date.parse(b.published_at) - Date.parse(a.published_at)) : [];
-  if (NEW(code)) return <details className="eg-ex"><summary>آخر الأخبار</summary><div className="eg-exb"><p className="eg-note">{pm && pm.news_as_of_ar ? <>{pm.news_as_of_ar}. {pm && pm.news_disclosure_ar}</> : d && d.as_of ? <>آخر تحديث لملف الأخبار: <bdi dir="ltr">{when(d.as_of)}</bdi>. مفيش فيه خبر للسهم ده في آخر 48 ساعة قبل التحديث ده (الفحص بالاسم، ممكن يفوت خبر). {pm && pm.news_disclosure_ar}</> : 'ملف الأخبار مش متاح دلوقتي.'}</p>{pm && pm.news_checks_ar ? pm.news_checks_ar.map((t: string, j: number) => <p key={'nc' + j} className="eg-note">{t}</p>) : null}</div></details>;
+  if (NEW(code)) return <details className="eg-ex"><summary>آخر الأخبار</summary><div className="eg-exb"><p className="eg-note">{pm && pm.news_as_of_ar ? <>{pm.news_as_of_ar}. {pm && pm.news_disclosure_ar}</> : d && d.as_of ? <>آخر تحديث لملف الأخبار: <bdi dir="ltr">{when(d.as_of)}</bdi>. مفيش فيه خبر للسهم ده في آخر 48 ساعة قبل التحديث ده (الفحص بالاسم، ممكن يفوت خبر). {pm && pm.news_disclosure_ar}</> : 'ملف الأخبار مش متاح دلوقتي.'}</p>{pm && pm.news_checks_ar ? pm.news_checks_ar.map((t: any, j: number) => <NC key={'nc' + j} t={t} src={pm.sources_ar} />) : null}</div></details>;
   return <details className="eg-ex"><summary>آخر الأخبار</summary><div className="eg-exb">
     <p className="eg-use"><b>ده بيفيدك في إيه؟</b> تشوف اللي اتنشر عن الشركة في آخر 48 ساعة ومصدره، من غير تفسير.</p>
     {d === undefined ? <p className="eg-note">بحمّل الأخبار...</p>
