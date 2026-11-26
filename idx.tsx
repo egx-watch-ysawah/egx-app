@@ -211,15 +211,14 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   const isOther = !!cl.s || (!!err1 && !row);
   useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
-  const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} onClick={() => setT({ ...t, [key]: !t[key] })}>{name}</button>;
+  const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
   if (err) return <OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
         <div className="eg-rowlab">مدة الشمعة</div><div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
         <div className="eg-rowlab">الفترة المعروضة</div><div className="eg-chips">{RANGES[tf].filter(([, b]) => b <= trows.length).concat([['المتاح كله', trows.length]] as [string, number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
-        <StockChart key={code + tf} rows={trows} n={n} t={t} plan={s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? s.plan : { entry: 0, stop: 0, target: 0, trail: 0 }} />
-        <div className="eg-chips">{s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? tg('plan', 'مستويات السيناريو') : null}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</div>
+        <StockChart key={code + tf} rows={trows} n={n} t={t} plan={s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? s.plan : { entry: 0, stop: 0, target: 0, trail: 0 }} tfName={{D:'يومية',W:'أسبوعية',M:'شهرية'}[tf]} rangeLabel={(RANGES[tf].find(([,b])=>b===n)||['المتاح كله'])[0]} bar={<>{s.plan && s.plan.entry > 0 && s.plan.tv >= 1 ? tg('plan', 'مستويات السيناريو') : null}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</>} />
       </Det>;
   return <div className="eg-pad">
     <Link className="eg-back" to={back}>← {back === '/others' ? 'باقي الأسهم' : back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
