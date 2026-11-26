@@ -489,7 +489,7 @@ export function FinCards({ k, r }: { k: string; r: any }) {
 let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
 const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
 // Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
-export const HELD = ['PHAR', 'MASR', 'BONY', 'HRHO', 'UNIP'];
+export const HELD = ['PHAR', 'BONY', 'HRHO', 'UNIP', 'ABUK', 'ADIB', 'AIH', 'AMER', 'AMIA', 'AMOC', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EAST', 'EFID', 'EFIH', 'EGAL', 'EHDR', 'ELKA', 'ELSH', 'EMFD', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'FWRY', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'ISPH', 'JUFO', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MFPC', 'MPCI', 'MPRC', 'OBRI', 'OCDI', 'ORAS', 'ORWE', 'PHDC', 'POUL', 'PRDC', 'RAYA', 'RMDA', 'SCEM', 'SKPC', 'SWDY', 'TAQA', 'TMGH', 'UEGC', 'VLMR', 'ZMID'];
 export const HELD_MSG = 'الصفحة دي لسه تحت المراجعة ومش جاهزة للعرض.';
 export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
   const [, tick] = useState(0);
@@ -511,10 +511,11 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     : r && r.tag ? r.tag : 'أرقام من القوائم المالية الأصلية للشركة (9 شهور لحد 30 سبتمبر 2026). كل رقم معاه معناه وتأثيره على السهم.';
   const tb = (id: 't' | 'f' | 'v' | 'd', name: string) => <button type="button" className={'gd-tab' + (tab === id ? ' on' : '')} onClick={() => setTab(id)}>{name}</button>;
   const nop = k === 'VLMRA';
+  const held = HELD.includes(k);
   return <><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
     <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
-    {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && tab === 'd' && <DecSum s={s} k={k} />}
+    {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
       {HELD.includes(k) && tab !== 't' ? <p className="gd-sum">{HELD_MSG}</p> : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
@@ -525,8 +526,8 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
           <p><em>تأثيره على السهم: </em>{it.effect}</p>
         </div>)}</Det>
       </>}
-      {!light && tab === 'f' && WIDE.includes(k) ? finNode : null}
-      {tab === 'f' ? <FinTabBlock k={k} /> : null}
+      {!light && !held && tab === 'f' && WIDE.includes(k) ? finNode : null}
+      {tab === 'f' && !held ? <FinTabBlock k={k} /> : null}
       <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
   </section></>;
