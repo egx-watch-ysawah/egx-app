@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from './shim';
 import I70 from './index70.json';
+import { goldOn } from './gold/gold';
 const C70: string[] = (I70 as any).codes || [];
 
 const SYMS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
@@ -22,6 +23,7 @@ export function AppBar() {
       <NavLink to="/egx30" className={({ isActive }: any) => 'ab-i' + (!oth && !on70 && (isActive || loc.pathname.startsWith('/s/')) ? ' on' : '')}><span dir="ltr">EGX 30</span></NavLink>
       <NavLink to="/egx70" className={({ isActive }: any) => 'ab-i' + (isActive || on70 ? ' on' : '')}><span dir="ltr">EGX 70</span></NavLink>
       <NavLink to="/others" className={({ isActive }: any) => 'ab-i' + (isActive || oth || loc.pathname.startsWith('/o/') ? ' on' : '')}><span>باقي الأسهم</span></NavLink>
+      {goldOn() && <NavLink to="/gold" className={({ isActive }: any) => 'ab-i' + (isActive ? ' on' : '')}><span>الذهب</span></NavLink>}
     </nav>
   );
 }
