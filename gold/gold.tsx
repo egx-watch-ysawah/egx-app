@@ -114,7 +114,7 @@ function todayLabel(){const t=new Date(cairoToday());return t.getUTCDate()+' '+A
 export function daysSincePeak(): number { return Math.round((cairoToday() - Date.parse((GOLD as any).peak.date + 'T00:00:00Z')) / DAY); }
 const nf = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-function TVChart() {
+function TVChart({ h = 420 }: { h?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current; if (!el) return; el.innerHTML = '';
@@ -123,7 +123,7 @@ function TVChart() {
     s.innerHTML = JSON.stringify({ autosize: true, symbol: 'OANDA:XAUUSD', interval: 'D', timezone: 'Africa/Cairo', theme: 'dark', style: '1', locale: 'ar_AE', allow_symbol_change: false, hide_side_toolbar: true, support_host: 'https://www.tradingview.com' });
     el.appendChild(s);
   }, []);
-  return <div className="gd-chart"><div className="tradingview-widget-container" ref={ref} style={{ height: 420, width: '100%' }} />
+  return <div className="gd-chart"><div className="tradingview-widget-container" ref={ref} style={{ height: h, width: '100%' }} />
     <P className="gd-note"><span dir="ltr">Indicative data · OANDA:XAUUSD</span> · بيانات إرشادية، قد تتأخر ومش سعر تنفيذ · التوقيت: القاهرة · <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">Chart by TradingView</a></P></div>;
 }
 
@@ -198,14 +198,55 @@ function TroughCard() {
 
 const STATUS: Record<string, string> = { verified: 'متحقق منه', gap: 'فجوة بين المصادر', mismatch: 'اختلاف بين المصادر', delayed: 'متأخر', not_updated: 'غير محدّث', closed: 'السوق مقفول' };
 
+
+// v2 preview (bigger chart + inner tabs). Open with #/gold?v2=1. Public tab is unchanged until V2_LIVE = true.
+export const V2_LIVE = false;
+function v2On(): boolean { if (V2_LIVE) return true; try { return /[?&]v2=1/.test(location.hash + location.search); } catch (e) { return false; } }
+const DISCLAIMER = 'الاستثمار (في الأسهم أو الذهب) فيه مخاطر.';
+const TABS: { id: string; label: string }[] = [{ id: 'ov', label: 'نظرة عامة' }, { id: 'news', label: 'أخبار' }, { id: 'ana', label: 'تحليل' }, { id: 'ops', label: 'آراء المحللين' }, { id: 'fc', label: 'التوقعات' }];
+const ITEMS: Record<string, any[]> = { news: [], ana: [], ops: [], fc3: [] };
+function ItemList({ id }: { id: string }) {
+  const items = ITEMS[id] || [];
+  return <section className="gd-card">
+    {id === 'ops' && <P className="gd-note">آراء منشورة من جهات تانية، بأرقامها وكلامها زي ما اتنشرت. مش رأينا ومش توصية.</P>}
+    {items.length === 0 && <P>لسه مفيش عناصر متأكدة هنا.</P>}
+    {items.map((it: any, i: number) => <div key={i} className="gd-item">
+      <b>{it.title}</b>
+      <div className="gd-rs">{id === 'ops' ? 'رأي منشور من جهة تانية: ' : ''}{it.source} · {it.date} {it.time} (توقيت القاهرة){it.unconfirmed ? ' · غير مؤكد' : ''}</div>
+      <a href={it.url} target="_blank" rel="noreferrer" dir="ltr">{it.linkLabel || it.source}</a></div>)}
+    <P className="gd-note">{DISCLAIMER}</P></section>;
+}
+function ForecastsV2() {
+  return <>
+    <section className="gd-card"><H3>توقعات منشورة من جهات تانية</H3>
+      {(ITEMS.fc3 || []).length === 0 && <P>لسه مفيش عناصر متأكدة هنا.</P>}</section>
+    <section className="gd-card"><H3>تقديرنا</H3><P>مفيش تقدير. مش هنعرض رقم غير لما يتجرب على التاريخ وتتعرض نسبة إصابته ومتوسط خطأه.</P></section>
+    <ForecastCards />
+    <section className="gd-card"><H3>سجل التوقعات</H3><P>لسه فاضي. كل توقع هيتسجل بتاريخه ومداه، وبعدين يتقارن بالنتيجة.</P><P className="gd-note">{DISCLAIMER}</P></section></>;
+}
+function GoldTabsV2({ overview }: { overview: any }) {
+  const [t, setT] = React.useState('ov');
+  return <>
+    <div className="gd-tabs" role="tablist">{TABS.map(x => <button key={x.id} role="tab" aria-selected={t === x.id} className={t === x.id ? 'on' : ''} onClick={() => setT(x.id)}>{x.label}</button>)}</div>
+    {t === 'ov' ? overview : t === 'fc' ? <ForecastsV2 /> : <ItemList id={t} />}</>;
+}
+
 export function GoldTab() {
   injectGoldCss();
-  const g: any = GOLD; const d = daysSincePeak();
+  const g: any = GOLD; const d = daysSincePeak(); const [v2] = React.useState(v2On);
   return <div className="eg-pad gold" dir="rtl">
     <P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P>
     <section className="gd-hero"><small>من {g.peak.label} (أعلى إقفال)</small><div className="gd-count">{d}</div><b>يوم من القمة ولسه ما رجعش لقمته</b><small className="gd-asof">العدد لحد {todayLabel()} (توقيت القاهرة)</small>
       <P>العداد بيمشي من ساعة جهازك. أعمق نزول لحد آخر إقفال في المصدر (23 نوفمبر 2026): <bdi dir="ltr">{g.fallPct}%</bdi> (إقفال <bdi dir="ltr">${nf(g.peak.close)}</bdi> لحد <bdi dir="ltr">${nf(g.low.close)}</bdi> يوم {g.low.label}، يعني 296 يوم من القمة للقاع). الأساس: الإقفال اليومي. أعلى سعر خلال اليوم ممكن يكون مختلف.</P>
       <P className="gd-ref">سعر مرجعي: <b>{STATUS[g.price.status]}</b>{g.price.value ? ' ' + g.price.value : ''} · اللقطة مش متاخدة، فمفيش سعر معروض. بنعرض السعر بس لما يكون له مصدر وتوقيت.</P></section>
+    {v2 ? <><TVChart h={Math.max(480, Math.round(window.innerHeight * 0.72))} /><GoldTabsV2 overview={<>
+    <Sand />
+    <Waits />
+    <WeeklyCard />
+    <TroughCard />
+    <ForecastCards />
+    <CorrelationCard />
+    <P className="gd-note">الاستثمار (في الأسهم أو الذهب) فيه مخاطر.</P></>} /></> : <>
     <TVChart />
     <Sand />
     <Waits />
@@ -214,6 +255,7 @@ export function GoldTab() {
     <ForecastCards />
     <CorrelationCard />
     <P className="gd-note">الاستثمار (في الأسهم أو الذهب) فيه مخاطر.</P>
+    </>}
   </div>;
 }
 
@@ -237,5 +279,7 @@ const GOLD_CSS = `.gold{max-width:560px;margin:0 auto;color:#dfe6f2}
 .gold ul{padding:0 18px 0 0;margin:6px 0}.gold li{margin:6px 0;font-size:13.5px;line-height:1.7}
 .gold p{font-size:13.5px;line-height:1.7}.gold h4{margin:8px 0 2px;color:#e8c14a;font-size:13px}
 .gd-card .gd-tag{text-align:right;margin:0 0 4px}
+.gd-tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0;padding:2px}.gd-tabs button{flex:1 0 auto;background:#141b29;color:#9fb0c8;border:1px solid #243049;border-radius:999px;padding:8px 14px;font:inherit;font-size:13.5px;cursor:pointer}.gd-tabs button.on{background:#e8c14a;color:#1a1500;border-color:#e8c14a;font-weight:700}
+.gd-item{padding:10px 0;border-top:1px solid #243049}.gd-item:first-of-type{border-top:0}
 `;
 function injectGoldCss() { if (!document.getElementById('gold-css')) { const st = document.createElement('style'); st.id = 'gold-css'; st.textContent = GOLD_CSS; document.head.appendChild(st); } }
