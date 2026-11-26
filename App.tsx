@@ -151,7 +151,7 @@ function Stock({ k }: { k: string }) {
     const chartNode = <Det title="الشارت" open>
                     <div className="eg-rowlab">مدة الشمعة</div><div className="eg-chips">{(['D', 'W', 'M'] as TF[]).map(x => <button type="button" key={x} className={'eg-chip' + (tf === x ? ' on' : '')} onClick={() => { setTf(x); setN(RANGES[x][1][1]); }}>{TF_AR[x]}</button>)}</div>
                 <div className="eg-rowlab">الفترة المعروضة</div><div className="eg-chips">{RANGES[tf].filter(([,b])=>b<=trows.length).concat([['المتاح كله',trows.length]] as [string,number][]).map(([a, b]) => <button type="button" key={a} className={'eg-chip eg-sm' + (n === b ? ' on' : '')} onClick={() => setN(b)}>{a}</button>)}</div>
-                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} tfName={{D:'يومية',W:'أسبوعية',M:'شهرية'}[tf]} rangeLabel={(RANGES[tf].find(([,b])=>b===n)||['المتاح كله'])[0]} bar={<>{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</>} />
+                <StockChart key={k + tf} rows={trows} n={n} t={t} plan={s.plan} closeDate={s.date} tfName={{D:'يومية',W:'أسبوعية',M:'شهرية'}[tf]} rangeLabel={(RANGES[tf].find(([,b])=>b===n)||['المتاح كله'])[0]} bar={<>{tg('plan', 'مستويات السيناريو')}{tg('sma', 'متوسطات')}{tg('vol', 'حجم')}{tg('bb', 'بولينجر')}{tg('rsi', 'RSI')}{tg('macd', 'MACD')}</>} />
     </Det>;
     return <div className="eg-pad">
         <a className="eg-back" href="#/" onClick={e => { if (window.history.length > 1) { e.preventDefault(); window.history.back(); } }}>← محفظتي</a>
