@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 // All gold code in this one file (flag, data, cards, styles). Isolated from the EGX code.
 
 // Keep numbers, signs and % in left-to-right order inside Arabic lines (wraps number tokens only; text unchanged).
-const NUM_RE = /(^|[\s(])([+\-]?\d[\d,.]*(?:-\d[\d,.]*)?%?)/g;
+const NUM_RE = /(^|[^\dA-Za-z.,:%+\-$])([+\-]?\$?\d(?:[\d,.:]*\d)?(?:-\d(?:[\d,.:]*\d)?)?%?)/g;
 function fixNums(c: any): any {
   if (typeof c === 'string') {
     const out: any[] = []; let last = 0; let m: RegExpExecArray | null; NUM_RE.lastIndex = 0;
@@ -15,6 +15,8 @@ function fixNums(c: any): any {
   return c;
 }
 const P = (p: any) => <p {...p}>{fixNums(p.children)}</p>;
+const H3 = (p: any) => <h3 {...p}>{fixNums(p.children)}</h3>;
+const H4 = (p: any) => <h4 {...p}>{fixNums(p.children)}</h4>;
 const Li = (p: any) => <li {...p}>{fixNums(p.children)}</li>;
 // Gold tab feature flag. Staging: open the app once with #/gold?gold=1 or set localStorage egx-gold=1.
 // Live: set GOLD_LIVE = true to show the tab for everyone.
@@ -47,11 +49,11 @@ const TAG = 'ذهب عالمي · مش مرتبط بالبورصة المصري�
 
 export function CorrelationCard() {
   return <section className="gd-card"><P className="gd-tag">{TAG}</P>
-    <h3>الذهب والدولار وعائد السندات: وصف للماضي</h3>
+    <H3>الذهب والدولار وعائد السندات: وصف للماضي</H3>
     <P>الارتباط رقم بيقيس هل شيئين بيتحركوا مع بعض ولا عكس بعض. الإشارة السالبة معناها عكس بعض: لما واحد يعلى، التاني بيميل ينزل. الارتباط مش معناه إن واحد بيسبب التاني.</P>
     <P>الذهب ومؤشر الدولار الواسع (FRED DTWEXBGS): <b dir="ltr">-0.47</b> على الفترة كلها (من يناير 2006 لنوفمبر 2026)، و<b dir="ltr">-0.48</b> على آخر 10 سنين. الحجم: متوسط.</P>
     <P>الذهب وعائد سندات الخزانة الأمريكية المحمي من التضخم لـ10 سنين (FRED DFII10): <b dir="ltr">-0.33</b> على الفترة كلها، و<b dir="ltr">-0.45</b> على آخر 10 سنين. الحجم: ضعيف لحد متوسط على كل الفترة، ومتوسط على آخر 10 سنين.</P>
-    <h4>الفترة الأخيرة</h4>
+    <H4>الفترة الأخيرة</H4>
     <P>الدولار: -0.60 في آخر سنة (51 أسبوع، هامش خطأ حوالي ±0.28)، و-0.64 في آخر 26 أسبوع (25 أسبوع بيانات، هامش حوالي ±0.40). العائد: -0.41 في آخر سنة (±0.28)، و-0.29 في آخر 26 أسبوع (±0.40). الفترات القصيرة حساسة لأسبوع واحد. (الهامش ده نقدّر بيه الضوضاء، مش مضمون.)</P>
     <P className="gd-note">تقسيم الحجم (ضعيف، ضعيف لحد متوسط، متوسط، قوي) تقسيم تقريبي من عندنا. الأرقام محسوبة من متوسطات أسبوعية، فالرقم تقريبي، ومن نفس الأسبوع بس، ومش بتقول مين بيتحرك الأول. بيانات الدولار لحد 20 نوفمبر 2026، وبيانات العائد لحد 24 نوفمبر 2026. أحدث أسبوع للذهب (23 نوفمبر) لسه ماخلصش. اتقرت 26 نوفمبر 2026 الساعة 18:52 بتوقيت القاهرة (FRED) و18:33 تقريبًا (gold-api).</P>
     <P className="gd-note">المصادر: {L('https://fred.stlouisfed.org/series/DTWEXBGS')} · {L('https://fred.stlouisfed.org/series/DFII10')} · {L('https://gold-api.com/docs')}</P>
@@ -63,10 +65,10 @@ const NOTE_PATTERN = 'ده النمط اللي بيتشرح عادة، ومش م
 
 export function ForecastCards() {
   return <div className="gd-fc"><P className="gd-tag">{TAG}</P>
-    <section className="gd-card"><h3>سيناريوهات مشروطة</h3>
+    <section className="gd-card"><H3>سيناريوهات مشروطة</H3>
       <P>ده مش توقع لسعر الذهب ومش نصيحة. الأوقات بتوقيت القاهرة (08:30 نيويورك = 15:30 القاهرة في ديسمبر).</P>
       <P>ما لقيناش مصدر مجاني نقدر نقراه ونتحقق منه لتوقعات المحللين (جربنا tradingeconomics وFedWatch)، فمفيش رقم هنسميه "المتوقع". قراءة الأرقام: 26 نوفمبر 18:52 القاهرة.</P></section>
-    <section className="gd-card"><h3>الإغلاق المخزّن</h3><ul>
+    <section className="gd-card"><H3>الإغلاق المخزّن</H3><ul>
       <Cond>المصدر: سعر الذهب الفوري من {L('https://api.gold-api.com/price/XAU')} (من غير حساب)، بنخزّن لقطة كل يوم الساعة 17:00 نيويورك، وبنسجّل معاها وقت التحديث اللي المصدر بيرجّعه (updatedAt).</Cond>
       <Cond>17:00 نيويورك = 00:00 القاهرة في الشتا (ديسمبر). اللقطة بتتحدد بنيويورك مش بالقاهرة.</Cond>
       <Cond>"إغلاق يوم الحدث" = لقطة 17:00 نيويورك يوم الحدث، ومقارنتها بلقطة اليوم اللي قبله.</Cond>
@@ -74,26 +76,26 @@ export function ForecastCards() {
       <Cond>"الأفق" في كل كارت يقصد اللقطة دي.</Cond>
       <Cond>الأرقام التاريخية (القمة 5,513.43، القاع 3,539.37) من مقال {L('https://goldprice.dev/blog/gold-drawdowns-since-1996')} وبتتنقل كمصدر مش بنخزنها.</Cond></ul>
       <P className="gd-note">إغلاقنا المخزّن مش نفس إقفالات goldprice.dev، ممكن يفرق. اللقطة سعر لحظي وقت اللقطة، مش إقفال رسمي.</P></section>
-    <section className="gd-card"><h3>كارت 1 · الوظائف، الجمعة 4 ديسمبر 15:30</h3><ul>
+    <section className="gd-card"><H3>كارت 1 · الوظائف، الجمعة 4 ديسمبر 15:30</H3><ul>
       <Cond>السابق (أكتوبر، منشور 6 نوفمبر، ممكن يتعدّل): +165 ألف وظيفة، البطالة 4.1%. {L('https://www.bls.gov/news.release/empsit.nr0.htm')}</Cond>
       <Cond>الشرط بيتحدد بعدد الوظائف بس. البطالة بتتسجل للعلم.</Cond>
       <Cond>السيناريو: لو الوظائف أعلى من الشهر اللي فات (165 ألف)، عادة الدولار والعوائد بيرتفعوا والذهب بيتضغط. لو أقل، العكس. وفي حالات كتير حصل العكس.</Cond>
       <Cond>{NOTE_PATTERN}</Cond>
       <Cond>الأفق: لقطة 4 ديسمبر 17:00 نيويورك. الموعد: {L('https://www.bls.gov/schedule/2026/12_sched.htm')}</Cond></ul></section>
-    <section className="gd-card"><h3>كارت 2 · الفيدرالي، 8-9 ديسمبر</h3><ul>
+    <section className="gd-card"><H3>كارت 2 · الفيدرالي، 8-9 ديسمبر</H3><ul>
       <Cond>خلفية مؤرّخة، مش تسعير حالي: لحد اجتماع أكتوبر، من محضر 18 نوفمبر: تقريبا كل المشاركين شايفين إن رفع تاني للفايدة غالبا هيكون مناسب. الفايدة وقتها 3.75-4%. {L('https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm')}</Cond>
       <Cond>تعريف بالرقم: يوم 8 ديسمبر نسجّل من مصدر مقروء ومؤرّخ احتمال رفع 25 نقطة أساس في اجتماع ديسمبر. "أكثر تشددا" = القرار رفع واحتمال الرفع المسجّل أقل من 50%. "أقل تشددا" = القرار تثبيت واحتمال الرفع المسجّل أكتر من 50%. غير كده = "زي المتوقع"، ما يتحسبش. لو ما لقيناش مصدر مقروء بالاحتمال: "غير متاح" والكارت ما يتحسبش. <b>(الـ50% تعريف تصميم مننا.)</b></Cond>
       <Cond>السيناريو: لو القرار أو البيان أكثر تشددا من التسعير المسجّل، عادة العوائد والدولار بيرتفعوا والذهب بيتضغط. لو أقل تشددا، العكس. وفي حالات كتير حصل العكس.</Cond>
       <Cond>{NOTE_PATTERN} التثبيت لوحده مش بيتصنف تشديد.</Cond>
       <Cond>الأفق: لقطة 9 ديسمبر 17:00 نيويورك. ساعة البيان عادة 2:00 م نيويورك (ساعة ديسمبر غير منشورة). {L('https://www.federalreserve.gov/newsevents/2026-december.htm')}</Cond></ul>
       <P className="gd-note">حالة الاحتمال المسجّل: <b>غير متاح</b> (لسه مفيش مصدر مقروء ومؤرّخ).</P></section>
-    <section className="gd-card"><h3>كارت 3 · التضخم CPI، الخميس 10 ديسمبر 15:30</h3><ul>
-      <Cond>السابق (أكتوبر، منشور 10 نوفمبر): الشهري +0.4%، الأساسي +0.3%. {L('https://www.bls.gov/news.release/cpi.nr0.htm')} . مفيش قيم سنوية.</Cond>
+    <section className="gd-card"><H3>كارت 3 · التضخم CPI، الخميس 10 ديسمبر 15:30</H3><ul>
+      <Cond>السابق (أكتوبر، منشور 10 نوفمبر): الشهري +0.4%، الأساسي +0.3%. {L('https://www.bls.gov/news.release/cpi.nr0.htm')}. مفيش قيم سنوية.</Cond>
       <Cond>المرجع: تقدير نموذج Cleveland Fed (تقدير نموذج، مش توقع محللين). آخر نسخة، تحديث 25 نوفمبر: الشهري 0.00%، الأساسي 0.21%. {L('https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting')} . بيتغير يومياً، فالملزم الرقم المسجّل يوم 9 ديسمبر مع تاريخه.</Cond>
       <Cond>السيناريو: لو الرقم الفعلي (الشهري، والأساسي لوحده) أعلى من تقدير النموذج المسجّل، عادة توقعات الفايدة بترتفع والذهب بيتضغط. لو أقل، العكس. وفي حالات كتير حصل العكس، والذهب أحياناً بيتشرى كحماية من التضخم.</Cond>
       <Cond>{NOTE_PATTERN}</Cond>
       <Cond>الأفق: لقطة 10 ديسمبر 17:00 نيويورك.</Cond></ul></section>
-    <section className="gd-card"><h3>التقييم</h3><ul>
+    <section className="gd-card"><H3>التقييم</H3><ul>
       <Cond>بعد الحدث سطر واحد: "الذهب قفل +X% أو -X% في نفس اليوم"، من لقطاتنا المخزّنة، من غير سبب.</Cond>
       <Cond><bdi dir="ltr">0.5%</bdi> = عتبة "ثابت"، اختيار تصميم مش مبني على بيانات.</Cond>
       <Cond>"حصلت" = اتجاه الحركة طابق الجملة المكتوبة لحالة الشرط اللي اتحقق. الحكم باللقطات المخزّنة بس.</Cond>
@@ -127,16 +129,16 @@ function TVChart() {
 function Sand() {
   const cur = Math.round(daysSincePeak() / 10);
   const rows = [...(GOLD as any).falls.map((f: any) => ({ id: f.id, label: f.label, n: Math.round(f.days / 10), days: f.days, pct: f.pct, peak: f.peak, peakClose: f.peakClose, low: f.low })), { id: 'now', label: 'دلوقتي', n: cur, days: daysSincePeak(), cur: true }];
-  return <section className="gd-card"><h3>رمل الذهب</h3>
+  return <section className="gd-card"><H3>رمل الذهب</H3>
     <P className="gd-note">كل نقطة = 10 أيام. من 1996، نفس المقياس لكل نزول 20% أو أكتر. النقط محسوبة من أيام الجدول المنشور ÷ 10 (تقريبي).</P>
-    {rows.map((r: any) => <div key={r.id} className="gd-row"><div className="gd-rl">{r.cur ? `دلوقتي (${r.days} يوم لحد دلوقتي)` : r.label}</div>
+    {rows.map((r: any) => <div key={r.id} className="gd-row"><div className="gd-rl">{fixNums(r.cur ? `دلوقتي (${r.days} يوم لحد دلوقتي)` : r.label)}</div>
       <div className={'gd-dots' + (r.cur ? ' cur' : '')} role="img" aria-label={`${r.n} نقطة = ${r.days} يوم`}>{Array.from({ length: r.n }, (_, i) => <i key={i} />)}</div>
       {!r.cur && <div className="gd-rs">من إقفال {r.peak} (<bdi dir="ltr">${nf(r.peakClose)}</bdi>) لحد أدنى إقفال <bdi dir="ltr">${nf(r.low)}</bdi> (<bdi dir="ltr">-{r.pct}%</bdi>) · <bdi dir="ltr">{r.days.toLocaleString('en-US')}</bdi> يوم لحد أول إقفال أعلى</div>}</div>)}
     <P className="gd-note">الأرقام على أساس الإقفال اليومي. المصدر: <a href={(GOLD as any).source.url} target="_blank" rel="noreferrer">goldprice.dev</a> · {(GOLD as any).source.note}. آخر إقفال في بيانات المصدر: 23 نوفمبر 2026.</P></section>;
 }
 
 function Waits() {
-  return <section className="gd-card"><P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P><h3>المدة لحد أول إقفال أعلى</h3>
+  return <section className="gd-card"><P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P><H3>المدة لحد أول إقفال أعلى</H3>
     <P>في الحالات الخمسة اللي فاتت (نزول 20% أو أكتر: 2011-2015، 1996-1999، 2008، 2006، 2020-2022) المدة من القمة لحد أول إقفال أعلى كانت: 3,261 / 2,888 / 549 / 495 / 1,212 يوم. الحالة الحالية لسه ما رجعتش لقمتها ({daysSincePeak()} يوم لحد {todayLabel()}).</P>
     <P className="gd-note">الأساس: الإقفال اليومي. حالات قليلة، ومفيش متوسط ولا "عادة". المصدر: <a href="https://goldprice.dev/blog/gold-drawdowns-since-1996" target="_blank" rel="noreferrer">goldprice.dev</a> (تواريخ المصدر مش متسقة، والمطابقة لسه معلّقة). أعلى سعر خلال اليوم ممكن يكون مختلف.</P></section>;
 }
@@ -146,7 +148,7 @@ const N = ({ children }: any) => <bdi dir="ltr">{children}</bdi>;
 const WK_SRC = 'من ملف متوسطات أسبوعية اتقرا من gold-api.com يوم 26 نوفمبر 2026 الساعة 18:33 تقريبًا بتوقيت القاهرة.';
 function WeeklyCard() {
   return <section className="gd-card"><P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P>
-    <h3>الذهب بيتحرك قد إيه في الأسبوع؟</h3>
+    <H3>الذهب بيتحرك قد إيه في الأسبوع؟</H3>
     <P>نص الأسابيع الذهب اتحرك فيها أقل من الرقم ده (لفوق أو لتحت)، والنص التاني اتحرك أكتر. ده مش حد أقصى.</P>
     <ul>
       <Li>آخر 26 أسبوع: <N>1.69%</N> مقابل <N>1.17%</N> من 2006</Li>
@@ -168,7 +170,7 @@ function WeeklyCard() {
 }
 function TroughCard() {
   return <section className="gd-card"><P className="gd-tag">ذهب عالمي · مش مرتبط بالبورصة المصرية</P>
-    <h3>حصل إيه بعد قيعان الذهب اللي فاتت؟</h3>
+    <H3>حصل إيه بعد قيعان الذهب اللي فاتت؟</H3>
     <P>الارتفاع بعد أقل متوسط أسبوعي، بعد 26 و52 و104 أسبوع:</P>
     <ul>
       <Li>2008 (القاع: أسبوع 10 نوفمبر 2008): <N>+25.4%</N> / <N>+51.1%</N> / <N>+89.6%</N></Li>
