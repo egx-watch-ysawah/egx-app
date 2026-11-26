@@ -144,17 +144,20 @@ function LegacyStockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t:
     </div>;
 }
 
-export function StockChart({rows,n,t,plan,closeOnly=false}:{rows:Row[];n:number;t:Toggles;plan:Plan;closeOnly?:boolean}) {
+const AR_M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+function arDate(v:any,withDay=true){let y:number,m:number,d:number;if(typeof v==='string'){const p=v.split('-');y=+p[0];m=+p[1];d=+p[2];}else if(v&&typeof v==='object'){y=v.year;m=v.month;d=v.day;}else return '';return (withDay?d+' ':'')+AR_M[m-1]+' '+y;}
+export function StockChart({rows,n,t,plan,closeOnly=false,tfName='يومية',rangeLabel,bar}:{rows:Row[];n:number;t:Toggles;plan:Plan;closeOnly?:boolean;tfName?:string;rangeLabel?:string;bar?:React.ReactNode}) {
  const host=React.useRef<HTMLDivElement>(null), api=React.useRef<any>(null);
  const [kind,setKind]=React.useState<'candle'|'line'>(closeOnly?'line':'candle');
  const [picked,setPicked]=React.useState<Row|null>(null);
  const [failed,setFailed]=React.useState(false);
+ const [tops,setTops]=React.useState<number[]>([]);
  React.useEffect(()=>{
   if(!host.current||!rows.length)return;
   let chart:any; setPicked(null);setFailed(false);
   try {
    const panels=Number(t.vol)+Number(t.rsi)+Number(t.macd);
-   chart=createChart(host.current,{autoSize:true,height:320+panels*95,layout:{background:{type:ColorType.Solid,color:'#0e1520'},textColor:'#9aa9bd',fontSize:10,attributionLogo:true,panes:{separatorColor:'#273242',enableResize:false}},grid:{vertLines:{color:'#1a2635'},horzLines:{color:'#1a2635'}},crosshair:{mode:CrosshairMode.Normal},rightPriceScale:{borderColor:'#273242',minimumWidth:48},timeScale:{borderColor:'#273242',timeVisible:false,rightOffset:3},handleScroll:{vertTouchDrag:false,horzTouchDrag:true},localization:{locale:'en-GB'}});
+   chart=createChart(host.current,{autoSize:true,height:330+panels*96,layout:{background:{type:ColorType.Solid,color:'#0e1520'},textColor:'#9aa9bd',fontSize:10,attributionLogo:true,panes:{separatorColor:'#273242',enableResize:false}},grid:{vertLines:{color:'#1a2635'},horzLines:{color:'#1a2635'}},crosshair:{mode:CrosshairMode.Normal},rightPriceScale:{borderColor:'#273242',minimumWidth:48},timeScale:{borderColor:'#273242',timeVisible:false,rightOffset:3,tickMarkFormatter:(time:any,type:number)=>type<=1?arDate(time,false):arDate(time,false)},handleScroll:{vertTouchDrag:false,horzTouchDrag:true},localization:{locale:'ar-EG',timeFormatter:(time:any)=>arDate(time)}});
    api.current=chart;
    const price=chart.addSeries(kind==='candle'?CandlestickSeries:LineSeries,kind==='candle'?{upColor:'#26a69a',downColor:'#ef5350',wickUpColor:'#26a69a',wickDownColor:'#ef5350',borderVisible:false,priceFormat:{type:'price',precision:3,minMove:.001}}:{color:'#73b2ff',lineWidth:2,priceFormat:{type:'price',precision:3,minMove:.001}});
    price.setData(rows.map(r=>kind==='candle'?{time:r[0],open:r[1],high:r[2],low:r[3],close:r[4]}:{time:r[0],value:r[4]}));
@@ -167,6 +170,7 @@ export function StockChart({rows,n,t,plan,closeOnly=false}:{rows:Row[];n:number;
    if(t.rsi){const l=addLine(8,'#bc9aff',++pane);[30,70].forEach(p=>l.createPriceLine({price:p,color:'#647083',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:''}));}
    if(t.macd){++pane;const h=chart.addSeries(HistogramSeries,{lastValueVisible:false,priceLineVisible:false},pane);h.setData(rows.map(r=>({time:r[0],value:r[9]-r[10],color:r[9]>=r[10]?'#26a69a88':'#ef535088'})));addLine(9,'#74adf5',pane);addLine(10,'#e0b665',pane);}
    chart.panes().forEach((p:any,i:number)=>p.setHeight(i===0?300:95));
+   const fit=()=>{try{chart.panes().forEach((p:any,i:number)=>p.setStretchFactor?p.setStretchFactor(i===0?3:1):p.setHeight(i===0?300:95));const hs=chart.panes().map((p:any)=>p.getHeight());const tp:number[]=[];let a=0;hs.forEach((h:number)=>{tp.push(a);a+=h+1;});setTops(tp);}catch{}};fit();requestAnimationFrame(fit);setTimeout(fit,300);
    chart.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});
    chart.subscribeCrosshairMove((e:any)=>{if(e.time){const r=rows.find(r=>r[0]===e.time);if(r)setPicked(r);}});
   }catch(e){console.error('Chart unavailable',e);setFailed(true);}
@@ -176,7 +180,16 @@ export function StockChart({rows,n,t,plan,closeOnly=false}:{rows:Row[];n:number;
  if(failed&&closeOnly)return <p role="status">الرسم غير متاح مؤقتًا؛ أرقام الإقفال متاحة في المحفظة.</p>;
  if(failed)return <><p role="status">الرسم التفاعلي مش متاح هنا. عرض بديل بنفس البيانات.</p><LegacyStockChart rows={rows} n={n} t={t} plan={plan}/></>;
  const r=picked??rows[rows.length-1];
- return <div className="eg-chart pro-chart" dir="ltr"><div className="eg-kind" dir="rtl" role="group" aria-label="شكل الشارت">{(closeOnly?['line'] as const:['candle','line'] as const).map(k=><button className={'eg-chip'+(kind===k?' on':'')} aria-pressed={kind===k} key={k} onClick={()=>setKind(k)}>{k==='candle'?'شموع':'خط'}</button>)}<button className="eg-chip" onClick={()=>{api.current?.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});setPicked(null);}}>إعادة الضبط</button></div><div className="eg-read" aria-live="polite"><b>{r[0]}</b>{!closeOnly&&<>{hideOpen() ? null : <span>فتح {r[1]}</span>}<span>أعلى {r[2]}</span><span>أقل {r[3]}</span></>}<span>إقفال {r[4]}</span><span>الحجم {r[5].toLocaleString('en-GB')}</span></div><div ref={host} role="img" aria-label="شارت أسعار تفاعلي" style={{width:'100%',minHeight:320}}/><label className="eg-scrub" dir="rtl">اختار جلسة للتفاصيل<input aria-label="اختار شمعة من الشارت" type="range" min="0" max={rows.length-1} value={picked?rows.indexOf(picked):rows.length-1} onChange={e=>{const index=Number(e.target.value),r=rows[index];setPicked(r);}}/></label><p className="eg-note" dir="rtl">اسحب للماضي · كبّر بإصبعين · دوس مطولًا لقراءة شمعة. اسحب خارج الشارت لتكمّل الصفحة. الحجم والمؤشرات تظهر في مساحات مستقلة لما تختارها.</p><small className="chart-credit">TradingView Lightweight Charts™ · Copyright (c) 2025 TradingView, Inc. <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView</a></small></div>;
+ const lastD=rows[rows.length-1][0];
+ const title=(kind==='candle'?'شمعة '+tfName:'خط إقفال '+tfName.replace('ية','ي'))+(rangeLabel?'، '+(rangeLabel==='المتاح كله'?'كل المتاح':'آخر '+rangeLabel):'')+'، لحد إقفال '+arDate(lastD);
+ const per=tfName.replace('ية','ي');
+ const legend:{top:number;title?:string;items:[string,string][]}[]=[];
+ {const it:[string,string][]=[];if(t.sma){it.push(['متوسط 50','#e6b65d'],['متوسط 200','#9b8fe0']);}if(t.bb)it.push(['بولينجر','#557b98']);legend.push({top:4,items:it});
+  let pn=0;const top=()=>(tops[pn]??300+pn*96)+4;
+  if(t.vol){pn++;legend.push({top:top(),title:'حجم · '+per,items:[]});}
+  if(t.rsi){pn++;legend.push({top:top(),title:'RSI 14 · '+per,items:[['RSI','#bc9aff']]});}
+  if(t.macd){pn++;legend.push({top:top(),title:'MACD · '+per,items:[['MACD','#74adf5'],['إشارة','#e0b665']]});}}
+ return <div className="eg-chart pro-chart" dir="ltr"><div className="eg-kind" dir="rtl" role="group" aria-label="شكل الشارت">{(closeOnly?['line'] as const:['candle','line'] as const).map(k=><button className={'eg-chip'+(kind===k?' on':'')} aria-pressed={kind===k} key={k} onClick={()=>setKind(k)}>{k==='candle'?'شموع':'خط'}</button>)}<button className="eg-chip" onClick={()=>{api.current?.timeScale().setVisibleLogicalRange({from:Math.max(0,rows.length-n),to:rows.length+2});setPicked(null);}}>إعادة الضبط</button></div><h4 className="ck-title" dir="rtl">{title}</h4>{bar&&<div className="eg-chips ck-bar" dir="rtl">{bar}</div>}<div className="eg-read" aria-live="polite"><b>{r[0]}</b>{!closeOnly&&<>{hideOpen() ? null : <span>فتح {r[1]}</span>}<span>أعلى {r[2]}</span><span>أقل {r[3]}</span></>}<span>إقفال {r[4]}</span><span>الحجم {r[5].toLocaleString('en-GB')}</span></div><div style={{position:'relative'}}><div ref={host} role="img" aria-label="شارت أسعار تفاعلي" style={{width:'100%',minHeight:320,height:330+(Number(t.vol)+Number(t.rsi)+Number(t.macd))*96}}/><div className="ck-ov" dir="rtl" aria-hidden="false">{legend.map((g,i)=><div key={i} className="ck-pt" style={{top:g.top}}>{g.title&&<b>{g.title}</b>}{g.items.map(([nm,col])=><span key={nm} className="ck-k"><i style={{background:col}}/>{nm}</span>)}</div>)}</div></div><label className="eg-scrub" dir="rtl">اختار جلسة للتفاصيل<input aria-label="اختار شمعة من الشارت" type="range" min="0" max={rows.length-1} value={picked?rows.indexOf(picked):rows.length-1} onChange={e=>{const index=Number(e.target.value),r=rows[index];setPicked(r);}}/></label><p className="eg-note" dir="rtl">اسحب للماضي · كبّر بإصبعين · دوس مطولًا لقراءة شمعة. اسحب خارج الشارت لتكمّل الصفحة. الحجم والمؤشرات تظهر في مساحات مستقلة لما تختارها.</p><small className="chart-credit">TradingView Lightweight Charts™ · Copyright (c) 2025 TradingView, Inc. <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView</a></small></div>;
 }
 
 export function Spark({ vals, up }: { vals: number[]; up: boolean }) {
