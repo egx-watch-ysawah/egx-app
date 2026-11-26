@@ -9,7 +9,7 @@ const Det = ({ title, children, open }: { title: string; children: React.ReactNo
 const RULE_AR: Record<string, string> = {
   'RSI<30 (oversold bounce)': 'RSI نزل تحت 30 (احتمال ارتداد)',
   'MACD cross up': 'تقاطع MACD لأعلى والسعر فوق متوسط 200',
-  '20d breakout + volume x1.5': 'إقفال أعلى من أعلى إقفال في 20 جلسة قبله، بحجم 1.5 ضعف',
+  '20d breakout + volume x1.5': 'إقفال أعلى من أعلى إقفال في 20 جلسة قبله، بحجم أعلى من المعتاد بـ50% أو أكتر',
   'SMA50 cross above SMA200': 'متوسط 50 قطع متوسط 200 لأعلى',
 };
 const state = (s: any) => s.votes.trend && s.votes.mid ? 'فوق المتوسطين' : !s.votes.trend && !s.votes.mid ? 'تحت المتوسطين' : 'بين المتوسطين';
@@ -34,7 +34,7 @@ export function ScenarioBlock({ s }: { s: any }) {
           <Plan3 s={s} />
           <p className="eg-note">{p.mode === 'pullback' ? 'الصندوق بيوصف مستوى تراجع للسعر مش شراء بالسعر الحالي. الوصول للمستوى لوحده مش معناه إن الصورة اتغيرت.' : 'الصندوق بيوصف مستوى اختراق للسعر مش شراء بالسعر الحالي. المستوى ده أعلى سعر خلال اليوم في آخر 20 جلسة (شامل النهارده)، أما إشارة "اختراق" فبتتحقق لما الإقفال يعدي أعلى إقفال في الـ20 جلسة قبله، فممكن تظهر والسعر لسه تحت المستوى المعروض. والاختراق من غير حجم أعلى من المعتاد ضعيف الدلالة.'}</p>
         </Det>
-        {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة النهارده: {s.fire.map((f: string) => RULE_AR[f] || f).join(' + ')}{(s.fire.some((f: string) => /breakout/.test(f)) && s.volx) ? ' (الحجم الفعلي ' + s.volx.toFixed(1) + ' ضعف المعتاد)' : ''}{!s.votes.trend ? '. السعر لسه تحت متوسط 200 جلسة.' : ''}</div>}
+        {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة النهارده: {s.fire.map((f: string) => RULE_AR[f] || f).join(' + ')}{(s.fire.some((f: string) => /breakout/.test(f)) && s.volx) ? ' (الحجم الفعلي ' + Math.round(s.volx*100) + '% من المعتاد)' : ''}{!s.votes.trend ? '. السعر لسه تحت متوسط 200 جلسة.' : ''}</div>}
         <Det title="طريقة حساب السيناريو والمخاطرة"><Use>تفهم الأرقام جاية منين وتتأكد منها.</Use><Ex>{X.plan(s)}</Ex></Det>
       </>}
     {!thin && has && <p className="eg-note eg-foot">قراءة تاريخية للسعر والتذبذب، مش نصيحة ولا توقع. السعر ممكن يتخطى أي مستوى بفجوة. المؤشرات مشتقة من نفس الأسعار فمش أدلة مستقلة.</p>}
