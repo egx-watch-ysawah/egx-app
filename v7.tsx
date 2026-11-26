@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { loadPage, NEW as NEWP, usePage } from './page';
 let cache: Promise<any> | null = null;
-const loadP = (): Promise<any> => pcache || (pcache = fetch('studies_rest/studies_rest/egx14_v7_pilot.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
-let pcache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/egx14_v7.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
 export const V7_CODES = ['MASR', 'BONY', 'HRHO', 'UNIP', 'SWDY', 'TMGH', 'ORHD', 'MTIE', 'JUFO', 'PHAR', 'AMOC', 'CLHO', 'ETEL', 'EGAL', 'ABUK', 'MFPC', 'EAST', 'MCQE', 'PHDC', 'RMDA', 'FWRY', 'EFID', 'MBSC', 'MPRC', 'ISPH', 'ELKA', 'ETRS', 'EFIH', 'ATQA', 'OCDI', 'SCEM', 'ORAS', 'LCSW', 'RAYA'];
-export const loadPilotM = (): Promise<any> => loadP().then((p: any) => (p && p.stocks && p.stocks.MTIE) || null).catch(() => null);
+export { loadPilotM } from './page';
 export const isV7 = (k: string) => V7_CODES.includes(k);
 export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
   const [d, setD] = useState<any>(null);
-  useEffect(() => { if (!isV7(k)) return; const ok = (x: any) => x && x.stocks && x.stocks[k] ? { ...x.stocks[k], footer: x.footer_ar } : null; (fair ? loadP().then(p => ok(p) || load().then(ok)) : load().then(ok)).then(setD); }, [k, fair]);
+  useEffect(() => { if (!isV7(k)) return; const ok = (x: any) => x && x.stocks && x.stocks[k] ? { ...x.stocks[k], footer: x.footer_ar } : null; (fair ? loadPage(k).then(p => p || load().then(ok)) : load().then(ok)).then(setD); }, [k, fair]);
   if (!isV7(k) || !d) return null;
   const scs: any[] = (d.scenarios || []).filter((n: any) => n.note_ar || n.note2_ar);
   const shared = scs.length > 1 && scs.every((n: any) => n.note_ar === scs[0].note_ar && n.note2_ar === scs[0].note2_ar);
@@ -37,6 +36,12 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {big(d.market_assumption, 'm')}
       {d.market_assumption.no_solution_ar ? <p className="eg-note">{d.market_assumption.no_solution_ar}</p> : null}
       {d.price_to_book_ar ? <p className="eg-note">{d.price_to_book_ar}</p> : null}
+      {d.developer_base_ar ? <p className="eg-note">{d.developer_base_ar}</p> : null}
+      {d.cash_treatment_ar ? <p className="eg-note">{d.cash_treatment_ar}</p> : null}
+      {d.sensitivity_cash_ar ? <details className="eg-ex"><summary>{d.sensitivity_cash_ar.label_ar}</summary><div className="eg-exb"><p className="eg-note v7-s"><bdi>{d.sensitivity_cash_ar.base}</bdi> جنيه للسهم (من <bdi>{d.sensitivity_cash_ar.low}</bdi> لـ<bdi>{d.sensitivity_cash_ar.high}</bdi>).</p>{d.sensitivity_cash_ar.note_ar ? <p className="eg-note v7-s">{d.sensitivity_cash_ar.note_ar}</p> : null}</div></details> : null}
+      {d.land_line_ar ? <p className="eg-note">{d.land_line_ar}</p> : null}
+      {d.backlog_ar ? <p className="eg-note">{d.backlog_ar}</p> : null}
+      {!d.sensitivity_D_ar && d.sensitivity_lines_ar && d.sensitivity_lines_ar.length ? <details className="eg-ex"><summary>تفاصيل الحساسية</summary><div className="eg-exb">{d.sensitivity_lines_ar.map((t: string, i: number) => <p key={i} className="eg-note v7-s">{t}</p>)}</div></details> : null}
       {d.liquidity_ar ? <p className="eg-note">{d.liquidity_ar}</p> : null}
       {d.book_value ? small(d.book_value, 'b') : null}
       {paras(d.auditor_note_ar, 'dn')}
@@ -64,12 +69,14 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
 }
 export function useFairNew(k: string) {
   const [on, setOn] = useState(false);
+  const pgx = usePage(k);
   useEffect(() => {
     if (!isV7(k)) { setOn(false); return; }
     if (/[?&]new(=|&|$)/.test(location.hash)) { setOn(true); return; }
+    if (NEWP(k)) { setOn(true); return; }
     let live = true;
     fetch('studies_rest/studies_rest/fair_new.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(x => { if (live) setOn(!!(x && Array.isArray(x.codes) && x.codes.includes(k))); }).catch(() => {});
     return () => { live = false; };
-  }, [k]);
+  }, [k, pgx]);
   return on;
 }
