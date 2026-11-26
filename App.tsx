@@ -12,6 +12,7 @@ import { IndexList, IdxStock, PageSwitch } from './idx';
 import { TeamBlock, Use, Glossary } from './scen';
 import { NewsBlock } from './news';
 import { FinVal6 } from './fv6';
+import { TopWarn } from './topwarn';
 
 
 const KEYS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
@@ -156,7 +157,7 @@ function Stock({ k }: { k: string }) {
     return <div className="eg-pad">
         <a className="eg-back" href="#/" onClick={e => { if (window.history.length > 1) { e.preventDefault(); window.history.back(); } }}>← محفظتي</a>
         <div className="eg-in">
-            <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2><MyPosition k={k}/>
+            <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2><MyPosition k={k}/><TopWarn k={k}/>
             {s.qualityChecked&&<p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a></p>}
             <PartialHistory s={s}/>
             {s.ok&&<StockGuide s={s} k={k} r={records[k]} chart={chartNode}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
