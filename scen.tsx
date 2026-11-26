@@ -59,7 +59,7 @@ const Src = ({ list }: { list?: { label: string; url: string | null }[] }) => li
 export function TeamBlock({ code }: { code: string }) {
   const t: any = (TEAM as any).stocks[code];
   const pgT = usePage(code);
-  if (!t && NEW(code) && pgT && pgT.team_missing_ar) return <Det title="الفريق وفترة المتابعة"><p className="eg-note">{pgT.team_missing_ar}</p></Det>;
+  if (NEW(code) && pgT && pgT.team_missing_ar) return <Det title="الفريق وفترة المتابعة"><p className="eg-note">{pgT.team_missing_ar}</p></Det>;
   if (!t) return <Det title="الفريق وفترة المتابعة"><p className="eg-note">غير متوفر: بيانات الفريق ومواعيد المتابعة للسهم ده لسه ما اتجمعتش ولا اتراجعت من مصادرها.</p></Det>;
   return <Det title="الفريق وفترة المتابعة">
     <Use>تعرف مين بيدير الشركة ومين ماسك نسبة كبيرة منها. التغيير المفاجئ في ده ممكن يكون سبب تدقق فيه.</Use>
