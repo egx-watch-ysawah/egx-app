@@ -83,3 +83,5 @@ body:has(.set-btn) .eg-card-root:has(.gd) .eg-pad{padding-top:106px}
 .v7-fair{padding:4px 2px}.v7-fh{display:flex;gap:8px;align-items:center;margin:4px 0 8px;font-size:17px}
 .v7-fair .v7-as summary{list-style:none;cursor:pointer}.v7-fair .v7-as summary::-webkit-details-marker{display:none}.v7-fair .v7-as summary::before{content:'＋ '}.v7-fair .v7-as[open]>summary::before{content:'－ '}
 .v7-ct{display:block;opacity:.75;margin:2px 0}
+
+.v7-sub{margin:6px 0;padding-inline-start:12px;border-inline-start:2px solid #2a3a55}.v7-sub .v7-n{border-top:0;padding:8px 0}
