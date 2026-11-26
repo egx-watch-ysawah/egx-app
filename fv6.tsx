@@ -6,7 +6,7 @@ let cache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/fair_value_sourced_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(noCodes).catch(() => null));
 // Display-only: the content files name the two scenarios T1/T3 (and the removed T2); readers see words, not codes.
 export const noCodes: any = (x: any) => typeof x === 'string' ? x.replace(/\bT1\b/g, 'سيناريو 1').replace(/\bT3\b/g, 'سيناريو 2').replace(/\bT2\b/g, 'الطريقة التالتة') : Array.isArray(x) ? x.map(noCodes) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, noCodes(v)])) : x;
-const STALE_AN = 'أهداف المحللين من صفحات stockanalysis وغالبًا محسوبة على أسعار أقدم من سعر النهارده، فنسبة الفرق عن السعر الحالي مش دقيقة.';
+const STALE_AN = 'أهداف الجهات الخارجية من صفحات stockanalysis وغالبًا محسوبة على أسعار أقدم من سعر النهارده، فنسبة الفرق عن السعر الحالي مش دقيقة.';
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
 const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور×4/3: الأساس مش متطابق.';
@@ -104,8 +104,8 @@ export function SourcedFair({ k }: { k: string }) {
         {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
         {num(t.value) && t.backtest_line && t.backtest_line !== bt && !/مكتوبة مرة واحدة/.test(t.backtest_line) ? <div className="na">{t.backtest_line}</div> : null}</>}</div>)}
       {an.avg != null
-        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
-        : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
+        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} جهات<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
+        : <div className="an"><b>مستهدف الجهات الخارجية، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
     </Fold>
     {d.peer_dates_note_ar ? <p className="nt">{d.peer_dates_note_ar}</p> : null}
     {d.t2_removed_note_ar ? <p className="nt">{d.t2_removed_note_ar}</p> : null}
@@ -146,8 +146,8 @@ export function SixScen({ d, s }: { d: any; s: any }) {
         {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
         {num(t.value) && t.backtest_line && t.backtest_line !== bt && !/مكتوبة مرة واحدة/.test(t.backtest_line) ? <div className="na">{t.backtest_line}</div> : null}</>}</div>)}
       {an.avg != null
-        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
-        : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
+        ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} جهات<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
+        : <div className="an"><b>مستهدف الجهات الخارجية، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
     </Fold>
   </>;
 }
@@ -213,8 +213,8 @@ export function FinVal6({ k, bony }: { k: string; bony?: boolean }) {
           {num(t.value) && t.t2_note ? <div className="na">{t.t2_note}</div> : null}
           {num(t.value) ? once(t.backtest_line) : null}</>}</div>)}
         {an.avg != null
-          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} محللين<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
-          : <div className="an"><b>مستهدف المحللين، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
+          ? <div className="an"><b>{an.label}</b>: متوسط <bdi dir="ltr">{fx(an.avg)}</bdi> (من <bdi dir="ltr">{fx(an.low)}</bdi> إلى <bdi dir="ltr">{fx(an.high)}</bdi>) · {an.n} جهات<br /><small>{an.note}</small>{an.stale ? <><br /><small><b>قديم:</b> مرجع بس، ومش قيمتنا.</small></> : null}{s.analyst_stale_note && !String(an.note || '').includes(s.analyst_stale_note) ? <><br /><small>{s.analyst_stale_note}</small></> : null}<br /><small>{STALE_AN}</small><br /><A u={an.source} /></div>
+          : <div className="an"><b>مستهدف الجهات الخارجية، مش قيمتنا:</b> {an.status || 'غير متوفر'}. {an.reason}</div>}
         {once(s.backtest_line)}
         {once(s.backtest_note)}
         {s.sources_detail_ar ? <Srcs l={s.sources_detail_ar} /> : <div className="na">المصادر: {(s.sources || []).map((u: string, i: number) => <React.Fragment key={u}><br /><A u={u} /></React.Fragment>)}</div>}
