@@ -22,6 +22,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
   const v15Node = d.market_assumption ? <div className="eg-exb v7-in">
       {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
       {d.market_price ? <p className="eg-note v7-s"><b>{d.market_price.label_ar}:</b> <bdi>{d.market_price.value}</bdi> {d.market_price.unit_ar}{d.market_price.as_of_ar ? ' · ' + d.market_price.as_of_ar : ''}</p> : null}
+      {d.market_price ? <p className="eg-note v7-s">سعر MTIE هو إقفال 25 نوفمبر 2026، والشريط فوق بتاريخ 26 نوفمبر.</p> : null}
       {d.analyst ? big(d.analyst, 'a') : null}
       {sc[0] ? big(sc[0], 's0') : null}
       {d.scenarios_note_ar ? <p className="eg-note">{d.scenarios_note_ar}</p> : null}
