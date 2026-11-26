@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 let cache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/egx14_v7.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
-export const V7_CODES = ['MASR', 'BONY', 'HRHO', 'UNIP', 'SWDY', 'TMGH', 'ORHD', 'MTIE', 'JUFO', 'PHAR', 'AMOC', 'CLHO', 'ETEL', 'EGAL'];
+export const V7_CODES = ['MASR', 'BONY', 'HRHO', 'UNIP', 'SWDY', 'TMGH', 'ORHD', 'MTIE', 'JUFO', 'PHAR', 'AMOC', 'CLHO', 'ETEL', 'EGAL', 'ABUK', 'MFPC', 'EAST', 'MCQE', 'PHDC'];
 export const isV7 = (k: string) => V7_CODES.includes(k);
 export function V7Card({ k }: { k: string }) {
   const [d, setD] = useState<any>(null);
@@ -9,7 +9,7 @@ export function V7Card({ k }: { k: string }) {
   if (!isV7(k) || !d) return null;
   const big = (n: any, key: any) => n.text_ar
     ? <p key={key} className="eg-note">{n.text_ar}</p>
-    : <div key={key} className="v7-n"><b>{n.label_ar}</b><div className="v7-v"><bdi>{n.value}</bdi> {n.unit_ar}</div>{n.as_of_ar ? <small>{n.as_of_ar}</small> : null}{n.status_ar ? <p className="eg-note">{n.status_ar}</p> : null}{n.source_ar ? <p className="eg-note">{n.source_ar}</p> : null}{n.tap_ar ? <p className="eg-note">{n.tap_ar}</p> : null}{n.assumptions_ar && n.assumptions_ar.length ? <details className="v7-as"><summary>الافتراضات</summary><ul>{n.assumptions_ar.map((a: string, j: number) => <li key={j}>{a}</li>)}</ul></details> : null}</div>;
+    : <div key={key} className="v7-n"><b>{n.label_ar}</b><div className="v7-v"><bdi>{n.value}</bdi> {n.unit_ar}</div>{n.as_of_ar ? <small>{n.as_of_ar}</small> : null}{n.status_ar ? <p className="eg-note">{n.status_ar}</p> : null}{n.source_ar ? <p className="eg-note">{n.source_ar}</p> : null}{n.tap_ar ? <p className="eg-note">{n.tap_ar}</p> : null}{n.assumptions_ar && n.assumptions_ar.length ? <details className="v7-as"><summary>الافتراضات</summary><ul>{n.assumptions_ar.map((a: string, j: number) => <li key={j}>{a}</li>)}</ul>{n.assumptions_more_ar && n.assumptions_more_ar.length ? <details className="v7-as"><summary>{n.more_label_ar || 'عرض المزيد'}</summary><ul>{n.assumptions_more_ar.map((a: string, j: number) => <li key={j}>{a}</li>)}</ul></details> : null}</details> : null}</div>;
   const small = (n: any, key: any) => n.text_ar
     ? <p key={key} className="eg-note">{n.text_ar}</p>
     : <p key={key} className="eg-note v7-s"><b>{n.label_ar}:</b> <bdi>{n.value}</bdi> {n.unit_ar}{n.as_of_ar ? ' (' + n.as_of_ar + ')' : ''}{n.tap_ar ? ' · ' + n.tap_ar : ''}</p>;
