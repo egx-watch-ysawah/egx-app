@@ -31,7 +31,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.stake_line_ar ? <p className="eg-note">{d.stake_line_ar}</p> : null}
       {d.range_note_ar ? <p className="eg-note">{d.range_note_ar}</p> : null}
       {d.rate_explain_ar ? <p className="eg-note">{d.rate_explain_ar}</p> : null}
-      {d.eps_table_ar && d.eps_table_ar.length ? <table className="v7-tbl"><tbody>{d.eps_table_ar.map((r: any, i: number) => <tr key={i}><td>{r.label}</td><td><bdi>{r.value}</bdi></td></tr>)}</tbody></table> : null}
+      {d.eps_table_ar && d.eps_table_ar.length ? <table className="v7-tbl"><tbody>{d.eps_table_ar.map((r: any, i: number) => <tr key={i}><td>{r.label}</td><td><bdi>{r.value && typeof r.value === 'object' ? r.value.unavailable_ar : r.value}</bdi></td></tr>)}</tbody></table> : null}
       {d.items_ar ? <p className="eg-note">{d.items_ar}</p> : null}
       {sc.slice(1).length ? <div className="v7-sub">{sc.slice(1).map((n: any, i: number) => big(n, 'c' + i))}</div> : null}
       {big(d.market_assumption, 'm')}
