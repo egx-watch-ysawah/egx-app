@@ -10,7 +10,7 @@ const p1 = (v: number) => iso((v > 0 ? '+' : '') + v.toFixed(1) + '%');
 import { PVN, NEW, pageOf, loadPilotM, usePage } from './page';
 import { FinTabBlock } from './finblock';
 const n1 = (n: number) => iso(n.toLocaleString('en-GB', { maximumFractionDigits: PVN() && Math.abs(n) < 1 ? 2 : 1 }));
-const pvVol = (s: any, v: any) => { const b = (s.bars || []); const lv = b.length ? b[b.length - 1][5] : null; const lead = lv != null && Number.isFinite(lv) ? 'آخر جلسة اتداول فيها ' + Math.round(lv).toLocaleString('en-US') + ' سهم، يعني ' + s.volx + ' مرة المتوسط في آخر 20 جلسة. ده مقارنة بنفس السهم. الحجم من مصدر واحد، وبيعكس البيانات وقت اللقطة، وآخر شمعة ممكن تكون قبل المزاد الأخير.' : 'آخر جلسة اتداولت بحوالي ' + s.volx + ' مرة المتوسط في آخر 20 جلسة. ده مقارنة بنفس السهم. الحجم من مصدر واحد، وبيعكس البيانات وقت اللقطة، وآخر شمعة ممكن تكون قبل المزاد الأخير.'; return lead + (s.plan && s.plan.tv != null ? ' السيولة المعتادة (الرقم الأوسط لقيمة التداول اليومي في آخر 60 جلسة) حوالي ' + s.plan.tv + ' مليون جنيه في اليوم، وده حاجة تانية.' : ''); };
+const pvVol = (s: any, v: any) => { const b = (s.bars || []); const lv = b.length ? b[b.length - 1][5] : null; const lead = lv != null && Number.isFinite(lv) ? 'آخر جلسة اتداول فيها ' + Math.round(lv).toLocaleString('en-US') + ' سهم، يعني ' + Math.round(s.volx * 100) + '% من المتوسط في آخر 20 جلسة. ده مقارنة بنفس السهم. الحجم من مصدر واحد، وبيعكس البيانات وقت اللقطة، وآخر شمعة ممكن تكون قبل المزاد الأخير.' : 'آخر جلسة اتداولت بحوالي ' + Math.round(s.volx * 100) + '% من المتوسط في آخر 20 جلسة. ده مقارنة بنفس السهم. الحجم من مصدر واحد، وبيعكس البيانات وقت اللقطة، وآخر شمعة ممكن تكون قبل المزاد الأخير.'; return lead + (s.plan && s.plan.tv != null ? ' السيولة المعتادة (الرقم الأوسط لقيمة التداول اليومي في آخر 60 جلسة) حوالي ' + s.plan.tv + ' مليون جنيه في اليوم، وده حاجة تانية.' : ''); };
 const MT_ATT = 'مجمل الربح 1,815.7 مليون مقابل 1,759.4، زاد 3% بس، والإيراد زاد 15.6%. يعني التكلفة المباشرة زادت أسرع من المبيعات، فمن كل جنيه مبيعات فضل ربح أقل من السنة اللي فاتت قبل المصاريف العامة. الربع التالت: المجمل زاد 11% (657.1 مليون مقابل 592.1) والإيراد زاد 17%، فالهامش 9.9% (أحسن من متوسط الـ9 شهور 9.4% لكن أقل من 10.4% في نفس الربع السنة اللي فاتت). ';
 const MT_LIM = 'فحص محدود من غير تحفظات: المراجع فحص القوائم فحص أخف من التدقيق الكامل، ومكتبش إنه مش موافق على أي بند.';
 const pvDec = (k: string) => { const d = DEC[k]; const pg = pageOf(k); return PVN() && NEW(k) && pg && pg.dec_ar ? { ...(d || {}), up: pg.dec_ar.up, down: pg.dec_ar.down, flip: pg.dec_ar.flip } : d; };
@@ -66,9 +66,9 @@ function techItems(s: any): Item[] {
     effect: v.macd ? 'الـMACD فوق خطه: السعر بيتحرك لفوق أسرع من المعتاد مؤخرًا. ده بيقيس السرعة مش المكان.' : 'الـMACD تحت خطه: الحركة لفوق بتتباطأ أو النزول بيزيد. ده بيقيس السرعة مش المكان، فممكن سهم يكون نازل بس بيبطّأ النزول، وأي ارتداد محتاج يتأكد.'
   });
   o.push({
-    label: 'حجم التداول', value: s.volx + ' مرة', tone: v.vol ? 'ok' : 'mid',
+    label: 'حجم التداول', value: Math.round(s.volx * 100) + '% من المعتاد', tone: v.vol ? 'ok' : 'mid',
     mean: PVN() ? 'عدد الأسهم اللي اتباعت واتشرت في آخر جلسة، مقارنة بمتوسط آخر 20 جلسة. المرة الواحدة يعني زي المتوسط، ومرتين يعني مرتين المتوسط. الحجم زي صوت السوق: كل ما زاد، اهتمام الناس بالحركة أكبر.' : 'عدد الأسهم اللي اتباعت واتشرت في آخر جلسة، مقارنة بمتوسط 20 جلسة قبلها. المرة الواحدة يعني زي المعتاد، ومرتين يعني مرتين المعتاد. الحجم زي صوت السوق: كل ما زاد، اهتمام الناس بالحركة أكبر.',
-    effect: PVN() ? pvVol(s, v) : s.volx < 0.7 ? 'التداول أقل من المعتاد (أقل من 0.7 مرة)، يعني قليلين بس هم اللي بيتحركوا، فحركة السعر دي ضعيفة الدلالة.' : s.volx >= 1.5 ? 'نشاط أعلى من المعتاد (1.5 مرة أو أكتر). لو مع صعود فده أقوى، بس الحجم لوحده مش بيقولك مين اللي بيشتري.' : 'قريب من المعتاد (بين 0.7 مرة و1.5 مرة)، فمفيش تأكيد خاص من الحجم.'
+    effect: PVN() ? pvVol(s, v) : s.volx < 0.7 ? 'التداول أقل من المعتاد (أقل من 70% من المعتاد)، يعني قليلين بس هم اللي بيتحركوا، فحركة السعر دي ضعيفة الدلالة.' : s.volx >= 1.5 ? 'نشاط أعلى من المعتاد (150% من المعتاد أو أكتر). لو مع صعود فده أقوى، بس الحجم لوحده مش بيقولك مين اللي بيشتري.' : 'قريب من المعتاد (بين 70% و150% من المعتاد)، فمفيش تأكيد خاص من الحجم.'
   });
   o.push({
     label: 'الهزة اليومية (ATR)', value: p.atrpct + '%', tone: 'mid',
@@ -489,7 +489,7 @@ export function FinCards({ k, r }: { k: string; r: any }) {
 let guideTab = 't'; let guideOn = false; const guideSubs = new Set<() => void>();
 const setGuide = (t: string, on: boolean) => { guideTab = t; guideOn = on; guideSubs.forEach(f => f()); };
 // Page blocks that belong to one tab only. With no tab bar on the page (short history), everything shows.
-export const HELD = ['ABUK', 'ADIB', 'AIH', 'AMER', 'AMIA', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EAST', 'EFID', 'EFIH', 'EHDR', 'ELKA', 'ELSH', 'EMFD', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'FWRY', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'ISPH', 'JUFO', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MFPC', 'MPCI', 'MPRC', 'OBRI', 'OCDI', 'ORAS', 'ORWE', 'PHDC', 'POUL', 'PRDC', 'RAYA', 'RMDA', 'SCEM', 'SKPC', 'SWDY', 'TAQA', 'UEGC', 'VLMR', 'ZMID'];
+export const HELD = ['ABUK', 'ADIB', 'AIH', 'AMER', 'AMIA', 'ARCC', 'ASPI', 'ATLC', 'ATQA', 'BTFH', 'CCAP', 'CIEB', 'CLHO', 'CNFN', 'COMI', 'DAPH', 'DSCW', 'EAST', 'EFID', 'EFIH', 'EHDR', 'ELKA', 'ELSH', 'EMFD', 'ENGC', 'ETEL', 'ETRS', 'EXPA', 'FWRY', 'GPIM', 'HDBK', 'ICFC', 'IDRE', 'IEEC', 'ISMA', 'ISPH', 'JUFO', 'LCSW', 'MBSC', 'MCQE', 'MCRO', 'MEPA', 'MFPC', 'MPCI', 'MPRC', 'OBRI', 'OCDI', 'ORAS', 'ORWE', 'PHDC', 'POUL', 'PRDC', 'RAYA', 'RMDA', 'SCEM', 'SKPC', 'TAQA', 'UEGC', 'VLMR', 'ZMID'];
 export const HELD_MSG = 'الصفحة دي لسه تحت المراجعة ومش جاهزة للعرض.';
 export function OnTab({ id, children }: { id: string; children: React.ReactNode }) {
   const [, tick] = useState(0);
