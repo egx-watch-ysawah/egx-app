@@ -52,6 +52,10 @@
   "GPIM",
   "EXPA",
   "EHDR",
-  "MFSC"
+  "MFSC",
+  "PRDC",
+  "ETEL",
+  "ADCI",
+  "MPCO"
  ]
 }
