@@ -103,7 +103,7 @@ export function OtherFacts({ row: r }: { row: any }) {
   const m = (k: string, v: React.ReactNode, i?: React.ReactNode) => <div className="eg-m"><span>{k}</span><b>{v}</b>{i ? <i>{i}</i> : null}</div>;
   const in52 = r.high_52w && r.low_52w && r.high_52w > r.low_52w ? Math.round(100 * (r.last_price - r.low_52w) / (r.high_52w - r.low_52w)) : null;
   return <details className="eg-ex" open={false}><summary>أرقام السوق من المصدر · آلي، مش مراجَع</summary><div className="eg-exb">
-    <p className="eg-use"><b>ده بيفيدك في إيه؟</b> تشوف حجم الشركة وسعر السهم بالنسبة لسنة كاملة وبالنسبة لمضاعفات المصدر، من غير تحليل.</p>
+    <p className="eg-use"><b>ده بيفيدك في إيه؟</b> تشوف حجم الشركة وسعر السهم بالنسبة لسنة كاملة{own ? '' : ' وبالنسبة لمضاعفات المصدر'}، من غير تحليل.</p>
     <p className="eg-note">آخر لقطة من المصدر: <L>{cairo(r.as_of)}</L>{r.is_stale ? '. السعر ده قديم، مفيش تحديث جديد من المصدر للسهم ده.' : '. متأخرة حتى 20 دقيقة.'} التغيّر يومي.</p>
     <div className="ot-g">
       {m('الحجم', <L>{big(r.volume || 0)}</L>, 'سهم')}
