@@ -1,5 +1,6 @@
 import React from 'react';
 import { verdict } from '../shared';
+import { LcFlag } from './LcFlag';
 import { loadAtrAll, atrOf, xTech, xRsi, xChg, xPos, xAtr, xVol, xRef } from './Explain';
 import { VAL, VAL_ASOF, VAL_METHOD } from './valuation';
 // Chip row for stock pages. Uses only fields already in the stock JSON (close, date, chg5/20/60, rsi, votes, plan.atrpct, volx, hi52, lo52).
@@ -22,6 +23,7 @@ export function StockChips({ s, code }: { s: any; code?: string }) {
   const atr = atrAll && atrAll.length >= 30 && code ? atrOf(code) : planAtr;
   return (
     <section className="chp" aria-label="ملخص بالأرقام">
+      <LcFlag code={code} />
       <div className="chp-c"><small>القراءة الفنية</small>{v ? <b className={'chp-v ' + vcls}>{vcls === 'up' ? '+ ' : vcls === 'dn' ? '− ' : ''}{v.t}</b> : NA}<p className="chp-x">{v && v.c !== 'na' ? xTech(v.c) : ''}</p></div>
       <div className="chp-c"><small>RSI 14</small>{num(s.rsi) ? <b className="chp-v gr" dir="ltr">{s.rsi.toFixed(0)}</b> : NA}<p className="chp-x">{xRsi(s.rsi)}</p></div>
       <div className="chp-c chp-w"><small>التغير</small>
