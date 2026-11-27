@@ -2,6 +2,7 @@ import { StockChips } from './ui2026/Chips';
 import { TechnicalSummary } from './ui2026/TechnicalSummary';
 import { xList } from './ui2026/ExplainLists';
 import { xHome } from './ui2026/Explain';
+import { LcFlag } from "./ui2026/LcFlag";
 import { ListHead, ListRow, ListNote, ListSpark, useSpark, statusBadge, voteScore } from './ui2026/Lists';
 import React, { useEffect, useState } from 'react';
 import { useStarta, URL_INDEX, inSessionNow } from './feed';
@@ -141,7 +142,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
     {rows.map((r: any) => {
       const to = r.full ? '/' + r.code.toLowerCase() : '/s/' + r.code;
       const vl = <><span className="ls-c1"><bdi dir="ltr">{r.vol != null ? shortN(r.vol) : '-'}</bdi> <bdi>سهم</bdi></span><span className="ls-c2">{r.val != null && r.code !== 'VLMRA' ? <><bdi dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</bdi> <bdi>مليون جنيه</bdi></> : null}</span></>;
-      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={r.code === "VLMRA" ? <span className="ls-na">غير متوفر</span> : <ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={r.price != null ? fmt(r.price) : undefined} chg={r.code === 'VLMRA' ? null : r.chg} na={r.code === 'VLMRA' ? 'السعر بالدولار، مش معروض بالجنيه' : undefined} volLine={vl} />;
+      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} flag={<LcFlag code={r.code} small />} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={r.code === "VLMRA" ? <span className="ls-na">غير متوفر</span> : <ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={r.price != null ? fmt(r.price) : undefined} chg={r.code === 'VLMRA' ? null : r.chg} na={r.code === 'VLMRA' ? 'السعر بالدولار، مش معروض بالجنيه' : undefined} volLine={vl} />;
     })}
     <p className="eg-note">آخر تحديث للقايمة: <L>{(() => { try { const t = new Date(d.asof); return t.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }) + ' ' + t.toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return String(d.asof).slice(0, 10); } })()}</L> · الأسهم اللي فيها تاريخ ناقص بتظهر بالسعر بس.</p>
   </div>;
