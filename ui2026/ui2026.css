@@ -121,3 +121,19 @@ html body em.hp-fl,html body .ls-t em.hp-fl,html body .ls-r em.hp-fl{display:inl
 .mc{display:flex;gap:10px;align-items:flex-start;background:#111822;border:1px solid #1e252f;border-radius:14px;padding:12px 14px;margin-bottom:10px}
 .mc-d{flex:none;width:10px;height:10px;border-radius:50%;background:#4b5563;margin-top:5px}.mc.on .mc-d{background:#25b896}
 .mc b{display:block;font-size:14px;color:#edeef0;line-height:1.5}.mc small{display:block;font-size:11.5px;line-height:1.55;color:#a5aab2;margin-top:3px}
+/* fair-value six-stock page (additive) */
+.fs-h{font-size:19px;color:#edeef0;margin:4px 0}.fs-tag{display:inline-block;background:#1e252f;color:#b4bac4;border-radius:8px;padding:2px 8px;font-size:12px;margin-bottom:10px}
+.fs-c{background:#111822;border:1px solid #1e252f;border-radius:14px;padding:12px;margin:0 0 12px}
+.fs-c header{display:flex;gap:8px;align-items:baseline;border-bottom:1px solid #1e252f;padding-bottom:6px;margin-bottom:4px}
+.fs-c header b{font-size:18px;color:#edeef0}.fs-c header span{color:#a5aab2;font-size:13px;flex:1}.fs-c header em{font-style:normal;font-size:18px;color:#edeef0;font-variant-numeric:tabular-nums}
+.fs-r{margin-top:12px}.fs-l{display:flex;align-items:baseline;gap:6px}.fs-l>span:first-child{flex:1;color:#d3d7dd;font-size:14.5px}
+.fs-l b{font-size:15px;width:84px;text-align:center}.fs-l strong{font-size:22px;width:76px;text-align:left;font-variant-numeric:tabular-nums}
+.fs .up{color:#25b896}.fs .dn{color:#de575b}.fs-na{color:#a5aab2;font-size:14px}
+.fs-b{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#a5aab2;margin-top:4px}.fs-b i{font-style:normal;width:132px;white-space:nowrap}.fs-b u{text-decoration:none;width:44px;direction:ltr;text-align:left}
+.fs-t{flex:1;height:8px;background:#1e252f;border-radius:4px}.fs-f{height:8px;border-radius:4px}.fs-f.p{background:#a5aab2}.fs-f.up{background:#25b896}.fs-f.dn{background:#de575b}
+.fs-d{font-size:12px;color:#a5aab2;margin-top:4px}.fs-s{font-size:13px;color:#d3d7dd;margin:10px 0 0;border-top:1px dashed #1e252f;padding-top:6px}
+.fs-ft{font-size:11.5px;color:#a5aab2}
+.eg-pad a.fs-link{display:flex;align-items:center;justify-content:space-between;min-height:56px;background:#111822;border:1px solid #1e252f;border-radius:14px;padding:10px 14px;margin:10px 0;text-decoration:none}
+.fs-link span{display:flex;flex-direction:column;gap:2px}.fs-link b{color:#edeef0;font-size:14.5px}.fs-link small{color:#a5aab2;font-size:12px}.fs-link em{font-style:normal;color:#a5aab2;font-size:22px}
+.fs h1.fs-h{color:#edeef0;opacity:1}.fs .fs-tag{display:block;width:fit-content}
+.fs .fs-dt{margin:0 0 6px;font-size:12.5px;color:#b4bac4}
