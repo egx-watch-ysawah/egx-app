@@ -22,7 +22,7 @@ export function StockChips({ s, code }: { s: any; code?: string }) {
   const pos = num(lo) && num(hi) && num(c) && hi > lo ? Math.max(0, Math.min(100, ((c - lo) / (hi - lo)) * 100)) : null;
   const ch: [string, any][] = [['5 جلسات', s.chg5], ['20 جلسة', s.chg20], ['60 جلسة', s.chg60]];
   const planAtr = s.plan && num(s.plan.atrpct) ? s.plan.atrpct : null;
-  const atr = atrAll && atrAll.length >= 30 && code ? atrOf(code) : planAtr;
+  const atr = (atrAll && atrAll.length >= 30 && code ? atrOf(code) : null) ?? planAtr;
   return (
     <section className="chp" aria-label="ملخص بالأرقام">
       <LcFlag code={code} />
