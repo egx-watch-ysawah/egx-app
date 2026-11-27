@@ -5,6 +5,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
 import { NEW } from './page';
+import { xList } from './ui2026/ExplainLists';
+import { ListHead, ListRow, ListNote, DayRange } from './ui2026/Lists';
 // "باقي الأسهم": Starta symbols that are not in EGX 30, EGX 70 or the portfolio pages. Automatic data only, no review, no verdict.
 const URL_STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const URL_HIST = 'https://startamarkets.com/api/v1/egx/history/';
@@ -65,14 +67,15 @@ export function OthersList() {
     <Label />
     <RefreshBar />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث في باقي الأسهم" /></label>
-    <p className="eg-note">الأسهم دي مش في EGX 30 ولا EGX 70 ولا صفحات محفظتك. المصدر: Starta Markets{at ? '، آخر لقطة ' + cairo(at) : ''}. مرتبة بقيمة التداول.</p>
-    <div className="ix-hd"><span>الشركة</span><span>السعر · التغيّر</span><span>الحجم</span></div>
+    <ListNote line="آلي من المصدر، مش مراجَع، مش توصية. مرتبة بقيمة التداول." date={at ? cairo(at).slice(0, 5) : undefined}>
+      <p>الأسهم دي مش في EGX 30 ولا EGX 70 ولا صفحات محفظتك. المصدر: Starta Markets{at ? '، آخر لقطة ' + cairo(at) : ''}. مرتبة بقيمة التداول.</p>
+      <p>الشريط الصغير في الصف = مدى اليوم (أقل وأعلى سعر) ونقطة آخر سعر. مفيش تاريخ أسعار لباقي الأسهم هنا، فمفيش خط تاريخي. غير متوفر = المصدر مش بيدي الرقم.</p>
+    </ListNote>
+    <p className="ls-lg"><b>الحجم:</b> عدد الأسهم اللي اتداولت.</p>
+    <p className="chp-x">{xList.range}</p>
+    <ListHead mid="مدى اليوم" />
     {rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في الأسهم الباقية. جرب EGX 30 أو EGX 70.</p>}
-    {rows.slice(0, 120).map(r => <Link key={r.symbol} to={'/s/' + r.symbol} className="ix-r">
-      <div className="ix-n1"><b>{r.name_ar || r.name_en}</b><small dir="ltr">{r.symbol}</small><i>{status(r)}</i></div>
-      <div className="ix-p"><span dir="ltr">{fmt(r.last_price)}</span><small className={r.change_percent >= 0 ? 'u' : 'd'} dir="ltr">{r.change_percent >= 0 ? '▲' : '▼'} {Math.abs(r.change_percent || 0).toFixed(2)}%</small></div>
-      <div className="ix-v"><b>{big(r.volume || 0)} <small>سهم</small></b></div>
-    </Link>)}
+    {rows.slice(0, 120).map(r => { const st = status(r); return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={r.name_ar || r.name_en} code={r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={<DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={fmt(r.last_price)} chg={r.change_percent || 0} volLine={<span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
     {rows.length > 120 && <p className="eg-note">معروض أول 120 سهم. اكتب في البحث عشان توصل لباقي الأسهم.</p>}
   </div>;
 }
