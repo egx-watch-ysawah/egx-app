@@ -14,7 +14,7 @@ export function AppBar() {
   const sc = loc.pathname.startsWith('/s/') ? loc.pathname.slice(3).toUpperCase() : (SYMS.some(s => loc.pathname.toLowerCase() === '/' + s.toLowerCase()) ? '' : '');
   const on70 = !oth && !!sc && C70.indexOf(sc) >= 0;
   useEffect(() => { window.scrollTo(0, 0); }, [loc.pathname]);
-  useEffect(() => { const q = loc.pathname.toLowerCase(); document.body.classList.toggle('pf', !(q === '/home' || q === '/more' || q === '/stocks' || q === '/egx30' || q === '/egx70' || q === '/others' || q === '/all' || q === '/gold' || q.startsWith('/s/') || q.startsWith('/o/') || SYMS.some(s => q === '/' + s.toLowerCase()))); }, [loc.pathname]);
+  useEffect(() => { const q = loc.pathname.toLowerCase(); document.body.classList.toggle('pf', !(q === '/home' || q === '/signals' || q === '/more' || q === '/stocks' || q === '/egx30' || q === '/egx70' || q === '/others' || q === '/all' || q === '/gold' || q.startsWith('/s/') || q.startsWith('/o/') || SYMS.some(s => q === '/' + s.toLowerCase()))); }, [loc.pathname]);
   const p = loc.pathname.toLowerCase();
   const stocksOn = p === '/egx30' || p === '/egx70' || p === '/others' || p === '/all' || p === '/gold' || p === '/stocks' || p.startsWith('/s/') || p.startsWith('/o/');
   const portOn = p === '/' || SYMS.some(s => p === '/' + s.toLowerCase());
@@ -27,6 +27,10 @@ export function AppBar() {
       <NavLink to="/egx30" className={() => 'ab-i' + (stocksOn ? ' on' : '')}>
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
         <span>الأسهم</span>
+      </NavLink>
+      <NavLink to="/signals" className={({ isActive }: any) => 'ab-i' + (isActive ? ' on' : '')}>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <span>الإشارات</span>
       </NavLink>
       <NavLink to="/" end className={() => 'ab-i' + (portOn ? ' on' : '')}>
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 7h18v13H3zM8 7V4h8v3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>
