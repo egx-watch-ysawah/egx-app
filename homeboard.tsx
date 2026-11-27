@@ -2,6 +2,7 @@ import { HistCurve, DivCalendar } from './extras';
 import { stampNote } from './scen';
 import { loadStarta, useStarta, sourceState } from './feed';
 import { RefreshBar } from './refresh';
+import { HoldingMini } from './ui2026/HoldingMini';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from './shim';
 import { DATA } from './data';
@@ -200,6 +201,7 @@ export function HomeBoard({ holdings }: { holdings: any[] }) {
                 ? (() => { const ca = h.quantity * (s.close - h.averageCost); const cp = 100 * (s.close / h.averageCost - 1); return <span className={'hb-chip ' + cls(ca)}><small>تكلفة</small><b>{sgn(ca, 0)}</b><b>{ca >= 0 ? '▲' : '▼'} {Math.abs(cp).toFixed(2)}%</b></span>; })()
                 : null}
             </span>
+            <HoldingMini s={s} />
             <i className="hb-w" style={{ width: Math.min(100, h.weight) + '%' }} />
           </Link>
         ))}
