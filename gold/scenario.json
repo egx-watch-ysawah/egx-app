@@ -4,7 +4,7 @@
  "from": "2006-03-01",
  "goldThrough": "2026-11-27",
  "dollarThrough": "2026-11-20",
- "computedAt": "2026-11-27T20:36Z",
+ "computedAt": "2026-11-27T20:42Z",
  "goldSource": "COMEX GC=F daily closes (Yahoo Finance)",
  "dollarSource": "FRED DTWEXBGS",
  "dollarMove20d": 1.85,
