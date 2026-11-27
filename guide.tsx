@@ -1,4 +1,6 @@
 import { tdP } from './feed';
+import { SummaryTab } from './ui2026/SummaryTab';
+import { FinancialTab } from './ui2026/FinancialTab';
 import React, { useEffect, useState } from 'react';
 import { SourcedFair, SIX, SummaryWorry } from './fv6';
 import { WIDE, WideFair } from './wide';
@@ -434,7 +436,7 @@ function DecisionCard({ s, k }: { s: any; k: string }) {
     <div className="gd-it mid"><div className="gd-h"><span>إيه اللي يغير الصورة</span></div><p>{d.flip}</p></div>
     <div className="gd-it mid"><div className="gd-h"><span>أرقام السعر دلوقتي</span></div>
       {PVN() && NEW(k) ? <p>السعر {f(s.close)} ويبعد {p1(a)} عن أعلى إقفال في سنة. بيتحرك السعر يوميًا حوالي {p.atrpct}% من سعره في العادة (آخر 14 جلسة، مش خسارة متوقعة). السيولة المعتادة (الرقم الأوسط لقيمة التداول اليومي في آخر 60 جلسة) حوالي {p.tv} مليون جنيه في اليوم، ممكن تكون قليلة لو مبلغك كبير: الشراء أو البيع بكمية كبيرة ممكن يحرك السعر.</p> : <p>السعر {f(s.close)} ويبعد {p1(a)} عن أعلى إقفال في سنة. المدى اليومي المعتاد (ATR، متوسط حركة السعر في آخر 14 جلسة، وبيدي وزن أكبر للأيام الأخيرة) حوالي {p.atrpct}% من السعر (مش خسارة متوقعة). السيولة: الرقم الأوسط لقيمة التداول اليومي (كام جنيه اتداول في اليوم العادي) (تقريبًا سعر الإقفال × حجم التداول) في آخر 60 جلسة حوالي {p.tv} مليون جنيه{p.tv < 5 ? '، وده قليل: الدخول والخروج بكميات كبيرة صعب.' : '.'}</p>}</div>
-    {PVN() && NEW(k) && pageOf(k).eps_block_ar ? <div className="gd-it mid"><div className="gd-h"><span>ربح السهم والربح</span></div>{pageOf(k).eps_block_ar.map((t: string, i: number) => <p key={i}>{t}</p>)}</div> : null}
+    {PVN() && NEW(k) && pageOf(k).eps_block_ar ? <div className="gd-it mid"><div className="gd-h"><span>ربح السهم والربح</span></div>{pageOf(k).eps_block_ar.map((t: any, i: number) => <p key={i}>{typeof t === 'string' ? t : t.label + ': ' + t.value}</p>)}</div> : null}
     <CoverageBox k={k} />
     <div className="gd-it mid"><div className="gd-h"><span>اسأل نفسك قبل أي قرار</span></div>
       <p>• المدة: هتتابع السهم كام يوم أو أسبوع؟ الشارت مبني على أيام وأسابيع.</p>
@@ -516,11 +518,11 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
   return <><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
     <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
-    {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && <DecSum s={s} k={k} />}
+    {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && !(NEW(k) && pmS && pmS.dec_ar) && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
-      {HELD.includes(k) && tab !== 't' ? (unNote || <p className="gd-sum">{HELD_MSG}</p>) : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? <DecisionCard s={s} k={k} /> : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
-        <p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p>
+      {HELD.includes(k) && tab !== 't' ? (unNote || <p className="gd-sum">{HELD_MSG}</p>) : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? (NEW(k) && pmS && pmS.dec_ar ? <SummaryTab s={s} k={k} p={pmS} legacy={<DecisionCard s={s} k={k} />} /> : <DecisionCard s={s} k={k} />) : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
+        {tab === 'f' ? <p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p> : <details className="gd-det"><summary>وصف السعر بالكلام</summary><p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p></details>}
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className={'gd-h' + (PVN() ? ' gd-h2' : '')}><span>{it.label}</span>{PVN() && String(it.value).indexOf(' · ') > 0 ? <Val1 v={String(it.value).split(' · ')[0]} /> : <Val v={it.value} />}</div>{PVN() && String(it.value).indexOf(' · ') > 0 ? <p className="gd-sub">{String(it.value).split(' · ').slice(1).join(' · ')}</p> : null}
           <p><em>يعني إيه: </em>{it.mean}</p>
@@ -528,7 +530,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
         </div>)}</Det>
       </>}
       {!light && !held && tab === 'f' && WIDE.includes(k) ? finNode : null}
-      {tab === 'f' && !held ? <FinTabBlock k={k} /> : null}
+      {tab === 'f' && !held ? (NEW(k) && pmS && pmS.financial_tab ? <FinancialTab p={pmS} /> : <FinTabBlock k={k} />) : null}
       <p className="gd-foot">مش نصيحة استثمار، ومفيش أمر بيع أو شراء.</p>
     </div>
   </section></>;
