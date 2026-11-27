@@ -251,4 +251,4 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       {held ? null : <OnTab id="f"><SourcesBar code={code} reviewed={reviewed} /></OnTab>}
     </div>
   </div>;
-      }
+}
