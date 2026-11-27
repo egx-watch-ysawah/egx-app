@@ -1,0 +1,23 @@
+name: gold-scenario
+# Recomputes gold/scenario.json (what gold did in the same 20-trading-day windows as dollar moves). Weekdays after the US close.
+# If any fetch or sanity check fails, the script exits non-zero and the existing file stays untouched (the page then shows its data date).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 22 * * 1-5"
+permissions:
+  contents: write
+concurrency:
+  group: gold-scenario
+jobs:
+  calc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/gold_scenario.py
+      - name: Commit if changed
+        run: |
+          git config user.name "gold-scenario"; git config user.email "actions@users.noreply.github.com"
+          git add gold/scenario.json
+          git diff --cached --quiet && { echo "no change"; exit 0; }
+          git commit -m "gold scenario $(date -u +%F)"; git push
