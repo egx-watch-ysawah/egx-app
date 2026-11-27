@@ -10,6 +10,7 @@ await build({ entryPoints: ['main.tsx'], bundle: true, minify: true, outfile: 'd
 const stamp = Date.now().toString(36);
 for (const f of ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png']) fs.copyFileSync(f, 'dist/' + f);
 if(fs.existsSync('idx'))fs.cpSync('idx','dist/idx',{recursive:true}); if(fs.existsSync('fundamentals.json'))fs.copyFileSync('fundamentals.json','dist/fundamentals.json'); if(fs.existsSync('news.json'))fs.copyFileSync('news.json','dist/news.json'); if(fs.existsSync('fundamentals_rest.json'))fs.copyFileSync('fundamentals_rest.json','dist/fundamentals_rest.json'); if(fs.existsSync('studies_rest'))fs.cpSync('studies_rest','dist/studies_rest',{recursive:true});
+for (const f of ['last_close.json', 'last_close_fallback.json']) if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f);
 fs.writeFileSync('dist/index.html',fs.readFileSync('dist/index.html','utf8').replace('src="app.js"','src="app.js?v='+stamp+'"').replace('href="app.css"','href="app.css?v='+stamp+'"'));
 fs.writeFileSync('dist/sw.js', fs.readFileSync('sw.js', 'utf8').replace('__V__', stamp));
 console.log('built', stamp);
