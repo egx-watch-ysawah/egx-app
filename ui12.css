@@ -91,3 +91,6 @@ body:has(.set-btn) .eg-card-root:has(.gd) .eg-pad{padding-top:106px}
 .gd-sub{margin:2px 0 6px;color:#9aa6bd;font-size:13px;line-height:1.6}
 
 .gd-h2{flex-direction:column!important;align-items:flex-start!important;gap:6px!important}
+
+.eg-pad a.ix-r,.eg-pad div.ix-r,.ix-r,.ix-hd{display:grid!important;grid-template-columns:minmax(0,1fr) 88px 92px!important;gap:8px!important}
+.ix-r>*,.ix-hd>*{min-width:0}
