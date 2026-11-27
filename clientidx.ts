@@ -63,6 +63,7 @@ export function buildStock(code: string, name: string, raw: any[], quote?: any):
   return { s };
 }
 
+const FEEDSYM: Record<string, string> = { NAPR: 'EGS370O1C013' };
 const STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const HIST = 'https://startamarkets.com/api/v1/egx/history/';
 export type StartaFull = { symbol: string; name_ar: string; name_en: string; sector_name: string; last_price: number; prev_close: number; change_percent: number; volume: number; market_cap: number | null; pe_ratio: number | null; pb_ratio: number | null; high: number; low: number; open_price: number; high_52w: number | null; low_52w: number | null; as_of: string; is_stale: boolean };
@@ -73,9 +74,9 @@ export function useClientStock(code: string, enabled: boolean) {
     (async () => {
       try {
         const all = await fetch(STOCKS + '?t=' + Date.now(), { cache: 'no-store' }).then(x => x.json());
-        const row: StartaFull | null = Array.isArray(all) ? all.find((x: any) => x.symbol === code) || null : null;
+        const row: StartaFull | null = Array.isArray(all) ? all.find((x: any) => x.symbol === (FEEDSYM[code] || code)) || null : null;
         if (!row) { on && setSt({ done: true, fail: 'السهم ده مش موجود عند المصدر دلوقتي.', row: null }); return; }
-        const raw = await fetch(HIST + code, { cache: 'no-store' }).then(x => { if (!x.ok) throw 0; return x.json(); });
+        const raw = await fetch(HIST + (FEEDSYM[code] || code), { cache: 'no-store' }).then(x => { if (!x.ok) throw 0; return x.json(); });
         const b = buildStock(code, row.name_ar || row.name_en, raw, row);
         on && setSt('s' in b ? { done: true, s: b.s, row } : { done: true, fail: b.fail, row });
       } catch { on && setSt({ done: true, fail: 'مقدرتش أحمّل التاريخ من المصدر دلوقتي.', row: null }); }
