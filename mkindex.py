@@ -14,6 +14,11 @@ def cols(lang,symset=None,tickers=None):
     return {x['d'][0]:x['d'] for x in post(b)['data']}
 e30=list(cols('en','SYML:EGX;EGX30'))
 e70=json.loads(Path('index70.json').read_text())['codes']
+# One company, two lines: VLMR is Valmore's USD line, VLMRA its EGP line (https://ir.valmore.com/en/share-and-corporate-information).
+# The feed lists both in EGX30, so the list had 31. Keep the EGP line (the app's prices and turnover are in pounds).
+TWIN={'VLMR':'VLMRA'}
+e30=[c for c in e30 if not (c in TWIN and TWIN[c] in e30)]
+e70=[c for c in e70 if not (c in TWIN and TWIN[c] in e70)]
 allc=list(dict.fromkeys(e30+e70))
 tick=['EGX:'+c for c in allc]
 ar=cols('ar',tickers=tick);en=cols('en',tickers=tick)
@@ -47,7 +52,21 @@ def mkplan(df,votes,P,atr,res,sup):
       entry_pct=round((entry/P-1)*100,1),stop_pct=round((stop/entry-1)*100,1),target_pct=round((target/entry-1)*100,1),res=round(res,4),sup=round(sup,4),ema20=round(ema20,4),strength=strength)
     return plan,fire
 Path('idx').mkdir(exist_ok=True)
+def write_atomic(path,text):
+    # temp file in the same folder, then rename: a failed run never leaves a half-written file
+    import os
+    t=Path(str(path)+'.tmp');t.write_text(text);os.replace(t,path)
 summary=[];errors={}
+# Portfolio rows: record how many sessions data.json holds inside the 3-year window the stock page uses.
+try:
+    _dj=json.loads(Path('data.json').read_text())
+    # data.json is built by mkdata.py with the same 3-year window the stock page shows, so its historyCount is the page's session count
+    if str(_dj['asof'])[:10]<'2000':raise ValueError('bad asof')
+    DJ={c:v['historyCount'] for c,v in _dj['stocks'].items() if v.get('historyCount')}
+except Exception as _e:
+    DJ={};print('WARNING: data.json session counts unavailable, portfolio rows get no historyCount:',_e)
+# Sanity log (does not fail the job): after the twin drop EGX30 must have 30 codes.
+if len(e30)!=30:errors['_egx30_count']='expected 30 got %d'%len(e30)
 for k in allc:
     t=ar.get(k) or en.get(k)
     row=dict(code=k,name=(ar.get(k) or ['',k])[1],price=(ar.get(k) or [0,0,None])[2],chg=(ar.get(k) or [0,0,0,None])[3],vol=(ar.get(k) or [0,0,0,0,None])[4],lists=[x for x,l in (('egx30',e30),('egx70',e70)) if k in l],full=k in PORT,ok=False)
@@ -63,15 +82,19 @@ for k in allc:
             chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
             res=float(df.high.tail(20).max());sup=float(df.low.tail(20).min())
             plan,fire=mkplan(df,votes,P,atr,res,sup)
-            s=dict(name=row['name'],ok=True,close=round(P,3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),rsi=round(float(last.rsi),0),votes=votes,volx=round(float(last.volume/last.vavg),1),
+            s=dict(name=row['name'],ok=True,close=round(P,3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),rsi=round(float(last.rsi),0),votes=votes,volx=round(float(last.volume/last.vavg),2),
               plan=plan,fire=fire,
               bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(420).iterrows()],
-              hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),historyCount=len(df),source='https://startamarkets.com/symbol/'+k+'/history',sourceName='Starta Markets',qualityChecked=True,auto=True)
-            Path('idx/'+k+'.json').write_text(json.dumps(s,ensure_ascii=False,separators=(',',':'),allow_nan=False))
+              hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),historyCount=len(df),historyWindowYears=3,source='https://startamarkets.com/symbol/'+k+'/history',sourceName='Starta Markets',qualityChecked=True,auto=True)
+            write_atomic(Path('idx/'+k+'.json'),json.dumps(s,ensure_ascii=False,separators=(',',':'),allow_nan=False))
             row.update(ok=True,date=s['date'],votes=votes,close=s['close'],chg5=s['chg5'])
             if row['price'] is None:row['price']=s['close']
         except Exception as e:
             errors[k]=type(e).__name__+':'+str(e)[:60]
+    row['historyWindowYears']=3
+    if k in PORT and k in DJ:row['historyCount']=DJ[k]
     summary.append(row);time.sleep(0.15)
-Path('idx/index.json').write_text(json.dumps(dict(asof=datetime.datetime.now(ZoneInfo('Africa/Cairo')).isoformat(),egx30=e30,egx70=e70,rows=summary,errors=errors,note70=json.loads(Path('index70.json').read_text())['source']),ensure_ascii=False,separators=(',',':'),allow_nan=False))
-print(len(summary),'rows',len(errors),'errors',errors)
+write_atomic(Path('idx/index.json'),json.dumps(dict(asof=datetime.datetime.now(ZoneInfo('Africa/Cairo')).isoformat(),egx30=e30,egx70=e70,listsEffective='2026-09-01',listsNextReview='2027-03-01',listsVerified='2026-11-28',listsSource='بيان البورصة المصرية للمراجعة الدورية سبتمبر 2026 كما نشرته masrtimes.com/739069 وmubasher.info/news/4659538، ومقارنة مع TradingView. موقع البورصة نفسه مش متاح للقراءة الآلية، فالتحقق من البيان المنشور.',rows=summary,errors=errors,note70=json.loads(Path('index70.json').read_text())['source']),ensure_ascii=False,separators=(',',':'),allow_nan=False))
+real={c:e for c,e in errors.items() if not c.startswith('_')}
+print(len(summary),'rows',len(real),'errors',real)
+if '_egx30_count' in errors:print('NOTE egx30 count:',errors['_egx30_count'])
