@@ -13,7 +13,7 @@ const mean = (a: number[]) => a.reduce((p, c) => p + c, 0) / a.length;
 const med = (a: number[]) => { const s = a.slice().sort((p, q) => p - q); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 
 export type Built = { s: any } | { fail: string };
-export function buildStock(code: string, name: string, raw: any[]): Built {
+export function buildStock(code: string, name: string, raw: any[], quote?: any): Built {
   const now = new Date(); const p: any = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(x => [x.type, x.value]));
   const today = p.year + '-' + p.month + '-' + p.day; const done = +p.hour >= 15;
   let rows = raw.filter(x => x && x.date && (x.date < today || (done && x.date === today)))
@@ -22,7 +22,7 @@ export function buildStock(code: string, name: string, raw: any[]): Built {
   rows.sort((a, b) => a[0] < b[0] ? -1 : 1);
   const y = new Date(today); y.setFullYear(y.getFullYear() - 3); const lim = y.toISOString().slice(0, 10);
   rows = rows.filter(x => x[0] >= lim && x[5] > 0 && Number.isFinite(x[4]));
-  if (rows.length < 60) return { fail: 'تاريخ السهم قصير جدًا (' + rows.length + ' جلسة).' };
+  if (rows.length < 60) return { s: { name, ok: true, nohist: true, close: r(+(quote && quote.last_price) || 0, 3), date: String((quote && quote.as_of) || '').slice(0, 10), chg5: NaN, chg20: NaN, chg60: NaN, rsi: NaN, votes: {}, volx: NaN, plan: { entry: 0, stop: 0, target: 0, trail: 0, tv: 0 }, fire: [], bars: [], hi52: NaN, lo52: NaN, historyCount: rows.length, source: 'https://startamarkets.com/symbol/' + code + '/history', sourceName: 'Starta Markets', qualityChecked: true, auto: true, client: true } };
   const short = rows.length < 260;
   const O = rows.map(x => x[1]), H = rows.map(x => x[2]), Lw = rows.map(x => x[3]), C = rows.map(x => x[4]), V = rows.map(x => x[5]);
   let jumps = 0; for (let i = 1; i < C.length; i++) if (Math.abs(C[i] / C[i - 1] - 1) > 0.25) jumps++;
@@ -76,7 +76,7 @@ export function useClientStock(code: string, enabled: boolean) {
         const row: StartaFull | null = Array.isArray(all) ? all.find((x: any) => x.symbol === code) || null : null;
         if (!row) { on && setSt({ done: true, fail: 'السهم ده مش موجود عند المصدر دلوقتي.', row: null }); return; }
         const raw = await fetch(HIST + code, { cache: 'no-store' }).then(x => { if (!x.ok) throw 0; return x.json(); });
-        const b = buildStock(code, row.name_ar || row.name_en, raw);
+        const b = buildStock(code, row.name_ar || row.name_en, raw, row);
         on && setSt('s' in b ? { done: true, s: b.s, row } : { done: true, fail: b.fail, row });
       } catch { on && setSt({ done: true, fail: 'مقدرتش أحمّل التاريخ من المصدر دلوقتي.', row: null }); }
     })();
