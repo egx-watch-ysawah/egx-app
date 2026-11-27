@@ -33,15 +33,17 @@ export function StockChips({ s, code }: { s: any; code?: string }) {
       <div className="chp-c"><small>تذبذب يومي (متوسط 14 جلسة)</small>{atr === null ? NA : <b className="chp-v gr" dir="ltr">{atr}%</b>}<p className="chp-x">{xAtr(atr, atrAll)}</p></div>
       <div className="chp-c"><small>حجم آخر جلسة من المعتاد</small>{num(s.volx) ? <b className="chp-v gr" dir="ltr">{Math.round(s.volx * 100)}%</b> : NA}<p className="chp-x">{xVol(s.volx)}</p></div>
       {val && (val.fv == null || val.price == null
-        ? <div className="chp-c chp-w"><small>مرجع التحقق</small><b className="chp-v gr">غير متوفر</b><p className="chp-s">{val.why} · بتاريخ {VAL_ASOF}</p></div>
+        ? <div className="chp-c chp-w"><small>رقم للمقارنة من حساب تاني</small><b className="chp-v gr">غير متوفر</b><p className="chp-s">{val.why} · بتاريخ {VAL_ASOF}</p></div>
         : (() => { const price = val.price as number; const gap = (price / val.fv - 1) * 100; const wide = val.lo != null && val.hi != null && (val.hi - val.lo) / val.fv > 2; 
-          return <div className="chp-c chp-w"><small>مرجع تحقق (وسيط {val.methods} طرق، نموذج مختلف)</small>
-            <b className="chp-v gr" dir="ltr">{val.fv} ← {price} ({(gap > 0 ? '+' : '−') + Math.abs(gap).toFixed(1)}%)</b>
-            <span className="chp-n">{gap > 0 ? 'السعر فوق مرجع التحقق' : 'السعر تحت مرجع التحقق'}</span>{val.models_differ ? <span className="chp-wd">نموذجان مختلفان</span> : null}{val.ke_ar ? <span className="chp-n" dir="rtl" style={{unicodeBidi:"plaintext"}}>{val.ke_ar}</span> : null}
-            {val.lo != null && <div className="chp-rg" dir="ltr"><span>{val.lo}</span><span>المدى</span><span>{val.hi}</span></div>}
+          return <div className="chp-c chp-w"><small>رقم للمقارنة من حساب تاني</small>
+            <b className="chp-v gr" dir="ltr">{val.fv}</b>
+            <span className="chp-n">{gap > 0 ? 'السعر أعلى منه بحوالي ' : 'السعر أقل منه بحوالي '}<bdi dir="ltr">{Math.abs(gap).toFixed(0)}%</bdi></span>
             <p className="chp-x">{xRef(gap)}</p>
-            {wide && <span className="chp-wd">مدى واسع: الرقم تقدير تقريبي، مش دقيق</span>}
-            <p className="chp-s">عدد الطرق: {val.methods == null ? 'غير متوفر هنا' : val.methods} · {VAL_METHOD} · بتاريخ {VAL_ASOF} · السعر إقفال {val.price_date} · مش توصية.</p></div>; })())}
+            <details className="chp-dt"><summary>تفاصيل</summary>
+              {val.models_differ ? <span className="chp-wd">نموذجان مختلفان</span> : null}{val.ke_ar ? <span className="chp-n" dir="rtl" style={{unicodeBidi:"plaintext"}}>{val.ke_ar}</span> : null}
+              {val.lo != null && <div className="chp-rg" dir="ltr"><span>{val.lo}</span><span>المدى</span><span>{val.hi}</span></div>}
+              {wide && <span className="chp-wd">مدى واسع: الرقم تقدير تقريبي، مش دقيق</span>}
+              <p className="chp-s">ده وسيط {val.methods == null ? 'عدد غير متوفر من' : val.methods} طريقة حساب ({VAL_METHOD}) بتاريخ {VAL_ASOF}. السعر إقفال {val.price_date}. مش توصية.</p></details></div>; })())}
       <p className="chp-s">لحد إقفال {s.date} · {s.sourceName || 'المصدر المجاني'} · وصف للي حصل، مش توصية.</p>
     </section>
   );
