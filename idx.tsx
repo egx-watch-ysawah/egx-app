@@ -217,7 +217,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
-  if (err) return <OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />;
+  if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />{unr ? <div className="eg-pad"><div className="gd-sum"><b>غير متوافر حاليا:</b> {unr.reason_ar}</div></div> : null}</>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
