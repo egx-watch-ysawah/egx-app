@@ -63,7 +63,7 @@ export function buildStock(code: string, name: string, raw: any[], quote?: any):
   return { s };
 }
 
-const FEEDSYM: Record<string, string> = { NAPR: 'EGS370O1C013' };
+const FEEDSYM: Record<string, string> = { NAPR: 'EGS370O1C013', FERC: 'EGS385S1C012' };
 const STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const HIST = 'https://startamarkets.com/api/v1/egx/history/';
 export type StartaFull = { symbol: string; name_ar: string; name_en: string; sector_name: string; last_price: number; prev_close: number; change_percent: number; volume: number; market_cap: number | null; pe_ratio: number | null; pb_ratio: number | null; high: number; low: number; open_price: number; high_52w: number | null; low_52w: number | null; as_of: string; is_stale: boolean };
