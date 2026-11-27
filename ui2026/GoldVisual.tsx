@@ -129,19 +129,18 @@ export function LiveHero({ peak, low, days }: { peak: { close: number; label: st
     <div className="gv-p" dir="ltr">{f2(lp.p)}</div>
     <small className="gv-s">{lp.live ? 'اتحدّث ' + stamp(lp.at) : 'مش لحظي: ' + lp.src}</small>
     <div className="gv-2">
-      <span><i>تغيّر 24 ساعة</i>{chg == null ? <b className="gr">غير متوفر</b> : <b className={cl(chg)} dir="ltr">{pc(chg)}</b>}<em>{chg == null ? 'المصدر ما بعتش النسبة.' : 'مقارنة بنفس الوقت امبارح (من PAXG). + يعني أغلى.'}</em></span>
-      <span><i>جرام عيار 24 بالجنيه</i>{g24 ? <b className="gr" dir="ltr">{Math.round(g24).toLocaleString('en-US')}</b> : <b className="gr">غير متوفر</b>}<em>{g24 ? 'محسوب من السعر العالمي، مش سعر محل.' : 'سعر الدولار مش متاح دلوقتي.'}</em></span>
+      <span><i>تغيّر 24 ساعة</i>{chg == null ? <b className="gr">غير متوفر</b> : <b className={cl(chg)} dir="ltr">{pc(chg)}</b>}<em>{chg == null ? 'المصدر ما بعتش النسبة.' : 'من PAXG، مقارنة بامبارح'}</em></span>
+      <span><i>جرام عيار 24 بالجنيه</i>{g24 ? <b className="gr" dir="ltr">{Math.round(g24).toLocaleString('en-US')}</b> : <b className="gr">غير متوفر</b>}<em>{g24 ? 'محسوب، مش سعر محل' : 'سعر الدولار مش متاح دلوقتي.'}</em></span>
     </div>
     <div className="gv-3">
-      <span><i>من القمة</i><b className={cl(fh)} dir="ltr">{pc(fh)}</b><em>القمة {f2(peak.close)} يوم {peak.label.replace(/\s\d{4}$/, '')}. ده النزول لحد دلوقتي.</em></span>
-      <span><i>من أدنى سعر</i><b className={cl(fl)} dir="ltr">{pc(fl)}</b><em>أدنى إقفال {f2(low.close)} يوم {low.label.replace(/\s\d{4}$/, '')}. بيوريك الارتداد منه.</em></span>
-      <span><i>بقاله من القمة</i><b className="gr" dir="ltr">{days}</b><em>يوم من أغلى إقفال.</em></span>
+      <span><i>من القمة</i><b className={cl(fh)} dir="ltr">{pc(fh)}</b><em>قمة إقفال {f2(peak.close)} ({peak.label.replace(/\s\d{4}$/, '')})</em></span>
+      <span><i>من أدنى سعر</i><b className={cl(fl)} dir="ltr">{pc(fl)}</b><em>أدنى إقفال {f2(low.close)} ({low.label.replace(/\s\d{4}$/, '')})</em></span>
+      <span><i>بقاله من القمة</i><b className="gr" dir="ltr">{days}</b><em>يوم من أغلى إقفال</em></span>
     </div>
     <div className="gv-bar" dir="ltr"><u style={{ left: Math.min(100, Math.max(0, pos)) + '%' }} /></div>
     <div className="gv-rg" dir="ltr"><span>{f2(lo)}</span><span>{f2(hi)}</span></div>
-    <p className="gv-x">الشريط: من أدنى إقفال لأعلى إقفال في السنة. مكان السعر عليه بيوريك هو قريب من القمة ولا من القاع.</p>
     <p className="gv-f" dir="ltr">{l.spot ? 'gold-api.com ' + f2(l.spot.p) + ' (' + hhmm(l.spot.at) + ')' : 'gold-api.com غير متوفر'} · {l.paxg ? 'PAXG ' + f2(l.paxg.p) + (l.paxg.at ? ' (' + hhmm(l.paxg.at) + ')' : '') : 'PAXG غير متوفر'}{gap != null ? ' · gap ' + (gap > 0 ? '+' : '\u2212') + Math.abs(gap).toFixed(2) + '%' : ''}</p>
-    <p className="gv-f">القمة والقاع إقفال يومي من GoldPrice.com. PAXG عملة مرمّزة بتتبع الذهب، بنستخدمها للمقارنة. وصف للي حصل، مش توصية.</p>
+    <p className="gv-f">القمة والقاع من إقفال لإقفال (GoldPrice.com). أعلى سعر لحظي 5,594.82 يوم 29 يناير (رويترز).</p>
   </section>;
 }
 
@@ -152,8 +151,7 @@ export function GramCard() {
   const g24 = lp.p * l.fx.r / 31.1035; const n = (v: number) => Math.round(v).toLocaleString('en-US');
   return <section className="gd-card gm" id="gld-gram"><h3>سعر الجرام بالجنيه</h3>
     <div className="gm-g">{rows.map(([t, k]) => <span key={k}><i>{t}</i><b dir="ltr">{n(g24 * k / 24)}</b></span>)}<span><i>الجنيه الذهب (8 جرام عيار 21)</i><b dir="ltr">{n(g24 * 21 / 24 * 8)}</b></span></div>
-    <p className="gm-x">محسوب من السعر العالمي، مش سعر محل. المحل بيضيف مصنعية وضريبة، فالسعر عنده أعلى.</p>
-    <p className="gv-f">الأونصة {f2(lp.p)} دولار ({lp.src}{lp.live ? '، ' + stamp(lp.at) : ''}) × الدولار {l.fx.r.toFixed(2)} جنيه (ExchangeRate-API، {l.fx.at ? dmy(l.fx.at) : ''}، بيتحدث مرة في اليوم) ÷ 31.1035 جرام.</p></section>;
+    <p className="gv-f">محسوب: الأونصة {f2(lp.p)} ({lp.src}{lp.live ? '، ' + stamp(lp.at) : ''}) × الدولار {l.fx.r.toFixed(2)} (ExchangeRate-API، {l.fx.at ? dmy(l.fx.at) : ''}) ÷ 31.1035. من غير مصنعية وضريبة المحل.</p></section>;
 }
 
 export function OwnChart() {
@@ -171,8 +169,7 @@ export function OwnChart() {
       <circle cx={X(h.length - 1)} cy={Y(ps[ps.length - 1])} r="3.5" fill="#edeef0" /></svg>
     <div className="gv-rg" dir="ltr"><span>{dmy(h[0].t)}</span><span>{dmy(h[h.length - 1].t)}</span></div>
     <div className="gv-rg" dir="ltr"><span>أدنى {f2(mn)}</span><span className={cl(ch)}>{pc(ch)} في 90 يوم</span><span>أعلى {f2(mx)}</span></div>
-    <p className="gm-x">الخط بيوريك الاتجاه في آخر 3 شهور. لو طالع فالسعر بيزيد.</p>
-    <p className="gv-f">السعر هنا من PAXG (عملة مرمّزة بتتبع الذهب) من CoinGecko، قيمة يومية، ممكن تفرق شوية عن سعر الأونصة الفوري. شارت TradingView تحته لو اشتغل.</p></section>;
+    <p className="gv-f">PAXG (ذهب مرمّز) من CoinGecko، قيمة يومية، ممكن تفرق عن الفوري.</p></section>;
 }
 
 export const GOLD_SKIN2 = `
