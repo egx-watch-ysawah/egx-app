@@ -14,6 +14,7 @@ export function AppBar() {
   const sc = loc.pathname.startsWith('/s/') ? loc.pathname.slice(3).toUpperCase() : (SYMS.some(s => loc.pathname.toLowerCase() === '/' + s.toLowerCase()) ? '' : '');
   const on70 = !oth && !!sc && C70.indexOf(sc) >= 0;
   useEffect(() => { window.scrollTo(0, 0); }, [loc.pathname]);
+  useEffect(() => { const q = loc.pathname.toLowerCase(); document.body.classList.toggle('pf', !(q === '/home' || q === '/more' || q === '/stocks' || q === '/egx30' || q === '/egx70' || q === '/others' || q === '/all' || q === '/gold' || q.startsWith('/s/') || q.startsWith('/o/') || SYMS.some(s => q === '/' + s.toLowerCase()))); }, [loc.pathname]);
   const p = loc.pathname.toLowerCase();
   const stocksOn = p === '/egx30' || p === '/egx70' || p === '/others' || p === '/all' || p === '/gold' || p === '/stocks' || p.startsWith('/s/') || p.startsWith('/o/');
   const portOn = p === '/' || SYMS.some(s => p === '/' + s.toLowerCase());
