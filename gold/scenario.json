@@ -1,0 +1,26 @@
+{
+ "kind": "same-window",
+ "windowDays": 20,
+ "from": "2006-03-01",
+ "goldThrough": "2026-11-27",
+ "dollarThrough": "2026-11-20",
+ "computedAt": "2026-11-27T20:36Z",
+ "goldSource": "COMEX GC=F daily closes (Yahoo Finance)",
+ "dollarSource": "FRED DTWEXBGS",
+ "dollarMove20d": 1.85,
+ "dollarMoveFrom": "2026-10-22",
+ "dollarUp": {
+  "n": 1293,
+  "upOf10": 3.3,
+  "median": -1.8,
+  "p10": -7.4,
+  "p90": 5.1
+ },
+ "dollarDown": {
+  "n": 1251,
+  "upOf10": 8.2,
+  "median": 3.7,
+  "p10": -1.6,
+  "p90": 9.6
+ }
+}
