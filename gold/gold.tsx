@@ -68,7 +68,7 @@ function TVChart({ h = 420, cap }: { h?: number; cap?: string[] }) {
     s.innerHTML = JSON.stringify({ autosize: true, symbol: 'OANDA:XAUUSD', interval: 'D', timezone: 'Africa/Cairo', theme: 'dark', style: '1', locale: 'ar_AE', allow_symbol_change: false, hide_side_toolbar: true, hide_top_toolbar: true, support_host: 'https://www.tradingview.com' });
     el.appendChild(s);
   }, [h]);
-  return <div className="gd-chart"><div style={{ height: h, width: '100%' }}><div className="tradingview-widget-container" ref={ref} style={{ height: '100%', width: '100%' }} /></div>
+  return <div className="gd-chart"><div style={{ height: h, width: '100%', position: 'relative' }}><div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9fb0c8', fontSize: 13 }}>الشارت بيحمّل...</div><div className="tradingview-widget-container" ref={ref} style={{ height: '100%', width: '100%', position: 'relative', zIndex: 1 }} /></div>
     <P className="gd-note">بيانات إرشادية من OANDA (رمز <span dir="ltr">XAUUSD</span>)، ممكن تتأخر ومش سعر تنفيذ · التوقيت: القاهرة · <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">الشارت من TradingView</a></P>{cap && <ul className="gd-bl gd-note">{cap.map((x: string, i: number) => <li key={i}>{Rng(x)}</li>)}</ul>}</div>;
 }
 
