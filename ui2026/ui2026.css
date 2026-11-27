@@ -99,3 +99,17 @@ html body .sm .sm-gt em s{background:none!important;color:#b4bac4!important}
 .hm{flex-wrap:wrap}.hm-x{flex-basis:100%;font-size:11.5px;line-height:1.55;color:#a5aab2}
 .lc-fl{grid-column:1/-1;margin:0 0 6px;font-size:12px;line-height:1.55;color:#b4bac4;border:1px dashed #3a4654;border-radius:8px;padding:6px 10px}
 .hp-r{grid-template-columns:minmax(104px,1.7fr) minmax(0,1fr) 64px!important}.hp-n b{-webkit-line-clamp:4!important}
+.hm-c{flex-direction:column;align-items:center;gap:1px}.hm-c em,.hm-s em{display:block;font-style:normal;font-size:10.5px;line-height:1.35;color:#a5aab2;text-align:center}.hm-s{display:flex;flex-direction:column;align-items:center;gap:1px}
+.hm-c{border-radius:12px!important;padding:4px 8px!important;min-width:70px}
+
+.fvd{display:flex;flex-direction:column;gap:10px;margin:8px 0 12px}
+.fvd-c{background:#111822;border:1px solid #1e252f;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.fvd-n{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fvd-n span{display:flex;flex-direction:column;gap:3px}.fvd-n small{font-size:12px;color:#a5aab2}.fvd-n b{font-size:26px;font-variant-numeric:tabular-nums;color:#edeef0}
+.fvd-s{margin:0;font-size:15px;font-weight:700}.fvd-s.u{color:#25b896}.fvd-s.d{color:#de575b}
+.fvd-bar{position:relative;height:10px;background:#1e252f;border-radius:5px;margin:22px 4px 22px}
+.fvd-bar i{position:absolute;top:-4px;width:3px;height:18px;border-radius:2px;transform:translateX(-50%)}.fvd-f{background:#a5aab2}.fvd-px{background:#fff}
+.fvd-bar u{position:absolute;text-decoration:none;font-style:normal;font-size:11px;color:#b4bac4;white-space:nowrap;top:-18px;left:50%;transform:translateX(-50%)}.fvd-bar u.px{top:22px;color:#fff}
+.fvd-w{margin:0;font-size:12.5px;line-height:1.6;color:#e5e7e9;border:1px dashed #3a4654;border-radius:8px;padding:6px 10px}
+.fvd-m{margin:0;font-size:11.5px;line-height:1.55;color:#a5aab2}
+.fvd-d>summary{min-height:44px;display:flex;align-items:center;color:#b4bac4;font-size:14px;cursor:pointer;padding:0 4px}
+.chp-dt{display:flex;flex-direction:column;gap:6px}.chp-dt>summary{min-height:44px;display:flex;align-items:center;color:#b4bac4;font-size:13px;cursor:pointer}
