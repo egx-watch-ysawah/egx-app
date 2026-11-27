@@ -148,6 +148,52 @@ export const GOLD_SKIN3B = `
 const F = (u: string, t: string) => <a href={u} target="_blank" rel="noreferrer">{t}</a>;
 export function GoldFooter() { return <p className="gf-ex gf-foot">ده رأي الجهات، مش توقعنا.<br />بنحدث لما الجهة تنشر رقم جديد.<br />مش نصيحة، والقرار قرارك.</p>; }
 // Rest of the gold tab: only dated, sourced numbers. No opinion lines, no backtests.
+
+// Same-window scenario panel. Reads gold/scenario.json (daily Action). Past co-movement only, never a forecast.
+type ScnSet = { n: number; upOf10: number; median: number; p10: number; p90: number };
+type Scn = { goldThrough: string; dollarThrough: string; windowDays: number; from: string; dollarMove20d: number; dollarMoveFrom: string; dollarUp: ScnSet; dollarDown: ScnSet };
+let SCN_P: Promise<Scn | null> | null = null;
+const okSet = (x: any) => x && [x.n, x.upOf10, x.median, x.p10, x.p90].every((v: any) => typeof v === 'number' && isFinite(v)) && x.n >= 300 && x.p10 <= x.median && x.median <= x.p90;
+const loadScn = (): Promise<Scn | null> => SCN_P || (SCN_P = fetch('gold/scenario.json?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then((j: any) =>
+  j && j.kind === 'same-window' && okSet(j.dollarUp) && okSet(j.dollarDown) && typeof j.dollarMove20d === 'number' && /^\d{4}-\d{2}-\d{2}$/.test(j.goldThrough) && /^\d{4}-\d{2}-\d{2}$/.test(j.dollarThrough) ? j as Scn : null));
+const dAge = (iso: string) => Math.floor((Date.now() - Date.parse(iso + 'T00:00:00Z')) / 864e5);
+const AXL = -10, AXH = 12;
+const sp = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%';
+function ScnBlock({ title, s, px }: { title: string; s: ScnSet; px: number }) {
+  const X = (v: number) => ((Math.max(AXL, Math.min(AXH, v)) - AXL) / (AXH - AXL) * 100) + '%';
+  const k = Math.round(s.upOf10); const col = s.median > 0 ? '#25b896' : '#de575b';
+  return <div className="sc-b">
+    <div className="sc-h"><b>{title}</b><span className="sc-n" dir="ltr" style={{ color: s.upOf10 >= 5 ? '#25b896' : '#de575b' }}>{s.upOf10.toFixed(1)} / 10</span></div>
+    <div className="sc-d" dir="ltr">{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < k ? 'u' : 'd'}>{i < k ? '▲' : '▼'}</i>)}</div>
+    <div className="sc-r" dir="ltr"><div className="sc-ln" /><div className="sc-z" style={{ left: X(0) }} />
+      <div className="sc-rg" style={{ left: X(s.p10), width: 'calc(' + X(s.p90) + ' - ' + X(s.p10) + ')' }} />
+      <div className="sc-m" style={{ left: X(s.median), background: col }} /></div>
+    <div className="sc-t" dir="ltr"><span>{sp(s.p10)}</span><b style={{ color: col }}>{sp(s.median)} ≈ {n0(px * (1 + s.median / 100))}</b><span>{sp(s.p90)}</span></div>
+  </div>;
+}
+export function GoldScenario() {
+  const [s, setS] = React.useState<Scn | null | undefined>(undefined);
+  const g = useGoldPx();
+  React.useEffect(() => { let on = true; loadScn().then(x => on && setS(x)); return () => { on = false; }; }, []);
+  if (s === undefined) return null;
+  const stale = !s || dAge(s.goldThrough) > 10 || dAge(s.dollarThrough) > 10;
+  return <section className="gd-card sc"><style>{SCN_CSS}</style><h3>الدولار والذهب في نفس الشهر</h3>
+    {stale ? <div className="sc-na"><b>غير متوفر</b><span>{s ? 'البيانات قديمة: الذهب لحد ' + arD(s.goldThrough) + '، الدولار لحد ' + arD(s.dollarThrough) : 'الحساب مش متاح دلوقتي (ملف الأرقام ما اتحملش)'}</span></div> : s && <>
+      <p className="gf-e">اللي حصل فعلًا في شهور (20 يوم تداول) الدولار اتحرك فيها، مش توقع. كل خانة شهر، والشريط من أقل 10% لأعلى 10%، والنقطة الوسيط.</p>
+      <div className="sc-t2"><span className="sc-i"><i>الدولار آخر 20 يوم تداول</i><b dir="ltr">{(s.dollarMove20d > 0 ? '▲ +' : s.dollarMove20d < 0 ? '▼ −' : '') + Math.abs(s.dollarMove20d).toFixed(2)}%</b><em>لحد {arD(s.dollarThrough)}</em></span>
+        <span className="sc-i"><i>الذهب الآن</i><b dir="ltr">{n0(g.p)}</b><em>{g.live ? 'لايف' : g.src}</em></span></div>
+      <ScnBlock title="الدولار طلع من 1% لـ 4%" s={s.dollarUp} px={g.p} />
+      <ScnBlock title="الدولار نزل أكتر من 1%" s={s.dollarDown} px={g.p} />
+      <p className="gf-e">ذهب: عقود كوميكس الآجلة (Yahoo) لحد {arD(s.goldThrough)} · دولار: FRED لحد {arD(s.dollarThrough)} · {s.dollarUp.n} و{s.dollarDown.n} فترة من {s.from.slice(0, 4)}. مش نصيحة.</p></>}
+  </section>;
+}
+const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso); const M = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر']; return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : iso; };
+const SCN_CSS = `.sc-b{border-top:1px solid #1e252f;margin-top:12px;padding-top:12px}.sc-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.sc-h b{font-size:14px;color:#edeef0}.sc-n{font-size:24px;font-weight:700;white-space:nowrap}
+.sc-d{display:flex;gap:3px;margin:8px 0}.sc-d i{font-style:normal;font-size:11px;flex:1;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center}.sc-d i.u{background:#25b89626;color:#25b896}.sc-d i.d{background:#de575b26;color:#de575b}
+.sc-r{position:relative;height:30px;margin:6px 0 2px}.sc-ln{position:absolute;top:14px;left:0;right:0;height:2px;background:#1e252f}.sc-z{position:absolute;top:2px;width:2px;height:26px;background:#a5aab2}.sc-rg{position:absolute;top:10px;height:10px;border-radius:5px;background:#3a4350}.sc-m{position:absolute;top:7px;width:16px;height:16px;border-radius:50%;margin-left:-8px;border:2px solid #111822}
+.sc-t{display:flex;justify-content:space-between;font-size:12px;color:#b4bac4}.sc-t b{font-size:13px}.sc-t2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.sc-i{background:#0b0f12;border-radius:10px;padding:10px;text-align:center;display:flex;flex-direction:column;gap:2px}.sc-i i{font-style:normal;font-size:11.5px;color:#b4bac4}.sc-i b{font-size:19px;color:#edeef0}.sc-i em{font-style:normal;font-size:11px;color:#a5aab2}
+.sc-na{border:1px dashed #3a4350;border-radius:10px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:4px}.sc-na b{font-size:18px;color:#b4bac4}.sc-na span{font-size:12px;color:#a5aab2}`;
+
 export function GoldFacts() {
   return <div className="gf">
     <section className="gd-card"><h3>الفايدة والدولار</h3>
@@ -158,6 +204,7 @@ export function GoldFacts() {
       </div>
       <p className="gf-e gf-lk"><span>الفايدة: رفع 16 سبتمبر</span>{F('https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm', 'الفيدرالي')}<span>العائد الحقيقي</span>{F('https://fred.stlouisfed.org/series/DFII10', 'FRED DFII10')}<span>الدولار</span>{F('https://fred.stlouisfed.org/series/DTWEXBGS', 'FRED DTWEXBGS')}</p>
     </section>
+    <GoldScenario />
     <section className="gd-card"><h3>شراء البنوك المركزية</h3>
       <div className="gf-bars">
         <div className="gf-b"><span>الربع التالت 2026</span><div className="gf-bt" dir="ltr"><div className="gf-bf" style={{ width: '100%' }} /></div><b dir="ltr">321</b></div>
