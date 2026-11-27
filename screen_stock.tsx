@@ -1,3 +1,4 @@
+import { StockChips } from './ui2026/Chips';
 import React, { useEffect, useState } from 'react';
 import { OthersList } from './others';
 import { GoldTab, goldOn } from './gold/gold';
@@ -55,7 +56,7 @@ export function Stock({ k }: { k: string }) {
             <h2 className="eg-h">{s.name} <span dir="ltr">({k})</span></h2><MyPosition k={k}/><TopWarn k={k}/>
             {s.qualityChecked&&<p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a></p>}
             <PartialHistory s={s}/>
-            {s.ok&&<StockGuide s={s} k={k} r={records[k]} chart={chartNode}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
+            {s.ok&&<StockChips s={s} code={k}/>}{s.ok&&<StockGuide s={s} k={k} r={records[k]} chart={chartNode}/>}{s.partial&&s.bars?.length>1&&<Det title="الشارت المتاح" open><StockChart rows={mkRows(s.bars) as any} n={s.bars.length} t={{sma:true,vol:true,rsi:false,macd:false,plan:false,bb:false}} plan={{entry:0,stop:0,target:0,trail:0}}/></Det>}
             <OnTab id="f"><Det title="دراسة الشركة · الأداء المالي والتقييم">{k==='BONY'?<BonyFundamentals/>:<FinancialStudy symbol={k}/>}</Det></OnTab>
             {!s.ok ? <p className="eg-note">{s.partial?'نافذة تاريخ متاحة جزئيًا، والتفاصيل تحت بتوضح المؤشرات الممكنة.':'المصدر المجاني معندوش تاريخ كفاية للسهم ده، فمفيش تقييم.'} السعر حوالي <L>{fmt(s.close)}</L>.</p> :<OnTab id="t">
 
