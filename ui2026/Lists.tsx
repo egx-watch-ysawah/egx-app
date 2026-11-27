@@ -37,9 +37,9 @@ export function statusBadge(r: any): { t: string; tone: Tone } {
   return v.trend && v.mid ? { t: 'فوق 200 و50', tone: 'up' } : !v.trend && !v.mid ? { t: 'تحت 200 و50', tone: 'dn' } : v.trend ? { t: 'فوق 200، تحت 50', tone: 'gr' } : { t: 'تحت 200، فوق 50', tone: 'gr' };
 }
 export const voteScore = (r: any): [number, number] | null => { const v = r.votes; if (!v || !Object.keys(v).length) return null; const k = ['trend', 'mid', 'macd', 'rsi', 'vol']; return [k.reduce((a, x) => a + (v[x] ? 1 : 0), 0), k.length]; };
-export function ListRow({ to, off, name, code, tag, badge, score, spark, price, chg, volLine, na }: { to?: string; off?: boolean; name: string; code: string; tag?: string; badge?: { t: string; tone: Tone } | null; score?: [number, number] | null; spark: React.ReactNode; price?: string; chg?: number | null; volLine?: React.ReactNode; na?: string }) {
+export function ListRow({ to, off, name, code, tag, flag, badge, score, spark, price, chg, volLine, na }: { to?: string; off?: boolean; name: string; code: string; tag?: string; flag?: React.ReactNode; badge?: { t: string; tone: Tone } | null; score?: [number, number] | null; spark: React.ReactNode; price?: string; chg?: number | null; volLine?: React.ReactNode; na?: string }) {
   const body = <>
-    <div className="ls-g"><div className="ls-n"><div className="ls-t"><b>{name}</b><small dir="ltr">{code}</small>{tag && <em className="ix-tag">{tag}</em>}</div>
+    <div className="ls-g"><div className="ls-n"><div className="ls-t"><b>{name}</b><small dir="ltr">{code}</small>{flag}{tag && <em className="ix-tag">{tag}</em>}</div>
       <div className="ls-m">{badge && <Badge {...badge} />}{score && <Score n={score[0]} of={score[1]} />}</div>
       {volLine && <div className="ls-v">{volLine}</div>}</div>
     <div className="ls-s">{spark}</div>
