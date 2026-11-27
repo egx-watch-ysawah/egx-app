@@ -99,7 +99,28 @@ export function PageFairHero({ d }: { d: any }) {
   const rows3: [string, any][] = ([['الحالة الأصعب', lo], ['الأساسي', b0], ['الحالة الأحسن', hi]] as [string, any][]).filter(r => r[1]);
   const smax = Math.max(price, ...rows3.map(r => r[1].value)) || 1;
   const anv = d.analyst && num(d.analyst.value) ? d.analyst : null;
-  return <div className="fvh" aria-label="ملخص مرئي للحساب">
+  const big = b0 && price != null && Math.abs(gap as number) > 100;
+  const gp = b0 ? Math.abs(gap as number) : 0;
+  const xmax2 = b0 ? Math.max(price, b0.value) * 1.08 : 1;
+  return <div className="fvd" aria-label="ملخص السعر العادل">
+    <div className="fvd-c">
+      {b0 ? <>
+        <div className="fvd-n" dir="rtl">
+          <span><small>السعر الحالي</small><b dir="ltr">{f2(price)}</b></span>
+          <span><small>القيمة حسب افتراضات الصفحة</small><b dir="ltr">{f2(b0.value)}</b></span>
+        </div>
+        <p className={'fvd-s ' + ((gap as number) > 0 ? 'd' : 'u')}>{(gap as number) > 0 ? '▲ السعر أعلى من القيمة حسب الافتراضات بنسبة ' : '▼ السعر أقل من القيمة حسب الافتراضات بنسبة '}<bdi dir="ltr">{gp.toFixed(0)}%</bdi></p>
+        <div className="fvd-bar" dir="ltr">
+          <i className="fvd-f" style={{ left: (b0.value / xmax2) * 100 + '%' }}><u>القيمة حسب الافتراضات</u></i>
+          <i className="fvd-px" style={{ left: (price / xmax2) * 100 + '%' }}><u className="px">السعر</u></i>
+        </div>
+        {big ? <p className="fvd-w">الفرق كبير: يعني السعر بيتوقع أكتر من افتراضات الحساب، أو افتراضاته متحفظة. اعتبره سؤال محتاج تدقيق مش إشارة.</p> : null}
+        <p className="fvd-m">حساب بافتراضات مش توقع، ومش توصية. {d.market_price && d.market_price.as_of_ar ? d.market_price.as_of_ar : ''}</p>
+      </> : <p className="fvd-m">القيمة حسب افتراضات الصفحة: غير متوفر، مفيش حساب أساسي منشور للسهم ده.</p>}
+    </div>
+    <details className="fvd-d"><summary>تفاصيل</summary>
+      <p className="fvh-n">متحفظ / متوسط / متفائل: ثلاث حالات للحساب بافتراضات أصعب وأسهل. بتوريك المدى، مش حاجة هتحصل.</p>
+    <div className="fvh" aria-label="ملخص مرئي للحساب">
     <div className="fvh-b">
       {b0 ? <span className="fvh-t">الحساب الأساسي (نموذج الصفحة، افتراضات مش قيمة) <bdi dir="ltr">{f2(b0.value)}</bdi></span> : null}
       {b0 && vj && num(vj.fv) ? <span className="fvh-t g">مرجع تحقق (وسيط {vj.methods} طرق، نموذج مختلف) <bdi dir="ltr">{f2(vj.fv)}</bdi>{num(vj.lo) && num(vj.hi) ? <> · <bdi dir="ltr">{f2(vj.lo)}–{f2(vj.hi)}</bdi></> : null}</span> : null}
@@ -142,5 +163,7 @@ export function PageFairHero({ d }: { d: any }) {
     {ms.length ? <div className="fvm" dir="ltr">{ms.map((m: any, i: number) => <div key={i} className="fvm-r"><span>{m.name_ar}{m.flt ? <em className="fvm-f">فلتر/حد</em> : null}{m.tip ? <small>{m.tip}</small> : null}</span><div className="fvm-t"><i style={{ width: Math.max(2, (m.value / mmax) * 100) + '%' }} /><u style={{ left: (price / mmax) * 100 + '%' }} /></div><b>{f2(m.value)}</b></div>)}</div> : null}
     <p className="fvh-n">حدود الحساب: افتراضات مش توقعات، ومصدر السعر واحد ومتأخر.</p>
     {d.market_price && d.market_price.as_of_ar ? <p className="fvh-n">{d.market_price.as_of_ar}</p> : null}
+    </div>
+    </details>
   </div>;
 }
