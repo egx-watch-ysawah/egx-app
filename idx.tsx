@@ -1,4 +1,8 @@
 import { StockChips } from './ui2026/Chips';
+import { TechnicalSummary } from './ui2026/TechnicalSummary';
+import { xList } from './ui2026/ExplainLists';
+import { xHome } from './ui2026/Explain';
+import { ListHead, ListRow, ListNote, ListSpark, useSpark, statusBadge, voteScore } from './ui2026/Lists';
 import React, { useEffect, useState } from 'react';
 import { useStarta, URL_INDEX, inSessionNow } from './feed';
 import { RefreshBar } from './refresh';
@@ -112,6 +116,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   const d = React.useMemo(() => overlay(d0, sf), [d0, sf]);
   const [sort, setSort] = useState<'val' | 'up' | 'down'>('val');
   const [q, setQ] = useState('');
+  const spk = useSpark();
   const title = which === 'egx30' ? 'EGX 30' : 'EGX 70';
   if (err) return <div className="eg-pad"><h2 className="eg-h">{title}</h2><p className="eg-note">مقدرتش أحمل القايمة. جرب تفتح التطبيق تاني.</p></div>;
   if (!d) return <div className="eg-pad"><h2 className="eg-h">{title}</h2><p className="eg-note">بحمّل القايمة...</p></div>;
@@ -124,19 +129,19 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
     <IndexSummary which={which} />
     <RefreshBar />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث عن سهم" autoComplete="off" /></label>
-    <p className="eg-note">الأسعار: {stampNote(d.asof)}. التغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
+    <ListNote line="الحالة وصف للسعر من المتوسطات، مش توصية." date={String(rows.reduce((m: string, r: any) => (r.date && r.date > m ? r.date : m), '') || '').slice(5).split('-').reverse().join('/')}>
+      <p>الأسعار: {stampNote(d.asof)}. التغيّر يومي. الحالة وصف للسعر من متوسط 200 و50 جلسة، مش توصية.{which === 'egx70' ? ' ' + d.note70 : ''}</p>
+      <p>الدايرة = عدد الفحوص الفنية الإيجابية من 5 (اتجاه طويل، متوسط، ماكد، RSI، حجم). الخط = إقفال آخر 30 جلسة.</p>
+    </ListNote>
     <div className="eg-chips">{chip('val', 'الأعلى تداولًا')}{chip('up', 'الأكثر ارتفاعًا')}{chip('down', 'الأكثر هبوطًا')}</div>
     <p className="eg-note ix-lg"><b>الحجم:</b> عدد الأسهم اللي اتداولت. <b>القيمة:</b> فلوس التداول بالمليون جنيه.</p>
-    <div className="ix-hd"><span>الشركة</span><span>السعر · التغيّر</span><span>الحجم · القيمة</span></div>
+    <p className="chp-x">{xHome.value} {xList.score}</p>
+    <ListHead mid="آخر 30 جلسة" />
     {nq && rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في EGX 30 أو EGX 70.</p>}
     {rows.map((r: any) => {
       const to = r.full ? '/' + r.code.toLowerCase() : '/s/' + r.code;
-      const body = <>
-        <div className="ix-n1"><b>{r.name}</b><small dir="ltr">{r.code}</small>{nq && <em className="ix-tag">{r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : ''}</em>}<i>{status(r)}</i></div>
-        <div className="ix-p">{r.code === 'VLMRA' ? <small>السعر بالدولار، مش معروض بالجنيه</small> : <><span dir="ltr">{r.price != null ? fmt(r.price) : '-'}</span>{r.chg != null && <small className={r.chg >= 0 ? 'u' : 'd'} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</small>}</>}</div>
-        <div className="ix-v"><b>{r.vol != null ? <>{shortN(r.vol)} <small>سهم</small></> : '-'}</b><span>{r.val != null && r.code !== 'VLMRA' ? Math.round(r.val / 1e6).toLocaleString('en-US') + ' مليون جنيه' : ''}</span></div>
-      </>;
-      return r.ok || r.full ? <Link key={r.code} to={to} className="ix-r">{body}</Link> : <div key={r.code} className="ix-r off">{body}</div>;
+      const vl = <><span className="ls-c1"><bdi dir="ltr">{r.vol != null ? shortN(r.vol) : '-'}</bdi> <bdi>سهم</bdi></span><span className="ls-c2">{r.val != null && r.code !== 'VLMRA' ? <><bdi dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</bdi> <bdi>مليون جنيه</bdi></> : null}</span></>;
+      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={r.code === "VLMRA" ? <span className="ls-na">غير متوفر</span> : <ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={r.price != null ? fmt(r.price) : undefined} chg={r.code === 'VLMRA' ? null : r.chg} na={r.code === 'VLMRA' ? 'السعر بالدولار، مش معروض بالجنيه' : undefined} volLine={vl} />;
     })}
     <p className="eg-note">آخر تحديث للقايمة: <L>{(() => { try { const t = new Date(d.asof); return t.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }) + ' ' + t.toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return String(d.asof).slice(0, 10); } })()}</L> · الأسهم اللي فيها تاريخ ناقص بتظهر بالسعر بس.</p>
   </div>;
@@ -243,6 +248,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
       
       <OnTab id="t">{s.short ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم قصير (أقل من 260 جلسة)، فالمؤشرات الفنية والشارت والسيناريوهات أقل موثوقية. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
+      <OnTab id="t"><TechnicalSummary s={s} /></OnTab>
       <OnTab id="t">{code === 'VLMRA' || s.jump || s.short || s.nohist ? null : <ScenarioBlock s={s} />}</OnTab>
       {held ? null : <OnTab id="f"><TeamBlock code={code} /></OnTab>}
       {held ? null : <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>}
