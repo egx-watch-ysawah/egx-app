@@ -1,5 +1,6 @@
 import { tdP } from './feed';
 import { SummaryTab } from './ui2026/SummaryTab';
+import { FlowSignal } from './ui2026/FlowSignal';
 import { FinancialTab } from './ui2026/FinancialTab';
 import React, { useEffect, useState } from 'react';
 import { SourcedFair, SIX, SummaryWorry } from './fv6';
@@ -521,6 +522,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
     <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && !(NEW(k) && pmS && pmS.dec_ar) && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
+    {tab === 't' && !nop ? <FlowSignal k={k} /> : null}
     <div className="gd-body">
       {FAIR6.includes(k) && tab === 'v' ? <FairCard code={k} /> : HELD.includes(k) && tab !== 't' ? (unNote || <p className="gd-sum">{HELD_MSG}</p>) : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? (NEW(k) && pmS && pmS.dec_ar ? <SummaryTab s={s} k={k} p={pmS} legacy={<DecisionCard s={s} k={k} />} /> : <DecisionCard s={s} k={k} />) : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
         {tab === 'f' ? <p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p> : <details className="gd-det"><summary>وصف السعر بالكلام</summary><p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p></details>}
