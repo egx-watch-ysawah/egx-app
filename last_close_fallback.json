@@ -1,0 +1,1238 @@
+{
+ "kind": "last-close-fallback",
+ "generated_utc": "2026-11-27T17:06:10Z",
+ "session_date": "2026-11-26",
+ "note": "Static last-close snapshot. Free delayed data, not real-time. Show with its session date. Values with status other than confirmed must display as unconfirmed.",
+ "sources": {
+  "tradingview_scanner": "https://scanner.tradingview.com/egypt/scan (free, used by the app generator; reuse terms not verified)",
+  "history_file": "egx-app idx/index.json built from Starta history, asof 2026-11-26T16:37:13.588503+02:00"
+ },
+ "indices": {
+  "egx30": {
+   "close": 50311.8,
+   "chg_pct": -0.45,
+   "chg_abs": -226.9,
+   "status": "confirmed",
+   "cross_check": "indices.json (Starta, 26 Nov) 50311.8 and Arab Finance 26 Nov report 50,3xx, matched"
+  },
+  "egx70ewi": {
+   "close": 16886.2,
+   "chg_pct": -0.0,
+   "chg_abs": -0.5,
+   "status": "single-source",
+   "cross_check": "only TradingView read by me; the 16,886.2 level matches egx.news and Foudalens pages read manually, not used as sources"
+  }
+ },
+ "counts": {
+  "confirmed": 85,
+  "unconfirmed": 5,
+  "single": 10
+ },
+ "stocks": {
+  "COMI": {
+   "name": "البنك التجاري الدولي",
+   "close": 124.25,
+   "chg_pct": -1.39,
+   "volume": 1632246,
+   "sources": {
+    "tradingview": 124.25,
+    "history_file": 124.25
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EMFD": {
+   "name": "إعمار مصر",
+   "close": 12.25,
+   "chg_pct": 1.83,
+   "volume": 1800779,
+   "sources": {
+    "tradingview": 12.25,
+    "history_file": 12.25
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ETEL": {
+   "name": "المصرية للاتصالات",
+   "close": 135.9,
+   "chg_pct": -2.37,
+   "volume": 1751623,
+   "sources": {
+    "tradingview": 135.9,
+    "history_file": 135.9
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ISPH": {
+   "name": "ابن سينا فارما",
+   "close": 10.17,
+   "chg_pct": 0.7,
+   "volume": 4778860,
+   "sources": {
+    "tradingview": 10.1,
+    "history_file": 10.17
+   },
+   "history_date": "2026-11-26",
+   "status": "unconfirmed",
+   "note": "two sources differ; shown value is the history-file close"
+  },
+  "MCQE": {
+   "name": "مصر للأسمنت - قنا",
+   "close": 173.49,
+   "chg_pct": -0.47,
+   "volume": 92428,
+   "sources": {
+    "tradingview": 173.49,
+    "history_file": 173.49
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MFPC": {
+   "name": "موبكو",
+   "close": 36.79,
+   "chg_pct": -0.59,
+   "volume": 698065,
+   "sources": {
+    "tradingview": 36.79,
+    "history_file": 36.79
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "PHDC": {
+   "name": "بالم هيلز",
+   "close": 11.34,
+   "chg_pct": -0.09,
+   "volume": 3102637,
+   "sources": {
+    "tradingview": 11.34,
+    "history_file": 11.34
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "RAYA": {
+   "name": "راية",
+   "close": 6.06,
+   "chg_pct": 5.21,
+   "volume": 7344924,
+   "sources": {
+    "tradingview": 6.06,
+    "history_file": 6.06
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EFIH": {
+   "name": "e-finance for Digital and Financial Investments S.A.E.",
+   "close": 24.61,
+   "chg_pct": -1.56,
+   "volume": 1465117,
+   "sources": {
+    "tradingview": 24.61,
+    "history_file": 24.61
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "GBCO": {
+   "name": "جي بي اوتو",
+   "close": 21.47,
+   "chg_pct": -1.51,
+   "volume": 2474567,
+   "sources": {
+    "tradingview": 21.47,
+    "history_file": 21.47
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ORHD": {
+   "name": "اوراسكوم للتنمية مصر",
+   "close": 10.45,
+   "chg_pct": 0.67,
+   "volume": 4195177,
+   "sources": {
+    "tradingview": 10.45,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "RMDA": {
+   "name": "Tenth of Ramadan Pharmaceutical Industries & Diagnostic-Rameda",
+   "close": 5.01,
+   "chg_pct": -0.79,
+   "volume": 1635179,
+   "sources": {
+    "tradingview": 5.01,
+    "history_file": 5.01
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "TMGH": {
+   "name": "طلعت مصطفى",
+   "close": 79.24,
+   "chg_pct": 0.37,
+   "volume": 3309720,
+   "sources": {
+    "tradingview": 79.24,
+    "history_file": 79.24
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "CLHO": {
+   "name": "مستشفى كليوباترا",
+   "close": 14.4,
+   "chg_pct": 1.41,
+   "volume": 1983414,
+   "sources": {
+    "tradingview": 14.4,
+    "history_file": 14.4
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EFID": {
+   "name": "ايديتا",
+   "close": 21.3,
+   "chg_pct": 2.9,
+   "volume": 2286155,
+   "sources": {
+    "tradingview": 21.3,
+    "history_file": 21.3
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ORAS": {
+   "name": "اوراسكوم كونستراكشون ليميتد",
+   "close": 790,
+   "chg_pct": 3.54,
+   "volume": 640043,
+   "sources": {
+    "tradingview": 790,
+    "history_file": 790.0
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "SKPC": {
+   "name": "سيدي كرير للبتروكيماويات",
+   "close": 14.7,
+   "chg_pct": -0.41,
+   "volume": 2280825,
+   "sources": {
+    "tradingview": 14.7,
+    "history_file": 14.7
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "BTFH": {
+   "name": "بلتون المالية",
+   "close": 2.17,
+   "chg_pct": 0,
+   "volume": 25379301,
+   "sources": {
+    "tradingview": 2.17,
+    "history_file": 2.17
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EAST": {
+   "name": "ايسترن كومباني",
+   "close": 33.03,
+   "chg_pct": 0,
+   "volume": 881309,
+   "sources": {
+    "tradingview": 33.03,
+    "history_file": 33.03
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ABUK": {
+   "name": "ابوقير للاسمدة",
+   "close": 73.49,
+   "chg_pct": -0.1,
+   "volume": 398101,
+   "sources": {
+    "tradingview": 73.49,
+    "history_file": 73.49
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "CCAP": {
+   "name": "القلعة للاستشارات المالية",
+   "close": 5.52,
+   "chg_pct": -1.78,
+   "volume": 44629053,
+   "sources": {
+    "tradingview": 5.52,
+    "history_file": 5.52
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "HRHO": {
+   "name": "هيرميس",
+   "close": 26.98,
+   "chg_pct": 2.47,
+   "volume": 23309349,
+   "sources": {
+    "tradingview": 26.98,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "JUFO": {
+   "name": "جهينة",
+   "close": 21.72,
+   "chg_pct": -0.59,
+   "volume": 1134457,
+   "sources": {
+    "tradingview": 21.72,
+    "history_file": 21.72
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "VLMRA": {
+   "name": "Valmore Holding",
+   "close": 25.9,
+   "chg_pct": 1.37,
+   "volume": 3866653,
+   "sources": {
+    "tradingview": 25.9,
+    "history_file": 25.9
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "AMOC": {
+   "name": "أموك",
+   "close": 12,
+   "chg_pct": 0.84,
+   "volume": 7968122,
+   "sources": {
+    "tradingview": 12,
+    "history_file": 12.0
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EGAL": {
+   "name": "مصر للالومنيوم",
+   "close": 292.5,
+   "chg_pct": -0.29,
+   "volume": 198944,
+   "sources": {
+    "tradingview": 292.5,
+    "history_file": 292.5
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "FWRY": {
+   "name": "Fawry For Banking Technology And Electronic Payment",
+   "close": 17.2,
+   "chg_pct": -0.29,
+   "volume": 1393633,
+   "sources": {
+    "tradingview": 17.2,
+    "history_file": 17.2
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "HELI": {
+   "name": "مصر الجديدة للاسكان",
+   "close": 6.3,
+   "chg_pct": 1.12,
+   "volume": 7861030,
+   "sources": {
+    "tradingview": 6.3,
+    "history_file": 6.3
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "VLMR": {
+   "name": "القابضة المصرية الكويتية",
+   "close": 0.644,
+   "chg_pct": -0.46,
+   "volume": 205450,
+   "sources": {
+    "tradingview": 0.644,
+    "history_file": 0.644
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ADIB": {
+   "name": "مصرف أبو ظبي الإسلامي",
+   "close": 45.98,
+   "chg_pct": 0.11,
+   "volume": 412555,
+   "sources": {
+    "tradingview": 45.98,
+    "history_file": 45.98
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ALCN": {
+   "name": "الاسكندرية لتداول الحاويات",
+   "close": 30.87,
+   "chg_pct": -1.25,
+   "volume": 117526,
+   "sources": {
+    "tradingview": 30.87,
+    "history_file": 30.87
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "UEGC": {
+   "name": "الصعيد العامة للمقاولات",
+   "close": 1.4,
+   "chg_pct": 0,
+   "volume": 4306321,
+   "sources": {
+    "tradingview": 1.4,
+    "history_file": 1.4
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ASCM": {
+   "name": "اسيك للتعدين",
+   "close": 44.01,
+   "chg_pct": -0.9,
+   "volume": 60008,
+   "sources": {
+    "tradingview": 44.01,
+    "history_file": 44.0
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "LCSW": {
+   "name": "ليسيكو",
+   "close": 43.34,
+   "chg_pct": 4.71,
+   "volume": 1408884,
+   "sources": {
+    "tradingview": 43.34,
+    "history_file": 43.34
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "CSAG": {
+   "name": "القناة للتوكيلات الملاحية",
+   "close": 38.18,
+   "chg_pct": 0.39,
+   "volume": 96481,
+   "sources": {
+    "tradingview": 38.18,
+    "history_file": 38.18
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "OFH": {
+   "name": "O B Financial Holding",
+   "close": 0.695,
+   "chg_pct": -0.71,
+   "volume": 5801877,
+   "sources": {
+    "tradingview": 0.695,
+    "history_file": 0.695
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ARAB": {
+   "name": "بورتو جروب",
+   "close": 0.252,
+   "chg_pct": 0,
+   "volume": 142175180,
+   "sources": {
+    "tradingview": 0.252,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "COSG": {
+   "name": "القاهرة للزيوت والصابون",
+   "close": 1.34,
+   "chg_pct": -2.19,
+   "volume": 14316822,
+   "sources": {
+    "tradingview": 1.34,
+    "history_file": 1.34
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "POUL": {
+   "name": "القاهرة للدواجن",
+   "close": 6.83,
+   "chg_pct": 1.49,
+   "volume": 8039479,
+   "sources": {
+    "tradingview": 6.83,
+    "history_file": 6.83
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "PRCL": {
+   "name": "شينى",
+   "close": 17.81,
+   "chg_pct": -0.5,
+   "volume": 638144,
+   "sources": {
+    "tradingview": 17.81,
+    "history_file": 17.81
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "DSCW": {
+   "name": "دايس",
+   "close": 1.42,
+   "chg_pct": 0.71,
+   "volume": 2658372,
+   "sources": {
+    "tradingview": 1.42,
+    "history_file": 1.42
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MPRC": {
+   "name": "مدينة الانتاج الاعلامى",
+   "close": 36.71,
+   "chg_pct": 1.13,
+   "volume": 313003,
+   "sources": {
+    "tradingview": 36.71,
+    "history_file": 36.71
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ETRS": {
+   "name": "إيجيترانس",
+   "close": 11.03,
+   "chg_pct": -1.08,
+   "volume": 1445567,
+   "sources": {
+    "tradingview": 11.03,
+    "history_file": 11.03
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EHDR": {
+   "name": "المصريين للاسكان",
+   "close": 2.01,
+   "chg_pct": 0,
+   "volume": 1410032,
+   "sources": {
+    "tradingview": 2.01,
+    "history_file": 2.0
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ELSH": {
+   "name": "الشمس للاسكان",
+   "close": 10.37,
+   "chg_pct": -0.67,
+   "volume": 1919845,
+   "sources": {
+    "tradingview": 10.37,
+    "history_file": 10.37
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EXPA": {
+   "name": "البنك المصري لتنمية الصادرات",
+   "close": 14.23,
+   "chg_pct": -1.32,
+   "volume": 191511,
+   "sources": {
+    "tradingview": 14.23,
+    "history_file": 14.23
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ISMQ": {
+   "name": "Iron & Steel for Mines & Quarries",
+   "close": 6.4,
+   "chg_pct": -0.78,
+   "volume": 1047352,
+   "sources": {
+    "tradingview": 6.4,
+    "history_file": 6.4
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MCRO": {
+   "name": "Macro Group Pharmaceutical S.A.E.",
+   "close": 1.3,
+   "chg_pct": 0,
+   "volume": 19865179,
+   "sources": {
+    "tradingview": 1.3,
+    "history_file": 1.3
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MEPA": {
+   "name": "العبوات الطبية",
+   "close": 1.28,
+   "chg_pct": -0.78,
+   "volume": 1505396,
+   "sources": {
+    "tradingview": 1.28,
+    "history_file": 1.28
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ATQA": {
+   "name": "عتاقة",
+   "close": 9.52,
+   "chg_pct": -2.26,
+   "volume": 3445472,
+   "sources": {
+    "tradingview": 9.52,
+    "history_file": 9.52
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MTIE": {
+   "name": "إم تي أي",
+   "close": 6.62,
+   "chg_pct": -1.93,
+   "volume": 4717144,
+   "sources": {
+    "tradingview": 6.62,
+    "history_file": 6.62
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "OCDI": {
+   "name": "سوديك",
+   "close": 23.6,
+   "chg_pct": 0.85,
+   "volume": 1039455,
+   "sources": {
+    "tradingview": 23.6,
+    "history_file": 23.6
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ZMID": {
+   "name": "زهراء المعادي",
+   "close": 6.28,
+   "chg_pct": 3.12,
+   "volume": 16135523,
+   "sources": {
+    "tradingview": 6.28,
+    "history_file": 6.28
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EGTS": {
+   "name": "المصرية للمنتجعات السياحية",
+   "close": 11.85,
+   "chg_pct": -1.0,
+   "volume": 1038707,
+   "sources": {
+    "tradingview": 11.85,
+    "history_file": 11.85
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ISMA": {
+   "name": "الاسماعيلية مصر للدواجن",
+   "close": 18.67,
+   "chg_pct": -0.95,
+   "volume": 96945,
+   "sources": {
+    "tradingview": 18.67,
+    "history_file": 18.67
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ENGC": {
+   "name": "ايكون",
+   "close": 36.6,
+   "chg_pct": -1.08,
+   "volume": 254311,
+   "sources": {
+    "tradingview": 36.6,
+    "history_file": 36.6
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "TAQA": {
+   "name": "TAQA Arabia",
+   "close": 13.46,
+   "chg_pct": 0.52,
+   "volume": 383673,
+   "sources": {
+    "tradingview": 13.5,
+    "history_file": 13.46
+   },
+   "history_date": "2026-11-26",
+   "status": "unconfirmed",
+   "note": "two sources differ; shown value is the history-file close"
+  },
+  "AMER": {
+   "name": "عامر جروب",
+   "close": 3.45,
+   "chg_pct": -1.99,
+   "volume": 19892465,
+   "sources": {
+    "tradingview": 3.45,
+    "history_file": 3.45
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "IEEC": {
+   "name": "Industrial & Engineering Enterprises Co.",
+   "close": 0.634,
+   "chg_pct": 2.92,
+   "volume": 17687831,
+   "sources": {
+    "tradingview": 0.634,
+    "history_file": 0.634
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "SVCE": {
+   "name": "جنوب الوادي للاسمنت",
+   "close": 8.45,
+   "chg_pct": -0.12,
+   "volume": 4026688,
+   "sources": {
+    "tradingview": 8.45,
+    "history_file": 8.45
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "AMIA": {
+   "name": "الملتقى العربي للاستثمارات",
+   "close": 15.45,
+   "chg_pct": 0.46,
+   "volume": 156841,
+   "sources": {
+    "tradingview": 15.45,
+    "history_file": 15.45
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "SCEM": {
+   "name": "اسمنت سيناء",
+   "close": 96.53,
+   "chg_pct": -1.01,
+   "volume": 160657,
+   "sources": {
+    "tradingview": 96.53,
+    "history_file": 96.53
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ICFC": {
+   "name": "الدولية للأسمدة",
+   "close": 27.65,
+   "chg_pct": 3.17,
+   "volume": 508386,
+   "sources": {
+    "tradingview": 27.65,
+    "history_file": 27.65
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "KABO": {
+   "name": "كابو",
+   "close": 7.5,
+   "chg_pct": -3.23,
+   "volume": 5055621,
+   "sources": {
+    "tradingview": 7.5,
+    "history_file": 7.5
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MPCO": {
+   "name": "المنصورة للدواجن",
+   "close": 1.87,
+   "chg_pct": -0.53,
+   "volume": 20811049,
+   "sources": {
+    "tradingview": 1.87,
+    "history_file": 1.87
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "SWDY": {
+   "name": "السويدي اليكتريك",
+   "close": 115.93,
+   "chg_pct": -0.08,
+   "volume": 150011,
+   "sources": {
+    "tradingview": 115.93,
+    "history_file": 115.93
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ACTF": {
+   "name": "Act Financial",
+   "close": 2.14,
+   "chg_pct": -2.28,
+   "volume": 2981244,
+   "sources": {
+    "tradingview": 2.14,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "AIH": {
+   "name": "العربية للاستثمارات",
+   "close": 0.781,
+   "chg_pct": -0.51,
+   "volume": 12279667,
+   "sources": {
+    "tradingview": 0.781,
+    "history_file": 0.781
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MPCI": {
+   "name": "ممفيس للادوية",
+   "close": 314.33,
+   "chg_pct": -6.17,
+   "volume": 442620,
+   "sources": {
+    "tradingview": 314.33,
+    "history_file": 314.33
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ASPI": {
+   "name": "بايونيرز القابضة",
+   "close": 0.307,
+   "chg_pct": -0.97,
+   "volume": 14360630,
+   "sources": {
+    "tradingview": 0.307,
+    "history_file": 0.307
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "OBRI": {
+   "name": "العبور للاستثمار العقارى",
+   "close": 21.12,
+   "chg_pct": -0.7,
+   "volume": 118303,
+   "sources": {
+    "tradingview": 21.3,
+    "history_file": 21.12
+   },
+   "history_date": "2026-11-26",
+   "status": "unconfirmed",
+   "note": "two sources differ; shown value is the history-file close"
+  },
+  "CNFN": {
+   "name": "Contact Financial Holding SAE",
+   "close": 3.84,
+   "chg_pct": 1.86,
+   "volume": 862147,
+   "sources": {
+    "tradingview": 3.84,
+    "history_file": 3.84
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "HDBK": {
+   "name": "بنك التعمير والاسكان",
+   "close": 100.27,
+   "chg_pct": -2.37,
+   "volume": 228107,
+   "sources": {
+    "tradingview": 100.27,
+    "history_file": 100.27
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ATLC": {
+   "name": "ايه تي ليس",
+   "close": 5.24,
+   "chg_pct": 3.15,
+   "volume": 2426897,
+   "sources": {
+    "tradingview": 5.24,
+    "history_file": 5.24
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "PHAR": {
+   "name": "ايبيكو",
+   "close": 99.4,
+   "chg_pct": -0.09,
+   "volume": 208098,
+   "sources": {
+    "tradingview": 99.4,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "MASR": {
+   "name": "مدينة نصر للاسكان",
+   "close": 6.35,
+   "chg_pct": 1.93,
+   "volume": 2771745,
+   "sources": {
+    "tradingview": 6.35,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "IDRE": {
+   "name": "الاسماعيلية الجديدة للتطوير",
+   "close": 38.63,
+   "chg_pct": 0.91,
+   "volume": 31951,
+   "sources": {
+    "tradingview": 38.63,
+    "history_file": 38.63
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "DAPH": {
+   "name": "التعمير والاستشارات الهندسية",
+   "close": 81.1,
+   "chg_pct": -1.1,
+   "volume": 87867,
+   "sources": {
+    "tradingview": 81.1,
+    "history_file": 81.1
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "CIEB": {
+   "name": "كريدي أجريكول",
+   "close": 22.63,
+   "chg_pct": -0.13,
+   "volume": 130135,
+   "sources": {
+    "tradingview": 22.8,
+    "history_file": 22.63
+   },
+   "history_date": "2026-11-26",
+   "status": "unconfirmed",
+   "note": "two sources differ; shown value is the history-file close"
+  },
+  "ZEOT": {
+   "name": "الزيوت المستخلصة",
+   "close": 12.77,
+   "chg_pct": -4.06,
+   "volume": 2572347,
+   "sources": {
+    "tradingview": 12.77,
+    "history_file": 12.77
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "SIPC": {
+   "name": "سبأ",
+   "close": 4.71,
+   "chg_pct": 1.07,
+   "volume": 2065133,
+   "sources": {
+    "tradingview": 4.71,
+    "history_file": 4.71
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "MOED": {
+   "name": "المصرية لنظم التعليم الحديثة",
+   "close": 0.46,
+   "chg_pct": -2.34,
+   "volume": 9476820,
+   "sources": {
+    "tradingview": 0.46,
+    "history_file": 0.461
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "GPIM": {
+   "name": "المصريين للاستثمار",
+   "close": 1.55,
+   "chg_pct": 0.65,
+   "volume": 11849392,
+   "sources": {
+    "tradingview": 1.55,
+    "history_file": 1.55
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "SDTI": {
+   "name": "شارم دريمز",
+   "close": 84.08,
+   "chg_pct": 0.6,
+   "volume": 83238,
+   "sources": {
+    "tradingview": 84.08,
+    "history_file": 84.08
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "VALU": {
+   "name": "U Consumer Finance S.A.E",
+   "close": 9.26,
+   "chg_pct": 0.11,
+   "volume": 808110,
+   "sources": {
+    "tradingview": 9.26,
+    "history_file": 9.26
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "NCCW": {
+   "name": "النصر للأعمال المدنية",
+   "close": 5.17,
+   "chg_pct": -0.58,
+   "volume": 875747,
+   "sources": {
+    "tradingview": 5.17,
+    "history_file": 5.16
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "UNIP": {
+   "name": "يونيباك",
+   "close": 0.292,
+   "chg_pct": 0,
+   "volume": 12656773,
+   "sources": {
+    "tradingview": 0.292,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "NIPH": {
+   "name": "النيل للادوية",
+   "close": 276,
+   "chg_pct": -0.37,
+   "volume": 352232,
+   "sources": {
+    "tradingview": 276,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "AIFI": {
+   "name": "اطلس لاستصلاح الاراضى",
+   "close": 2.5,
+   "chg_pct": 2.46,
+   "volume": 6860505,
+   "sources": {
+    "tradingview": 2.5,
+    "history_file": 2.5
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ARCC": {
+   "name": "العربية للأسمنت",
+   "close": 65.98,
+   "chg_pct": 0.44,
+   "volume": 146739,
+   "sources": {
+    "tradingview": 66.24,
+    "history_file": 65.98
+   },
+   "history_date": "2026-11-26",
+   "status": "unconfirmed",
+   "note": "two sources differ; shown value is the history-file close"
+  },
+  "ELEC": {
+   "name": "الكابلات الكهربائية المصرية",
+   "close": 1.54,
+   "chg_pct": 0.65,
+   "volume": 8428734,
+   "sources": {
+    "tradingview": 1.54,
+    "history_file": 1.54
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ORWE": {
+   "name": "النساجون الشرقيون",
+   "close": 24,
+   "chg_pct": 0,
+   "volume": 292846,
+   "sources": {
+    "tradingview": 24,
+    "history_file": 24.0
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "OIH": {
+   "name": "اوراسكوم للاتصالات والاعلام والتكنولوجيا",
+   "close": 1.6,
+   "chg_pct": 2.56,
+   "volume": 9814114,
+   "sources": {
+    "tradingview": 1.6,
+    "history_file": 1.6
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "ELKA": {
+   "name": "القاهرة للاسكان",
+   "close": 1.4,
+   "chg_pct": 0.72,
+   "volume": 5116134,
+   "sources": {
+    "tradingview": 1.4,
+    "history_file": 1.4
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "GDWA": {
+   "name": "Gadwa For Industrial Development",
+   "close": 0.505,
+   "chg_pct": -0.59,
+   "volume": 16888561,
+   "sources": {
+    "tradingview": 0.505,
+    "history_file": 0.505
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "BONY": {
+   "name": "Bonyan for Development and Trade",
+   "close": 4.1,
+   "chg_pct": 0.49,
+   "volume": 1697340,
+   "sources": {
+    "tradingview": 4.1,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "GOUR": {
+   "name": "Gourmet Egypt.Com Foods",
+   "close": 13.42,
+   "chg_pct": 0.37,
+   "volume": 450444,
+   "sources": {
+    "tradingview": 13.42,
+    "history_file": null
+   },
+   "history_date": null,
+   "status": "single"
+  },
+  "MBSC": {
+   "name": "مصر بنى سويف للأسمنت",
+   "close": 330,
+   "chg_pct": -1.03,
+   "volume": 87165,
+   "sources": {
+    "tradingview": 330,
+    "history_file": 330.0
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "EGCH": {
+   "name": "كيما",
+   "close": 10.11,
+   "chg_pct": 4.33,
+   "volume": 3722262,
+   "sources": {
+    "tradingview": 10.11,
+    "history_file": 10.11
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  },
+  "PRDC": {
+   "name": "Pioneers Properties for Urban Development",
+   "close": 6.17,
+   "chg_pct": 0,
+   "volume": 1035851,
+   "sources": {
+    "tradingview": 6.17,
+    "history_file": 6.17
+   },
+   "history_date": "2026-11-26",
+   "status": "confirmed"
+  }
+ }
+}
