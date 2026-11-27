@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from './shim';
 import { useStarta } from './feed';
+import { stampNote } from './scen';
 
 const SYMS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
 const fmt = (v: number) => (v >= 1 ? v.toFixed(2) : v.toFixed(3));
@@ -21,8 +22,8 @@ export function Ticker() {
     </Link>
   ));
   return (
-    <div className="tk" role="region" aria-label={'شريط الأسهم، آخر لقطة ' + dm + ' ' + hm} title={'آخر لقطة من المصدر ' + dm + ' ' + hm + '، متأخرة حتى 20 دقيقة'}>
-      <div className="tk-track">{row('')}{row('-b')}</div>
+    <div className="tk" role="region" aria-label={'شريط الأسهم، آخر لقطة ' + dm + ' ' + hm} title={'آخر لقطة من المصدر ' + dm + ' ' + hm + '، ' + stampNote(f.at)}>
+      <div className="tk-vp"><div className="tk-track">{row('')}{row('-b')}</div></div>
       <span className="tk-at" dir="ltr">{dm} {hm}</span>
     </div>
   );
