@@ -9,7 +9,7 @@ const sg = (v: number, d = 2) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v
 const cairoDate = (iso: string) => { try { return new Date(iso).toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit', year: 'numeric' }); } catch { return ''; } };
 
 // Home market panel. Every number comes from idx/index.json (all rows share one session date) and indices.json.
-export const LC_FILES = ['last_close.json', 'last_close_fallback.json'];
+export const LC_FILES = ['last_close_fallback.json', 'last_close.json'];
 let LC_P: Promise<any> | null = null;
 export const getLc = (): Promise<any> => LC_P || (LC_P = LC_FILES.reduce((p: Promise<any>, f) => p.then(x => x || fetch(f, { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null)), Promise.resolve(null)));
 export const FLAG: Record<string, string> = { 'single-source': 'مصدر واحد', single: 'مصدر واحد', unconfirmed: 'غير مؤكد' };
