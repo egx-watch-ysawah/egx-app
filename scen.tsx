@@ -95,5 +95,7 @@ export function stampNote(iso?: string): string {
   if (!Number.isFinite(t)) return 'مش لحظي';
   if ((Date.now() - t) / 60000 <= 25) return 'متأخر حتى 20 دقيقة، مش لحظي';
   const h = Number(new Date(t).toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', hour12: false }));
+  const mm = Number(new Date(t).toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }).replace(':', '')) ;
+  if (mm >= 1420) return 'إقفال آخر جلسة، السوق مقفول، مش لحظي';
   return h < 10 ? 'قبل فتح السوق (10:00): آخر لقطة متاحة، مش لحظي' : 'آخر لقطة متاحة، أقدم من 20 دقيقة، مش لحظي';
 }
