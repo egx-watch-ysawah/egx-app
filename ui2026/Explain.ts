@@ -27,9 +27,12 @@ export const xPos = (p: number | null) => p === null ? ''
   : 'السعر في نص مدى السنة تقريبًا. قارنه بالمتوسطات.';
 
 let ATR_ALL: number[] | null = null;
+const ATR_BY: Record<string, number | null> = {};
+export const atrOf = (code: string): number | null => (code && typeof ATR_BY[code.toUpperCase()] === 'number' ? ATR_BY[code.toUpperCase()] : null);
 let ATR_P: Promise<number[]> | null = null;
 export const loadAtrAll = (): Promise<number[]> => ATR_ALL ? Promise.resolve(ATR_ALL) : (ATR_P = ATR_P || fetch('idx/index.json', { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then(j => {
   const rows: any[] = j && Array.isArray(j.rows) ? j.rows : [];
+  rows.forEach(r => { if (r && r.code) ATR_BY[String(r.code).toUpperCase()] = typeof r.atr_pct === 'number' && isFinite(r.atr_pct) ? r.atr_pct : null; });
   ATR_ALL = rows.map(r => r && r.atr_pct).filter((x: any) => typeof x === 'number' && isFinite(x)).sort((a: number, b: number) => a - b);
   return ATR_ALL;
 }));
@@ -62,3 +65,10 @@ export const xHome = {
   movers: 'ده أكبر تغيّر في آخر جلسة بس. قارنه بحجم التداول قبل ما تدي له وزن.',
   value: 'قيمة التداول بتوريك فين السيولة: الرقم الكبير يعني الدخول والخروج أسهل.',
 };
+
+export const xSig = (score: number) => score >= 4 ? 'أغلب المؤشرات إيجابية لحد الإقفال، وده وصف للحركة اللي فاتت. قارنه بالحجم وبمتوسط 200 قبل ما تدي له وزن.'
+  : score <= 1 ? 'أغلب المؤشرات سلبية لحد الإقفال، وده وصف للحركة اللي فاتت. اسأل ليه ضعف قبل أي حكم.'
+  : 'المؤشرات مختلطة. قارنها بباقي الأسهم.';
+export const xHold = (above200: boolean | null) => above200 === null ? ''
+  : above200 ? 'فوق متوسط 200: الاتجاه الطويل إيجابي لحد الإقفال. قارنه بسعر شرائك مش بتوقع.'
+  : 'تحت متوسط 200: الاتجاه الطويل لسه ضعيف. قارن حالتك بسعر شرائك.';
