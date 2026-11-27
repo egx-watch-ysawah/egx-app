@@ -14,3 +14,5 @@ for (const f of ['last_close.json', 'last_close_fallback.json']) if (fs.existsSy
 fs.writeFileSync('dist/index.html',fs.readFileSync('dist/index.html','utf8').replace('src="app.js"','src="app.js?v='+stamp+'"').replace('href="app.css"','href="app.css?v='+stamp+'"'));
 fs.writeFileSync('dist/sw.js', fs.readFileSync('sw.js', 'utf8').replace('__V__', stamp));
 console.log('built', stamp);
+
+if(fs.existsSync('gold/history.jsonl')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/history.jsonl','dist/gold/history.jsonl');}
