@@ -498,12 +498,12 @@ export function OnTab({ id, children }: { id: string; children: React.ReactNode 
 }
 
 export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart, fairNew }: { fairNew?: boolean; s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
-  const [tab, setTab0] = useState<'t' | 'f' | 'v' | 'd'>('t');
+  const [tab, setTab0] = useState<'t' | 'f' | 'v' | 'd'>(s.nohist ? 'f' : 't');
   const setTab = (t: 't' | 'f' | 'v' | 'd') => { setTab0(t); setGuide(t, true); };
-  React.useEffect(() => { setGuide('t', true); return () => setGuide('t', false); }, [k]);
+  React.useEffect(() => { const g = s.nohist ? 'f' : 't'; setGuide(g, true); return () => setGuide(g, false); }, [k]);
   const [pmS, setPmS] = useState<any>(null);
   useEffect(() => { let on = true; if (NEW(k)) loadPilotM(k).then(x => on && setPmS(x)); return () => { on = false; }; }, [k]);
-  const tech = techItems(s);
+  const tech = s.nohist ? [] : techItems(s);
   const fin = light ? [] : (NEW(k) && pageOf(k) && pageOf(k).fin_items_ar) ? pageOf(k).fin_items_ar : k === 'BONY' ? BONY_ITEMS : finItems(r, k);
   const items = tab === 'f' ? fin : tech;
   const lead = tab === 't'
@@ -514,7 +514,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
   const held = HELD.includes(k);
   return <><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
-    <div className="gd-tabs">{tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
+    <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
