@@ -113,3 +113,4 @@ html body .sm .sm-gt em s{background:none!important;color:#b4bac4!important}
 .fvd-m{margin:0;font-size:11.5px;line-height:1.55;color:#a5aab2}
 .fvd-d>summary{min-height:44px;display:flex;align-items:center;color:#b4bac4;font-size:14px;cursor:pointer;padding:0 4px}
 .chp-dt{display:flex;flex-direction:column;gap:6px}.chp-dt>summary{min-height:44px;display:flex;align-items:center;color:#b4bac4;font-size:13px;cursor:pointer}
+html body em.hp-fl,html body .ls-t em.hp-fl,html body .ls-r em.hp-fl{display:inline!important;font-style:normal!important;font-size:11px!important;font-weight:400!important;line-height:inherit!important;color:#a5aab2!important;text-decoration:none!important;margin:0!important;padding:0!important;border:0!important;background:none!important;white-space:nowrap}
