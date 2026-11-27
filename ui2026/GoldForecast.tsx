@@ -12,7 +12,7 @@ export const TARGETS: Tgt[] = [
   { n: 3, org: 'UBS', v: 4500, d: '2026-12-31', kind: 'آخر 2026', pub: '18 و21 نوفمبر', urls: [['المصدر 21 نوفمبر', 'https://www.investing.com/news/commodities-news/ubs-flags-further-gold-weakness-before-fed-ratecut-expectations-return-5043537'], ['المصدر 18 نوفمبر', 'https://www.boerse-express.com/news/articles/ubs-aktie-goldprognose-gesenkt-964375']] },
   { n: 4, org: 'ستاندرد تشارترد', v: 4500, d: '2027-11-20', kind: 'بعد 12 شهر', pub: 'توقع 20 نوفمبر', urls: [['المصدر (PDF)', 'https://www.sc.com/en/uploads/sites/66/content/docs/wm-weekly-market-view-staying-diversified-adding-us-mega-caps-20-november-2026.pdf']] },
   { n: 5, org: 'جي بي مورغان', v: 4500, hi: 4600, d: '2027-12-31', kind: 'آخر 2027', pub: '24 و27 نوفمبر', urls: [['كيتكو 27 نوفمبر', 'https://www.kitco.com/news/article/2026-11-27/gold-will-reach-4600oz-q4-2027-rates-fall-usd-gives-back-10-overvaluation'], ['رويترز 24 نوفمبر', 'https://www.tradingview.com/news/reuters.com%2C2026:newsml_L3N4751FV:0-jp-morgan-cuts-base-metals-outlook-sees-gold-at-4-500-by-end-2027/']] },
-  { n: 6, org: 'جولدمان ساكس', v: 4650, d: '2027-12-31', kind: 'آخر 2027', pub: '17 نوفمبر', urls: [['المصدر', 'https://www.kitco.com/news/article/2026-11-17/gold-will-reclaim-5600oz-2028-rate-cuts-bring-western-investors-back']] },
+  { n: 6, org: 'جولدمان ساكس', v: 4650, d: '2027-12-31', kind: 'آخر 2027', pub: '17 نوفمبر', urls: [['المصدر', 'https://www.kitco.com/news/article/2026-11-17/gold-will-reclaim-5600oz-2028-rate-cuts-bring-western-investors-back']], extra: 'مخاطر ذكرها جولدمان: 4,585 لو الفيدرالي رفع 4 مرات، و4,265 لو 300 طن خرجت من الصناديق' },
   { n: 7, org: 'UBS', v: 5000, d: '2027-12-31', kind: 'آخر 2027', pub: '18 و21 نوفمبر', urls: [['المصدر', 'https://www.investing.com/news/commodities-news/ubs-flags-further-gold-weakness-before-fed-ratecut-expectations-return-5043537']], extra: 'في الطريق: مارس 4,200 · يونيو 4,600 · سبتمبر 4,800' },
   { n: 8, org: 'جولدمان ساكس', v: 5600, d: '2028-12-31', kind: 'آخر 2028، بشرط تخفيض الفايدة', pub: '17 نوفمبر', urls: [['المصدر', 'https://www.kitco.com/news/article/2026-11-17/gold-will-reclaim-5600oz-2028-rate-cuts-bring-western-investors-back']] },
 ];
@@ -95,7 +95,9 @@ export function ForecastBoard() {
     <section className="gd-card"><h3>أهداف الجهات (مش توقعنا)</h3>
       <p className="gf-ex">آراء جهات منشورة، بتواريخها. آخر مراجعة {STAMP}.</p>
       <ForecastChart px={g.p} /><Key />
-      <div className="gf-tb">{TARGETS.map(a => {
+      <p className="gf-p">البنوك كتبت أهدافها وهي عارفة إن الفيدرالي هيرفع الفايدة (جولدمان واليو بي إس ذكروا الرفع صراحة)، وقالوا إن الذهب هيفضل تحت ضغط الأول، والصعود مربوط بتوقف الرفع وبدء التخفيض في 2027.</p>
+      <p className="gf-p">دي آراء بنوك بتواريخها، مش توقعنا. وأهداف آخر 2026 أعلى من السعر دلوقتي والمصادر ما شرحتش إزاي هتوصل لها. القرار قرارك.</p>
+      <div className="gf-tb">{[...TARGETS].sort((x, y) => (x.d < y.d ? 1 : x.d > y.d ? -1 : x.n - y.n)).map(a => {
         const mid = a.hi ? (a.v + a.hi) / 2 : a.v; const gp = (mid / g.p - 1) * 100;
         return <div className="gf-tr" key={a.n}>
           <span className={'gf-n f ' + cl(gp)}>{a.n}</span>
