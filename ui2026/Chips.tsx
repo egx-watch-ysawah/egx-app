@@ -3,6 +3,7 @@ import { verdict } from '../shared';
 import { LcFlag } from './LcFlag';
 import { loadAtrAll, atrOf, xTech, xRsi, xChg, xPos, xAtr, xVol, xRef } from './Explain';
 import { VAL, VAL_ASOF, VAL_METHOD } from './valuation';
+import { FAIR6 } from './FairSix';
 // Chip row for stock pages. Uses only fields already in the stock JSON (close, date, chg5/20/60, rsi, votes, plan.atrpct, volx, hi52, lo52).
 // Every missing field is a grey "غير متوفر" chip, never a made-up number.
 const num = (v: any) => typeof v === 'number' && Number.isFinite(v);
@@ -13,7 +14,8 @@ export function StockChips({ s, code }: { s: any; code?: string }) {
   const [atrAll, setAtrAll] = React.useState<number[] | null>(null);
   React.useEffect(() => { let on = true; loadAtrAll().then(a => on && setAtrAll(a)); return () => { on = false; }; }, []);
   if (!s || s.nohist) return null;
-  const val = code ? VAL[code.toUpperCase()] : undefined;
+  // the six stocks show one fair-value card (fair_six.json) in their السعر العادل tab, so the second comparison number is hidden there
+  const val = code && !FAIR6.includes(code.toUpperCase()) ? VAL[code.toUpperCase()] : undefined;
   const v = s.ok ? verdict(s) : null;
   const vcls = !v ? 'gr' : v.c === 'go' ? 'up' : v.c === 'wait' ? 'dn' : 'gr';
   const lo = s.lo52, hi = s.hi52, c = s.close;
