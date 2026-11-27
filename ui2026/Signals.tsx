@@ -29,11 +29,12 @@ export function Signals() {
   const missing = d ? d.rows.length - rows.length : 0;
   const Row = ({ r }: { r: any }) => (
     <Link to={to(r.code)} className="sg-r">
-      <div className="sg-n"><b>{r.name}</b><small dir="ltr">{r.code}</small></div>
-      <Dots votes={r.votes} />
-      <div className="sg-p" dir="ltr"><b>{r.price}</b>{typeof r.chg === 'number' ? <span className={cls(r.chg)}>{sg(r.chg)}</span> : null}</div>
-      <div className="sg-s">{score(r)}/5</div>
+      <div className="sg-n"><b>{r.name}</b><small dir="ltr">{r.code}</small><Dots votes={r.votes} /></div>
+      <div className="sg-k" dir="ltr">{score(r)}/5</div>
+      <div className="sg-q" dir="ltr">{r.price}</div>
+      <div className={'sg-g ' + (typeof r.chg === 'number' ? cls(r.chg) : 'gr')} dir="ltr">{typeof r.chg === 'number' ? (r.chg > 0 ? '▲ ' : r.chg < 0 ? '▼ ' : '') + sg(r.chg) : '—'}</div>
     </Link>);
+  const Head = () => <div className="sg-hd" aria-hidden="true"><span>السهم</span><span>النقاط</span><span>السعر</span><span>التغير</span></div>;
   return (
     <div className="eg-pad sg">
       <h2 className="eg-h" style={{ marginTop: 56 }}>الإشارات</h2>
@@ -54,9 +55,9 @@ export function Signals() {
           </div>))}
       <p className="sg-note">باقي الأسهم (EGX 30 و70 غير الستة): الإشارات المفعّلة غير متوفرة هنا حاليًا، لأن بيانات الإشارة مش متضمنة في القايمة العامة.</p>
       <h3 className="sg-h">أقوى قراءة فنية (4 من 5 مؤشرات إيجابية أو أكتر)</h3>
-      {err ? <div className="sg-na">مقدرتش أحمل القايمة</div> : !d ? <div className="sg-na">بحمّل...</div> : strong.length ? strong.map(r => <Row key={r.code} r={r} />) : <div className="sg-na">مفيش</div>}
+      {err ? <div className="sg-na">مقدرتش أحمل القايمة</div> : !d ? <div className="sg-na">بحمّل...</div> : strong.length ? <><Head />{strong.map(r => <Row key={r.code} r={r} />)}</> : <div className="sg-na">مفيش</div>}
       <h3 className="sg-h">أضعف قراءة فنية (مؤشر واحد إيجابي أو أقل)</h3>
-      {d ? weak.map(r => <Row key={r.code} r={r} />) : null}
+      {d ? <><Head />{weak.map(r => <Row key={r.code} r={r} />)}</> : null}
       <p className="sg-note">النقط الخمسة: فوق متوسط 200 · فوق متوسط 50 · ماكد · RSI · الحجم. نقطة مضيئة = إيجابي. {missing ? missing + ' أسهم بدون بيانات كافية (مش معروضة).' : ''} {d ? 'القايمة بتاريخ ' + String(d.asof).slice(0, 10) + '، المصدر Starta Markets.' : ''}</p>
     </div>
   );
