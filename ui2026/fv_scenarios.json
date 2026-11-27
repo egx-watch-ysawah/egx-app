@@ -1,0 +1,331 @@
+{
+ "generated": "2026-11-27",
+ "label": "cross-check study (private calculator), not the page base case",
+ "currency": "EGP",
+ "stocks": {
+  "MASR": {
+   "bear": 5.19,
+   "base": 5.89,
+   "bull": 6.58,
+   "scenario_basis": "FV-B unified residual income; terminal ROE = current ROE x 0.76 / 0.83 / 0.90 (assumption, COMI ratios): ROE نهائي 19.3% | ROE نهائي 21.1% | ROE نهائي 22.9%",
+   "growth": 10,
+   "ke": {
+    "year1": 26.351,
+    "year5": 21,
+    "path": "linear fade"
+   },
+   "g": 10,
+   "margin": null,
+   "inputs": {
+    "price": 6.35,
+    "price_date": "2026-11-26",
+    "bvps": 5.83,
+    "roe0_pct": 25.44,
+    "roeT_scenarios_pct": "19.3 21.1 22.9",
+    "years": 5
+   },
+   "method_values": {
+    "ri": 5.77,
+    "ri_unified": 5.89,
+    "multiples_fwd": 6.33,
+    "evebitda": 13.22,
+    "fcff": 4.78,
+    "fcfe": 4.57,
+    "nav": 6.26,
+    "ddm2": 1.64,
+    "gordon": 1.01,
+    "hmodel": 1.12,
+    "pb": 3.96,
+    "pe_just": 0.91,
+    "eva": 5.65,
+    "grahamNumber": 12.69,
+    "graham": 22.7,
+    "ncav": 3.17,
+    "montecarlo": 3.44
+   },
+   "method_weights": {
+    "ri": "equal",
+    "ri_unified": "equal",
+    "multiples_fwd": "equal",
+    "evebitda": "equal",
+    "fcff": "equal",
+    "fcfe": "equal",
+    "nav": "equal",
+    "ddm2": "equal",
+    "gordon": "equal",
+    "hmodel": "equal",
+    "pb": "equal",
+    "pe_just": "equal",
+    "eva": "equal",
+    "grahamNumber": "equal",
+    "graham": "equal",
+    "ncav": "equal",
+    "montecarlo": "equal"
+   },
+   "median_all_methods": 4.68,
+   "methods_in_median": 14,
+   "as_of": "2026-11-27",
+   "source": "StockAnalysis + Starta public pages via private calculator",
+   "status": "available",
+   "reason": null
+  },
+  "BONY": {
+   "bear": 2.08,
+   "base": 2.64,
+   "bull": 3.14,
+   "scenario_basis": "FV-B unified residual income; terminal ROE = current ROE x 0.76 / 0.83 / 0.90 (assumption, COMI ratios): ROE نهائي 12.7% | ROE نهائي 13.9% | ROE نهائي 15%",
+   "growth": 10,
+   "ke": {
+    "year1": 26.351,
+    "year5": 21,
+    "path": "linear fade"
+   },
+   "g": 10,
+   "margin": null,
+   "inputs": {
+    "price": 4.1,
+    "price_date": "2026-11-26",
+    "bvps": 6.98,
+    "roe0_pct": 16.72,
+    "roeT_scenarios_pct": "12.7 13.9 15.0",
+    "years": 5
+   },
+   "method_values": {
+    "ri": 2.59,
+    "ri_unified": 2.64,
+    "multiples_fwd": 8.1,
+    "evebitda": 0.81,
+    "nav": 6.98,
+    "pb": 1.66,
+    "grahamNumber": 13.02,
+    "graham": 19.98
+   },
+   "method_weights": {
+    "ri": "equal",
+    "ri_unified": "equal",
+    "multiples_fwd": "equal",
+    "evebitda": "equal",
+    "nav": "equal",
+    "pb": "equal",
+    "grahamNumber": "equal",
+    "graham": "equal"
+   },
+   "median_all_methods": 2.61,
+   "methods_in_median": 6,
+   "as_of": "2026-11-27",
+   "source": "StockAnalysis + Starta public pages via private calculator",
+   "status": "available",
+   "reason": null
+  },
+  "HRHO": {
+   "bear": 0.52,
+   "base": 2.02,
+   "bull": 3.51,
+   "scenario_basis": "FV-B unified residual income; terminal ROE = current ROE x 0.76 / 0.83 / 0.90 (assumption, COMI ratios): ROE نهائي 9.6% | ROE نهائي 10.5% | ROE نهائي 11.4%",
+   "growth": 10,
+   "ke": {
+    "year1": 26.351,
+    "year5": 21,
+    "path": "linear fade"
+   },
+   "g": 10,
+   "margin": null,
+   "inputs": {
+    "price": 26.98,
+    "price_date": "2026-11-26",
+    "bvps": 25.16,
+    "roe0_pct": 12.64,
+    "roeT_scenarios_pct": "9.6 10.5 11.4",
+    "years": 5
+   },
+   "method_values": {
+    "ri": 1.98,
+    "ri_unified": 2.02,
+    "nav": 32.19,
+    "ddm2": 3.03,
+    "gordon": 1.87,
+    "hmodel": 2.08,
+    "pb": 0.77,
+    "pe_just": 7.96,
+    "eva": 1.93,
+    "grahamNumber": 38.36,
+    "graham": 48.1
+   },
+   "method_weights": {
+    "ri": "equal",
+    "ri_unified": "equal",
+    "nav": "equal",
+    "ddm2": "equal",
+    "gordon": "equal",
+    "hmodel": "equal",
+    "pb": "equal",
+    "pe_just": "equal",
+    "eva": "equal",
+    "grahamNumber": "equal",
+    "graham": "equal"
+   },
+   "median_all_methods": 2.02,
+   "methods_in_median": 9,
+   "as_of": "2026-11-27",
+   "source": "StockAnalysis + Starta public pages via private calculator",
+   "status": "available",
+   "reason": null
+  },
+  "UNIP": {
+   "bear": null,
+   "base": null,
+   "bull": null,
+   "scenario_basis": null,
+   "growth": 10,
+   "ke": {
+    "year1": 26.351,
+    "year5": 21,
+    "path": "linear fade"
+   },
+   "g": 10,
+   "margin": null,
+   "inputs": {
+    "price": 0.3,
+    "price_date": "2026-11-23",
+    "bvps": 0.22,
+    "roe0_pct": null,
+    "roeT_scenarios_pct": null,
+    "years": 5
+   },
+   "method_values": {
+    "nav": 0.22,
+    "eva": -0.36,
+    "grahamNumber": 0.22,
+    "graham": 0.18,
+    "ncav": 0.06
+   },
+   "method_weights": {
+    "nav": "equal",
+    "eva": "equal",
+    "grahamNumber": "equal",
+    "graham": "equal",
+    "ncav": "equal"
+   },
+   "median_all_methods": 0.22,
+   "methods_in_median": 1,
+   "as_of": "2026-11-27",
+   "source": "StockAnalysis + Starta public pages via private calculator",
+   "status": "unavailable",
+   "reason": "residual income needs ROE and book value; ROE not available from source"
+  },
+  "PHAR": {
+   "bear": 20.13,
+   "base": 23.47,
+   "bull": 27.04,
+   "scenario_basis": "FV-B unified residual income; terminal ROE = current ROE x 0.76 / 0.83 / 0.90 (assumption, COMI ratios): ROE نهائي 15.6% | ROE نهائي 17% | ROE نهائي 18.5%",
+   "growth": 10,
+   "ke": {
+    "year1": 26.351,
+    "year5": 21,
+    "path": "linear fade"
+   },
+   "g": 10,
+   "margin": null,
+   "inputs": {
+    "price": 99.11,
+    "price_date": "2026-11-26",
+    "bvps": 36.08,
+    "roe0_pct": 20.51,
+    "roeT_scenarios_pct": "15.6 17.0 18.5",
+    "years": 5
+   },
+   "method_values": {
+    "ri": 23.03,
+    "ri_unified": 23.47,
+    "multiples_fwd": 75.99,
+    "evebitda": 86.8,
+    "nav": 36.11,
+    "ddm2": 38.18,
+    "gordon": 23.55,
+    "hmodel": 26.22,
+    "pb": 15.45,
+    "pe_just": 19.48,
+    "peg": 72.13,
+    "eva": -57.41,
+    "grahamNumber": 78.81,
+    "graham": 141.53,
+    "ncav": -22.43
+   },
+   "method_weights": {
+    "ri": "equal",
+    "ri_unified": "equal",
+    "multiples_fwd": "equal",
+    "evebitda": "equal",
+    "nav": "equal",
+    "ddm2": "equal",
+    "gordon": "equal",
+    "hmodel": "equal",
+    "pb": "equal",
+    "pe_just": "equal",
+    "peg": "equal",
+    "eva": "equal",
+    "grahamNumber": "equal",
+    "graham": "equal",
+    "ncav": "equal"
+   },
+   "median_all_methods": 26.22,
+   "methods_in_median": 11,
+   "as_of": "2026-11-27",
+   "source": "StockAnalysis + Starta public pages via private calculator",
+   "status": "available",
+   "reason": null
+  },
+  "ORHD": {
+   "bear": 7.3,
+   "base": 8.09,
+   "bull": 8.88,
+   "scenario_basis": "FV-B unified residual income; terminal ROE = current ROE x 0.76 / 0.83 / 0.90 (assumption, COMI ratios): ROE نهائي 25% | ROE نهائي 27.3% | ROE نهائي 29.6%",
+   "growth": 10,
+   "ke": {
+    "year1": 26.351,
+    "year5": 21,
+    "path": "linear fade"
+   },
+   "g": 10,
+   "margin": null,
+   "inputs": {
+    "price": 10.45,
+    "price_date": "2026-11-26",
+    "bvps": 5.21,
+    "roe0_pct": 32.9,
+    "roeT_scenarios_pct": "25.0 27.3 29.6",
+    "years": 5
+   },
+   "method_values": {
+    "ri": 7.94,
+    "ri_unified": 8.09,
+    "multiples_fwd": 8.42,
+    "evebitda": 16.77,
+    "nav": 5.59,
+    "pb": 5.51,
+    "eva": 5.61,
+    "grahamNumber": 13.65,
+    "graham": 29.42,
+    "ncav": -0.58
+   },
+   "method_weights": {
+    "ri": "equal",
+    "ri_unified": "equal",
+    "multiples_fwd": "equal",
+    "evebitda": "equal",
+    "nav": "equal",
+    "pb": "equal",
+    "eva": "equal",
+    "grahamNumber": "equal",
+    "graham": "equal",
+    "ncav": "equal"
+   },
+   "median_all_methods": 7.94,
+   "methods_in_median": 7,
+   "as_of": "2026-11-27",
+   "source": "StockAnalysis + Starta public pages via private calculator",
+   "status": "available",
+   "reason": null
+  }
+ }
+}
