@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from '../shim';
 import { DATA } from '../data';
 import { RULE_AR, KEYS } from '../shared';
+import { xSig } from './Explain';
 // Signals screen. Only data that exists:
 //  - fired signals + their own backtest sample (n, win %, avg %) for the 6 held stocks (data.json: fire, bt)
 //  - technical score = count of positive indicators out of 5 (votes) for EGX30/EGX70 rows in idx/index.json
@@ -33,6 +34,7 @@ export function Signals() {
       <div className="sg-k" dir="ltr">{score(r)}/5</div>
       <div className="sg-q" dir="ltr">{r.price}</div>
       <div className={'sg-g ' + (typeof r.chg === 'number' ? cls(r.chg) : 'gr')} dir="ltr">{typeof r.chg === 'number' ? (r.chg > 0 ? '▲ ' : r.chg < 0 ? '▼ ' : '') + sg(r.chg) : '—'}</div>
+      <p className="chp-x">{xSig(score(r))}</p>
     </Link>);
   const Head = () => <div className="sg-hd" aria-hidden="true"><span>السهم</span><span>النقاط</span><span>السعر</span><span>التغير</span></div>;
   return (
