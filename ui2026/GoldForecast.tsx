@@ -194,8 +194,44 @@ const SCN_CSS = `.sc-b{border-top:1px solid #1e252f;margin-top:12px;padding-top:
 .sc-t{display:flex;justify-content:space-between;font-size:12px;color:#b4bac4}.sc-t b{font-size:13px}.sc-t2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.sc-i{background:#0b0f12;border-radius:10px;padding:10px;text-align:center;display:flex;flex-direction:column;gap:2px}.sc-i i{font-style:normal;font-size:11.5px;color:#b4bac4}.sc-i b{font-size:19px;color:#edeef0}.sc-i em{font-style:normal;font-size:11px;color:#a5aab2}
 .sc-na{border:1px dashed #3a4350;border-radius:10px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:4px}.sc-na b{font-size:18px;color:#b4bac4}.sc-na span{font-size:12px;color:#a5aab2}`;
 
+// Price-range panel. Range = lognormal 80% band from EWMA volatility (computed daily in gold/scenario.json -> range), applied to the LIVE price. A range, not a direction.
+type Rng = { sigmaDaily: number; sigmaAnnual: number; goldThrough: string; inside20: number; inside60: number; calibFrom: string };
+let RNG_P: Promise<Rng | null> | null = null;
+const loadRng = (): Promise<Rng | null> => RNG_P || (RNG_P = fetch('gold/scenario.json?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then((j: any) => {
+  const r = j && j.range; return r && [r.sigmaDaily, r.sigmaAnnual, r.inside20, r.inside60].every((v: any) => typeof v === 'number' && isFinite(v)) && r.sigmaDaily > 0.2 && r.sigmaDaily < 10 && /^\d{4}-\d{2}-\d{2}$/.test(r.goldThrough) ? r as Rng : null; }));
+const ZR = 1.2816;
+function RangeBar({ label, H, r, px, lo0, hi0 }: { label: string; H: number; r: Rng; px: number; lo0: number; hi0: number }) {
+  const sg = r.sigmaDaily / 100 * Math.sqrt(H); const lo = px * Math.exp(-ZR * sg), hi = px * Math.exp(ZR * sg);
+  const X = (v: number) => ((v - lo0) / (hi0 - lo0) * 100);
+  return <div className="rg-b"><div className="rg-h"><b>{label}</b></div>
+    <div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: X(lo) + '%', width: (X(hi) - X(lo)) + '%' }} /><div className="rg-p" style={{ left: X(px) + '%' }} /></div>
+    <div className="rg-n" dir="ltr"><span className="dn"><b>{n0(lo)}</b><small>{'−' + Math.abs((lo / px - 1) * 100).toFixed(1) + '%'}</small></span><span className="rg-c"><b>{n0(px)}</b><small>الآن</small></span><span className="up"><b>{n0(hi)}</b><small>{'+' + ((hi / px - 1) * 100).toFixed(1) + '%'}</small></span></div></div>;
+}
+export function GoldRange() {
+  const [r, setR] = React.useState<Rng | null | undefined>(undefined);
+  const g = useGoldPx();
+  React.useEffect(() => { let on = true; loadRng().then(x => on && setR(x)); return () => { on = false; }; }, []);
+  if (r === undefined) return null;
+  const stale = !r || dAge(r.goldThrough) > 10;
+  return <section className="gd-card sc"><style>{SCN_CSS + RG_CSS}</style><h3>مدى سعر الذهب</h3>
+    {stale ? <div className="sc-na"><b>غير متوفر</b><span>{r ? 'البيانات قديمة: الذهب لحد ' + arD(r.goldThrough) : 'الحساب مش متاح دلوقتي (ملف الأرقام ما اتحملش)'}</span></div> : r && (() => {
+      const hi60 = g.p * Math.exp(ZR * r.sigmaDaily / 100 * Math.sqrt(60)), lo60 = g.p * Math.exp(-ZR * r.sigmaDaily / 100 * Math.sqrt(60));
+      const pad = (hi60 - lo60) * 0.04; const lo0 = lo60 - pad, hi0 = hi60 + pad;
+      return <>
+        <p className="gf-e">مدى مش اتجاه، مش نصيحة.</p>
+        <RangeBar label="شهر (20 يوم تداول)" H={20} r={r} px={g.p} lo0={lo0} hi0={hi0} />
+        <RangeBar label="3 شهور (60 يوم تداول)" H={60} r={r} px={g.p} lo0={lo0} hi0={hi0} />
+        <div className="sc-t2"><span className="sc-i"><i>تقلب الذهب دلوقتي</i><b>حوالي <bdi dir="ltr">{Math.round(r.sigmaAnnual)}%</bdi> في السنة</b><em>{r.sigmaDaily.toFixed(2)}% في اليوم</em></span>
+          <span className="sc-i"><i>جوه المدى تاريخيًا</i><b dir="ltr">{Math.round(r.inside20)}% / {Math.round(r.inside60)}%</b><em>شهر / 3 شهور · من {r.calibFrom.slice(0, 4)}</em></span></div>
+        <p className="gf-e">في حوالي 8 من 10 شهور الذهب فضل جوه مدى زي ده. سعر الذهب: {g.live ? 'لايف، ' : ''}{g.src} · التقلب من إقفالات عقود كوميكس (Yahoo) لحد {arD(r.goldThrough)}.</p></>; })()}
+  </section>;
+}
+const RG_CSS = `.rg-b{margin-top:12px}.rg-h b{font-size:13px;color:#edeef0}.rg-bar{position:relative;height:26px;margin:8px 0 6px;background:#0b0f12;border-radius:13px}.rg-f{position:absolute;top:4px;height:18px;border-radius:9px;background:linear-gradient(90deg,#de575b55,#3a4350 40%,#3a4350 60%,#25b89655)}.rg-p{position:absolute;top:0;width:3px;height:26px;margin-left:-1px;background:#edeef0;border-radius:2px}
+.rg-n{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:6px}.rg-n span{display:flex;flex-direction:column;gap:1px}.rg-n span:first-child{align-items:flex-start}.rg-n span:last-child{align-items:flex-end}.rg-c{align-items:center}.rg-n b{font-size:20px}.rg-n small{font-size:12px;color:#b4bac4}.rg-n .dn b{color:#de575b}.rg-n .up b{color:#25b896}.rg-n .rg-c b{color:#edeef0}`;
+
 export function GoldFacts() {
   return <div className="gf">
+    <GoldRange />
     <section className="gd-card"><h3>الفايدة والدولار</h3>
       <div className="gf-t3">
         <span className="gf-w"><i>الفايدة الأمريكية</i><b dir="ltr">3.75–4.00%</b><em>{STAMP}</em></span>
