@@ -95,3 +95,5 @@ html body .sm .sm-gt em s{background:none!important;color:#b4bac4!important}
 .sg-k,.sg-q,.sg-g{text-align:right;font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}.sg-k{color:#a5aab2;font-size:12px}.sg-g{font-size:12px}.sg-g.up{color:#25b896}.sg-g.dn{color:#de575b}.sg-g.gr{color:#a5aab2}
 .sg-r .sg-dots{margin-top:4px}
 .hp-v{display:block;text-align:right;font-variant-numeric:tabular-nums}
+.hp-fl{font-style:normal;color:#b4bac4;text-decoration:underline dotted}
+.hm{flex-wrap:wrap}.hm-x{flex-basis:100%;font-size:11.5px;line-height:1.55;color:#a5aab2}
