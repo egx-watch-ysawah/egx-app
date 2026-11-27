@@ -17,6 +17,7 @@ import { TopWarn } from './topwarn';
 import { AllStocks } from './unavail';
 
 
+import { RuleCards } from './ui2026/More';
 import { Det, ENCRYPTED_PORTFOLIO, Evidence, FinancialStudy, KEYS, L, PORTFOLIO_KEY, Plan3, Price, RULE_AR, Short, fmt, invalidCandles, num, pc, reason, records, verdict, w20, why } from './shared';
 import { Home } from './screen_home';
 import { MyPosition, Stock } from './screen_stock';
@@ -72,7 +73,7 @@ export function About() {
 export function Info() {
     return <div className="eg-pad eg-in">
         {DATA.flows && <Det title="حركة السوق (أسهم بس)"><Market /></Det>}
-        <Det title="قواعد البورصة المصرية باختصار"><ul className="eg-ul"><li>الحد اليومي للسعر حوالي 20% صعود أو نزول من إقفال أمس، فأي أمر وقف ممكن يتنفذ بفجوة.</li><li>التسوية T+2: الأسهم اللي تشتريها النهارده تدخل حسابك بعد يومين عمل.</li><li>التداول من الأحد للخميس: 10:00 لـ14:15 تداول متواصل، وبعدها مزاد الإغلاق لحد 14:30.</li><li>ضريبة دمغة 0.05% على المشتري وعلى البايع، غير عمولة الوسيط (مثال منشور لتطبيق ثندر: 0.10% + 2 جنيه للأمر). التكلفة بتختلف حسب حجم الأمر والوسيط والرسوم وفرق سعر الشراء والبيع، ومفيش نسبة واحدة مضمونة.</li><li>أسهم الشركات الصغيرة (تمياز) حدها 10%.</li></ul><p className="eg-note">المصادر: دليل EFG Hermes، وبورصة مصر، ودليل أسعار ثندر (عن طريق Perplexity). اتأكد من إعلانات البورصة لكل سهم.</p></Det>
+        <RuleCards />
         <Det title="عن التطبيق وحدوده"><About /></Det>
     </div>;
 }
