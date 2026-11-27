@@ -1,0 +1,13 @@
+{
+ "tested": "2026-11-27",
+ "note": "نتيجة اختبار تاريخي من خبير التدفقات. بتتحدّث لما الاختبار يتعاد، مش يوميًا.",
+ "source": "Starta Markets, بيانات يومية مجانية متأخرة",
+ "aggregate": {"stocks": 96, "signals": 8813, "horizon": 20, "win": 54, "winAny": 50, "avg": 4.5, "avgAny": 2.3, "median": 1.17, "p25": -6.1, "p10": -12.5, "lossOver10": 14.9, "lossOver20": 3.3, "worst": -67.4, "positiveStocks": 82, "testedStocks": 93},
+ "perStock": {
+  "HRHO": {"signals": 106, "since": "2006-02", "rows": [
+    {"h": 5, "win": 48, "winAny": 49.6, "avg": 0.4, "avgAny": 0.23},
+    {"h": 10, "win": 55, "winAny": 51.3, "avg": 2.1, "avgAny": 0.48},
+    {"h": 20, "win": 58, "winAny": 52.0, "avg": 2.3, "avgAny": 1.04}],
+   "worst": [{"v": -25, "d": "مارس 2024"}, {"v": -20, "d": "أبريل 2022"}]}
+ }
+}
