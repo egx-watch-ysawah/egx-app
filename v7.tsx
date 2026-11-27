@@ -1,3 +1,4 @@
+import { PageFairHero } from './ui2026/FairVisual';
 import React, { useEffect, useState } from 'react';
 import { loadPage, NEW as NEWP, READY, usePage } from './page';
 let cache: Promise<any> | null = null;
@@ -24,7 +25,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
       {d.study_card_date_ar ? <p className="eg-note v7-s">{d.study_card_date_ar}</p> : null}
       {d.market_price ? <p className="eg-note v7-s"><b>{d.market_price.label_ar}:</b> <bdi>{d.market_price.value}</bdi> {d.market_price.unit_ar}{d.market_price.as_of_ar ? ' · ' + d.market_price.as_of_ar : ''}</p> : null}
-      {d.analyst ? big(d.analyst, 'a') : null}
+      {d.analyst ? big(d.analyst && d.analyst.value == null ? { ...d.analyst, label_ar: 'مستهدف الجهات الخارجية', tap_ar: 'غير متوفر: مفيش مستهدف منشور من جهات خارجية للسهم ده.', status_ar: 'غير متوفر' } : d.analyst, 'a') : null}
       {sc[0] ? big(sc[0], 's0') : null}
       {d.scenarios_note_ar ? <p className="eg-note">{d.scenarios_note_ar}</p> : null}
       {(d.why_ar || []).map((t: string, i: number) => <p key={'w' + i} className="eg-note">{t}</p>)}
@@ -56,7 +57,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
     </div> : null;
   const bodyNode = <div className="eg-exb v7-in">
       {d.period_ar && d.period_ar !== 'غير متوفر' ? <p className="eg-note">الفترة: {d.period_ar}</p> : null}
-      {d.analyst ? big(d.analyst, 'a') : null}
+      {d.analyst ? big(d.analyst && d.analyst.value == null ? { ...d.analyst, label_ar: 'مستهدف الجهات الخارجية', tap_ar: 'غير متوفر: مفيش مستهدف منشور من جهات خارجية للسهم ده.', status_ar: 'غير متوفر' } : d.analyst, 'a') : null}
       {(d.scenarios || []).map((n: any, i: number) => big(n, 's' + i))}
       {d.scenarios_note_ar ? <p className="eg-note">{d.scenarios_note_ar}</p> : null}
       {shared ? <div className="v7-sh">{scs[0].note_ar ? <p className="eg-note">{scs[0].note_ar}</p> : null}{scs[0].note2_ar ? <p className="eg-note">{scs[0].note2_ar}</p> : null}</div> : null}
@@ -66,7 +67,7 @@ export function V7Card({ k, fair }: { k: string; fair?: boolean }) {
       {d.unavailable && d.unavailable.length && !(fair && (d.scenarios || []).some((n: any) => n.text_ar)) ? <div className="v7-u"><b>غير متوفر</b>{d.unavailable.map((u: any, i: number) => <p key={i} className="eg-note">{u.item_ar}: {u.reason_ar}</p>)}</div> : null}
       {d.risks_ar && d.risks_ar.length ? (fair ? <div className="v7-u"><b>نقاط محتاجة انتباه</b>{d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)}</div> : d.risks_ar.map((r: string, i: number) => <p key={i} className="eg-note">{r}</p>)) : null}
     </div>;
-  if (fair) return <div className="v7-fair"><div className="v7-fh"><b>السعر العادل</b> <span className="tg">{d.tag_ar}</span></div>{v15Node || bodyNode}</div>;
+  if (fair) return <div className="v7-fair"><div className="v7-fh"><b>السعر العادل</b></div><PageFairHero d={d} />{v15Node || bodyNode}</div>;
   return <details className="eg-ex v7"><summary>الأرقام المراجَعة ({d.tag_ar})</summary>
     {bodyNode}</details>;
 }
