@@ -206,7 +206,7 @@ function RangeBar({ label, H, r, px, lo0, hi0 }: { label: string; H: number; r: 
   const X = (v: number) => ((v - lo0) / (hi0 - lo0) * 100);
   return <div className="rg-b"><div className="rg-h"><b>{label}</b></div>
     <div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: X(lo) + '%', width: (X(hi) - X(lo)) + '%' }} /><div className="rg-p" style={{ left: X(px) + '%' }} /></div>
-    <div className="rg-n" dir="ltr"><span className="dn"><b>{n0(lo)}</b><small>{'−' + Math.abs((lo / px - 1) * 100).toFixed(1) + '%'}</small></span><span className="rg-c"><b>{n0(px)}</b><small>الآن</small></span><span className="up"><b>{n0(hi)}</b><small>{'+' + ((hi / px - 1) * 100).toFixed(1) + '%'}</small></span></div></div>;
+    <div className="rg-n" dir="ltr"><span className="dn"><small>أقل سعر ممكن</small><b>{n0(lo)}</b><small>{'−' + Math.abs((lo / px - 1) * 100).toFixed(1) + '%'}</small></span><span className="rg-c"><b>{n0(px)}</b><small>السعر دلوقتي</small></span><span className="up"><small>أعلى سعر ممكن</small><b>{n0(hi)}</b><small>{'+' + ((hi / px - 1) * 100).toFixed(1) + '%'}</small></span></div></div>;
 }
 export function GoldRange() {
   const [r, setR] = React.useState<Rng | null | undefined>(undefined);
@@ -214,23 +214,26 @@ export function GoldRange() {
   React.useEffect(() => { let on = true; loadRng().then(x => on && setR(x)); return () => { on = false; }; }, []);
   if (r === undefined) return null;
   const stale = !r || dAge(r.goldThrough) > 10;
-  return <section className="gd-card sc"><style>{SCN_CSS + RG_CSS}</style><h3>مدى سعر الذهب</h3>
+  return <section className="gd-card sc"><style>{SCN_CSS + RG_CSS}</style><h3>الذهب ممكن يزيد ويقل لحد كام</h3>
     {stale ? <div className="sc-na"><b>غير متوفر</b><span>{r ? 'البيانات قديمة: الذهب لحد ' + arD(r.goldThrough) : 'الحساب مش متاح دلوقتي (ملف الأرقام ما اتحملش)'}</span></div> : r && (() => {
       const hi60 = g.p * Math.exp(ZR * r.sigmaDaily / 100 * Math.sqrt(60)), lo60 = g.p * Math.exp(-ZR * r.sigmaDaily / 100 * Math.sqrt(60));
       const pad = (hi60 - lo60) * 0.04; const lo0 = lo60 - pad, hi0 = hi60 + pad;
       return <>
-        <p className="gf-e">مدى مش اتجاه، مش نصيحة.</p>
+        <p className="gf-e">ده مش توقع إنه يطلع ولا ينزل، ومش نصيحة.</p>
         <RangeBar label="شهر (20 يوم تداول)" H={20} r={r} px={g.p} lo0={lo0} hi0={hi0} />
         <RangeBar label="3 شهور (60 يوم تداول)" H={60} r={r} px={g.p} lo0={lo0} hi0={hi0} />
         <div className="sc-t2"><span className="sc-i"><i>تقلب الذهب دلوقتي</i><b>حوالي <bdi dir="ltr">{Math.round(r.sigmaAnnual)}%</bdi> في السنة</b><em>{r.sigmaDaily.toFixed(2)}% في اليوم</em></span>
-          <span className="sc-i"><i>جوه المدى تاريخيًا</i><b dir="ltr">{Math.round(r.inside20)}% / {Math.round(r.inside60)}%</b><em>شهر / 3 شهور · من {r.calibFrom.slice(0, 4)}</em></span></div>
-        <p className="gf-e">في حوالي 8 من 10 شهور الذهب فضل جوه مدى زي ده. سعر الذهب: {g.live ? 'لايف، ' : ''}{g.src} · التقلب من إقفالات عقود كوميكس (Yahoo) لحد {arD(r.goldThrough)}.</p>
-        <details className="rg-det"><summary>إزاي المدى ده بيتحسب؟</summary>
-          <div className="rg-dv"><div><small>أيام هادية</small><div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: '38%', width: '24%' }} /><div className="rg-p" style={{ left: '50%' }} /></div><b>المدى أضيق</b></div>
-            <div><small>أيام متقلبة</small><div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: '12%', width: '76%' }} /><div className="rg-p" style={{ left: '50%' }} /></div><b>المدى أوسع</b></div></div>
-          <p><b>بيعتمد على إيه؟</b> على حركة الذهب اليومية الأخيرة، دلوقتي حوالي <bdi dir="ltr">{r.sigmaDaily.toFixed(1)}%</bdi> في اليوم. الأيام القريبة وزنها أكتر من القديمة.</p>
-          <p><b>إيه اللي بيغيره؟</b> أيام هادية بتضيّق المدى، وأيام الحركة الكبيرة بتوسّعه.</p>
-          <p><b>يعني إيه؟</b> الشريط بيغطي حوالي 8 من 10 احتمالات. اتجرب من <bdi dir="ltr">{r.calibFrom.slice(0, 4)}</bdi> والذهب فضل جواه <bdi dir="ltr">{Math.round(r.inside20)}%</bdi> من الشهور (شهر) و<bdi dir="ltr">{Math.round(r.inside60)}%</bdi> (3 شهور). مش بيقول هيطلع ولا هينزل.</p></details></>; })()}
+          <span className="sc-i"><i>فضل بين الأقل والأعلى تاريخيًا</i><b dir="ltr">{Math.round(r.inside20)}% / {Math.round(r.inside60)}%</b><em>شهر / 3 شهور · من {r.calibFrom.slice(0, 4)}</em></span></div>
+        <p className="gf-e">في أغلب الشهور الذهب فضل بين أقل وأعلى سعر زي دول. سعر الذهب: {g.live ? 'لايف، ' : ''}{g.src} · التقلب من إقفالات عقود كوميكس (Yahoo) لحد {arD(r.goldThrough)}.</p>
+        <details className="rg-det"><summary>إزاي أقل وأعلى سعر دول بيتحسبوا؟</summary>
+          <div className="rg-dv"><div><small>أيام هادية</small><div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: '38%', width: '24%' }} /><div className="rg-p" style={{ left: '50%' }} /></div><b>الفرق أصغر</b></div>
+            <div><small>أيام متقلبة</small><div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: '12%', width: '76%' }} /><div className="rg-p" style={{ left: '50%' }} /></div><b>الفرق أكبر</b></div></div>
+          <p><b>إيه اللي بيحرك الذهب؟</b> الفايدة الأمريكية (لما تطلع الذهب بيضغط عليه في العادة)، والدولار (لما يقوى الذهب بيتأثر)، والأحداث: الحروب، الأخبار، وقرارات البنوك المركزية.</p>
+          <p><b>طب ليه مش بنتوقع منهم؟</b> جربناهم على سنين فاتت، ولا واحد منهم لوحده قدر يتوقع الذهب هيطلع ولا هينزل. عشان كده مش بنخمّن الاتجاه.</p>
+          <p><b>بنحسبها إزاي؟</b> من حركة الذهب الفعلية الأيام اللي فاتت، دلوقتي حوالي <bdi dir="ltr">{r.sigmaDaily.toFixed(1)}%</bdi> في اليوم، والأيام القريبة وزنها أكتر. الحركة دي فيها أثر الفايدة والدولار والأحداث أصلًا.</p>
+          <p><b>لما الأخبار تسخن؟</b> الذهب بيتحرك أكتر، فالفرق بين أقل وأعلى سعر بيكبر لوحده. ولما الدنيا تهدى بيصغر. وبتتحدث تلقائي كل يوم.</p>
+          <p><b>اتجربت صح؟</b> من <bdi dir="ltr">{r.calibFrom.slice(0, 4)}</bdi> الذهب فضل بين أقل وأعلى سعر <bdi dir="ltr">{Math.round(r.inside20)}%</bdi> من الشهور (شهر) و<bdi dir="ltr">{Math.round(r.inside60)}%</bdi> (3 شهور). يعني مرات طلع بره أقل وأعلى سعر دول. مش بيقول هيطلع ولا هينزل.</p>
+          <p><b>تتابعهم فين؟</b> لوحتا الفايدة والدولار تحت على تاب الذهب.</p></details></>; })()}
   </section>;
 }
 const RG_CSS = `.rg-det{margin-top:12px;background:#0b0f12;border-radius:12px}.rg-det summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:14px;color:#b4bac4;cursor:pointer;list-style:none}.rg-det summary::-webkit-details-marker{display:none}.rg-det summary::after{content:'+';font-size:18px}.rg-det[open] summary::after{content:'−'}.rg-det>p{margin:0;padding:8px 14px;font-size:13px;line-height:1.7;color:#b4bac4}.rg-det>p b{color:#edeef0}.rg-det>p:last-child{padding-bottom:14px}.rg-dv{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 14px 8px}.rg-dv small{display:block;font-size:12px;color:#a5aab2}.rg-dv b{font-size:12.5px;color:#edeef0}.rg-dv .rg-bar{background:#111822;margin:6px 0}.rg-b{margin-top:12px}.rg-h b{font-size:13px;color:#edeef0}.rg-bar{position:relative;height:26px;margin:8px 0 6px;background:#0b0f12;border-radius:13px}.rg-f{position:absolute;top:4px;height:18px;border-radius:9px;background:linear-gradient(90deg,#de575b55,#3a4350 40%,#3a4350 60%,#25b89655)}.rg-p{position:absolute;top:0;width:3px;height:26px;margin-left:-1px;background:#edeef0;border-radius:2px}
