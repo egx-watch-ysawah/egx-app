@@ -9,7 +9,14 @@ const sg = (v: number, d = 2) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v
 const cairoDate = (iso: string) => { try { return new Date(iso).toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit', year: 'numeric' }); } catch { return ''; } };
 
 // Home market panel. Every number comes from idx/index.json (all rows share one session date) and indices.json.
+const LC_FILES = ['last_close.json', 'last_close_fallback.json'];
+let LC_P: Promise<any> | null = null;
+const getLc = (): Promise<any> => LC_P || (LC_P = LC_FILES.reduce((p: Promise<any>, f) => p.then(x => x || fetch(f, { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null)), Promise.resolve(null)));
+const FLAG: Record<string, string> = { 'single-source': 'مصدر واحد', single: 'مصدر واحد', unconfirmed: 'غير مؤكد' };
 export function HomePanel() {
+  const [lc, setLc] = useState<any>(null);
+  useEffect(() => { let on = true; getLc().then(l => on && setLc(l)); return () => { on = false; }; }, []);
+  const flag = (code: string) => { const st = lc && lc.stocks && lc.stocks[code] && lc.stocks[code].status; return st && st !== 'confirmed' ? (FLAG[st] || 'غير مؤكد') : null; };
   const [ix, setIx] = useState<any>(null);
   const [ind, setInd] = useState<any>(() => { try { return JSON.parse(localStorage.getItem('egx-indices-v1') || 'null'); } catch { return null; } });
   useEffect(() => {
@@ -21,7 +28,15 @@ export function HomePanel() {
       const k = q && q.quote;
       if (!k || !(k.value > 0) || !Number.isFinite(k.changePercent) || !k.timestamp) return Promise.reject();
       save({ indices: { egx30: { name: 'EGX 30', close: k.value, chg: k.changePercent, chg_abs: k.change } }, fetched_at_utc: k.timestamp });
-    }).catch(() => fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then(save));
+    }).catch(() => fetch(INDICES_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then(x => {
+      if (x && x.indices) return save(x);
+      // Last resort: static last-close snapshot served with the app (same origin, no CORS).
+      return getLc().then(l => {
+        const e = l && l.indices && l.indices.egx30;
+        if (!on || !e || !(e.close > 0) || !Number.isFinite(e.chg_pct) || !l.session_date) return;
+        setInd({ indices: { egx30: { name: 'EGX 30', close: e.close, chg: e.chg_pct, chg_abs: e.chg_abs } }, last_close: String(l.session_date), lc_status: e.status });
+      });
+    }));
     return () => { on = false; };
   }, []);
   if (!ix) return <section className="hp"><p className="eg-note">بحمّل...</p></section>;
@@ -38,7 +53,7 @@ export function HomePanel() {
   const e30 = rows.filter(r => (r.lists || []).includes('egx30')), e70 = rows.filter(r => (r.lists || []).includes('egx70'));
   const brd = (a: any[]) => ({ u: a.filter(r => r.chg > 0).length, d: a.filter(r => r.chg < 0).length, n: a.length });
   const Row = ({ r, w }: { r: any; w: number }) => <Link to={'/s/' + r.code} className="hp-r">
-    <span className="hp-n"><b>{r.name}</b><small dir="ltr">{r.code}</small></span>
+    <span className="hp-n"><b>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
     <div className="hp-b" dir="ltr"><i className={r.chg >= 0 ? 'u' : 'd'} style={{ width: Math.max(3, (Math.abs(r.chg) / w) * 100) + '%' }} /></div>
     <span className={'hp-v ' + (r.chg >= 0 ? 'u' : 'd')} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</span>
   </Link>;
@@ -46,7 +61,7 @@ export function HomePanel() {
     <div className="hp-st" dir="ltr"><i className="u" style={{ flex: a.u }} /><i className="f" style={{ flex: a.n - a.u - a.d }} /><i className="d" style={{ flex: a.d }} /></div>
     <b dir="ltr"><span className="u">▲ {a.u}</span> <span className="d">▼ {a.d}</span></b></div>;
   return <section className="hp" aria-label="ملخص السوق">
-    {q && fin(q.close) && fin(q.chg) ? <div className="hp-ix"><small>EGX 30 · {ind.fetched_at_utc ? cairoDate(ind.fetched_at_utc) : ''}</small>
+    {q && fin(q.close) && fin(q.chg) ? <div className="hp-ix"><small>EGX 30 · {ind.last_close ? 'آخر إقفال · ' + ind.last_close + (ind.lc_status && ind.lc_status !== 'confirmed' ? ' · ' + (FLAG[ind.lc_status] || 'غير مؤكد') : '') : ind.fetched_at_utc ? cairoDate(ind.fetched_at_utc) : ''}</small>
       <b dir="ltr">{q.close.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b>
       <span className={q.chg >= 0 ? 'u' : 'd'} dir="ltr">{q.chg >= 0 ? '▲' : '▼'} {sg(q.chg)}%</span><p className="chp-x">{xHome.index}</p></div>
       : <div className="hp-ix"><small>EGX 30</small><span className="hp-na">غير متوفر: مستوى المؤشر مش واصل دلوقتي</span></div>}
@@ -59,7 +74,7 @@ export function HomePanel() {
     <p className="chp-x">{xHome.movers}</p>
     <h3 className="hp-h">الأضعف</h3>{bot.map(r => <Row key={r.code} r={r} w={mx} />)}
     <h3 className="hp-h">الأعلى قيمة تداول (مليون جنيه)</h3>
-    {lead.map(r => <Link key={r.code} to={'/s/' + r.code} className="hp-r"><span className="hp-n"><b>{r.name}</b><small dir="ltr">{r.code}</small></span>
+    {lead.map(r => <Link key={r.code} to={'/s/' + r.code} className="hp-r"><span className="hp-n"><b>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
       <div className="hp-b" dir="ltr"><i className="g" style={{ width: Math.max(3, (r.val / lm) * 100) + '%' }} /></div>
       <span className="hp-v" dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</span></Link>)}
     <p className="chp-x">{xHome.value}</p>
