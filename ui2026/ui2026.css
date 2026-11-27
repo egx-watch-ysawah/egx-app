@@ -1,0 +1,4 @@
+:root{--up:#2ebd85;--dn:#f6465d;--gr:#8b95a5}
+.sst{display:flex;gap:6px;margin:58px 0 10px;direction:rtl;overflow-x:auto}
+.sst-i{flex:1;min-width:max-content;text-align:center;padding:10px 12px;border-radius:12px;font-size:13px;height:44px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;line-height:1;color:var(--gr);background:#0f1620;border:1px solid #1d2733;text-decoration:none}
+.sst-i.on{color:#fff;border-color:var(--up);background:#0f1f1b}
