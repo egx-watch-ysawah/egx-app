@@ -207,7 +207,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   const finNew = !!(NEW(code) && pgT && pgT.fin_items_ar);
   const [tf, setTf] = useState<TF>('D'); const [n, setN] = useState(130);
   const [t, setT] = useState({ sma: true, vol: false, rsi: false, macd: false, plan: false, bb: false });
-  const trows = React.useMemo(() => s ? mkRows(resample(s.bars, tf)) : [], [s, tf]);
+  const trows = React.useMemo(() => s && !s.nohist ? mkRows(resample(s.bars, tf)) : [], [s, tf]);
   const row = ix && ix.rows.find((r: any) => r.code === code);
   const isOther = !!cl.s || (!!err1 && !row);
   useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
@@ -226,6 +226,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
     <div className="eg-in">
       <h2 className="eg-h ix-top">{NEW(code) && pgT && pgT.title_ar_short ? pgT.title_ar_short : s.name} <span dir="ltr">({code})</span></h2><TopWarn k={code}/>
       <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> · <L>{s.historyCount}</L> جلسة{code === 'MTIE' && PVN() ? ' (آخر 3 سنين)' : ''} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
+      {s.nohist ? <p className="eg-note"><b>تنبيه:</b> مفيش تاريخ أسعار حديث عند المصدر، فالقراءة الفنية والشارت والسيناريوهات المبنية على السعر غير متاحة. آخر سعر عند المصدر: <bdi>{s.close}</bdi> ج.م. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} />
       {fairNew || held ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
       {fairNew ? <><style>{'.gd-fv{display:none}'}</style><OnTab id="v"><V7Card k={code} fair /></OnTab></> : null}
@@ -233,7 +234,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
       
       <OnTab id="t">{s.short ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم قصير (أقل من 260 جلسة)، فالمؤشرات الفنية والشارت والسيناريوهات أقل موثوقية. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
-      <OnTab id="t">{code === 'VLMRA' || s.jump || s.short ? null : <ScenarioBlock s={s} />}</OnTab>
+      <OnTab id="t">{code === 'VLMRA' || s.jump || s.short || s.nohist ? null : <ScenarioBlock s={s} />}</OnTab>
       {held ? null : <OnTab id="f"><TeamBlock code={code} /></OnTab>}
       {held ? null : <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>}
       <OnTab id="t"><Glossary /></OnTab>
