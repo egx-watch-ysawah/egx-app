@@ -232,8 +232,8 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       {held ? null : <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>}
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
       
-      <OnTab id="t">{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
-      <OnTab id="t">{code === 'VLMRA' || s.jump ? null : <ScenarioBlock s={s} />}</OnTab>
+      <OnTab id="t">{s.short ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم قصير (أقل من 260 جلسة)، فالمؤشرات الفنية والشارت والسيناريوهات أقل موثوقية. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
+      <OnTab id="t">{code === 'VLMRA' || s.jump || s.short ? null : <ScenarioBlock s={s} />}</OnTab>
       {held ? null : <OnTab id="f"><TeamBlock code={code} /></OnTab>}
       {held ? null : <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>}
       <OnTab id="t"><Glossary /></OnTab>
