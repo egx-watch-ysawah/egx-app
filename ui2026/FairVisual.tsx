@@ -1,5 +1,9 @@
 import React from 'react';
 import { VAL, VAL_ASOF } from './valuation';
+import FSJ from './fv_scenarios.json';
+const FS: Record<string, any> = (FSJ as any).stocks || {};
+const MN: Record<string, [string, string]> = {"ri": ["الدخل المتبقي (ROE ثابت)", "الدفترية + قيمة الأرباح الزائدة عن تكلفة رأس المال."], "ri_unified": ["الدخل المتبقي الموحد", "نفس الفكرة مع تلاشي ROE وتكلفة رأس المال على 5 سنوات."], "multiples_fwd": ["مضاعف الربحية المتوقعة", "ربح السهم القادم × مضاعف الأقران."], "evebitda": ["مضاعف قيمة المنشأة", "EV/EBITDA الأقران ثم نخصم الدين ونضيف النقد."], "fcff": ["خصم التدفق الحر للمنشأة", "التدفقات قبل الدين ثم نطرح الدين."], "fcfe": ["خصم التدفق الحر للمساهمين", ""], "nav": ["صافي قيمة الأصول", "الأصول ناقص الالتزامات على الأسهم."], "sotp": ["مجموع الأجزاء", "قيمة كل نشاط لوحده ثم نجمعها."], "ddm2": ["خصم التوزيعات مرحلتين", ""], "gordon": ["جوردون", "التوزيع القادم ÷ (العائد المطلوب − النمو)."], "hmodel": ["نموذج H", "نمو توزيعات يتناقص خطيا."], "pb": ["مضاعف القيمة الدفترية العادل", ""], "pe_just": ["مضاعف الربحية العادل", ""], "peg": ["الربحية مقابل النمو", ""], "aeg": ["نمو الأرباح غير العادي", ""], "eva": ["القيمة الاقتصادية المضافة", ""], "grahamNumber": ["رقم جراهام", "حد أعلى للسعر المعقول."], "graham": ["معادلة جراهام للنمو", ""], "ncav": ["صافي الأصول المتداولة", "حد أدنى متحفظ."], "liquidation": ["قيمة التصفية", "حد أدنى."], "montecarlo": ["محاكاة مونت كارلو", "آلاف التجارب والوسيط."], "realoption": ["حق التوسع (خيار حقيقي)", "يضاف ولا يستقل بنفسه."]};
+const FLT = ['grahamNumber', 'graham', 'ncav', 'liquidation'];
 
 const num = (v: any): v is number => typeof v === 'number' && isFinite(v);
 const f2 = (v: number) => (Math.abs(v) >= 1 ? v.toFixed(2) : v.toFixed(3));
@@ -79,10 +83,22 @@ export function PageFairHero({ d }: { d: any }) {
   const p = (x: number) => Math.min(100, Math.max(0, ((x - x0) / sp) * 100));
   const b0 = base[0];
   const gap = b0 ? (price / b0.value - 1) * 100 : null;
-  const rate = pick(d.rate_explain_ar, /العائد المطلوب في السنة الخامسة[^0-9]*([0-9.]+)%/);
-  const bond = pick(d.rate_explain_ar, /فايدة السندات النهارده\s*([0-9.]+)%/);
-  const infl = pick(d.rate_explain_ar, /التضخم الحضري النهارده\s*([0-9.]+)%/);
-  const gro = pick(d.rate_explain_ar, /التضخم\s*([0-9.]+)%\)/);
+  const fs = FS[code] && FS[code].status === 'available' ? FS[code] : null;
+  const A: any = fs ? { growth_pct: fs.growth, ke_pct: fs.ke && fs.ke.year5, g_pct: fs.g, margin_pct: fs.margin } : {};
+  const AS: [string, string, string][] = [
+    ['growth_pct', 'نمو الأرباح', 'سرعة زيادة الربح كل سنة في حساب مرجع التحقق. أعلى معناها قيمة أعلى، فاسأل هل واقعي.'],
+    ['ke_pct', 'العائد المطلوب (سنة 5)', 'اللي المستثمر بيطلبه سنوياً. أعلى معناها قيمة أقل للسهم.'],
+    ['g_pct', 'النمو الدائم', 'نمو الأرباح على المدى البعيد. كل ما قرب من التضخم يبقى أهدى.'],
+    ['margin_pct', 'هامش الربح', 'كام قرش ربح من كل جنيه إيراد. قارنه بهامش السنين اللي فاتت.'],
+  ];
+  const why = fs ? 'مش موجود في بيانات مرجع التحقق' : (FS[code] && FS[code].reason) || 'مفيش بيانات منظمة لمرجع التحقق للسهم ده';
+  const ms: any[] = fs && fs.method_values ? Object.keys(fs.method_values).filter(k => num(fs.method_values[k])).map(k => ({ name_ar: (MN[k] || [k, ''])[0], tip: (MN[k] || [k, ''])[1], flt: FLT.indexOf(k) >= 0, value: fs.method_values[k] })) : [];
+  const mmax = Math.max(price, ...ms.map((m: any) => m.value), 0) || 1;
+  const xs: [string, number][] = fs && num(fs.bear) && num(fs.base) && num(fs.bull) ? [['الأقل', fs.bear], ['الأوسط', fs.base], ['الأعلى', fs.bull]] : [];
+  const xmax = Math.max(price, ...xs.map(r => r[1])) || 1;
+  const rows3: [string, any][] = ([['الحالة الأصعب', lo], ['الأساسي', b0], ['الحالة الأحسن', hi]] as [string, any][]).filter(r => r[1]);
+  const smax = Math.max(price, ...rows3.map(r => r[1].value)) || 1;
+  const anv = d.analyst && num(d.analyst.value) ? d.analyst : null;
   return <div className="fvh" aria-label="ملخص مرئي للحساب">
     <div className="fvh-b">
       {b0 ? <span className="fvh-t">الحساب الأساسي (نموذج الصفحة، افتراضات مش قيمة) <bdi dir="ltr">{f2(b0.value)}</bdi></span> : null}
@@ -104,12 +120,27 @@ export function PageFairHero({ d }: { d: any }) {
       {an != null ? <span><i className="k2" />مرجع خارجي <bdi dir="ltr">{f2(an)}</bdi></span> : null}
       <span><i className="k3" />السعر <bdi dir="ltr">{f2(price)}</bdi></span>
     </div>
-    {rate || bond || infl || gro ? <div className="fvh-as">
-      {rate ? <span className="fvh-t g">عائد مطلوب (سنة 5) <bdi dir="ltr">{rate}%</bdi></span> : null}
-      {bond ? <span className="fvh-t g">فايدة سندات <bdi dir="ltr">{bond}%</bdi></span> : null}
-      {infl ? <span className="fvh-t g">تضخم <bdi dir="ltr">{infl}%</bdi></span> : null}
-      {gro ? <span className="fvh-t g">نمو مفترض <bdi dir="ltr">{gro}%</bdi></span> : null}
+    {rows3.length ? <div className="fvs" dir="ltr" aria-label="سيناريوهات مقابل السعر">
+      {rows3.map(([l, n]) => { const g2 = (n.value / price - 1) * 100; return <div key={l} className="fvs-r"><span className="fvs-l">{l}</span>
+        <div className="fvs-t"><i className={'fvs-b ' + (g2 >= 0 ? 'up' : 'dn')} style={{ width: Math.max(2, (n.value / smax) * 100) + '%' }} /><i className="fvs-p" style={{ left: (price / smax) * 100 + '%' }} /></div>
+        <b className={'fvs-v ' + (g2 >= 0 ? 'u' : 'd')}>{f2(n.value)} <small>{g2 >= 0 ? '▲ +' : '▼ −'}{Math.abs(g2).toFixed(0)}%</small></b></div>; })}
+      <p className="fvh-n" dir="rtl">الخط الأبيض = السعر الحالي {f2(price)}. الأخضر أعلى منه والأحمر أقل. افتراضات "لو" مش توقع.</p>
     </div> : null}
+    {xs.length ? <div className="fvs fvs2" dir="ltr" aria-label="سيناريوهات مرجع التحقق">
+      <p className="fvh-n" dir="rtl"><b>سيناريوهات مرجع التحقق</b> (نموذج مختلف عن الصفحة، مش القيمة العادلة)</p>
+      {xs.map(([l, v2]) => { const g2 = (v2 / price - 1) * 100; return <div key={l} className="fvs-r"><span className="fvs-l">{l}</span>
+        <div className="fvs-t"><i className="fvs-b ref" style={{ width: Math.max(2, (v2 / xmax) * 100) + '%' }} /><i className="fvs-p" style={{ left: (price / xmax) * 100 + '%' }} /></div>
+        <b className="fvs-v">{f2(v2)} <small>{g2 >= 0 ? '▲ +' : '▼ −'}{Math.abs(g2).toFixed(0)}%</small></b></div>; })}
+      <p className="fvh-n" dir="rtl">الأساس: دخل متبقي بثلاث افتراضات لعائد حقوق الملكية النهائي (افتراض مش توقع). المصدر: StockAnalysis وصفحات Starta العامة عبر حاسبة خاصة، بتاريخ <bdi dir="ltr">{fs.as_of}</bdi>.</p>
+    </div> : <p className="fvh-n">سيناريوهات مرجع التحقق: غير متوفر، {FS[code] && FS[code].reason ? FS[code].reason : 'مفيش بيانات منظمة للسهم ده'}.</p>}
+    <p className="fvh-n">{anv ? 'مستهدف المحللين: ' + f2(anv.value) + (anv.as_of_ar ? ' (' + anv.as_of_ar + ')' : '') : 'مستهدف المحللين: غير متوفر، مفيش مستهدف منشور من جهة خارجية.'}</p>
+    {fs ? <div className="fvh-as fva">
+      {AS.map(([k, l, m]) => num(A[k]) ? <span key={k} className="fva-c"><i>{l}</i><b dir="ltr">{A[k]}%</b><small>{m}</small></span>
+        : <span key={k} className="fva-c na"><i>{l}</i><b>غير متوفر</b><small>{why}</small></span>)}
+    </div> : <p className="fvh-n">افتراضات مرجع التحقق (نمو الأرباح، العائد المطلوب، النمو الدائم، هامش الربح): غير متوفر، {why}.</p>}
+    {ms.length ? <p className="fvh-n">طرق مرجع التحقق (كل طريقة لوحدها، الخط الأبيض = السعر):</p> : null}
+    {ms.length ? <div className="fvm" dir="ltr">{ms.map((m: any, i: number) => <div key={i} className="fvm-r"><span>{m.name_ar}{m.flt ? <em className="fvm-f">فلتر/حد</em> : null}{m.tip ? <small>{m.tip}</small> : null}</span><div className="fvm-t"><i style={{ width: Math.max(2, (m.value / mmax) * 100) + '%' }} /><u style={{ left: (price / mmax) * 100 + '%' }} /></div><b>{f2(m.value)}</b></div>)}</div> : null}
+    <p className="fvh-n">حدود الحساب: افتراضات مش توقعات، ومصدر السعر واحد ومتأخر.</p>
     {d.market_price && d.market_price.as_of_ar ? <p className="fvh-n">{d.market_price.as_of_ar}</p> : null}
   </div>;
 }
