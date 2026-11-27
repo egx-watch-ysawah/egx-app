@@ -53,7 +53,7 @@ export function HomePanel() {
   const e30 = rows.filter(r => (r.lists || []).includes('egx30')), e70 = rows.filter(r => (r.lists || []).includes('egx70'));
   const brd = (a: any[]) => ({ u: a.filter(r => r.chg > 0).length, d: a.filter(r => r.chg < 0).length, n: a.length });
   const Row = ({ r, w }: { r: any; w: number }) => <Link to={'/s/' + r.code} className="hp-r">
-    <span className="hp-n"><b>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
+    <span className="hp-n"><b title={r.name}>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
     <div className="hp-b" dir="ltr"><i className={r.chg >= 0 ? 'u' : 'd'} style={{ width: Math.max(3, (Math.abs(r.chg) / w) * 100) + '%' }} /></div>
     <span className={'hp-v ' + (r.chg >= 0 ? 'u' : 'd')} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</span>
   </Link>;
@@ -74,7 +74,7 @@ export function HomePanel() {
     <p className="chp-x">{xHome.movers}</p>
     <h3 className="hp-h">الأضعف</h3>{bot.map(r => <Row key={r.code} r={r} w={mx} />)}
     <h3 className="hp-h">الأعلى قيمة تداول (مليون جنيه)</h3>
-    {lead.map(r => <Link key={r.code} to={'/s/' + r.code} className="hp-r"><span className="hp-n"><b>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
+    {lead.map(r => <Link key={r.code} to={'/s/' + r.code} className="hp-r"><span className="hp-n"><b title={r.name}>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
       <div className="hp-b" dir="ltr"><i className="g" style={{ width: Math.max(3, (r.val / lm) * 100) + '%' }} /></div>
       <span className="hp-v" dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</span></Link>)}
     <p className="chp-x">{xHome.value}</p>
