@@ -1,3 +1,4 @@
+import { FairHero } from './ui2026/FairVisual';
 import React, { useEffect, useState } from 'react';
 import { SixScen, FV6CSS, Card, Srcs, noCodes, tidy, SIX } from './fv6';
 
@@ -145,7 +146,8 @@ export function WideFair({ k, fallback }: { k: string; fallback?: React.ReactNod
   const a = s.aggregate || {}, ms = arr(s.methods), cf = s.confidence || {};
   const ov = a.overlap === true && num(a.conservative) && num(a.optimistic);
   return <div className="gd-fv wr fv6"><style>{FV6CSS}</style><style>{CSS}</style>
-    <div className="q"><span>السعر العادل</span><span>{str(s.badge_ar) ? <span className="tg">{s.badge_ar}</span> : null}</span></div>
+    <div className="q"><span>نطاق المقارنة (نموذج الدراسة)</span></div>
+    <FairHero k={k} s={s} />
     {str(s.price_note) ? <p className="hd">السعر المستخدم: {num(s.price) ? <L v={s.price} /> : null} ({s.price_note})</p> : null}
     {ov ? <>
       <div className="hd">{str(a.name_ar) || 'منطقة التقاطع'} {str(a.label) ? <span className="tg">{a.label}</span> : null}</div>
