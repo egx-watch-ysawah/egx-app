@@ -18,6 +18,7 @@ import { NewsBlock } from './news';
 import { useStudy, StudyFin, StudyFair } from './studyrest';
 import { WIDE, WideFair, WideFin } from './wide';
 import { V7Card, isV7, useFairNew } from './v7';
+import { FAIR6 } from './ui2026/FairSix';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
@@ -244,7 +245,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       <StockChips s={s} code={code} />
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
       {fairNew || held ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
-      {fairNew ? <><style>{'.gd-fv{display:none}'}</style><OnTab id="v"><V7Card k={code} fair /></OnTab></> : null}
+      {fairNew && !FAIR6.includes(code) ? <><style>{'.gd-fv{display:none}'}</style><OnTab id="v"><V7Card k={code} fair /></OnTab></> : null}
       {held ? null : <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>}
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
       
