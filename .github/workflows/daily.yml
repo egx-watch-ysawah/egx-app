@@ -52,16 +52,6 @@ jobs:
           git config user.email "egx-bot@users.noreply.github.com"
           git add idx
           git diff --cached --quiet || (git commit -m "index data refresh" && git push)
-      - name: Institutional-accumulation signal (offline, from the repo bars; keeps old file on failure)
-        continue-on-error: true
-        run: |
-          python3 scripts/flow_signal.py
-          if [ "${{ github.event_name }}" != "push" ]; then
-            git config user.name "egx-bot"
-            git config user.email "egx-bot@users.noreply.github.com"
-            git add flow_signal.json
-            git diff --cached --quiet || (git commit -m "flow signal refresh" && git push)
-          fi
       - run: pip install pillow && python make_icons.py
       - run: npm install && npm run build
       - uses: actions/upload-pages-artifact@v3
