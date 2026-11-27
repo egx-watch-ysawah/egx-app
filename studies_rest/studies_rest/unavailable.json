@@ -693,25 +693,25 @@
  {
   "code": "EFAC",
   "name_ar": "الشركة المصرية للسبائك الحديدية (ايفاكو)",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "قيد مؤقت من أبريل 2026 (حسب الأخبار)، والسعر اسمي ومفيش حجم تداول، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "EGOTH",
-  "name_ar": "El Masreyah Touris Egp100",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "المصرية للسياحة والفنادق",
+  "reason_ar": "قيد مؤقت (حسب الأخبار)، ومفيش حجم تداول، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "EGS220N1C016",
-  "name_ar": "ALNASR For Building And Construction Company",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "النصر للمباني والإنشاءات (إيجيكو)",
+  "reason_ar": "قيد مؤقت من 26 أغسطس 2026 (حسب الأخبار)، والسنة المالية بتنتهي في يونيو (حسب الأخبار)، ومفيش قوائم منشورة.",
   "extra": true
  },
  {
   "code": "EGS65101C015",
-  "name_ar": "National Investment & Reconstruction",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "الأهلية للاستثمار والتعمير (نيركو)",
+  "reason_ar": "قيد مؤقت من أبريل 2026 (حسب الأخبار)، والطرح لسه مخطط، ومفيش قوائم منشورة.",
   "extra": true
  },
  {
@@ -741,61 +741,61 @@
  {
   "code": "EGWA",
   "name_ar": "المستودعات المصرية العامة",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "قيد مؤقت (حسب الأخبار)، ومفيش حجم تداول، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "ELAB",
   "name_ar": "المصرية لانتاج الالكيل بنزين الخطى (إيلاب)",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "قيد مؤقت من يونيو 2026 (حسب الأخبار)، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "ENPI",
   "name_ar": "الهندسية للصناعات البترولية والكيماوية (إنبى)",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "قيد مؤقت من يونيو 2026 (حسب الأخبار)، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "GEOS",
   "name_ar": "جيوس للتجارة والمقاولات",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "قيد مؤقت (حسب الأخبار)، ومفيش حجم تداول، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "GROV",
-  "name_ar": "Grova Special Purpose Acquisition Company",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "جروفا",
+  "reason_ar": "شركة استحواذ ومفيش نشاط تشغيلي يتقيّم.",
   "extra": true
  },
  {
   "code": "HDST",
   "name_ar": "هيدجستون للاستثمار",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "مفيش إفصاحات خالص في 2026.",
   "extra": true
  },
  {
   "code": "KNGC",
-  "name_ar": "EL- Nasr Glass And Crystal",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "النصر لصناعة الزجاج والبلور",
+  "reason_ar": "قيد مؤقت من أبريل 2026 (حسب الأخبار)، لسه مش بيتداول، والسنة المالية يونيو (حسب الأخبار)، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "MITR",
-  "name_ar": "Misr Travel&Touris Egp6",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "مصر للسياحة",
+  "reason_ar": "قيد مؤقت من مايو 2026 (حسب الأخبار)، والسنة المالية يونيو (حسب الأخبار)، ومفيش قوائم.",
   "extra": true
  },
  {
   "code": "MMHC",
-  "name_ar": "El Mamoura Company For Construction & Tourism Development",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "المعمورة للتعمير والتنمية السياحية",
+  "reason_ar": "مفيش غير إشعارات القيد، ومفيش قوائم. السنة المالية يونيو (حسب الأخبار).",
   "extra": true
  },
  {
   "code": "NFCI",
-  "name_ar": "ELNASR Co For Fertilizers And Chemical Industries",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "النصر للأسمدة والصناعات الكيماوية",
+  "reason_ar": "قيد مؤقت من مايو 2026 (حسب الأخبار)، ومفيش مستندات.",
   "extra": true
  },
  {
@@ -837,13 +837,13 @@
  {
   "code": "TOUR",
   "name_ar": "التعمير السياحي",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "reason_ar": "موقوف من 2017 وأُعيد قيده مؤقتًا يوم 26 أغسطس 2026 (حسب الأخبار)، ومفيش قوائم منشورة من بعدها.",
   "extra": true
  },
  {
   "code": "YAYT",
-  "name_ar": "Spring & Transportation Needs Manufacturing Co.",
-  "reason_ar": "الدراسة لسه ما خلصتش",
+  "name_ar": "صناعة اليايات ومهمات وسائل النقل",
+  "reason_ar": "قيد مؤقت من أبريل 2026 (حسب الأخبار)، ومفيش قوائم على موقع البورصة.",
   "extra": true
  },
  {
