@@ -168,7 +168,7 @@ function ScnBlock({ title, s, px }: { title: string; s: ScnSet; px: number }) {
     <div className="sc-r" dir="ltr"><div className="sc-ln" /><div className="sc-z" style={{ left: X(0) }} />
       <div className="sc-rg" style={{ left: X(s.p10), width: 'calc(' + X(s.p90) + ' - ' + X(s.p10) + ')' }} />
       <div className="sc-m" style={{ left: X(s.median), background: col }} /></div>
-    <div className="sc-t" dir="ltr"><span>{sp(s.p10)}</span><b style={{ color: col }}>{sp(s.median)} ≈ {n0(px * (1 + s.median / 100))}</b><span>{sp(s.p90)}</span></div>
+    <div className="sc-t" dir="ltr"><span>{sp(s.p10)}</span><b style={{ color: col }}>{sp(s.median)}</b><span>{sp(s.p90)}</span></div>
   </div>;
 }
 export function GoldScenario() {
