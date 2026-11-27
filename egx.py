@@ -65,7 +65,7 @@ if __name__=="__main__":
             x=backtest(df,r);bt[r]=dict(n=len(x),win=round(float(np.mean([v>0 for v in x]))*100) if x else None,avg=round(float(np.mean(x))*100,1) if x else None)
         base=df.close.pct_change(H).shift(-H).dropna();bl=round(float(base.mean())*100-COST*100,1)
         fire=[r for r in RULES if bool(RULES[r](df).iloc[-1])]
-        out[k]=dict(q=q,close=round(float(last.close),3),rsi=round(float(last.rsi),0),macd_pos=bool(last.macd>last.sig),above200=bool(last.close>last.sma200),above50=bool(last.close>last.sma50),volx=round(float(last.volume/last.vavg),1),fire=fire,bt=bt,base10=bl)
+        out[k]=dict(q=q,close=round(float(last.close),3),rsi=round(float(last.rsi),0),macd_pos=bool(last.macd>last.sig),above200=bool(last.close>last.sma200),above50=bool(last.close>last.sma50),volx=round(float(last.volume/last.vavg),2),fire=fire,bt=bt,base10=bl)
         print(k,json.dumps(out[k]))
     out['flows']=flows();print(out['flows'])
     json.dump(out,open('out.json','w'),ensure_ascii=False,indent=1)
