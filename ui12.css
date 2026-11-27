@@ -94,3 +94,14 @@ body:has(.set-btn) .eg-card-root:has(.gd) .eg-pad{padding-top:106px}
 
 .eg-pad a.ix-r,.eg-pad div.ix-r,.ix-r,.ix-hd{display:grid!important;grid-template-columns:minmax(0,1fr) 88px 92px!important;gap:8px!important}
 .ix-r>*,.ix-hd>*{min-width:0}
+.eg-pad a.ix-r,.eg-pad div.ix-r,.ix-r,.ix-hd{grid-template-columns:minmax(0,1fr) 78px 108px!important}
+.ix-r{height:92px;box-sizing:border-box;overflow:hidden}
+.ix-n1 b{font-size:14px!important;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.ix-n1 i{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-p span,.ix-p small,.ix-v b,.ix-v b small,.ix-v span{white-space:nowrap}
+.ix-v b{font-size:12.5px}
+.eg-pad.ix{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+.bid{margin-bottom:calc(100px + env(safe-area-inset-bottom))!important}
+.tk{display:flex!important;align-items:stretch;-webkit-mask-image:none!important;mask-image:none!important}
+.tk-vp{flex:1 1 auto;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%)}
+.tk-at{position:static!important;flex:none;white-space:nowrap}
