@@ -25,7 +25,7 @@ export function buildStock(code: string, name: string, raw: any[]): Built {
   if (rows.length < 260) return { fail: 'تاريخ السهم قصير (' + rows.length + ' جلسة) ومحتاج 260 على الأقل.' };
   const O = rows.map(x => x[1]), H = rows.map(x => x[2]), Lw = rows.map(x => x[3]), C = rows.map(x => x[4]), V = rows.map(x => x[5]);
   let jumps = 0; for (let i = 1; i < C.length; i++) if (Math.abs(C[i] / C[i - 1] - 1) > 0.25) jumps++;
-  if (jumps) return { fail: 'فيه قفزة سعر أكبر من 25% في يوم واحد في التاريخ، فالتحليل مش موثوق.' };
+  const jump = jumps > 0; // jump: technical sections only show a note, study tabs still render
   const n = C.length, i1 = n - 1;
   const d = C.map((c, i) => i ? c - C[i - 1] : NaN);
   const up = ewm(d.map(v => Number.isFinite(v) ? Math.max(v, 0) : NaN), 1 / 14), dn = ewm(d.map(v => Number.isFinite(v) ? Math.max(-v, 0) : NaN), 1 / 14);
@@ -58,7 +58,7 @@ export function buildStock(code: string, name: string, raw: any[]): Built {
   const plan = { trail: r(trail, 4), tv: r(tv / 1e6, 1), ext: r(ext, 1), sizepct, mode, entry: r(entry, 4), stop: r(stop, 4), target: r(target, 4), atr: r(atr, 4), atrpct: r(atr / P * 100, 1), entry_pct: r((entry / P - 1) * 100, 1), stop_pct: r((stop / entry - 1) * 100, 1), target_pct: r((target / entry - 1) * 100, 1), res: r(res, 4), sup: r(sup, 4), ema20: r(ema20, 4), strength };
   // ADX / Bollinger fields that App.tsx pages read are not part of idx json; the idx page uses plan + votes only.
   const bars = rows.slice(-420).map(x => [x[0], r(x[1], 4), r(x[2], 4), r(x[3], 4), r(x[4], 4), Math.trunc(x[5])]);
-  const s = { name, ok: true, close: r(P, 3), date: rows[i1][0], chg5: chg(5), chg20: chg(20), chg60: chg(60), rsi: r(rsi[i1], 0), votes, volx: r(V[i1] / vavg[i1], 1), plan, fire, bars, hi52: r(Math.max(...C.slice(-250)), 3), lo52: r(Math.min(...C.slice(-250)), 3), historyCount: n, source: 'https://startamarkets.com/symbol/' + code + '/history', sourceName: 'Starta Markets', qualityChecked: true, auto: true, client: true };
+  const s = { name, ok: true, close: r(P, 3), date: rows[i1][0], chg5: chg(5), chg20: chg(20), chg60: chg(60), rsi: r(rsi[i1], 0), votes, volx: r(V[i1] / vavg[i1], 1), plan, fire, bars, hi52: r(Math.max(...C.slice(-250)), 3), lo52: r(Math.min(...C.slice(-250)), 3), historyCount: n, source: 'https://startamarkets.com/symbol/' + code + '/history', sourceName: 'Starta Markets', qualityChecked: true, auto: true, client: true, jump };
   return { s };
 }
 
