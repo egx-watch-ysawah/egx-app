@@ -59,7 +59,7 @@ export function buildStock(code: string, name: string, raw: any[], quote?: any):
   const plan = { trail: r(trail, 4), tv: r(tv / 1e6, 1), ext: r(ext, 1), sizepct, mode, entry: r(entry, 4), stop: r(stop, 4), target: r(target, 4), atr: r(atr, 4), atrpct: r(atr / P * 100, 1), entry_pct: r((entry / P - 1) * 100, 1), stop_pct: r((stop / entry - 1) * 100, 1), target_pct: r((target / entry - 1) * 100, 1), res: r(res, 4), sup: r(sup, 4), ema20: r(ema20, 4), strength };
   // ADX / Bollinger fields that App.tsx pages read are not part of idx json; the idx page uses plan + votes only.
   const bars = rows.slice(-420).map(x => [x[0], r(x[1], 4), r(x[2], 4), r(x[3], 4), r(x[4], 4), Math.trunc(x[5])]);
-  const s = { name, ok: true, close: r(P, 3), date: rows[i1][0], chg5: chg(5), chg20: chg(20), chg60: chg(60), rsi: r(rsi[i1], 0), votes, volx: r(V[i1] / vavg[i1], 1), plan, fire, bars, hi52: r(Math.max(...C.slice(-250)), 3), lo52: r(Math.min(...C.slice(-250)), 3), historyCount: n, source: 'https://startamarkets.com/symbol/' + code + '/history', sourceName: 'Starta Markets', qualityChecked: true, auto: true, client: true, jump, short };
+  const s = { name, ok: true, close: r(P, 3), date: rows[i1][0], chg5: chg(5), chg20: chg(20), chg60: chg(60), rsi: r(rsi[i1], 0), votes, volx: r(V[i1] / vavg[i1], 2), plan, fire, bars, hi52: r(Math.max(...C.slice(-250)), 3), lo52: r(Math.min(...C.slice(-250)), 3), historyCount: n, source: 'https://startamarkets.com/symbol/' + code + '/history', sourceName: 'Starta Markets', qualityChecked: true, auto: true, client: true, jump, short };
   return { s };
 }
 
