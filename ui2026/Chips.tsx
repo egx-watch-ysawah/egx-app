@@ -1,6 +1,6 @@
 import React from 'react';
 import { verdict } from '../shared';
-import { loadAtrAll, xTech, xRsi, xChg, xPos, xAtr, xVol, xRef } from './Explain';
+import { loadAtrAll, atrOf, xTech, xRsi, xChg, xPos, xAtr, xVol, xRef } from './Explain';
 import { VAL, VAL_ASOF, VAL_METHOD } from './valuation';
 // Chip row for stock pages. Uses only fields already in the stock JSON (close, date, chg5/20/60, rsi, votes, plan.atrpct, volx, hi52, lo52).
 // Every missing field is a grey "غير متوفر" chip, never a made-up number.
@@ -18,7 +18,8 @@ export function StockChips({ s, code }: { s: any; code?: string }) {
   const lo = s.lo52, hi = s.hi52, c = s.close;
   const pos = num(lo) && num(hi) && num(c) && hi > lo ? Math.max(0, Math.min(100, ((c - lo) / (hi - lo)) * 100)) : null;
   const ch: [string, any][] = [['5 جلسات', s.chg5], ['20 جلسة', s.chg20], ['60 جلسة', s.chg60]];
-  const atr = s.plan && num(s.plan.atrpct) ? s.plan.atrpct : null;
+  const planAtr = s.plan && num(s.plan.atrpct) ? s.plan.atrpct : null;
+  const atr = atrAll && atrAll.length >= 30 && code ? atrOf(code) : planAtr;
   return (
     <section className="chp" aria-label="ملخص بالأرقام">
       <div className="chp-c"><small>القراءة الفنية</small>{v ? <b className={'chp-v ' + vcls}>{vcls === 'up' ? '+ ' : vcls === 'dn' ? '− ' : ''}{v.t}</b> : NA}<p className="chp-x">{v && v.c !== 'na' ? xTech(v.c) : ''}</p></div>
