@@ -26,22 +26,22 @@ export const Srcs = ({ l }: { l: any }) => Array.isArray(l) && l.length ? <div c
 const rangeOf = (vs: number[]) => vs.length ? (Math.min(...vs) === Math.max(...vs) ? <bdi dir="ltr">{fx(vs[0])}</bdi> : <><bdi dir="ltr">{fx(Math.min(...vs))}</bdi> إلى <bdi dir="ltr">{fx(Math.max(...vs))}</bdi></>) : null;
 const fx = (v: number) => '\u2066' + (v >= 1 ? v.toFixed(2) : v.toFixed(3)) + '\u2069';
 export const FV6CSS = `
-.fv6 .q{margin:10px 0 2px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#5eead4}
-.fv6 .tg{font-size:11.5px;font-weight:400;border:1px solid #6b5b2a;color:#f5c26b;border-radius:10px;padding:2px 8px;white-space:nowrap}
+.fv6 .q{margin:10px 0 2px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#9da3ab}
+.fv6 .tg{font-size:11.5px;font-weight:400;border:1px solid #454950;color:#8a919c;border-radius:10px;padding:2px 8px;white-space:nowrap}
 .fv6 .big{font-size:24px;font-weight:700;color:#fff;margin:2px 0}
-.fv6 .vv2{display:flex;gap:8px;margin:4px 0}.fv6 .vv2 div{flex:1;background:#101827;border-radius:10px;text-align:center;padding:6px 2px}.fv6 .vv2 small{display:block;color:#8b97ad;font-size:11.5px}.fv6 .vv2 b{color:#fff;font-size:22px}
-.fv6 .ex{font-size:13px;line-height:1.8;color:#b6c0d2;margin:2px 0 6px}
-.fv6 .mm{background:#0a0e17;border:1px solid #1b2538;border-radius:10px;padding:9px;margin:8px 0;font-size:13px;line-height:1.8;color:#d5dbe7}
+.fv6 .vv2{display:flex;gap:8px;margin:4px 0}.fv6 .vv2 div{flex:1;background:#101827;border-radius:10px;text-align:center;padding:6px 2px}.fv6 .vv2 small{display:block;color:#969da6;font-size:11.5px}.fv6 .vv2 b{color:#fff;font-size:22px}
+.fv6 .ex{font-size:13px;line-height:1.8;color:#bfc3c9;margin:2px 0 6px}
+.fv6 .mm{background:#0a0e17;border:1px solid #1b2538;border-radius:10px;padding:9px;margin:8px 0;font-size:13px;line-height:1.8;color:#dbdde1}
 .fv6 .mm h5{margin:0 0 4px;font-size:14px;color:#fff}
 .fv6 .vv{display:flex;gap:6px;margin:4px 0}.fv6 .vv div{flex:1;background:#101827;border-radius:8px;text-align:center;padding:4px 2px}
-.fv6 .vv small{display:block;color:#8b97ad;font-size:11px}.fv6 .vv b{color:#fff}
-.fv6 .src{color:#9fb0c9}.fv6 .src a{color:#7dd3fc;word-break:break-all}.fv6 .ours{color:#f5c26b}
-.fv6 .vv .mid{font-size:11.5px;font-weight:500;line-height:1.6;color:#cbd5e6}.fv6 .ch{margin:6px 0;line-height:1.8;color:#e8edf5}.fv6 .cl{color:#cbd5e6;font-size:13px;line-height:1.9;margin:3px 0}
+.fv6 .vv small{display:block;color:#969da6;font-size:11px}.fv6 .vv b{color:#fff}
+.fv6 .src{color:#aeb3ba}.fv6 .src a{color:#b7bbc2;word-break:break-all}.fv6 .ours{color:#aaafb6}
+.fv6 .vv .mid{font-size:11.5px;font-weight:500;line-height:1.6;color:#d5d8dc}.fv6 .ch{margin:6px 0;line-height:1.8;color:#edeef0}.fv6 .cl{color:#d5d8dc;font-size:13px;line-height:1.9;margin:3px 0}
 .fv6 .na a,.fv6 .src a{display:inline-block;padding:10px 0}
-.fv6 .na{color:#9aa6bb;font-size:12.5px;line-height:1.8;margin:4px 0}
-.fv6 .an{border-top:1px dashed #2a3650;margin-top:8px;padding-top:6px;font-size:13px;color:#d5dbe7}
+.fv6 .na{color:#a4a9b1;font-size:12.5px;line-height:1.8;margin:4px 0}
+.fv6 .an{border-top:1px dashed #42464d;margin-top:8px;padding-top:6px;font-size:13px;color:#dbdde1}
 .fv6 hr{border:0;border-top:1px solid #263249;margin:12px 0}
-.fv6 .nt{font-size:12px;color:#8b97ad;line-height:1.7;margin:6px 0}
+.fv6 .nt{font-size:12px;color:#969da6;line-height:1.7;margin:6px 0}
 `;
 export const snum = (k: any) => { const x = String(k); return /1$/.test(x) ? '1' : /3$|2$/.test(x) && /سيناريو 2|T3/.test(x) ? '2' : x.replace(/^سيناريو /, ''); };
 const A = ({ u }: { u: string }) => <a href={u} target="_blank" rel="noreferrer">{u.replace(/^https?:\/\//, '')}</a>;
