@@ -15,4 +15,5 @@ fs.writeFileSync('dist/index.html',fs.readFileSync('dist/index.html','utf8').rep
 fs.writeFileSync('dist/sw.js', fs.readFileSync('sw.js', 'utf8').replace('__V__', stamp));
 console.log('built', stamp);
 
+if(fs.existsSync('gold/scenario.json')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/scenario.json','dist/gold/scenario.json');}
 if(fs.existsSync('gold/history.jsonl')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/history.jsonl','dist/gold/history.jsonl');}
