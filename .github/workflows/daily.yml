@@ -3,6 +3,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: [gold-scenario]
+    types: [completed]
+    branches: [main]
   schedule:
     - cron: "30 13 * * 0-4"
 permissions:
@@ -14,6 +18,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,21 +29,21 @@ jobs:
         with:
           node-version: "20"
       - name: Refresh data (keeps old data if the free source fails)
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && github.event_name != 'workflow_run'
         run: |
           pip install pandas numpy
           touch data.old.json; [ -f data.json ] && cp data.json data.old.json || true
           if python mkdata.py && python -c "import json;d=json.load(open('data.json'));assert set(d['stocks'])=={'MASR','BONY','HRHO','UNIP','PHAR','ORHD'};assert all(s.get('date') and s.get('bars') and s['close']>0 for s in d['stocks'].values())"; then echo refreshed; else [ -s data.old.json ] && cp data.old.json data.json; echo kept-old; fi
           rm data.old.json
       - name: Save refreshed data
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && github.event_name != 'workflow_run'
         run: |
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
           git add data.json
           git diff --cached --quiet || (git commit -m "daily data refresh" && git push)
       - name: Refresh index data (EGX 30 / EGX 70)
-        if: github.event_name != 'push' || hashFiles('idx/index.json') == ''
+        if: (github.event_name != 'push' && github.event_name != 'workflow_run') || hashFiles('idx/index.json') == ''
         continue-on-error: true
         run: |
           pip install pandas numpy
