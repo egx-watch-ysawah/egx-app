@@ -83,6 +83,9 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
   const x = j && j.indices && j.indices[which];
   if (!x || !Number.isFinite(x.close) || !Number.isFinite(x.chg)) return <section className="hb ixs"><div className="hb-top"><small>{which === 'egx30' ? 'EGX 30' : 'EGX 70'}</small><p className="eg-note">مستوى المؤشر مش متاح دلوقتي.</p></div></section>;
   const up = x.chg >= 0, cls = up ? 'hb-up' : 'hb-down';
+  // Market closed: the card shows the last session's close, so the wording must not say "today" or "delayed".
+  const closed = !inSessionNow();
+  const lastSess = (() => { const C = (d: Date) => Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Cairo', weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(d).map(p => [p.type, p.value])) as any; const n = C(new Date()); const mins = +n.hour * 60 + +n.minute; for (let i = 0; i < 8; i++) { const p = C(new Date(Date.now() - i * 86400000)); if (['Sun', 'Mon', 'Tue', 'Wed', 'Thu'].includes(p.weekday) && (i > 0 ? true : mins >= 890)) return p.day + '/' + p.month; } return ''; })();
   const sg = (v: number, d: number) => (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
   const ft = (iso: string, timeOnly?: boolean) => { try { const dt = new Date(iso); const o: any = { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }; const tm = dt.toLocaleTimeString('en-GB', o); const dd = dt.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); const today = new Date().toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }); return timeOnly || dd === today ? tm : tm + ' ' + dd; } catch { return ''; } };
   let at = '';
@@ -92,8 +95,8 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
       <small>{which === 'egx30' ? 'مؤشر EGX 30' : 'مؤشر EGX 70 (متساوي الأوزان)'}</small>
       <b className="hb-total" dir="ltr">{x.close.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b>
       <div className={'hb-day ' + cls} dir="ltr"><span>{sg(x.chg_abs, 1)}</span><span>{up ? '▲' : '▼'} {sg(x.chg, 2)}%</span></div>
-      <p className="ixs-s">{up ? 'المؤشر طالع النهارده' : 'المؤشر نازل النهارده'}</p>
-      {j.live ? <p className="ixs-t">اتحمّل الساعة <bdi dir="ltr">{ft(j.loaded_at)}</bdi> · المصدر بيعلن إن المؤشر متأخر حوالي {Math.round((j.delay_s || 900) / 60)} دقيقة، مش لحظي. الوقت المسجّل عنده للمؤشر ثابت <bdi dir="ltr">{ft(j.fetched_at_utc, true)}</bdi> طول اليوم، فمش بنعتمد عليه.</p>
+      <p className="ixs-s">{closed && lastSess ? (up ? 'المؤشر طالع في آخر جلسة ' : 'المؤشر نازل في آخر جلسة ') + '(' + lastSess + ')' : up ? 'المؤشر طالع النهارده' : 'المؤشر نازل النهارده'}</p>
+      {closed && lastSess ? <p className="ixs-t">إقفال آخر جلسة (<bdi dir="ltr">{lastSess}</bdi>)</p> : j.live ? <p className="ixs-t">اتحمّل الساعة <bdi dir="ltr">{ft(j.loaded_at)}</bdi> · المصدر بيعلن إن المؤشر متأخر حوالي {Math.round((j.delay_s || 900) / 60)} دقيقة، مش لحظي. الوقت المسجّل عنده للمؤشر ثابت <bdi dir="ltr">{ft(j.fetched_at_utc, true)}</bdi> طول اليوم، فمش بنعتمد عليه.</p>
         : <p className="ixs-t">{at && <>آخر تحديث <bdi dir="ltr">{at}</bdi> · </>}{stampNote(j.fetched_at_utc)}</p>}
     </div>
   </section>;
