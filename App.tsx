@@ -10,6 +10,7 @@ import { Ex, X } from './explain';
 import { HomeBoard } from './homeboard';
 import { IndexList, IdxStock, PageSwitch } from './idx';
 import { TeamBlock, Use, Glossary } from './scen';
+import { tdA, tdW, inSessionNow } from './feed';
 import { NewsBlock } from './news';
 import { FinVal6 } from './fv6';
 import { TopWarn } from './topwarn';
@@ -183,7 +184,7 @@ function Stock({ k }: { k: string }) {
                 
 
                 
-                {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة النهارده: {s.fire.map((f: string) => RULE_AR[f]).join(' + ')}{(s.fire.some((f: string) => /breakout/.test(f)) && s.volx) ? ' (الحجم الفعلي ' + Math.round(s.volx*100) + '% من المعتاد)' : ''}{!s.votes.trend ? '. السعر لسه تحت متوسط 200 جلسة.' : ''}</div>}
+                {s.fire.length > 0 && <div className="eg-fire">إشارة جديدة {tdW()}: {s.fire.map((f: string) => RULE_AR[f]).join(' + ')}{(s.fire.some((f: string) => /breakout/.test(f)) && s.volx) ? ' (الحجم الفعلي ' + Math.round(s.volx*100) + '% من المعتاد)' : ''}{!s.votes.trend ? '. السعر لسه تحت متوسط 200 جلسة.' : ''}</div>}
                 <Det title="ليه الحكم ده؟">
                     <div className="eg-why">{why(s).map((w, i) => <div key={i} className="eg-w" style={{ animationDelay: i * 50 + 'ms' }}><span className={w.ok === null ? '' : w.ok ? 'ok' : 'no'}>{w.ok === null ? '•' : w.ok ? '✓' : '✗'}</span>{w.t}</div>)}<div className="eg-legend" style={{ fontSize: 12, opacity: .75, marginTop: 6, lineHeight: 1.8 }}>✓ الشرط متحقق · ✗ الشرط مش متحقق · • محايد: في النص، لا بيأكد ولا بيضعف (زي حجم قريب من المعتاد أو RSI بين 30 و70)</div></div>
                 <Ex>{X.why()}</Ex>
@@ -196,8 +197,8 @@ function Stock({ k }: { k: string }) {
                     <div className="eg-m"><span>التذبذب اليومي</span><b dir="ltr">{s.plan.atrpct}%</b><i>الحركة المعتادة في اليوم (متوسط آخر 14 جلسة). بنحسب منها المستوى الافتراضي.</i></div>
                     <div className="eg-m"><span>قوة الاتجاه ADX</span><b dir="ltr">{s.plan.adx}</b><i>{s.plan.adx > 25 ? 'حركة قوية نسبيًا (ADX بيقيس القوة مش الاتجاه).' : s.plan.adx >= 20 ? 'فوق 25 اتجاه واضح، وحوالي 20 اتجاه بيتكون.' : 'فوق 25 تبقى الحركة قوية. دلوقتي مفيش قوة واضحة.'}</i></div>
                     <div className="eg-m"><span>مكانه في بولينجر</span><b dir="ltr">{s.plan.bbpos}%</b><i>0% عند الحد الأدنى للنطاق المعتاد و100% عند الأعلى. 20% أو أقل يعني الخُمس الأدنى، و80% أو أكتر الخُمس الأعلى، وبينهم منطقة وسطى.</i></div>
-                    <div className="eg-m"><span>أعلى 20 جلسة (شامل النهارده)</span><b dir="ltr">{fmt(s.plan.res)}</b><i>{w20(s).hp != null ? `قبل جلسة النهارده: ${fmt(w20(s).hp)}. إشارة الاختراق بتقارن الإقفال بأعلى إقفال في الـ20 جلسة قبله (${fmt(w20(s).hc)})، فالإشارة ممكن تظهر والسعر لسه تحت أعلى سعر المعروض فوق.` : 'مقاومة محتملة.'}</i></div>
-                    <div className="eg-m"><span>أقل 20 جلسة (شامل النهارده)</span><b dir="ltr">{fmt(s.plan.sup)}</b><i>{w20(s).lp != null ? `قبل جلسة النهارده: ${fmt(w20(s).lp)}. أقل إقفال في الـ20 جلسة قبله: ${fmt(w20(s).lc)}.` : 'دعم محتمل.'}</i></div>
+                    <div className="eg-m"><span>أعلى 20 جلسة (شامل {tdA()})</span><b dir="ltr">{fmt(s.plan.res)}</b><i>{w20(s).hp != null ? `قبل ${inSessionNow() ? 'جلسة النهارده' : 'آخر جلسة'}: ${fmt(w20(s).hp)}. إشارة الاختراق بتقارن الإقفال بأعلى إقفال في الـ20 جلسة قبله (${fmt(w20(s).hc)})، فالإشارة ممكن تظهر والسعر لسه تحت أعلى سعر المعروض فوق.` : 'مقاومة محتملة.'}</i></div>
+                    <div className="eg-m"><span>أقل 20 جلسة (شامل {tdA()})</span><b dir="ltr">{fmt(s.plan.sup)}</b><i>{w20(s).lp != null ? `قبل ${inSessionNow() ? 'جلسة النهارده' : 'آخر جلسة'}: ${fmt(w20(s).lp)}. أقل إقفال في الـ20 جلسة قبله: ${fmt(w20(s).lc)}.` : 'دعم محتمل.'}</i></div>
                 </div>
                 <Ex label="اشرحلي RSI">{X.rsi(s)}</Ex>
                 <Ex label="اشرحلي التذبذب (ATR)">{X.atr(s)}</Ex>
@@ -229,7 +230,7 @@ function Market() {
     return <div className="eg-pad eg-in">
         <h2 className="eg-h">حركة السوق (أسهم بس)</h2>
         {f ? <>
-            <p className="eg-lead">صافي الشراء النهارده في الأسهم فقط بالجنيه (M = مليون). لقطة من foudalens يوم 24-11-2026 أثناء الجلسة، والأرقام بتتغير لحد الإغلاق:</p>
+            <p className="eg-lead">صافي الشراء في جلسة 24/11 (آخر بيانات متاحة) في الأسهم فقط بالجنيه (M = مليون). لقطة من foudalens يوم 24-11-2026 أثناء الجلسة، والأرقام بتتغير لحد الإغلاق:</p>
             {rows.map(([a, b], i) => { const nv = num(b); return <div key={a} className="eg-flow"><div className="eg-fl"><span>{a}</span><b dir="ltr" className={nv < 0 ? 'd' : 'u'}>{b}</b></div><div className="eg-bar"><i className={nv < 0 ? 'd' : 'u'} style={{ width: (Math.abs(nv) / mx * 100) + '%', animationDelay: i * 120 + 'ms' }} /></div></div>; })}
             <Ex>{X.flow()}</Ex>
             <p className="eg-note">{num(f.foreign) < 0 ? 'الأجانب بيبيعوا صافي والمحليين بيشتروا، يعني السوق ماسكه محليين.' : 'الأجانب بيشتروا صافي، ده بيدعم السوق عادة.'}</p>
@@ -256,7 +257,7 @@ function About() {
             <li><b>القوة من 100:</b> اتجاه طويل 25، اتجاه متوسط 20، مؤشر الزخم (ماكد) 20، RSI صحي 15، حجم 10، وإشارة جديدة 10.</li>
             <li><b>فريم التقييم:</b> يومي بعد الإقفال. متابعة موجة أيام/أسابيع، من غير مدة ربح مضمونة. فريم الشارت لا يغيّر التقييم.</li>
             <li><b>مستويات مرجعية:</b> المستوى الأدنى للمراقبة = مستوى المراقبة ناقص 2.5 مرة هزة اليوم. الخط المرجعي = أعلى إقفال 20 جلسة ناقص 3 مرات هزة اليوم. التطبيق للمتابعة والتحليل بس: مفيهوش مركز محفوظ ولا بيع عند أي مستوى.</li>
-            <li><b>طريقة حساب مستوى المراقبة:</b> تراجع لمتوسط 20 يوم لو السعر فوقه، وإلا مستوى اختراق = أعلى سعر خلال اليوم في آخر 20 جلسة (شامل النهارده). إشارة الاختراق نفسها بتتحقق لما الإقفال يعدي أعلى إقفال في الـ20 جلسة قبله.</li>
+            <li><b>طريقة حساب مستوى المراقبة:</b> تراجع لمتوسط 20 يوم لو السعر فوقه، وإلا مستوى اختراق = أعلى سعر خلال اليوم في آخر 20 جلسة (شامل {tdA()}). إشارة الاختراق نفسها بتتحقق لما الإقفال يعدي أعلى إقفال في الـ20 جلسة قبله.</li>
         </ul>
         <h3 className="eg-h3">اتختبر ولا لأ؟ (صراحة)</h3>
         <ul className="eg-ul">
@@ -418,4 +419,4 @@ export function App() {
         <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/>{goldOn()&&<Route path="/gold" element={<GoldTab/>}/>}<Route path="/others" element={<OthersList/>}/><Route path="/all" element={<AllStocks/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="*" element={<Portfolio/>}/></Routes>
         <p className="eg-disc" style={{ fontSize: 13, lineHeight: 1.9, color: '#9aa7bd', margin: '18px 0 8px', padding: '10px 0 0', borderTop: '1px solid #253144' }}>تنبيه مهم: التطبيق ده مش تابع لجهة مرخصة من الهيئة العامة للرقابة المالية ولا معتمد منها. اللي هنا معلومات وقراءات مبنية على أرقام مجانية منشورة ممكن تتأخر أو تتغير، مش نصيحة استثمار ومش توصية بشراء أو بيع، ومفيش أي وعد بربح. الاستثمار في الأسهم فيه مخاطر وممكن تخسر جزء من فلوسك أو كلها. القرار النهائي قرارك لوحدك ومسؤوليتك.</p>
     </FileCard>;
-}
+                                       }
