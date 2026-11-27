@@ -96,7 +96,9 @@ export async function loadStarta(force = false): Promise<StartaFeed> {
     const m = merge(s, tv);
     disagree = m.bad;
     let at = '';
-    for (const c of Object.keys(m.rows)) { const x = m.rows[c]; if (!x.stale && x.at > at) at = x.at; }
+    // Snapshot time comes from the Starta rows only. The TradingView fallback has no timestamp (now minus 15 min), so it must not set it.
+    if (s) for (const c of Object.keys(s)) { const x = s[c]; if (!x.stale && x.at > at) at = x.at; }
+    if (!at) for (const c of Object.keys(m.rows)) { const x = m.rows[c]; if (!x.stale && x.at > at) at = x.at; }
     if (Object.keys(m.rows).length > 20 && at) { feed = { at, rows: m.rows }; subs.forEach(f => f(feed)); }
   } catch { /* keep the last good data */ }
   busy = false;
