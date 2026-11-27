@@ -19,6 +19,8 @@ import './ui11.css';
 import './ui12.css';
 import './ui13.css';
 import './ui2026/ui2026.css';
+import './ui2026/colors.css';
+import './ui2026/colors-manual.css';
 import { Ticker } from './ticker';
 import { AppBar } from './appbar';
 import { SettingsGear } from './settings';
