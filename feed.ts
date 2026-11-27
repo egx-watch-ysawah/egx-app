@@ -18,6 +18,11 @@ export function inSessionNow(): boolean {
   return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu'].includes(p.weekday) && m >= 600 && m <= 890;
 }
 
+// Wording helper: "today" only while the market is in session, otherwise the last session.
+export const tdA = () => (inSessionNow() ? 'النهارده' : 'آخر جلسة');
+export const tdW = () => (inSessionNow() ? 'النهارده' : 'في آخر جلسة');
+export const tdP = () => (inSessionNow() ? 'سعر النهارده' : 'سعر آخر جلسة');
+
 let lastAt = 0;
 let lastTv = 0;
 let lastCodes: string[] = [];
