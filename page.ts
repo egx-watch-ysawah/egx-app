@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-const wd = (x: any): any => typeof x === 'string' ? x.replace(/[\u0660-\u0669]/g, (c: string) => String(c.charCodeAt(0) - 0x660)) : Array.isArray(x) ? x.map(wd) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, y]) => [k, wd(y)])) : x;
+const wd = (x: any): any => typeof x === 'string' ? x.replace(/[\u0660-\u0669]/g, (c: string) => String(c.charCodeAt(0) - 0x660)).replace(/(\s*،)?\s*آخر تحديث \d{1,2}:\d{2} (?:صباحًا|مساءً)(،)?\s*/g, ' ').replace(/\( +/g, '(').replace(/ +\)/g, ')') : Array.isArray(x) ? x.map(wd) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, y]) => [k, wd(y)])) : x;
 const pages: Record<string, any> = {};
 const asked: Record<string, boolean> = {};
 const done: Record<string, boolean> = {};
