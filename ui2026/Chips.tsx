@@ -27,11 +27,11 @@ export function StockChips({ s, code }: { s: any; code?: string }) {
       <div className="chp-c"><small>تذبذب يومي (متوسط 14 جلسة)</small>{atr === null ? NA : <b className="chp-v gr" dir="ltr">{atr}%</b>}</div>
       <div className="chp-c"><small>حجم آخر جلسة من المعتاد</small>{num(s.volx) ? <b className="chp-v gr" dir="ltr">{Math.round(s.volx * 100)}%</b> : NA}</div>
       {val && (val.fv == null || val.price == null
-        ? <div className="chp-c chp-w"><small>السعر العادل مقابل السعر</small><b className="chp-v gr">غير متوفر</b><p className="chp-s">{val.why} · بتاريخ {VAL_ASOF}</p></div>
-        : (() => { const price = val.price as number; const gap = (price / val.fv - 1) * 100; const wide = val.lo != null && val.hi != null && (val.hi - val.lo) / val.fv > 2; const cls = gap > 0 ? 'dn' : gap < 0 ? 'up' : 'gr';
-          return <div className="chp-c chp-w"><small>السعر العادل مقابل السعر</small>
-            <b className={'chp-v ' + cls} dir="ltr">{val.fv} ← {price} ({(gap > 0 ? '+' : '−') + Math.abs(gap).toFixed(1)}%)</b>
-            <span className="chp-n">{gap > 0 ? 'السعر فوق السعر العادل' : 'السعر تحت السعر العادل'}</span>
+        ? <div className="chp-c chp-w"><small>مرجع التحقق</small><b className="chp-v gr">غير متوفر</b><p className="chp-s">{val.why} · بتاريخ {VAL_ASOF}</p></div>
+        : (() => { const price = val.price as number; const gap = (price / val.fv - 1) * 100; const wide = val.lo != null && val.hi != null && (val.hi - val.lo) / val.fv > 2; 
+          return <div className="chp-c chp-w"><small>مرجع تحقق (وسيط {val.methods} طرق، نموذج مختلف)</small>
+            <b className="chp-v gr" dir="ltr">{val.fv} ← {price} ({(gap > 0 ? '+' : '−') + Math.abs(gap).toFixed(1)}%)</b>
+            <span className="chp-n">{gap > 0 ? 'السعر فوق مرجع التحقق' : 'السعر تحت مرجع التحقق'}</span>{val.models_differ ? <span className="chp-wd">نموذجان مختلفان</span> : null}{val.ke_ar ? <span className="chp-n" dir="rtl" style={{unicodeBidi:"plaintext"}}>{val.ke_ar}</span> : null}
             {val.lo != null && <div className="chp-rg" dir="ltr"><span>{val.lo}</span><span>المدى</span><span>{val.hi}</span></div>}
             {wide && <span className="chp-wd">مدى واسع: الرقم تقدير تقريبي، مش دقيق</span>}
             <p className="chp-s">عدد الطرق: {val.methods == null ? 'غير متوفر هنا' : val.methods} · {VAL_METHOD} · بتاريخ {VAL_ASOF} · السعر إقفال {val.price_date} · مش توصية.</p></div>; })())}
