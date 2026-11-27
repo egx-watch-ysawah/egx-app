@@ -65,7 +65,7 @@ export function OthersList() {
     <Label />
     <RefreshBar />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث في باقي الأسهم" /></label>
-    <p className="eg-note">الأسهم دي مش في EGX 30 ولا EGX 70 ولا صفحات محفظتك. المصدر: Starta Markets{at ? '، آخر لقطة ' + cairo(at) : ''}. مرتبة بالأعلى تداولًا.</p>
+    <p className="eg-note">الأسهم دي مش في EGX 30 ولا EGX 70 ولا صفحات محفظتك. المصدر: Starta Markets{at ? '، آخر لقطة ' + cairo(at) : ''}. مرتبة بقيمة التداول.</p>
     <div className="ix-hd"><span>الشركة</span><span>السعر · التغيّر</span><span>الحجم</span></div>
     {rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في الأسهم الباقية. جرب EGX 30 أو EGX 70.</p>}
     {rows.slice(0, 120).map(r => <Link key={r.symbol} to={'/s/' + r.symbol} className="ix-r">
