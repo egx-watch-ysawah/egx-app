@@ -92,6 +92,7 @@ export function VerdictVisual() {
 export function ForecastBoard() {
   const g = useGoldPx();
   return <div className="gf">
+    <GoldRange />
     <section className="gd-card"><h3>أهداف الجهات (مش توقعنا)</h3>
       <p className="gf-ex">آراء جهات منشورة، بتواريخها. آخر مراجعة {STAMP}.</p>
       <ForecastChart px={g.p} /><Key />
@@ -223,15 +224,20 @@ export function GoldRange() {
         <RangeBar label="3 شهور (60 يوم تداول)" H={60} r={r} px={g.p} lo0={lo0} hi0={hi0} />
         <div className="sc-t2"><span className="sc-i"><i>تقلب الذهب دلوقتي</i><b>حوالي <bdi dir="ltr">{Math.round(r.sigmaAnnual)}%</bdi> في السنة</b><em>{r.sigmaDaily.toFixed(2)}% في اليوم</em></span>
           <span className="sc-i"><i>جوه المدى تاريخيًا</i><b dir="ltr">{Math.round(r.inside20)}% / {Math.round(r.inside60)}%</b><em>شهر / 3 شهور · من {r.calibFrom.slice(0, 4)}</em></span></div>
-        <p className="gf-e">في حوالي 8 من 10 شهور الذهب فضل جوه مدى زي ده. سعر الذهب: {g.live ? 'لايف، ' : ''}{g.src} · التقلب من إقفالات عقود كوميكس (Yahoo) لحد {arD(r.goldThrough)}.</p></>; })()}
+        <p className="gf-e">في حوالي 8 من 10 شهور الذهب فضل جوه مدى زي ده. سعر الذهب: {g.live ? 'لايف، ' : ''}{g.src} · التقلب من إقفالات عقود كوميكس (Yahoo) لحد {arD(r.goldThrough)}.</p>
+        <details className="rg-det"><summary>إزاي المدى ده بيتحسب؟</summary>
+          <div className="rg-dv"><div><small>أيام هادية</small><div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: '38%', width: '24%' }} /><div className="rg-p" style={{ left: '50%' }} /></div><b>المدى أضيق</b></div>
+            <div><small>أيام متقلبة</small><div className="rg-bar" dir="ltr"><div className="rg-f" style={{ left: '12%', width: '76%' }} /><div className="rg-p" style={{ left: '50%' }} /></div><b>المدى أوسع</b></div></div>
+          <p><b>بيعتمد على إيه؟</b> على حركة الذهب اليومية الأخيرة، دلوقتي حوالي <bdi dir="ltr">{r.sigmaDaily.toFixed(1)}%</bdi> في اليوم. الأيام القريبة وزنها أكتر من القديمة.</p>
+          <p><b>إيه اللي بيغيره؟</b> أيام هادية بتضيّق المدى، وأيام الحركة الكبيرة بتوسّعه.</p>
+          <p><b>يعني إيه؟</b> الشريط بيغطي حوالي 8 من 10 احتمالات. اتجرب من <bdi dir="ltr">{r.calibFrom.slice(0, 4)}</bdi> والذهب فضل جواه <bdi dir="ltr">{Math.round(r.inside20)}%</bdi> من الشهور (شهر) و<bdi dir="ltr">{Math.round(r.inside60)}%</bdi> (3 شهور). مش بيقول هيطلع ولا هينزل.</p></details></>; })()}
   </section>;
 }
-const RG_CSS = `.rg-b{margin-top:12px}.rg-h b{font-size:13px;color:#edeef0}.rg-bar{position:relative;height:26px;margin:8px 0 6px;background:#0b0f12;border-radius:13px}.rg-f{position:absolute;top:4px;height:18px;border-radius:9px;background:linear-gradient(90deg,#de575b55,#3a4350 40%,#3a4350 60%,#25b89655)}.rg-p{position:absolute;top:0;width:3px;height:26px;margin-left:-1px;background:#edeef0;border-radius:2px}
+const RG_CSS = `.rg-det{margin-top:12px;background:#0b0f12;border-radius:12px}.rg-det summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:14px;color:#b4bac4;cursor:pointer;list-style:none}.rg-det summary::-webkit-details-marker{display:none}.rg-det summary::after{content:'+';font-size:18px}.rg-det[open] summary::after{content:'−'}.rg-det>p{margin:0;padding:8px 14px;font-size:13px;line-height:1.7;color:#b4bac4}.rg-det>p b{color:#edeef0}.rg-det>p:last-child{padding-bottom:14px}.rg-dv{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 14px 8px}.rg-dv small{display:block;font-size:12px;color:#a5aab2}.rg-dv b{font-size:12.5px;color:#edeef0}.rg-dv .rg-bar{background:#111822;margin:6px 0}.rg-b{margin-top:12px}.rg-h b{font-size:13px;color:#edeef0}.rg-bar{position:relative;height:26px;margin:8px 0 6px;background:#0b0f12;border-radius:13px}.rg-f{position:absolute;top:4px;height:18px;border-radius:9px;background:linear-gradient(90deg,#de575b55,#3a4350 40%,#3a4350 60%,#25b89655)}.rg-p{position:absolute;top:0;width:3px;height:26px;margin-left:-1px;background:#edeef0;border-radius:2px}
 .rg-n{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:6px}.rg-n span{display:flex;flex-direction:column;gap:1px}.rg-n span:first-child{align-items:flex-start}.rg-n span:last-child{align-items:flex-end}.rg-c{align-items:center}.rg-n b{font-size:20px}.rg-n small{font-size:12px;color:#b4bac4}.rg-n .dn b{color:#de575b}.rg-n .up b{color:#25b896}.rg-n .rg-c b{color:#edeef0}`;
 
 export function GoldFacts() {
   return <div className="gf">
-    <GoldRange />
     <section className="gd-card"><h3>الفايدة والدولار</h3>
       <div className="gf-t3">
         <span className="gf-w"><i>الفايدة الأمريكية</i><b dir="ltr">3.75–4.00%</b><em>{STAMP}</em></span>
