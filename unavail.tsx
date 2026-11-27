@@ -31,7 +31,7 @@ export function AllStocks() {
   const all = useMemo(() => {
     if (!st) return [];
     const rs = new Set(st.ready);
-    const un = st.rows.filter(r => !r.extra && !rs.has(String(r.code).toUpperCase())).map(r => ({ code: String(r.code).toUpperCase(), name: r.name_ar || r.code, un: r }));
+    const un = st.rows.filter(r => !rs.has(String(r.code).toUpperCase())).map(r => ({ code: String(r.code).toUpperCase(), name: r.name_ar || r.code, un: r }));
     const unc = new Set(un.map(x => x.code));
     const rd = st.ready.filter(c => !unc.has(c)).map(c => ({ code: c, name: st.names[c] || c, un: null as UnRow | null }));
     return [...rd, ...un].sort((a, b) => a.name.localeCompare(b.name, 'ar'));
