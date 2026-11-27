@@ -13,6 +13,7 @@ import { TeamBlock, Use, Glossary } from './scen';
 import { NewsBlock } from './news';
 import { FinVal6 } from './fv6';
 import { TopWarn } from './topwarn';
+import { AllStocks } from './unavail';
 
 
 const KEYS = ['MASR', 'BONY', 'HRHO', 'UNIP', 'PHAR', 'ORHD'];
@@ -387,6 +388,7 @@ function Portfolio() {
         {!ENCRYPTED_PORTFOLIO&&(!holdings.length ? <label className="portfolio-import">إعداد المحفظة مرة واحدة <input type="file" accept="application/json,.json" onChange={load}/></label> : <Det title="تحديث ملف المحفظة"><label className="portfolio-import">اختار الملف الجديد <input type="file" accept="application/json,.json" onChange={load}/></label></Det>)}
         {!ENCRYPTED_PORTFOLIO&&<Det title="الإعداد من غير اختيار ملف"><p className="eg-note">لو الرابط مفتحش البيانات تلقائيًا، انسخ رابط الإعداد الخاص من الرسالة والصقه هنا. اللصق والاستيراد بيحصلوا على جهازك من غير رفع.</p><textarea aria-label="رابط الإعداد الخاص" value={setupCode} onChange={e=>setSetupCode(e.target.value)} style={{width:'100%',minHeight:80,boxSizing:'border-box'}}/><button type="button" className="eg-chip" onClick={()=>{try{const text=setupCode.trim();const code=text.includes('setup=')?text.split('setup=')[1].split(/[\s&#]/)[0]:text;if(!code||code.length>15000)throw Error();const rows=parsePortfolio(JSON.parse(atob(code.replace(/-/g,'+').replace(/_/g,'/'))));localStorage.setItem(PORTFOLIO_KEY,JSON.stringify({version:1,holdings:rows}));setHoldings(rows);setSaved(true);setSetupCode('');setErr('تم إعداد المحفظة وحفظها على المتصفح ده.');}catch{setErr('الرابط ناقص أو المتصفح منع الحفظ. انسخ رسالة الرابط كاملة وحاول تاني.');}}}>احفظ المحفظة من الرابط</button></Det>}
         
+        <Link to="/all" className="un-link"><b>كل الأسهم</b><small>كل الأسهم اللي عندنا، واللي مالهاش دراسة مكتوب جنبها السبب</small></Link>
         {err&&<p role="alert" className="eg-note eg-warn">{err}</p>}
         {!!holdings.length&&<>
             <HomeBoard holdings={holdings}/>
@@ -413,7 +415,7 @@ function Info() {
 export function App() {
     return <FileCard lang="ar" dir="rtl">
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">محفظتي · بيانات يومية</span></div>
-        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/>{goldOn()&&<Route path="/gold" element={<GoldTab/>}/>}<Route path="/others" element={<OthersList/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="*" element={<Portfolio/>}/></Routes>
+        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/>{goldOn()&&<Route path="/gold" element={<GoldTab/>}/>}<Route path="/others" element={<OthersList/>}/><Route path="/all" element={<AllStocks/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="*" element={<Portfolio/>}/></Routes>
         <p className="eg-disc" style={{ fontSize: 13, lineHeight: 1.9, color: '#9aa7bd', margin: '18px 0 8px', padding: '10px 0 0', borderTop: '1px solid #253144' }}>تنبيه مهم: التطبيق ده مش تابع لجهة مرخصة من الهيئة العامة للرقابة المالية ولا معتمد منها. اللي هنا معلومات وقراءات مبنية على أرقام مجانية منشورة ممكن تتأخر أو تتغير، مش نصيحة استثمار ومش توصية بشراء أو بيع، ومفيش أي وعد بربح. الاستثمار في الأسهم فيه مخاطر وممكن تخسر جزء من فلوسك أو كلها. القرار النهائي قرارك لوحدك ومسؤوليتك.</p>
     </FileCard>;
 }
