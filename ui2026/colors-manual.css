@@ -1,1 +1,15 @@
-body:not(.pf) .eg-disc{color:#a5aab2!important}
+html:not([data-theme=light]) body:not(.pf) .eg-disc{color:#a5aab2!important}
+html:not([data-theme=light]):has(body:not(.pf)){background:#0b0f12}
+html:not([data-theme=light]) body:not(.pf){background:#0b0f12!important;--ds-page:#0b0f12!important}
+html:not([data-theme=light]) body:not(.pf) .ix-r{background:#111822!important;border-color:#1e252f!important}
+html:not([data-theme=light]) body .ix-p small.u,html:not([data-theme=light]) body:not(.pf) .u{color:#25b896!important}
+html:not([data-theme=light]) body .ix-p small.d,html:not([data-theme=light]) body:not(.pf) .d{color:#de575b!important}
+html:not([data-theme=light]) body .tk-i em.u{color:#25b896!important;background:#25b8961f!important}
+html:not([data-theme=light]) body .tk-i em.d{color:#de575b!important;background:#de575b1f!important}
+html:not([data-theme=light]) body:not(.pf) .eg-chg.up,html:not([data-theme=light]) body:not(.pf) .up{color:#25b896!important}
+html:not([data-theme=light]) body:not(.pf) .eg-chg.dn,html:not([data-theme=light]) body:not(.pf) .dn,html:not([data-theme=light]) body:not(.pf) .down{color:#de575b!important}
+html:not([data-theme=light]) body:not(.pf) .hb-top{background:#111822!important;border:1px solid #1e252f!important;box-shadow:none!important}
+html:not([data-theme=light]) body:not(.pf) .hb-top::before{background:none!important}
+html:not([data-theme=light]) body:not(.pf) .hb-tiles>div,html:not([data-theme=light]) body:not(.pf) .hb-tiles>div:nth-child(1),html:not([data-theme=light]) body:not(.pf) .hb-tiles>div:nth-child(2),html:not([data-theme=light]) body:not(.pf) .hb-row,html:not([data-theme=light]) body:not(.pf) .hb-row[data-dir=up],html:not([data-theme=light]) body:not(.pf) .hb-row[data-dir=down]{background:#111822!important;border-color:#1e252f!important;box-shadow:none!important}
+html:not([data-theme=light]) body:not(.pf) .hb-ico.hb-up,html:not([data-theme=light]) body:not(.pf) .hb-row[data-dir=up] .hb-w,html:not([data-theme=light]) body:not(.pf) .hb-mix i.hb-up{background:#25b896!important}
+html:not([data-theme=light]) body:not(.pf) .hb-ico.hb-down,html:not([data-theme=light]) body:not(.pf) .hb-row[data-dir=down] .hb-w,html:not([data-theme=light]) body:not(.pf) .hb-mix i.hb-down{background:#de575b!important}
