@@ -1,0 +1,91 @@
+{
+ "code": "GBCO",
+ "name_ar": "جي بي اوتو",
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 8 شركات من القطاع، شركة Future Care بتزود أعلى النطاق 70%، والسعر 21.47 أقل من أدنى النطاق (91.63) بحوالي 4 مرات.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 21.47,
+ "price_date": "2026-11-26",
+ "own_bvps": 31.95,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 0.67,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Distribution Services",
+ "n_peers": 8,
+ "peers": [
+  {
+   "code": "SMFR",
+   "name_ar": null,
+   "pb": 0.9855789342187148,
+   "price": 214.99
+  },
+  {
+   "code": "BIGP",
+   "name_ar": null,
+   "pb": 2.5764690950628255,
+   "price": 0.203
+  },
+  {
+   "code": "MTIE",
+   "name_ar": "إم تي أي",
+   "pb": 2.9651261746289115,
+   "price": 6.62
+  },
+  {
+   "code": "ISPH",
+   "name_ar": "ابن سينا فارما",
+   "pb": 3.2451050321618826,
+   "price": 10.1
+  },
+  {
+   "code": "IBCT",
+   "name_ar": null,
+   "pb": 3.5751226995994476,
+   "price": 10.3
+  },
+  {
+   "code": "MBEG",
+   "name_ar": null,
+   "pb": 5.129855969428551,
+   "price": 4.94
+  },
+  {
+   "code": "BIOC",
+   "name_ar": null,
+   "pb": 14.29255125677202,
+   "price": 373.3
+  },
+  {
+   "code": "EGS3I0S1C019",
+   "name_ar": null,
+   "pb": 15.754931239829041,
+   "price": 8.81
+  }
+ ],
+ "multiples": {
+  "low": 2.868,
+  "median": 3.41,
+  "high": 7.421,
+  "min": 0.9855789342187148,
+  "max": 15.754931239829041
+ },
+ "range": {
+  "low": 91.631,
+  "base": 108.953,
+  "high": 237.086
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "FCMD raises the top of the range by 70%; price 21.47 is about 4x under the low end 91.63",
+  "FCMD (Future Care, P/B 15.75, loss-making, recent listing) is a peer and raises the top of the range by 70% (237.09 vs 139.06 without it)",
+  "market reviewer: range inflated by FCMD among the peers; 26 Nov price is 2x to 4x below the range, do not read as fair value"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B2",
+ "method": "pb_peers",
+ "rung": 1,
+ "method_ar": "نطاق من مضاعف القيمة الدفترية (P/B) للشركات المشابهة"
+}
