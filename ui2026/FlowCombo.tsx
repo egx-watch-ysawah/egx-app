@@ -1,6 +1,7 @@
 import React from 'react';
 import { staleBySession, useHolidays } from './FlowSignal';
 import { BlockNone, useStatus } from './StockStatus';
+import { hasFile } from './FileIndex';
 // Per-stock "same state in the past" block. Data: flow_combo_<CODE>.json (data engineer). Only stocks with a file get the block.
 const nn = (v: any) => typeof v === 'number' && isFinite(v);
 const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
@@ -9,7 +10,7 @@ const L = (v: any) => <bdi dir="ltr">{v}</bdi>;
 const pc = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%';
 const NAMES: Record<string, string> = { A: 'قيمة التداول (أ)', B: 'الإقفال في الثلث الأعلى (ب)', C: 'الحجم الصاعد (ج)' };
 const cache: Record<string, Promise<any>> = {};
-export const loadCombo = (k: string): Promise<any> => cache[k] || (cache[k] = fetch('flow_combo_' + k + '.json?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then((j: any) => { const ok = j && j.symbol === k && j.today && j.combos && j.history ? j : null; if (!ok) delete cache[k]; return ok; }));
+export const loadCombo = (k: string): Promise<any> => cache[k] || (cache[k] = hasFile('combo', k).then(h => (h ? fetch('flow_combo_' + k + '.json?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null) : null)).then((j: any) => { const ok = j && j.symbol === k && j.today && j.combos && j.history ? j : null; if (!ok) delete cache[k]; return ok; }));
 export const useCombo = (k: string) => { const [c, setC] = React.useState<any>(undefined); React.useEffect(() => { let on = true; loadCombo(k).then(x => on && setC(x)); return () => { on = false; }; }, [k]); return c; };
 const countLine = (n: number, hist: any) => n === 0 ? <>الحالة دي ما حصلتش قبل كده في تاريخ السهم المتاح ({arD(hist.from)} إلى {arD(hist.to)})، فمفيش نتيجة نعرضها.</> : n === 1 ? 'حصلت مرة واحدة بس في تاريخ السهم المتاح. دي حالة واحدة، مش كفاية نستنتج منها.' : n === 2 ? 'حصلت مرتين بس.' : n <= 10 ? <>حصلت {L(n)} مرات بس، عينة صغيرة جدًا.</> : n < 30 ? <>حصلت {L(n)} مرة، عينة صغيرة.</> : <>حصلت {L(n)} مرة.</>;
 const dayW = (n: number) => n === 1 ? 'يوم واحد' : n === 2 ? 'يومين' : <>{L(n)} {n <= 10 ? 'أيام' : 'يوم'}</>;
