@@ -43,7 +43,7 @@ def source_frame(k):
     df.index=pd.to_datetime(df.pop('date'));df=df.sort_index()
     if df.index.duplicated().any():raise ValueError('Duplicate history')
     # Rolling five-year window, not a splice with the rejected Yahoo candles.
-    cutoff=pd.Timestamp(datetime.datetime.now(ZoneInfo('Africa/Cairo')).date())-pd.DateOffset(years=5)
+    cutoff=pd.Timestamp(datetime.datetime.now(ZoneInfo('Africa/Cairo')).date())-pd.DateOffset(years=3)  # same 3-year window the stock page builds from Starta (clientidx.ts)
     df=df[df.index>=cutoff]
     if len(df)<250:raise ValueError('Insufficient five-year window')
     if (df.close.pct_change().abs()>.25).any():raise ValueError('Unexplained corporate-action jump')
@@ -92,7 +92,7 @@ for k,s in SYM.items():
         bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(900).iterrows()]
         chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
         out['stocks'][k]=dict(name=NAMES[k],ok=True,close=round(float(last.close),3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),
-          rsi=round(float(last.rsi),0),score=int(last.score),votes={a:int(b) for a,b in lv.items()},volx=round(float(last.volume/last.vavg),1),
+          rsi=round(float(last.rsi),0),score=int(last.score),votes={a:int(b) for a,b in lv.items()},volx=round(float(last.volume/last.vavg),2),
           fire=[r for r in RULES if bool(RULES[r](df).iloc[-1])],bt=bt,buckets=bk,plan=plan,bars=bars,base=round(float((df.close.shift(-H)/df.open.shift(-1)-1).mean())*100-COST*100,1),
           hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),jumps=q['jumps'],dropped=q['dropped'])
         print(k,out['stocks'][k]['score'],bk)
