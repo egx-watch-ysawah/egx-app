@@ -1,0 +1,72 @@
+{
+ "code": "IDRE",
+ "name_ar": "الاسماعيلية الجديدة للتطوير",
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 6 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 38.63,
+ "price_date": "2026-11-26",
+ "own_bvps": 4.13,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 9.35,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Consumer Durables",
+ "n_peers": 6,
+ "peers": [
+  {
+   "code": "ORWE",
+   "name_ar": "النساجون الشرقيون",
+   "pb": 0.7965689121723032,
+   "price": 24
+  },
+  {
+   "code": "RREI",
+   "name_ar": null,
+   "pb": 1.4711882718709952,
+   "price": 2.56
+  },
+  {
+   "code": "ORHD",
+   "name_ar": "اوراسكوم للتنمية مصر",
+   "pb": 2.0072260136491367,
+   "price": 10.45
+  },
+  {
+   "code": "HELI",
+   "name_ar": "مصر الجديدة للإسكان",
+   "pb": 2.4133030457416695,
+   "price": 6.3
+  },
+  {
+   "code": "RUBX",
+   "name_ar": null,
+   "pb": 3.105011171401213,
+   "price": 12.16
+  },
+  {
+   "code": "GIHD",
+   "name_ar": null,
+   "pb": 4.082965866405357,
+   "price": 46
+  }
+ ],
+ "multiples": {
+  "low": 1.605,
+  "median": 2.21,
+  "high": 2.932,
+  "min": 0.7965689121723032,
+  "max": 4.082965866405357
+ },
+ "range": {
+  "low": 6.629,
+  "base": 9.128,
+  "high": 12.11
+ },
+ "price_marker": "above_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
