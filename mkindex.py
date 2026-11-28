@@ -1,4 +1,4 @@
-import json,sys,time,datetime,urllib.request
+import json,sys,time,datetime,urllib.request,urllib.error
 import numpy as np,pandas as pd
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -22,9 +22,21 @@ e70=[c for c in e70 if not (c in TWIN and TWIN[c] in e70)]
 allc=list(dict.fromkeys(e30+e70))
 tick=['EGX:'+c for c in allc]
 ar=cols('ar',tickers=tick);en=cols('en',tickers=tick)
+BACKOFF_S=(2,8,20)
+def fetch_json(url,opener=None,sleep=time.sleep):
+    # Retry 429 and connection errors (HTTP 5xx too) with backoff, like scripts/fetch_flow_hist.py. Other errors raise at once.
+    opener=opener or (lambda u:urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=40).read())
+    last=None
+    for attempt in range(1+len(BACKOFF_S)):
+        if attempt:sleep(BACKOFF_S[attempt-1])
+        try:return json.loads(opener(url))
+        except urllib.error.HTTPError as e:
+            last=e
+            if e.code!=429 and e.code<500:raise
+        except (urllib.error.URLError,TimeoutError,ConnectionError) as e:last=e
+    raise last
 def hist(k):
-    req=urllib.request.Request('https://startamarkets.com/api/v1/egx/history/'+k,headers={'User-Agent':'Mozilla/5.0'})
-    raw=json.loads(urllib.request.urlopen(req,timeout=40).read())
+    raw=fetch_json('https://startamarkets.com/api/v1/egx/history/'+k)
     now=datetime.datetime.now(ZoneInfo('Africa/Cairo'))
     rows=[]
     for r in raw:
@@ -51,12 +63,26 @@ def mkplan(df,votes,P,atr,res,sup):
     plan=dict(trail=round(trail,4),tv=round(tv/1e6,1),ext=round(ext,1),sizepct=sizepct,mode=mode,entry=round(entry,4),stop=round(stop,4),target=round(target,4),atr=round(atr,4),atrpct=round(atr/P*100,1),
       entry_pct=round((entry/P-1)*100,1),stop_pct=round((stop/entry-1)*100,1),target_pct=round((target/entry-1)*100,1),res=round(res,4),sup=round(sup,4),ema20=round(ema20,4),strength=strength)
     return plan,fire
+def close_check_applies(bar_date,now):
+    # TradingView's price equals the final close only when the market is closed: same day after 15:00, or the next morning before 10:00.
+    d=now.date().isoformat();t=now.time()
+    if bar_date==d and t>=datetime.time(15,0):return True
+    if t<datetime.time(10,0):
+        p=now.date()-datetime.timedelta(1)
+        while p.weekday() in (4,5):p-=datetime.timedelta(1)
+        return bar_date==p.isoformat()
+    return False
+def close_mismatch(P,tv_price):
+    # After the close TradingView equals the close exactly: compare at the quoted precision (2 decimals, 3 below 1).
+    if tv_price is None or tv_price<=0:return False
+    d=3 if tv_price<1 else 2
+    return round(P,d)!=round(tv_price,d)
 Path('idx').mkdir(exist_ok=True)
 def write_atomic(path,text):
     # temp file in the same folder, then rename: a failed run never leaves a half-written file
     import os
     t=Path(str(path)+'.tmp');t.write_text(text);os.replace(t,path)
-summary=[];errors={}
+summary=[];errors={};warnings={};FETCHED_AT=datetime.datetime.now(ZoneInfo('Africa/Cairo')).isoformat(timespec='seconds')
 # Portfolio rows: record how many sessions data.json holds inside the 3-year window the stock page uses.
 try:
     _dj=json.loads(Path('data.json').read_text())
@@ -67,34 +93,52 @@ except Exception as _e:
     DJ={};print('WARNING: data.json session counts unavailable, portfolio rows get no historyCount:',_e)
 # Sanity log (does not fail the job): after the twin drop EGX30 must have 30 codes.
 if len(e30)!=30:errors['_egx30_count']='expected 30 got %d'%len(e30)
+def build(k,row,final=False):
+    raw=hist(k);df,q=quality(raw)
+    _now=datetime.datetime.now(ZoneInfo('Africa/Cairo'))
+    if len(df) and close_check_applies(str(df.index[-1].date()),_now) and close_mismatch(float(df.close.iloc[-1]),row['price']):
+        if not final:flagged.append((k,row))  # re-fetched together after one pause, see below
+        else:warnings[k]='closeMismatch: Starta %s vs TradingView %s'%(round(float(df.close.iloc[-1]),3),row['price'])
+    if len(df)<260:raise ValueError('short history %d'%len(df))
+    if q['jumps']:raise ValueError('jump')
+    df=ind(df.copy());last=df.iloc[-1];P=float(last.close)
+    pc_=df.close.shift();tr=pd.concat([df.high-df.low,(df.high-pc_).abs(),(df.low-pc_).abs()],axis=1).max(axis=1);atr=float(tr.ewm(alpha=1/14,adjust=False).mean().iloc[-1])
+    votes=dict(trend=int(last.close>last.sma200),mid=int(last.close>last.sma50),macd=int(last.macd>last.sig),rsi=int(40<=last.rsi<=70),vol=int(last.volume>last.vavg and last.close>df.close.iloc[-2]))
+    chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
+    res=float(df.high.tail(20).max());sup=float(df.low.tail(20).min())
+    plan,fire=mkplan(df,votes,P,atr,res,sup)
+    s=dict(name=row['name'],ok=True,close=round(P,3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),rsi=round(float(last.rsi),0),votes=votes,volx=round(float(last.volume/last.vavg),2),
+      plan=plan,fire=fire,
+      bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(420).iterrows()],
+      hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),historyCount=len(df),historyWindowYears=3,fetchedAt=FETCHED_AT,source='https://startamarkets.com/symbol/'+k+'/history',sourceName='Starta Markets',qualityChecked=True,auto=True)
+    write_atomic(Path('idx/'+k+'.json'),json.dumps(s,ensure_ascii=False,separators=(',',':'),allow_nan=False))
+    row.update(ok=True,date=s['date'],votes=votes,close=s['close'],chg5=s['chg5'],atr_pct=round(atr/P*100,2))
+    if row['price'] is None:row['price']=s['close']
+
+flagged=[]
 for k in allc:
     t=ar.get(k) or en.get(k)
     row=dict(code=k,name={'MASR':'مدينة مصر للإسكان والتعمير'}.get(k) or (ar.get(k) or ['',k])[1],price=(ar.get(k) or [0,0,None])[2],chg=(ar.get(k) or [0,0,0,None])[3],vol=(ar.get(k) or [0,0,0,0,None])[4],lists=[x for x,l in (('egx30',e30),('egx70',e70)) if k in l],full=k in PORT,ok=False)
     if row['price'] is not None and row['vol'] is not None:row['val']=row['price']*row['vol']
     if k not in PORT:
         try:
-            raw=hist(k);df,q=quality(raw)
-            if len(df)<260:raise ValueError('short history %d'%len(df))
-            if q['jumps']:raise ValueError('jump')
-            df=ind(df.copy());last=df.iloc[-1];P=float(last.close)
-            pc_=df.close.shift();tr=pd.concat([df.high-df.low,(df.high-pc_).abs(),(df.low-pc_).abs()],axis=1).max(axis=1);atr=float(tr.ewm(alpha=1/14,adjust=False).mean().iloc[-1])
-            votes=dict(trend=int(last.close>last.sma200),mid=int(last.close>last.sma50),macd=int(last.macd>last.sig),rsi=int(40<=last.rsi<=70),vol=int(last.volume>last.vavg and last.close>df.close.iloc[-2]))
-            chg=lambda n:round(float(df.close.iloc[-1]/df.close.iloc[-1-n]-1)*100,1)
-            res=float(df.high.tail(20).max());sup=float(df.low.tail(20).min())
-            plan,fire=mkplan(df,votes,P,atr,res,sup)
-            s=dict(name=row['name'],ok=True,close=round(P,3),date=str(df.index[-1].date()),chg5=chg(5),chg20=chg(20),chg60=chg(60),rsi=round(float(last.rsi),0),votes=votes,volx=round(float(last.volume/last.vavg),2),
-              plan=plan,fire=fire,
-              bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(420).iterrows()],
-              hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),historyCount=len(df),historyWindowYears=3,source='https://startamarkets.com/symbol/'+k+'/history',sourceName='Starta Markets',qualityChecked=True,auto=True)
-            write_atomic(Path('idx/'+k+'.json'),json.dumps(s,ensure_ascii=False,separators=(',',':'),allow_nan=False))
-            row.update(ok=True,date=s['date'],votes=votes,close=s['close'],chg5=s['chg5'],atr_pct=round(atr/P*100,2))
-            if row['price'] is None:row['price']=s['close']
+            build(k,row)
         except Exception as e:
             errors[k]=type(e).__name__+':'+str(e)[:60]
     row['historyWindowYears']=3
     if k in PORT and k in DJ:row['historyCount']=DJ[k]
     summary.append(row);time.sleep(0.15)
-write_atomic(Path('idx/index.json'),json.dumps(dict(asof=datetime.datetime.now(ZoneInfo('Africa/Cairo')).isoformat(),egx30=e30,egx70=e70,listsEffective='2026-09-01',listsNextReview='2027-03-01',listsVerified='2026-11-28',listsSource='بيان البورصة المصرية للمراجعة الدورية سبتمبر 2026 كما نشرته masrtimes.com/739069 وmubasher.info/news/4659538، ومقارنة مع TradingView. موقع البورصة نفسه مش متاح للقراءة الآلية، فالتحقق من البيان المنشور.',rows=summary,errors=errors,note70=json.loads(Path('index70.json').read_text())['source']),ensure_ascii=False,separators=(',',':'),allow_nan=False))
+if flagged:
+    # Starta may still be finalising these closes: ONE pause of 30 s, then re-fetch the flagged symbols together (at most 10).
+    time.sleep(30)
+    for k,row in flagged[:10]:
+        try:build(k,row,final=True)
+        except Exception as e:errors[k]=type(e).__name__+':'+str(e)[:60]
+    for k,row in flagged[10:]:warnings[k]='closeMismatch (not re-fetched: more than 10 flagged); TradingView %s'%row['price']
+write_atomic(Path('idx/index.json'),json.dumps(dict(asof=datetime.datetime.now(ZoneInfo('Africa/Cairo')).isoformat(),egx30=e30,egx70=e70,listsEffective='2026-09-01',listsNextReview='2027-03-01',listsVerified='2026-11-28',listsSource='بيان البورصة المصرية للمراجعة الدورية سبتمبر 2026 كما نشرته masrtimes.com/739069 وmubasher.info/news/4659538، ومقارنة مع TradingView. موقع البورصة نفسه مش متاح للقراءة الآلية، فالتحقق من البيان المنشور.',rows=summary,errors=errors,warnings=warnings,note70=json.loads(Path('index70.json').read_text())['source']),ensure_ascii=False,separators=(',',':'),allow_nan=False))
 real={c:e for c,e in errors.items() if not c.startswith('_')}
 print(len(summary),'rows',len(real),'errors',real)
 if '_egx30_count' in errors:print('NOTE egx30 count:',errors['_egx30_count'])
+
+if real:print('FAILED symbols (kept their old idx file): '+', '.join(sorted(real)))
+if warnings:print('closeMismatch warnings: '+json.dumps(warnings,ensure_ascii=False))
