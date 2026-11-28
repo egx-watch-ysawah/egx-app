@@ -1,0 +1,74 @@
+{
+ "code": "EGAL",
+ "name_ar": "مصر للالومنيوم",
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 6 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 يونيو 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 292.5,
+ "price_date": "2026-11-26",
+ "own_bvps": 82.16,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 يونيو 2026",
+ "own_pb_at_price": 3.56,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Non-Energy Minerals",
+ "n_peers": 6,
+ "peers": [
+  {
+   "code": "SVCE",
+   "name_ar": "جنوب الوادي للاسمنت",
+   "pb": 0.5394707440865706,
+   "price": 8.45
+  },
+  {
+   "code": "ASCM",
+   "name_ar": "اسيك للتعدين",
+   "pb": 0.7855556293334076,
+   "price": 44.01
+  },
+  {
+   "code": "SCEM",
+   "name_ar": "اسمنت سيناء",
+   "pb": 3.3278770812590843,
+   "price": 96.53
+  },
+  {
+   "code": "MBSC",
+   "name_ar": "مصر بنى سويف للأسمنت",
+   "pb": 3.6279428113082757,
+   "price": 330
+  },
+  {
+   "code": "MCQE",
+   "name_ar": "مصر للأسمنت - قنا",
+   "pb": 3.90918099852772,
+   "price": 173.49
+  },
+  {
+   "code": "ALUM",
+   "name_ar": null,
+   "pb": 6.2137884648869735,
+   "price": 18.2
+  }
+ ],
+ "multiples": {
+  "low": 1.421,
+  "median": 3.478,
+  "high": 3.839,
+  "min": 0.5394707440865706,
+  "max": 6.2137884648869735
+ },
+ "range": {
+  "low": 116.761,
+  "base": 285.745,
+  "high": 315.402
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.54, max 6.21, median 3.63)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B2"
+}
