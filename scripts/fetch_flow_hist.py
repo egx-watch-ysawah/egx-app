@@ -8,7 +8,7 @@ The symbol list is the SYMS literal in scripts/flow_signal.py (single source).
 Incremental and resumable (Starta hard-throttles runner IPs with HTTP 429
 for hours at a time, and a from-scratch 96-symbol backfill no longer fits in
 one job): the cache is loaded at start, saved atomically after EVERY
-successful symbol, and a sidecar chunk_0.meta.json records the Cairo date
+successful symbol, and a sidecar chunk_0.meta records the Cairo date
 each symbol was last fetched. Symbols already fetched today are skipped, so
 repeated runs accumulate progress instead of restarting from zero. A partial
 cache is a valid output: the workflow commits it so the next run resumes.
@@ -60,10 +60,10 @@ def save(out_dir, H, meta):
     with open(tmp, 'w') as fh:
         json.dump(H, fh)
     os.replace(tmp, os.path.join(out_dir, 'chunk_0.json'))
-    mtmp = os.path.join(out_dir, 'chunk_0.meta.json.tmp')
+    mtmp = os.path.join(out_dir, 'chunk_0.meta.tmp')
     with open(mtmp, 'w') as fh:
         json.dump(meta, fh)
-    os.replace(mtmp, os.path.join(out_dir, 'chunk_0.meta.json'))
+    os.replace(mtmp, os.path.join(out_dir, 'chunk_0.meta'))
 
 def pass_symbols(todo, H, meta, today, out_dir):
     failed = []
@@ -86,7 +86,7 @@ today = datetime.now(ZoneInfo('Africa/Cairo')).date().isoformat()
 H, meta = {}, {}
 try:
     H = json.load(open(os.path.join(out_dir, 'chunk_0.json')))
-    meta = json.load(open(os.path.join(out_dir, 'chunk_0.meta.json')))
+    meta = json.load(open(os.path.join(out_dir, 'chunk_0.meta')))
     print('resuming: %d symbols already cached' % len(H), flush=True)
 except Exception:
     print('no existing cache, full fetch', flush=True)
