@@ -34,7 +34,7 @@ SYMS = ["ABUK","ADIB","AIFI","AIH","ALCN","AMER","AMIA","AMOC","ARCC","ASCM","AS
         "IEEC","ISMA","ISMQ","ISPH","JUFO","KABO","LCSW","MASR","MBSC","MCQE","MCRO","MEPA",
         "MFPC","MOED","MPCI","MPCO","MPRC","MTIE","NCCW","OBRI","OCDI","OFH","OIH","ORAS",
         "ORHD","ORWE","PHAR","PHDC","POUL","PRCL","PRDC","RAYA","RMDA","SCEM","SDTI","SIPC",
-        "SKPC","SVCE","SWDY","TAQA","TMGH","UEGC","UNIP","VALU","VLMR","VLMRA","ZEOT","ZMID"]
+        "SKPC","SVCE","SWDY","TAQA","TMGH","UEGC","UNIP","VALU","VLMRA","ZEOT","ZMID"]
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'flow_signal.json'
 
 def completed_date(day, now=None):
