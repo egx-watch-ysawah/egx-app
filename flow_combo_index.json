@@ -1,0 +1,583 @@
+{
+ "session": "2026-11-26",
+ "generated_at": "2026-11-28T11:29:45+02:00",
+ "stocks": {
+  "ABUK": {
+   "state": "",
+   "n": null,
+   "sessions": 4879,
+   "first": "2005-10-10"
+  },
+  "ADIB": {
+   "state": "B",
+   "n": 218,
+   "sessions": 5025,
+   "first": "2005-11-08"
+  },
+  "AIFI": {
+   "state": "BC",
+   "n": 11,
+   "sessions": 359,
+   "first": "2025-06-10"
+  },
+  "AIH": {
+   "state": "",
+   "n": null,
+   "sessions": 354,
+   "first": "2025-06-10"
+  },
+  "ALCN": {
+   "state": "",
+   "n": null,
+   "sessions": 4978,
+   "first": "2003-08-21"
+  },
+  "AMER": {
+   "state": "",
+   "n": null,
+   "sessions": 3833,
+   "first": "2010-11-30"
+  },
+  "AMIA": {
+   "state": "",
+   "n": null,
+   "sessions": 4036,
+   "first": "2008-08-27"
+  },
+  "AMOC": {
+   "state": "B",
+   "n": 268,
+   "sessions": 5027,
+   "first": "2006-02-08"
+  },
+  "ARCC": {
+   "state": "B",
+   "n": 151,
+   "sessions": 3029,
+   "first": "2014-05-18"
+  },
+  "ASCM": {
+   "state": "",
+   "n": null,
+   "sessions": 4822,
+   "first": "2004-07-07"
+  },
+  "ASPI": {
+   "state": "B",
+   "n": 170,
+   "sessions": 4431,
+   "first": "2008-06-25"
+  },
+  "ATLC": {
+   "state": "",
+   "n": null,
+   "sessions": 2074,
+   "first": "2017-12-28"
+  },
+  "ATQA": {
+   "state": "",
+   "n": null,
+   "sessions": 2707,
+   "first": "2014-10-26"
+  },
+  "BONY": {
+   "state": "",
+   "n": null,
+   "sessions": 331,
+   "first": "2025-07-23"
+  },
+  "BTFH": {
+   "state": "",
+   "n": null,
+   "sessions": 3514,
+   "first": "2011-01-06"
+  },
+  "CCAP": {
+   "state": "",
+   "n": null,
+   "sessions": 4092,
+   "first": "2009-12-07"
+  },
+  "CIEB": {
+   "state": "B",
+   "n": 330,
+   "sessions": 4952,
+   "first": "2004-03-09"
+  },
+  "CLHO": {
+   "state": "B",
+   "n": 152,
+   "sessions": 2431,
+   "first": "2016-11-15"
+  },
+  "CNFN": {
+   "state": "B",
+   "n": 121,
+   "sessions": 1699,
+   "first": "2018-10-15"
+  },
+  "COMI": {
+   "state": "",
+   "n": null,
+   "sessions": 5027,
+   "first": "2006-02-07"
+  },
+  "COSG": {
+   "state": "C",
+   "n": 238,
+   "sessions": 4627,
+   "first": "2004-04-01"
+  },
+  "CSAG": {
+   "state": "BC",
+   "n": 89,
+   "sessions": 5024,
+   "first": "2005-12-04"
+  },
+  "DAPH": {
+   "state": "",
+   "n": null,
+   "sessions": 4892,
+   "first": "2005-02-17"
+  },
+  "DSCW": {
+   "state": "B",
+   "n": 128,
+   "sessions": 2118,
+   "first": "2015-02-08"
+  },
+  "EAST": {
+   "state": "",
+   "n": null,
+   "sessions": 4934,
+   "first": "2004-11-23"
+  },
+  "EFID": {
+   "state": "BC",
+   "n": 87,
+   "sessions": 2618,
+   "first": "2015-04-02"
+  },
+  "EFIH": {
+   "state": "",
+   "n": null,
+   "sessions": 1238,
+   "first": "2021-10-20"
+  },
+  "EGAL": {
+   "state": "B",
+   "n": 256,
+   "sessions": 4891,
+   "first": "2005-07-28"
+  },
+  "EGCH": {
+   "state": "B",
+   "n": 219,
+   "sessions": 5030,
+   "first": "2004-12-15"
+  },
+  "EGTS": {
+   "state": "",
+   "n": null,
+   "sessions": 5032,
+   "first": "2006-01-23"
+  },
+  "EHDR": {
+   "state": "",
+   "n": null,
+   "sessions": 4828,
+   "first": "2004-06-20"
+  },
+  "ELEC": {
+   "state": "",
+   "n": null,
+   "sessions": 4558,
+   "first": "2007-12-31"
+  },
+  "ELKA": {
+   "state": "",
+   "n": null,
+   "sessions": 4722,
+   "first": "2006-02-01"
+  },
+  "ELSH": {
+   "state": "",
+   "n": null,
+   "sessions": 5028,
+   "first": "2006-02-02"
+  },
+  "EMFD": {
+   "state": "B",
+   "n": 173,
+   "sessions": 2770,
+   "first": "2015-07-05"
+  },
+  "ENGC": {
+   "state": "",
+   "n": null,
+   "sessions": 5001,
+   "first": "2005-11-23"
+  },
+  "ETEL": {
+   "state": "",
+   "n": null,
+   "sessions": 5028,
+   "first": "2006-02-08"
+  },
+  "ETRS": {
+   "state": "C",
+   "n": 259,
+   "sessions": 4799,
+   "first": "2002-05-19"
+  },
+  "EXPA": {
+   "state": "",
+   "n": null,
+   "sessions": 5002,
+   "first": "2006-01-08"
+  },
+  "FWRY": {
+   "state": "B",
+   "n": 109,
+   "sessions": 1773,
+   "first": "2019-08-14"
+  },
+  "GBCO": {
+   "state": "",
+   "n": null,
+   "sessions": 4545,
+   "first": "2007-07-12"
+  },
+  "GDWA": {
+   "state": "B",
+   "n": 90,
+   "sessions": 1246,
+   "first": "2021-10-11"
+  },
+  "GPIM": {
+   "state": "",
+   "n": null,
+   "sessions": 309,
+   "first": "2025-08-25"
+  },
+  "HDBK": {
+   "state": "",
+   "n": null,
+   "sessions": 4979,
+   "first": "2006-01-22"
+  },
+  "HELI": {
+   "state": "B",
+   "n": 225,
+   "sessions": 5027,
+   "first": "2005-12-18"
+  },
+  "HRHO": {
+   "state": "ABC",
+   "n": 106,
+   "sessions": 5028,
+   "first": "2006-02-06"
+  },
+  "ICFC": {
+   "state": "BC",
+   "n": 10,
+   "sessions": 359,
+   "first": "2025-06-10"
+  },
+  "IDRE": {
+   "state": "",
+   "n": null,
+   "sessions": 3433,
+   "first": "2011-08-08"
+  },
+  "IEEC": {
+   "state": "B",
+   "n": 13,
+   "sessions": 359,
+   "first": "2025-06-10"
+  },
+  "ISMA": {
+   "state": "",
+   "n": null,
+   "sessions": 4460,
+   "first": "2005-08-14"
+  },
+  "ISMQ": {
+   "state": "",
+   "n": null,
+   "sessions": 1225,
+   "first": "2021-11-10"
+  },
+  "ISPH": {
+   "state": "",
+   "n": null,
+   "sessions": 2173,
+   "first": "2017-12-12"
+  },
+  "JUFO": {
+   "state": "",
+   "n": null,
+   "sessions": 3953,
+   "first": "2010-06-09"
+  },
+  "KABO": {
+   "state": "",
+   "n": null,
+   "sessions": 5038,
+   "first": "2006-01-04"
+  },
+  "LCSW": {
+   "state": "ABC",
+   "n": 104,
+   "sessions": 4201,
+   "first": "2007-12-31"
+  },
+  "MASR": {
+   "state": "B",
+   "n": 219,
+   "sessions": 5027,
+   "first": "2006-01-29"
+  },
+  "MBSC": {
+   "state": "",
+   "n": null,
+   "sessions": 4715,
+   "first": "2005-09-26"
+  },
+  "MCQE": {
+   "state": "B",
+   "n": 350,
+   "sessions": 4967,
+   "first": "2005-10-17"
+  },
+  "MCRO": {
+   "state": "",
+   "n": null,
+   "sessions": 657,
+   "first": "2024-03-07"
+  },
+  "MEPA": {
+   "state": "",
+   "n": null,
+   "sessions": 3612,
+   "first": "2011-11-29"
+  },
+  "MFPC": {
+   "state": "",
+   "n": null,
+   "sessions": 2473,
+   "first": "2016-09-07"
+  },
+  "MOED": {
+   "state": "",
+   "n": null,
+   "sessions": 1554,
+   "first": "2020-06-07"
+  },
+  "MPCI": {
+   "state": "",
+   "n": null,
+   "sessions": 4406,
+   "first": "2002-06-12"
+  },
+  "MPCO": {
+   "state": "",
+   "n": null,
+   "sessions": 4787,
+   "first": "2003-07-24"
+  },
+  "MPRC": {
+   "state": "",
+   "n": null,
+   "sessions": 5022,
+   "first": "2006-01-25"
+  },
+  "MTIE": {
+   "state": "",
+   "n": null,
+   "sessions": 2254,
+   "first": "2017-04-11"
+  },
+  "NCCW": {
+   "state": "",
+   "n": null,
+   "sessions": 4849,
+   "first": "2003-06-23"
+  },
+  "OBRI": {
+   "state": "",
+   "n": null,
+   "sessions": 3070,
+   "first": "2005-11-17"
+  },
+  "OCDI": {
+   "state": "B",
+   "n": 246,
+   "sessions": 5030,
+   "first": "2006-02-01"
+  },
+  "OFH": {
+   "state": "",
+   "n": null,
+   "sessions": 1401,
+   "first": "2021-02-17"
+  },
+  "OIH": {
+   "state": "B",
+   "n": 201,
+   "sessions": 3595,
+   "first": "2012-01-22"
+  },
+  "ORAS": {
+   "state": "AB",
+   "n": 66,
+   "sessions": 2531,
+   "first": "2016-06-13"
+  },
+  "ORHD": {
+   "state": "BC",
+   "n": 84,
+   "sessions": 3321,
+   "first": "2007-12-31"
+  },
+  "ORWE": {
+   "state": "",
+   "n": null,
+   "sessions": 5025,
+   "first": "2006-01-08"
+  },
+  "PHAR": {
+   "state": "",
+   "n": null,
+   "sessions": 4630,
+   "first": "2005-06-16"
+  },
+  "PHDC": {
+   "state": "",
+   "n": null,
+   "sessions": 4473,
+   "first": "2008-05-15"
+  },
+  "POUL": {
+   "state": "B",
+   "n": 274,
+   "sessions": 4973,
+   "first": "2005-02-07"
+  },
+  "PRCL": {
+   "state": "",
+   "n": null,
+   "sessions": 5031,
+   "first": "2003-06-02"
+  },
+  "PRDC": {
+   "state": "B",
+   "n": 88,
+   "sessions": 1246,
+   "first": "2021-10-11"
+  },
+  "RAYA": {
+   "state": "B",
+   "n": 260,
+   "sessions": 4964,
+   "first": "2006-02-02"
+  },
+  "RMDA": {
+   "state": "",
+   "n": null,
+   "sessions": 1689,
+   "first": "2019-12-11"
+  },
+  "SCEM": {
+   "state": "",
+   "n": null,
+   "sessions": 4928,
+   "first": "2005-12-25"
+  },
+  "SDTI": {
+   "state": "",
+   "n": null,
+   "sessions": 4900,
+   "first": "2004-09-09"
+  },
+  "SIPC": {
+   "state": "",
+   "n": null,
+   "sessions": 2712,
+   "first": "2014-10-28"
+  },
+  "SKPC": {
+   "state": "",
+   "n": null,
+   "sessions": 5028,
+   "first": "2006-02-07"
+  },
+  "SVCE": {
+   "state": "",
+   "n": null,
+   "sessions": 5033,
+   "first": "2006-02-05"
+  },
+  "SWDY": {
+   "state": "",
+   "n": null,
+   "sessions": 4925,
+   "first": "2006-05-31"
+  },
+  "TAQA": {
+   "state": "B",
+   "n": 15,
+   "sessions": 345,
+   "first": "2025-07-01"
+  },
+  "TMGH": {
+   "state": "B",
+   "n": 219,
+   "sessions": 4593,
+   "first": "2007-11-28"
+  },
+  "UEGC": {
+   "state": "",
+   "n": null,
+   "sessions": 5026,
+   "first": "2005-08-03"
+  },
+  "UNIP": {
+   "state": "",
+   "n": null,
+   "sessions": 4555,
+   "first": "2002-11-19"
+  },
+  "VALU": {
+   "state": "B",
+   "n": 22,
+   "sessions": 345,
+   "first": "2025-07-01"
+  },
+  "VLMR": {
+   "state": "",
+   "n": null,
+   "sessions": 345,
+   "first": "2025-07-01"
+  },
+  "VLMRA": {
+   "state": "ABC",
+   "n": 9,
+   "sessions": 345,
+   "first": "2025-07-01"
+  },
+  "ZEOT": {
+   "state": "A",
+   "n": 190,
+   "sessions": 5026,
+   "first": "2006-02-02"
+  },
+  "ZMID": {
+   "state": "B",
+   "n": 272,
+   "sessions": 4233,
+   "first": "2006-01-19"
+  }
+ },
+ "skipped": []
+}
