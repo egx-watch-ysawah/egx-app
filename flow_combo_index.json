@@ -1,6 +1,6 @@
 {
  "session": "2026-11-26",
- "generated_at": "2026-11-28T12:24:57+02:00",
+ "generated_at": "2026-11-28T13:01:27+02:00",
  "stocks": {
   "AALR": {
    "state": "",
@@ -116,6 +116,12 @@
    "sessions": 4036,
    "first": "2008-08-27"
   },
+  "AMII": {
+   "state": "",
+   "n": null,
+   "sessions": 85,
+   "first": "2026-07-29"
+  },
   "AMOC": {
    "state": "B",
    "n": 271,
@@ -199,6 +205,12 @@
    "n": null,
    "sessions": 331,
    "first": "2025-07-23"
+  },
+  "BQDC": {
+   "state": null,
+   "n": null,
+   "sessions": 19,
+   "first": "2026-11-02"
   },
   "BTFH": {
    "state": "",
@@ -295,6 +307,12 @@
    "n": null,
    "sessions": 4493,
    "first": "2004-12-01"
+  },
+  "CPME": {
+   "state": "B",
+   "n": 10,
+   "sessions": 181,
+   "first": "2025-07-23"
   },
   "CRST": {
    "state": "A",
@@ -608,6 +626,12 @@
    "sessions": 2449,
    "first": "2004-08-03"
   },
+  "HBCO": {
+   "state": "B",
+   "n": 4,
+   "sessions": 120,
+   "first": "2026-06-07"
+  },
   "HDBK": {
    "state": "",
    "n": null,
@@ -709,6 +733,12 @@
    "n": null,
    "sessions": 5038,
    "first": "2006-01-04"
+  },
+  "KORA": {
+   "state": "",
+   "n": null,
+   "sessions": 116,
+   "first": "2026-06-11"
   },
   "KRDI": {
    "state": "B",
@@ -1196,6 +1226,12 @@
    "sessions": 3670,
    "first": "2007-04-02"
   },
+  "TWSA": {
+   "state": "",
+   "n": null,
+   "sessions": 120,
+   "first": "2026-06-07"
+  },
   "TYCN": {
    "state": "",
    "n": null,
@@ -1232,11 +1268,29 @@
    "sessions": 5021,
    "first": "2006-01-25"
   },
+  "UPMS": {
+   "state": "B",
+   "n": 6,
+   "sessions": 120,
+   "first": "2026-06-07"
+  },
+  "UTOP": {
+   "state": "",
+   "n": null,
+   "sessions": 120,
+   "first": "2026-06-07"
+  },
   "VALU": {
    "state": "B",
    "n": 23,
    "sessions": 345,
    "first": "2025-07-01"
+  },
+  "VERT": {
+   "state": "B",
+   "n": 8,
+   "sessions": 120,
+   "first": "2026-06-07"
   },
   "VLMR": {
    "state": "",
@@ -1276,27 +1330,18 @@
   }
  },
  "skipped": [
-  "AMII",
   "BIDI",
-  "BQDC",
   "CFGH",
-  "CPME",
   "DEIN",
   "EPPK",
   "FERC",
   "GPPL",
-  "HBCO",
   "ICLE",
-  "KORA",
   "MEGM",
   "MISR",
   "NDRL",
   "RTVC",
   "SAIB",
-  "SPHT",
-  "TWSA",
-  "UPMS",
-  "UTOP",
-  "VERT"
+  "SPHT"
  ]
 }
