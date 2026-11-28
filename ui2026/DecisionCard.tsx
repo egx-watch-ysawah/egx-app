@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useStatus } from './StockStatus';
 
 // Decision card for one stock, inside the الفني tab. Reads the same fair-value file the fair-value tab reads.
 const DAYS = ['الأحد', 'الاتنين', 'التلات', 'الأربع', 'الخميس', 'الجمعة', 'السبت'];
@@ -46,9 +47,9 @@ function TwoCard({ code, close, date: dt }: { code: string; close?: number; date
   const norm = (m: any) => { const v = m && m.values ? m.values : m; return v && typeof v.conservative === 'number' && typeof v.optimistic === 'number' ? { values: { conservative: v.conservative, optimistic: v.optimistic } } : null; };
   const ms = fin && Array.isArray(fin.methods) ? fin.methods.map(norm).filter((m: any) => m) : [];
   const style = <style>{CSS}</style>;
-  if (price == null || !date) return <section className="dc" aria-label="ملخص القرار">{style}<div className="dc-t">ملخص القرار: غير متوفر</div><p className="dc-ft">غير متوفر: مفيش سعر إقفال متاح للسهم ده دلوقتي.</p></section>;
+  if (price == null || !date) return <section className="dc" aria-label="ملخص القرار">{style}<div className="dc-t">ملخص القرار</div><p className="dc-ft">مفيش سعر إقفال للسهم ده دلوقتي.</p></section>;
   const fresh = <div className="dc-fresh">أسعار إقفال يوم {dateAr(date)}</div>;
-  if (ms.length < 1) return <section className="dc" aria-label="ملخص القرار">{style}<div className="dc-top"><span className="dc-t">ملخص القرار</span><span className="dc-tag">تجريبي</span></div>{fresh}<div className="dc-px"><N v={price} /><small>جنيه</small></div><div className="dc-v">غير متوفر: مفيش نطاق سعر عادل تقديري للسهم ده.</div></section>;
+  if (ms.length < 1) return <section className="dc" aria-label="ملخص القرار">{style}<div className="dc-top"><span className="dc-t">ملخص القرار</span><span className="dc-tag">تجريبي</span></div>{fresh}<div className="dc-px"><N v={price} /><small>جنيه</small></div><div className="dc-v">مفيش نطاق سعر عادل تقديري للسهم ده.</div></section>;
   const los = ms.map((m: any) => m.values.conservative as number), his = ms.map((m: any) => m.values.optimistic as number);
   const minLo = Math.min(...los), maxHi = Math.max(...his), maxLo = Math.max(...los), minHi = Math.min(...his);
   const allOverlap = maxLo <= minHi;
@@ -84,7 +85,7 @@ function TwoCard({ code, close, date: dt }: { code: string; close?: number; date
     <div className="dc-top"><span className="dc-t">ملخص القرار</span><span className="dc-tag">تجريبي</span></div>
     {fresh}
     <div className="dc-px"><N v={price} /><small>جنيه، إقفال {dateAr(date)}</small></div>
-    {single ? <div className="dc-rg">نطاق طريقة واحدة بس: من <b><N v={minLo} /></b> لـ <b><N v={maxHi} /></b> جنيه، من غير طريقة تانية تأكده.</div> : bl != null && bh != null ? <div className="dc-rg">نطاق السعر العادل التقديري: من <b><N v={bl} /></b> لـ <b><N v={bh} /></b> جنيه ({allOverlap ? bnote + ' متفقين' : bnote}).</div> : <div className="dc-rg">نطاق السعر العادل التقديري: غير متوفر، لأن الطرق مالهاش نطاق مشترك.</div>}
+    {single ? <div className="dc-rg">نطاق طريقة واحدة بس: من <b><N v={minLo} /></b> لـ <b><N v={maxHi} /></b> جنيه، من غير طريقة تانية تأكده.</div> : bl != null && bh != null ? <div className="dc-rg">نطاق السعر العادل التقديري: من <b><N v={bl} /></b> لـ <b><N v={bh} /></b> جنيه ({allOverlap ? bnote + ' متفقين' : bnote}).</div> : <div className="dc-rg">نطاق السعر العادل التقديري: مفيش، لأن الطرق مالهاش نطاق مشترك.</div>}
     <div className="dc-bar" role="img" aria-label="السعر مقابل نطاق السعر العادل التقديري">
       <div className="dc-span" style={{ left: X(minLo) + '%', width: (X(maxHi) - X(minLo)) + '%' }} />
       {bl != null && bh != null && <div className="dc-ov" style={{ left: X(bl) + '%', width: Math.max(1, X(bh) - X(bl)) + '%' }} />}
@@ -95,7 +96,7 @@ function TwoCard({ code, close, date: dt }: { code: string; close?: number; date
     {disagree ? <div className="dc-v">مفيش حكم واحد نقدر نقوله دلوقتي.<span>{single ? 'فيه طريقة واحدة بس عندها رقم، فمنقولش السعر أعلى ولا أقل من النطاق.' : (allOverlap ? 'المدى بين الطرق واسع جدا، فمنقولش السعر أعلى ولا أقل من النطاق.' : 'الطرق مش متفقة على نطاق واحد، فمنقولش السعر أعلى ولا أقل من النطاق.')}</span></div>
       : <div className="dc-v">السعر {pos} النطاق المشترك.<span>ده وصف للأرقام الحالية، مش حكم.</span></div>}
     <ol>{reasons}</ol>
-    <p className="dc-ft">{fin && fin.peer_data_date_ar ? fin.peer_data_date_ar : 'غير متوفر: تاريخ بيانات الشركات المقارنة'}</p>
+    <p className="dc-ft">{fin && fin.peer_data_date_ar ? fin.peer_data_date_ar : 'تاريخ بيانات الشركات المقارنة مش مسجل.'}</p>
     {nt.map((x, i) => <p key={i} className="dc-ft">ملاحظة: {x}</p>)}
     <p className="dc-ft">دي قراءة تحليلية مش توصية بشراء أو بيع، والقرار النهائي قرارك ومسؤوليتك.</p>
   </section>;
@@ -121,6 +122,9 @@ const NOR = (st: string, ms: string) => (st === 'non_egp' ? 'النطاق بال
 
 function PBCard({ code, close, date: dt }: { code: string; close?: number; date?: string }) {
   const [d, setD] = useState<any>(undefined);
+  const stx = useStatus(code);
+  // status stocks: price is the last real close with its own date (none for stocks that never traded)
+  const sp = stx && !['not_trading_yet', 'new_listing', 'temporary_listing_sme'].includes(stx.status) && typeof stx.last_close === 'number' && stx.last_close > 0 && stx.last_traded ? stx : null;
   useEffect(() => { let on = true; pload(code).then(j => on && setD(j)); return () => { on = false; }; }, [code]);
   const style = <style>{CSS + PBCSS}</style>;
   const date = dt ? String(dt).slice(0, 10) : '';
@@ -129,22 +133,23 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
   const hist = method === 'price_history_52w', usd = !!d && (d.currency === 'USD' || method === 'usd_pb_peers');
   const unit = usd ? 'دولار' : 'جنيه';
   // USD stocks: no currency conversion, compare in USD only, with the file's own price
-  const price = usd ? (d && typeof d.price === 'number' ? d.price : null) : (typeof close === 'number' && close > 0 ? close : null);
-  const pdt = usd ? String(d && d.as_of || '') : date;
+  const price = sp ? sp.last_close : stx ? null : usd ? (d && typeof d.price === 'number' ? d.price : null) : (typeof close === 'number' && close > 0 ? close : null);
+  const pdt = sp ? String(sp.last_traded) : usd ? String(d && d.as_of || '') : date;
   const head = <div className="dc-top"><span className="dc-t">ملخص القرار</span><span className="dc-tag">تجريبي</span></div>;
   const foot = <p className="dc-ft">دي قراءة تحليلية مش توصية بشراء أو بيع، والقرار النهائي قرارك ومسؤوليتك.</p>;
   const px = price != null && pdt ? <div className="dc-px"><N v={price} /><small>{unit}، {usd ? 'سعر ' : 'إقفال '}{dateAr(pdt)}</small></div> : null;
   const rg = d && d.range && typeof d.range.low === 'number' && typeof d.range.high === 'number' ? d.range : null;
   const neg = !!d && !!rg && !hist && (rg.low <= 0 || (typeof d.own_bvps === 'number' && d.own_bvps <= 0));
   if (!d || !rg || neg) {
-    const line = neg ? 'غير متوفر: القيمة الدفترية للسهم بالسالب، فمفيش نطاق P/B ليه معنى.' : !d ? 'غير متوفر: مفيش نطاق سعر تقديري للسهم ده.' : d.method === 'none' && d.confidence_ar ? String(d.confidence_ar) : 'غير متوفر: ' + (d.missing_ar ? String(d.missing_ar).replace(/[.،]$/, '') : NOR(String(d.status || ''), String(d.missing || ''))) + '.';
+    const line = neg ? 'القيمة الدفترية للسهم بالسالب، فمفيش نطاق P/B ليه معنى.' : !d ? 'مفيش نطاق سعر تقديري للسهم ده.' : d.method === 'none' && d.confidence_ar ? String(d.confidence_ar) : 'مفيش نطاق: ' + (d.missing_ar ? String(d.missing_ar).replace(/[.،]$/, '') : NOR(String(d.status || ''), String(d.missing || ''))) + '.';
     return <section className="dc" aria-label="ملخص القرار">{style}{head}{px}<div className="dc-v">{line}</div>{d && d.profile && d.profile.last_updated ? <p className="dc-ft">ملف الشركة على موقع arabfinance.com آخر تحديث له: <bdi dir="ltr">{String(d.profile.last_updated)}</bdi>.</p> : null}{foot}</section>;
   }
   const mm = d.multiples || {};
   const tag = String(d.confidence_ar || '').split(':')[0] || 'ثقة منخفضة';
   const weak = d.tier === 3 || /ضعيفة/.test(tag);
-  const same = price != null && !!pdt && (usd || d.price_date === date || (hist && String(d.as_of) === date));
+  const same = price != null && !!pdt && (!!sp || usd || d.price_date === date || (hist && String(d.as_of) === date));
   const flat = rg.low === rg.high;
+  const far = same && !weak && price != null && price > 0 && rg.low > 0 && rg.high > 0 ? (price * 2.5 <= rg.low ? { dir: 'تحته', x: rg.low / price } : price >= rg.high * 2.5 ? { dir: 'فوقه', x: price / rg.high } : null) : null;
   const lo = Math.min(rg.low, price != null ? price : rg.low) * 0.94, hi = Math.max(rg.high, price != null ? price : rg.high) * 1.04, X = (v: number) => (hi > lo ? ((v - lo) / (hi - lo)) * 100 : 50);
   const pos = same ? (price! > rg.high ? 'فوق' : price! < rg.low ? 'تحت' : 'جوه') : '';
   const bvDate = /[\u0600-\u06FF]|^\d/.test(String(d.own_bvps_date || '')) ? String(d.own_bvps_date) : 'آخر ربع في بيانات السوق، تاريخه مش معروف';
@@ -184,12 +189,14 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
     {hist ? <div className="dc-v">{same && !flat ? 'السعر ' + pos + ' مدى آخر 52 أسبوع.' : 'ده مدى سعر آخر 52 أسبوع.'}<span>ده مدى سعر حصل فعلا، مش تقدير للسعر العادل ولا حكم.</span></div>
       : weak ? <div className="dc-v">ثقة ضعيفة جدا، فالنطاق ده للاطلاع بس.<span>منقارنش بيه السعر ولا بنقول حكم.</span></div>
       : same ? <div className="dc-v">السعر {pos} النطاق ده.<span>ده وصف للأرقام الحالية، مش حكم.</span></div>
-      : <div className="dc-v">غير متوفر: مقارنة السعر بالنطاق.<span>تاريخ إقفال الصفحة غير تاريخ بيانات النطاق.</span></div>}
+      : stx && price == null ? <div className="dc-v">مفيش مقارنة للسعر بالنطاق.<span>السهم لسه ماتداولش، فمفيش سعر تداول نقارن بيه.</span></div>
+      : <div className="dc-v">مفيش مقارنة للسعر بالنطاق.<span>تاريخ إقفال الصفحة غير تاريخ بيانات النطاق.</span></div>}
     <ol>
       {typeof d.own_bvps === 'number' && d.own_bvps <= 0 && <li>القيمة الدفترية للسهم بالسالب (<N v={d.own_bvps} /> جنيه للسهم، {bvSrc})، فمقارنة P/B ملهاش معنى.</li>}
       {d.own_pb_at_price != null && typeof d.own_bvps === 'number' && d.own_bvps > 0 && <li>السعر بيساوي <N v={d.own_pb_at_price} /> مرة القيمة الدفترية للسهم (<N v={d.own_bvps} /> جنيه للسهم، {bvSrc}{conv ? ' ' : '، '}{bvDate}).</li>}
       {typeof mm.low === 'number' && typeof mm.high === 'number' && <li>{d.n_peers} شركة {LEVEL[d.peer_level] || (usd ? 'مسعّرة بالدولار' : 'مشابهة')} بتتداول على P/B من <N v={mm.low} /> لـ <N v={mm.high} /> مرة{typeof mm.median === 'number' ? <>، والوسيط <N v={mm.median} /></> : null}. بنضرب ده في القيمة الدفترية للسهم.</li>}
       <li>{d.confidence_ar}</li>
+      {far && <li>السعر الحالي بعيد جدا عن النطاق ({far.dir} بحوالي <bdi dir="ltr">{far.x.toFixed(1)}</bdi> مرات)، فالقراءة دي للاستدلال بس.</li>}
       {conv && <li>النطاق بيتحرك مع سعر صرف الدولار.</li>}
       {flags}
     </ol>
@@ -199,9 +206,10 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
   </section>;
 }
 
-// batches switched on (B1 = portfolio, B2 = rest of EGX30); each batch passes the gate before it is added
+// batches switched on (B1 = portfolio, B2 = rest of EGX30, B3 = 65 EGX70/others); each batch passes the gate before it is added
 const B2 = ["EMFD", "ETEL", "ISPH", "MCQE", "MFPC", "PHDC", "RAYA", "EFIH", "GBCO", "RMDA", "TMGH", "CLHO", "EFID", "ORAS", "SKPC", "BTFH", "EAST", "ABUK", "CCAP", "JUFO", "VLMRA", "AMOC", "EGAL", "FWRY", "HELI", "ADIB", "ALCN"];
-export const CARD_ON = new Set<string>([...TWO, ...B2]);
+const B3 = ["UEGC", "ASCM", "LCSW", "CSAG", "OFH", "ARAB", "COSG", "POUL", "PRCL", "DSCW", "MPRC", "ETRS", "EHDR", "ELSH", "EXPA", "ISMQ", "MCRO", "MEPA", "ATQA", "MTIE", "OCDI", "ZMID", "EGTS", "ISMA", "ENGC", "TAQA", "AMER", "IEEC", "SVCE", "AMIA", "SCEM", "ICFC", "KABO", "MPCO", "SWDY", "ACTF", "AIH", "MPCI", "ASPI", "OBRI", "CNFN", "HDBK", "ATLC", "IDRE", "DAPH", "CIEB", "ZEOT", "SIPC", "MOED", "GPIM", "SDTI", "VALU", "NCCW", "NIPH", "AIFI", "ARCC", "ELEC", "ORWE", "OIH", "ELKA", "GDWA", "GOUR", "MBSC", "EGCH", "PRDC"];
+export const CARD_ON = new Set<string>([...TWO, ...B2, ...B3]);
 export function DecisionCard({ code, close, date }: { code: string; close?: number; date?: string }) {
   return TWO.includes(code) ? <TwoCard code={code} close={close} date={date} /> : <PBCard code={code} close={close} date={date} />;
 }
