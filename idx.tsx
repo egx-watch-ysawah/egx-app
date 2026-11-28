@@ -22,7 +22,7 @@ import { FAIR6 } from './ui2026/FairSix';
 import { FlowCombo } from './ui2026/FlowCombo';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
-import { StatusBanner, useCur, useCurMap, useNty, useStatus } from './ui2026/StockStatus';
+import { StatusBanner, useCur, useCurMap, useNty, useStatus, useSV, unitPx } from './ui2026/StockStatus';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -117,6 +117,7 @@ const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u06
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   const cmap = useCurMap();
   const nty = useNty();
+  const sv = useSV();
   const [d0, err] = useJson('idx/index.json');
   const sf = useStarta();
   const d = React.useMemo(() => overlay(d0, sf), [d0, sf]);
@@ -147,7 +148,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
     {rows.map((r: any) => {
       const to = r.full ? '/' + r.code.toLowerCase() : '/s/' + r.code;
       const vl = <><span className="ls-c1"><bdi dir="ltr">{r.vol != null && !(nty && nty[r.code]) ? shortN(r.vol) : '-'}</bdi> <bdi>سهم</bdi></span><span className="ls-c2">{r.val != null && !(nty && nty[r.code]) && !(cmap && cmap[r.code] === 'USD') ? <><bdi dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</bdi> <bdi>مليون جنيه</bdi></> : null}</span></>;
-      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} flag={<LcFlag code={r.code} small />} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={<ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={nty && nty[r.code] ? undefined : r.price != null ? fmt(r.price) : undefined} chg={nty && nty[r.code] || cmap && cmap[r.code] === 'USD' ? null : r.chg} na={nty && nty[r.code] ? 'مقيد مؤقتًا ولسه ماتداولش' : cmap && cmap[r.code] === 'USD' ? 'السعر بالدولار، مش معروض بالجنيه' : undefined} volLine={vl} />;
+      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} flag={<LcFlag code={r.code} small />} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={<ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={nty && nty[r.code] ? undefined : r.price != null ? unitPx(sv, r.code, fmt(r.price)) : undefined} chg={nty && nty[r.code] || cmap && cmap[r.code] === 'USD' ? null : r.chg} na={nty && nty[r.code] ? 'مقيد مؤقتًا ولسه ماتداولش' : cmap && cmap[r.code] === 'USD' ? 'مش معروض بالجنيه' : undefined} volLine={vl} />;
     })}
     <p className="eg-note">آخر تحديث للقايمة: <L>{(() => { try { const t = new Date(d.asof); return t.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }) + ' ' + t.toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return String(d.asof).slice(0, 10); } })()}</L> · الأسهم اللي فيها تاريخ ناقص بتظهر بالسعر بس.</p>
   </div>;
@@ -235,7 +236,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
   if (code === 'VLMR') return <OtherLight code={code} row={null} reason="" />;
-  if (stx && stx.status === 'not_trading_yet') return <OtherLight code={code} row={cl.row || null} reason="" />;
+  if (stx && (stx.status === 'not_trading_yet' || stx.status === 'temporary_listing_sme')) return <OtherLight code={code} row={cl.row || null} reason="" />;
   if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} unNode={unr && !cl.row ? <div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div> : undefined} />{unr && cl.row ? <div className="eg-pad"><div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div></div> : null}</>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
