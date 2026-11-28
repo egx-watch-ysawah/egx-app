@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { hasFile } from './ui2026/FileIndex';
 
 // Financial studies for stocks outside the bundled reviewed set. Data-only: studies_rest/<CODE>.json is written by the content agent.
 // Every study carries its own honesty status line; nothing here adds numbers or opinions.
 const cache: Record<string, Promise<any>> = {};
-const load = (code: string) => cache[code] || (cache[code] = fetch('studies_rest/studies_rest/' + code + '.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null));
+const load = (code: string) => cache[code] || (cache[code] = hasFile('studies', code).then(h => (h ? fetch('studies_rest/studies_rest/' + code + '.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null) : null)));
 export function useStudy(code: string) {
   const [st, setSt] = useState<any>(null);
   useEffect(() => { let on = true; setSt(null); load(code).then(x => { if (on && x && x.record) setSt(x); }); return () => { on = false; }; }, [code]);
@@ -40,7 +41,7 @@ export function StudyFin({ st }: { st: any }) {
   </div>;
 }
 
-const FACT_AR: Record<string, string> = { bvps: 'القيمة الدفترية للسهم', bvps_calc: 'طريقة حسابها', pb_at_feed_price: 'السعر ÷ القيمة الدفترية (بسعر Starta Markets)', pe_annualised_at_feed_price: 'مضاعف الربحية المبسط (بسعر Starta Markets)', price_feed: 'السعر في Starta Markets', price_note: 'ملاحظة السعر', shares: 'عدد الأسهم', par: 'القيمة الاسمية' };
+const FACT_AR: Record<string, string> = { bvps: 'القيمة الدفترية للسهم', bvps_calc: 'طريقة حسابها', pb_at_feed_price: 'السعر على القيمة الدفترية (بسعر Starta Markets)', pe_annualised_at_feed_price: 'مضاعف الربحية المبسط (بسعر Starta Markets)', price_feed: 'السعر في Starta Markets', price_note: 'ملاحظة السعر', shares: 'عدد الأسهم', par: 'القيمة الاسمية' };
 const factLabel = (k: string) => FACT_AR[k] || (/^eps_/.test(k) ? 'ربح السهم (' + k.replace(/^eps_/, '').replace(/_/g, ' ') + ')' : k.replace(/_/g, ' '));
 export function StudyFair({ st }: { st: any }) {
   const fv = st.fair_value || {}; const fo = fv.facts_only || {}; const rg = Array.isArray(fv.range) && fv.range.length === 3 ? fv.range : null;
@@ -48,7 +49,7 @@ export function StudyFair({ st }: { st: any }) {
   const fx = (x: number) => (x >= 10 ? x.toFixed(2) : x.toFixed(2));
   if (rg) return <div className="gd-fv"><h4>{fv.status}، تقدير تجريبي منا · الثقة {fv.confidence}</h4>
     <p className="gd-sum">{fv.text}<small>{fv.label}{fv.price_at_check != null ? ' · السعر وقت الفحص ' + fv.price_at_check + ' (' + (fv.price_note || '') + ')' : ''}</small></p>
-    <div className="gd-rng">{rg.map((v: number, i: number) => <div key={i}><small>{['حذر', 'أساسي', 'متفائل'][i]}{mm[i] ? ' · ' + mm[i] + '×' : ''}</small><b dir="ltr">{fx(v)}</b></div>)}</div>
+    <div className="gd-rng">{rg.map((v: number, i: number) => <div key={i}><small>{['حذر', 'أساسي', 'متفائل'][i]}{mm[i] ? ' · ' + mm[i] + ' مرة' : ''}</small><b dir="ltr">{fx(v)}</b></div>)}</div>
     <details className="gd-det"><summary>التفاصيل</summary>
       {fv.basis ? <p className="gd-foot">الأساس: {fv.basis}</p> : null}
       {fv.eps_calc ? <p className="gd-foot">ربح السهم السنوي المبسط {fv.eps_annualised}: {fv.eps_calc}</p> : null}
