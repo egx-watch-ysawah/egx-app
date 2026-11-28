@@ -1,8 +1,13 @@
 # Institutional-accumulation flow jobs, after the EGX close (13:30 UTC = 15:30 Cairo winter).
-# Chain: cache Starta history -> flow_signal.py (offline from the cache) -> freshness gate
-# (session must equal the last expected trading day) -> build_flow_stats.py with that session.
-# flow_signal.json / flow_stats.json are committed only if ALL steps succeed; any failure keeps
-# the old files live and opens an issue.
+# Chain: restore history cache -> fetch Starta (resumable) -> flow_signal.py -> freshness gate -> build_flow_stats.py
+#        -> guard -> COMMIT flow_signal.json + flow_stats.json -> THEN flow_combo (continue-on-error, never blocks the signal).
+# v4 (proposal, not installed): the seed is base64 text parts (flow_hist_seed/part_NNN.b64 + manifest.json), because the publisher cannot commit binary files.
+# v3 (proposal, not installed). Changes vs the current repo file:
+#  1) The history cache is NOT committed to git (it is about 40 MB; it was never in the repo and no run has finished yet).
+#     It lives in the GitHub Actions cache (restore at start, save at the end even on failure, so partial progress survives).
+#  2) First run seeds the cache from flow_hist_seed/part_*.b64 (about 9.5 MB of text in 48 parts, committed ONCE, never touched by the job). If the seed file is missing the step falls back to the normal full fetch.
+#     Both actions/cache lines are pinned to the v4.3.0 commit (restore/ and save/ exist at that SHA). No 'actions: write' permission is needed for the cache.
+#  3) flow_combo runs after the signal commit, continue-on-error; its files are committed in a separate step.
 name: flow-signal
 on:
   workflow_dispatch:
@@ -15,14 +20,47 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 60  # raised from 25 (approved): first full-history backfill exceeds 25m
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.11"
       - run: pip install pandas==2.3.3 numpy==2.2.6
-      - name: Cache Starta history
+      - name: Restore history cache (Actions cache, not git)
+        id: hist
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: flow_hist
+          key: flow-hist-never-matches
+          restore-keys: flow-hist-
+      - name: Seed cache once (from base64 text parts; only if nothing restored)
+        run: |
+          mkdir -p flow_hist
+          if [ ! -s flow_hist/chunk_0.json ]; then
+            python3 - <<'PY' || echo "seed unavailable or failed verification: normal full fetch from Starta"
+          import base64, gzip, hashlib, json, os, sys
+          d = 'flow_hist_seed'
+          m = json.load(open(os.path.join(d, 'manifest.json')))
+          buf = b''
+          for p in m['parts']:
+              raw = open(os.path.join(d, p['file']), 'rb').read()
+              if hashlib.sha256(raw).hexdigest() != p['sha256']:
+                  sys.exit('bad part hash: ' + p['file'])
+              buf += raw
+          gz = base64.b64decode(buf)
+          if hashlib.sha256(gz).hexdigest() != m['original_sha256']:
+              sys.exit('bad seed hash')
+          data = json.loads(gzip.decompress(gz))
+          if not isinstance(data, dict) or len(data) < 50:
+              sys.exit('seed has too few symbols')
+          json.dump(data, open('flow_hist/chunk_0.json.tmp', 'w'))
+          os.replace('flow_hist/chunk_0.json.tmp', 'flow_hist/chunk_0.json')
+          open('flow_hist/chunk_0.meta', 'w').write('{}')
+          print('seeded cache from flow_hist_seed:', len(data), 'symbols')
+          PY
+          fi
+      - name: Cache Starta history (resumable, per-symbol backoff)
         run: python3 scripts/fetch_flow_hist.py flow_hist
       - name: Flow signal
         run: FLOW_HIST_DIR=flow_hist python3 scripts/flow_signal.py flow_signal.json
@@ -32,25 +70,35 @@ jobs:
         run: python3 scripts/build_flow_stats.py flow_hist flow_stats.json "$(python3 -c "import json; print(json.load(open('flow_signal.json'))['session'])")"
       - name: Guard refreshed signal
         run: python3 scripts/guard_refresh.py flow_signal.json
-      - name: Commit if changed
+      - name: Commit signal and stats
         run: |
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
-          git add flow_signal.json flow_stats.json flow_hist/chunk_0.json flow_hist/chunk_0.meta
+          git add flow_signal.json flow_stats.json
           git diff --cached --quiet || (git commit -m "flow signal refresh" && git push)
-      - name: Commit partial history cache
-        if: always()
+      - name: Flow combo (one file per stock; failure never blocks the signal)
+        id: combo
+        continue-on-error: true
+        run: python3 scripts/build_flow_combo.py flow_hist . "$(python3 -c "import json; print(json.load(open('flow_signal.json'))['session'])")"
+      - name: Commit flow combo files
+        if: steps.combo.outcome == 'success'
         run: |
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
-          git add flow_hist/chunk_0.json flow_hist/chunk_0.meta
-          git diff --cached --quiet || (git commit -m "flow history cache (partial)" && git push)
+          git add flow_combo_*.json
+          git diff --cached --quiet || (git commit -m "flow combo refresh" && git pull --rebase -q && git push)
+      - name: Save history cache (even if an earlier step failed)
+        if: always()
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: flow_hist
+          key: flow-hist-${{ github.run_id }}
       - name: Open issue on failure
-        if: failure()
+        if: failure() || steps.combo.outcome == 'failure'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue create --title "flow-signal job failed" \
-            --body "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          gh issue create --title "flow-signal job: a step failed" \
+            --body "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} (combo outcome: ${{ steps.combo.outcome }})"
 
 # End of workflow
