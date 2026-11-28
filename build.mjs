@@ -15,6 +15,8 @@ fs.writeFileSync('dist/index.html',fs.readFileSync('dist/index.html','utf8').rep
 fs.writeFileSync('dist/sw.js', fs.readFileSync('sw.js', 'utf8').replace('__V__', stamp));
 console.log('built', stamp);
 
-for (const f of ['stock_status.json', 'stock_currency.json', 'flow_signal.json', 'flow_stats.json', 'peer_compare.json', 'result_card.json', 'egx_holidays.json', ...fs.readdirSync('.').filter(f => /^flow_combo_[A-Z0-9]+\.json$/.test(f))]) if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f);
+for (const f of ['stock_status.json', 'stock_currency.json', 'flow_signal.json', 'flow_stats.json', 'peer_compare.json', 'universe.json', 'result_card.json', 'egx_holidays.json', ...fs.readdirSync('.').filter(f => /^flow_combo_[A-Z0-9]+\.json$/.test(f))]) if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f);
 if(fs.existsSync('gold/scenario.json')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/scenario.json','dist/gold/scenario.json');}
 if(fs.existsSync('gold/history.jsonl')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/history.jsonl','dist/gold/history.jsonl');}
+// Per-stock files that exist, so the app does not request ones that would 404.
+{ const ls = (d, re) => (fs.existsSync(d) ? fs.readdirSync(d).map(f => (re.exec(f) || [])[1]).filter(Boolean) : []); fs.writeFileSync('dist/files_index.json', JSON.stringify({ idx: ls('idx', /^([A-Z0-9]+)\.json$/).filter(c => c !== 'INDEX'), studies: ls('studies_rest/studies_rest', /^([A-Z0-9]+)\.json$/), combo: ls('.', /^flow_combo_([A-Z0-9]+)\.json$/) })); }
