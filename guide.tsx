@@ -505,7 +505,7 @@ export function OnTab({ id, children }: { id: string; children: React.ReactNode 
   return !guideOn || guideTab === id ? <>{children}</> : null;
 }
 
-export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart, fairNew, unNote }: { unNote?: React.ReactNode; fairNew?: boolean; s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
+export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart, fairNew, unNote, topCard }: { topCard?: React.ReactNode; unNote?: React.ReactNode; fairNew?: boolean; s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
   const [tabRaw, setTab0] = useState<'t' | 'f' | 'v' | 'd'>(s.nohist ? 'f' : 't');
   const tab: 't' | 'f' | 'v' | 'd' = tabRaw === 'v' && !FAIR6.includes(k) ? (s.nohist ? 'f' : 't') : tabRaw;
   const setTab = (t: 't' | 'f' | 'v' | 'd') => { setTab0(t); setGuide(t, true); };
@@ -524,6 +524,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
   return <><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
     <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{FAIR6.includes(k) ? tb('v', 'تجميع ومقارنة') : null}{!light && !nop && tb('d', 'الخلاصة')}</div>
+    {!nop && tab === 't' ? topCard : null}
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && !(NEW(k) && pmS && pmS.dec_ar) && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
