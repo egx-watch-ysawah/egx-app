@@ -1,0 +1,34 @@
+{
+ "code": "CCAP",
+ "name_ar": "القلعة للاستشارات المالية",
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: القيمة الدفترية سالبة وربح السهم آخر 12 شهر مش متاح. ده أدنى وأعلى سعر في آخر 52 أسبوع بس، مش تقدير للسعر العادل.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 5.52,
+ "price_date": "2026-11-26",
+ "own_bvps": -0.284,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": -19.44,
+ "peer_group_feed_label": "Investment Managers",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.69, max 56.75, median 1.92)",
+  "negative book value (feed -1.43139, reviewed statements -0.284), TTM EPS null"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B2",
+ "method": "price_history_52w",
+ "rung": 6,
+ "method_ar": "مدى سعر تاريخي بس، مش تقدير للسعر العادل",
+ "range": {
+  "low": 2.97,
+  "base": null,
+  "high": 7.32
+ },
+ "range_source": "TradingView scanner price_52_week_low/high, pulled 28 Nov 2026",
+ "currency": "EGP",
+ "price_marker": "inside",
+ "confidence": "low"
+}
