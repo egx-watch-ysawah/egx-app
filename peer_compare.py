@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily peer comparison for the six held stocks. Source: TradingView scanner (free, delayed, single source).
+"""Daily peer comparison for the six held stocks plus the 5 P0 pilot stocks (11 in all). Source: TradingView scanner (free, delayed, single source).
 Writes peer_compare.json. Peer groups use the feed's own labels (not EGX official sectors).
 Rules: medians exclude the stock; only positive values count; n<3 => no comparison; n<5 => quality 'weak'.
 If the feed fails or returns too few rows, the old data is kept, marked status=stale, and the run exits 1 (job fails = alert).
@@ -10,13 +10,35 @@ OUT=Path(sys.argv[1] if len(sys.argv)>1 else 'peer_compare.json')
 COLS=['name','close','sector','industry','price_earnings_ttm','price_book_fq','time']
 # stock -> (label, filter on feed row). Group definitions are fixed here, so a change is a visible code change.
 G={
- 'ORHD':('Real Estate Development (wider group; feed puts ORHD in "Homebuilding", 4 peers)',lambda r:r['industry']=='Real Estate Development'),
+ 'ORHD':('Real Estate Development (wider group; feed label is Homebuilding)',lambda r:r['industry']=='Real Estate Development'),
  'MASR':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
  'BONY':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
  'HRHO':('Investment Banks/Brokers',lambda r:r['industry']=='Investment Banks/Brokers'),
  'PHAR':('Pharmaceuticals (Health Technology sector)',lambda r:r['sector']=='Health Technology'),
  'UNIP':('Containers/Packaging',lambda r:r['industry']=='Containers/Packaging'),
+ # P0 pilot stocks added 28 Nov. Group choices are by feed label only; reasons are in NOTES below (not in the group label, which must stay a short clean label).
+ 'COMI':('Regional Banks',lambda r:r['industry']=='Regional Banks'),
+ 'ETEL':('Major Telecommunications',lambda r:r['industry']=='Major Telecommunications'),
+ 'TMGH':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'SWDY':('Electrical Products',lambda r:r['industry']=='Electrical Products'),
+ 'EAST':('Tobacco',lambda r:r['industry']=='Tobacco'),
 }
+NOTES={ # structural explanations only (design choices that do not depend on today's data). Data-state sentences are generated from the reason fields.
+ 'ORHD':'Uses the wider Real Estate Development group because the feed label (Homebuilding) has too few stocks.',
+ 'COMI':'Banks are compared on P/B first. P/E is secondary and must not be read alone.',
+ 'ETEL':'Group is the feed industry and is not widened to a broader sector.',
+ 'SWDY':'Group is the feed industry and is not widened to a broader sector.',
+ 'EAST':'Group is the feed industry and is not widened to a broader sector.'}
+def make_note(c,res):
+    parts=[NOTES[c]] if c in NOTES else []
+    for key,lab in (('pb','P/B'),('pe','P/E')):
+        r=res['reason_'+key]
+        if r=='no_own_figure': parts.append('The feed has no own %s for this stock.'%lab)
+        elif r=='no_peers': parts.append('Fewer than 3 peers with a %s in the feed group, so no %s comparison.'%(lab,lab))
+    return ' '.join(parts) or None
+BANK_INDUSTRIES={'Regional Banks','Major Banks'}
+# Second share line of the same company (identical market cap in the feed). Excluded as a peer so one company is not counted twice.
+DUP={'VLMRA','FAITA'}
 def post(b):
     req=urllib.request.Request('https://scanner.tradingview.com/egypt/scan',data=json.dumps(b).encode(),headers={'Content-Type':'application/json'})
     return json.loads(urllib.request.urlopen(req,timeout=40).read())
@@ -42,7 +64,9 @@ def med(vals):
 try:
     data=post({'symbols':{'query':{'types':[]},'tickers':[]},'columns':COLS,'range':[0,600]})['data']
     rows={x['d'][0]:dict(zip(COLS,x['d'])) for x in data}
-    assert len(rows)>=200 and all(c in rows for c in G)
+    missing=[c for c in G if c not in rows]
+    if len(rows)<200: raise AssertionError('feed returned only %d stocks'%len(rows))
+    if missing: raise AssertionError('stocks missing from feed: '+', '.join(missing))
 except Exception as e:
     # keep the old data and its old generated_utc, but mark it stale so the UI can show it; exit 1 fails the job (alert)
     now=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -57,7 +81,7 @@ out={'price_session':sd,'generated_utc':datetime.datetime.now(datetime.timezone.
  'source':'TradingView scanner egypt/scan (single source, not cross-checked, reuse terms unverified)',
  'expected_session':expected_session(),'up_to_date':sd==expected_session(),'note':'Peer groups are the feed\'s own labels, not EGX official sectors. Medians exclude the stock itself. Hint only, not fair value.','stocks':{}}
 for c,(label,f) in G.items():
-    me=rows[c];peers=[r for k,r in rows.items() if k!=c and f(r)]
+    me=rows[c];peers=[r for k,r in rows.items() if k!=c and k not in DUP and f(r)]
     rd=lambda v:round(v,2) if v else None
     res={'group':label,'feed_industry':me['industry'],'price_session':sess(me),'price':me['close'],'pb':rd(pos(me['price_book_fq'])),'pe':rd(pos(me['price_earnings_ttm']))}
     for key,fld in (('pb','price_book_fq'),('pe','price_earnings_ttm')):
@@ -66,8 +90,18 @@ for c,(label,f) in G.items():
         if res[key] is not None and n>=3: res['vs_'+key]='cheaper' if res[key]<res['median_'+key] else 'dearer' if res[key]>res['median_'+key] else 'same'
         else: res['vs_'+key]=None
         res['range_'+key]=[v[0],v[-1]] if n else None
-    n=min([res[k] for k in('n_pb','n_pe') if res['pb' if k=='n_pb' else 'pe'] is not None] or [0])
-    res['quality']='none' if n<3 else 'weak' if n<5 else 'ok'
+        wide=n>=3 and (v[-1]>5*med(v) or v[0]<0.2*med(v))
+        res['comparable_'+key]=res['vs_'+key] is not None   # medians/ranges may be stored for context but are a comparison only when this is true
+        res['range_'+key+'_show']=n>=3 and not wide          # hide ranges with under 3 values or extreme values
+        res['reason_'+key]=None if res['comparable_'+key] else ('no_own_figure' if res[key] is None else 'no_peers')
+    ql=lambda n:'none' if n<3 else 'weak' if n<5 else 'ok'
+    res['quality_pb']=ql(res['n_pb']);res['quality_pe']=ql(res['n_pe'])
+    # overall quality = the best metric that has an own figure (a valid comparison on one metric is not hidden by the other)
+    n=max([res[k] for k in('n_pb','n_pe') if res['pb' if k=='n_pb' else 'pe'] is not None] or [0])
+    res['quality']=ql(n)
+    res['quality_reason']=None if res['quality']!='none' else ('no_own_figure' if res['pb'] is None and res['pe'] is None else 'no_peers')
+    res['pe_secondary']=me['industry'] in BANK_INDUSTRIES   # banks: P/B first, vs_pe must not be read alone
+    res['note']=make_note(c,res)
     out['stocks'][c]=res
 try: old=json.loads(OUT.read_text())
 except Exception: old=None
@@ -76,4 +110,4 @@ if old and core(old)==core(out):
     out['generated_utc']=old['generated_utc']  # unchanged data keeps its old stamp, never restamped as new
 out['checked_utc']=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 OUT.write_text(json.dumps(out,ensure_ascii=False,indent=1))
-for c,r in out['stocks'].items(): print(c,r['pb'],r['median_pb'],r['n_pb'],'|',r['pe'],r['median_pe'],r['n_pe'],r['quality'],r['vs_pb'],r['vs_pe'])
+for c,r in out['stocks'].items(): print(c,r['pb'],r['median_pb'],r['n_pb'],'|',r['pe'],r['median_pe'],r['n_pe'],r['quality'],r['quality_reason'],r['vs_pb'],r['vs_pe'],'pe_secondary' if r['pe_secondary'] else '')
