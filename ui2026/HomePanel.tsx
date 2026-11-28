@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { URL_INDEX } from '../feed';
 import { xHome } from './Explain';
 import { MarketClock } from './MarketClock';
+import { ResultCard } from './ResultCard';
 
 const INDICES_URL = 'https://raw.githubusercontent.com/egx-watch-ysawah/egx-app/main/indices.json';
 const fin = (x: any): x is number => typeof x === 'number' && isFinite(x);
@@ -63,6 +64,7 @@ export function HomePanel() {
     <b dir="ltr"><span className="u">▲ {a.u}</span> <span className="d">▼ {a.d}</span></b></div>;
   return <section className="hp" aria-label="ملخص السوق">
     <MarketClock />
+    <ResultCard />
     {q && fin(q.close) && fin(q.chg) ? <div className="hp-ix"><small>EGX 30 · {ind.last_close ? 'آخر إقفال · ' + ind.last_close + (ind.lc_status && ind.lc_status !== 'confirmed' ? ' · ' + (FLAG[ind.lc_status] || 'غير مؤكد') : '') : ind.fetched_at_utc ? cairoDate(ind.fetched_at_utc) : ''}</small>
       <b dir="ltr">{q.close.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b>
       <span className={q.chg >= 0 ? 'u' : 'd'} dir="ltr">{q.chg >= 0 ? '▲' : '▼'} {sg(q.chg)}%</span><p className="chp-x">{xHome.index}</p></div>
