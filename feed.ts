@@ -3,7 +3,7 @@ import I70 from './index70.json';
 import PR from './prices.json';
 // Direct browser read of Starta Markets' public delayed feed (CORS open, allowed by its robots.txt).
 // Used so prices refresh while the app is open, without depending on a scheduled GitHub job.
-export type StartaRow = { price: number; prev: number; chg: number; vol: number; at: string; stale: boolean; src?: 'starta' | 'tv' };
+export type StartaRow = { price: number; prev: number; chg: number; vol: number; at: string; stale: boolean; src?: 'starta' | 'tv'; hi?: number; lo?: number };
 export type StartaFeed = { at: string; rows: Record<string, StartaRow> } | null;
 const URL_STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 export const URL_INDEX = 'https://startamarkets.com/api/v1/egx30/index';
@@ -42,7 +42,7 @@ async function fetchStarta(): Promise<Record<string, StartaRow> | null> {
     const rows: Record<string, StartaRow> = {};
     for (const x of j) {
       if (!x || !x.symbol || !(x.last_price > 0) || !(x.prev_close > 0) || !x.as_of) continue;
-      rows[x.symbol] = { price: x.last_price, prev: x.prev_close, chg: Number.isFinite(x.change_percent) ? x.change_percent : 100 * (x.last_price / x.prev_close - 1), vol: Number.isFinite(x.volume) ? x.volume : 0, at: x.as_of, stale: !!x.is_stale, src: 'starta' };
+      rows[x.symbol] = { price: x.last_price, prev: x.prev_close, chg: Number.isFinite(x.change_percent) ? x.change_percent : 100 * (x.last_price / x.prev_close - 1), vol: Number.isFinite(x.volume) ? x.volume : 0, at: x.as_of, stale: !!x.is_stale, src: 'starta', hi: Number.isFinite(x.high) ? x.high : undefined, lo: Number.isFinite(x.low) ? x.low : undefined };
     }
     return Object.keys(rows).length > 20 ? rows : null;
   } catch { return null; }
