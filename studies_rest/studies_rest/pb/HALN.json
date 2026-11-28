@@ -36,7 +36,7 @@
  ],
  "price_marker": "inside",
  "confidence": "low",
- "confidence_ar": "ثقة منخفضة: إدراج جديد (21 أكتوبر 2026)، 4 شركات مشابهة بس، ومفيش ربحية",
+ "confidence_ar": "ثقة ضعيفة جدا: إدراج جديد (أكتوبر 2026)، 4 شركات مشابهة بس، ومفيش ربحية",
  "review_flags": [
   "IPO 21 Oct 2026 (offer price 24.50 per TradingView page and Arab Finance), about 5 weeks of trading; peers are fintech/software, not lenders like Halan itself",
   "feed 52-week low shows 0.10, not usable, so no 52-week range given"
@@ -45,5 +45,18 @@
  "name_ar": null,
  "app_batch": "B5",
  "as_of": "2026-11-26",
- "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar"
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "price_date": "2026-11-26",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "basis": "P/B only",
+ "status": "range",
+ "tier": 3,
+ "own_bvps": 5.3552,
+ "own_pb_at_price": 3.9,
+ "own_bvps_source": "feed book_value_per_share_fq (TradingView)",
+ "single_source": {
+  "is_single_source": true,
+  "source": "TradingView only",
+  "as_of": "2026-11-26 close"
+ }
 }

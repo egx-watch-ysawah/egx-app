@@ -2,7 +2,7 @@
  "code": "SMFR",
  "name_ar": null,
  "tier": 2,
- "confidence_ar": "ثقة منخفضة جدا: P/B بس، 8 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 7 شركات من قطاع أوسع مش نفس النشاط، القيمة الدفترية للسهم من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
  "basis": "P/B only",
  "as_of": "2026-11-26",
  "price": 214.99,
@@ -13,7 +13,7 @@
  "own_pb_at_price": 0.99,
  "peer_level": "sector",
  "peer_group_feed_label": "Distribution Services",
- "n_peers": 8,
+ "n_peers": 7,
  "peers": [
   {
    "code": "GBCO",
@@ -56,29 +56,23 @@
    "name_ar": null,
    "pb": 14.29255125677202,
    "price": 373.3
-  },
-  {
-   "code": "EGS3I0S1C019",
-   "name_ar": null,
-   "pb": 15.754931239829041,
-   "price": 8.81
   }
  ],
  "multiples": {
-  "low": 2.868,
-  "median": 3.41,
-  "high": 7.421,
+  "low": 2.771,
+  "median": 3.245,
+  "high": 4.352,
   "min": 0.7787328670608329,
-  "max": 15.754931239829041
+  "max": 14.29255125677202
  },
  "range": {
-  "low": 625.617,
-  "base": 743.882,
-  "high": 1618.714
+  "low": 604.422,
+  "base": 707.887,
+  "high": 949.452
  },
  "price_marker": "below_all",
  "review_flags": [
-  "FCMD (Future Care, P/B 15.75, loss-making, recent listing) is a peer and raises the top of the range by 70% (1618.71 vs 949.45 without it)"
+  "FCMD (loss-making) removed from the peers: range was 625.617 to 1618.714 with it"
  ],
  "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
  "status": "range",

@@ -7,14 +7,16 @@
   "no book value and no positive P/E",
   "feed 52-week low = high = last price: no trading range",
   "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found",
-  "stockanalysis.com: last close 20 Feb 2025, no volume (52w 0.82 to 5.00 then)"
+  "stockanalysis.com: last close 20 Feb 2025, no volume (52w 0.82 to 5.00 then)",
+  "status from stock_status.json scan_zero_volume_no_history (listed_no_recent_trades)"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 5,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 5 ثابت في بيانات السوق). مفيش ملف للشركة في Arab Finance ولا أي مصدر مجاني تاني لقيته.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. السعر الظاهر 5 جنيه رقم مدوّر مش سعر تداول. مدرج في البورصة حسب FoudaLens، بس مفيش حجم تداول في بيانات السوق، وآخر إقفال في stockanalysis كان يوم 20 فبراير 2025.",
  "rung": null,
- "range": null
+ "range": null,
+ "status_kind": "listed_no_recent_trades"
 }

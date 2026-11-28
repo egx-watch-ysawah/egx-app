@@ -6,14 +6,15 @@
  "review_flags": [
   "no book value and no positive P/E",
   "feed 52-week low = high = last price: no trading range",
-  "Arab Finance profile: ISIN EGS65021C015, market SME, sector Travel & Leisure, profile last updated 26/08/2026. The profile does not say why there is no trading."
+  "Arab Finance profile: ISIN EGS65021C015, market SME, sector Travel & Leisure, profile last updated 26/08/2026. The profile does not say why there is no trading.",
+  "status from stock_status.json v17 (temporary_listing_sme): https://beta.egx.com.eg/en/news/293978"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
- "price": 10,
+ "price": 6.85,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 10 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق SME والقطاع Travel & Leisure، آخر تحديث للملف 26/08/2026.",
+ "confidence_ar": "ثقة منعدمة: آخر إقفال عندنا 6.85 جنيه، وتاريخ آخر تداول مش معروف (حسب Starta بيانات 19 أكتوبر 2026، وAfrican Markets 27 أبريل 2026)، ومفيش نطاق سعري. السهم مقيد مؤقتا على سوق SME من 30 أغسطس 2026 وكان بيتداول قبل كده.",
  "rung": null,
  "range": null,
  "profile": {
@@ -23,5 +24,9 @@
   "price_shown": null,
   "last_updated": "26/08/2026",
   "source": "arabfinance.com/en/home/companyprofile/tour (fetched 28 Nov 2026)"
- }
+ },
+ "price_date": null,
+ "status_kind": "confirmed_temporary_listing_sme",
+ "status_source": "https://beta.egx.com.eg/en/news/293978",
+ "price_note": "last close 6.85, last trade date unknown (Starta data as of 2026-10-19; African Markets as of 2026-04-27); TradingView 10 is the par value"
 }

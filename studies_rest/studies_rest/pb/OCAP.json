@@ -6,14 +6,15 @@
  "review_flags": [
   "no industry label in feed",
   "feed 52-week low = high = last price: no trading range",
-  "Arab Finance profile: ISIN EGS699Z1C014, market NOPL, sector Non-bank financial services, profile last updated 19/05/2026. The profile does not say why there is no trading."
+  "Arab Finance profile: ISIN EGS699Z1C014, market NOPL, sector Non-bank financial services, profile last updated 19/05/2026. The profile does not say why there is no trading.",
+  "status from stock_status.json v17 (not_trading_yet): https://foudalens.com/en/news/288532"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 1,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 1 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Non-bank financial services، آخر تحديث للملف 19/05/2026.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. شركة استحواذ (SPAC) مقيدة مؤقتا، وقرار البورصة إنها متتداولش لحد ما الاستحواذ يتم (آخر معلومة عندنا: 22 نوفمبر 2026). السعر الظاهر 1 جنيه مش سعر تداول.",
  "rung": null,
  "range": null,
  "profile": {
@@ -23,5 +24,7 @@
   "price_shown": null,
   "last_updated": "19/05/2026",
   "source": "arabfinance.com/en/home/companyprofile/ocap (fetched 28 Nov 2026)"
- }
+ },
+ "status_kind": "confirmed_temporary_listing",
+ "status_source": "https://foudalens.com/en/news/288532"
 }

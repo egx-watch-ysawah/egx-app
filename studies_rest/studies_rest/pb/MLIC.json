@@ -6,14 +6,15 @@
  "review_flags": [
   "no book value and no positive P/E",
   "feed 52-week low = high = last price: no trading range",
-  "Arab Finance profile: ISIN EGS632D1C010, market NOPL, sector Non-bank financial services, profile last updated 10/11/2026, price shown 0. The profile does not say why there is no trading."
+  "Arab Finance profile: ISIN EGS632D1C010, market NOPL, sector Non-bank financial services, profile last updated 10/11/2026, price shown 0. The profile does not say why there is no trading.",
+  "status from stock_status.json scan_zero_volume_no_history (par_like_unconfirmed)"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 1,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 1 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Non-bank financial services، آخر تحديث للملف 10/11/2026.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. السعر الظاهر 1 جنيه رقم مدوّر مش سعر تداول. السبب: حجم التداول صفر، وقريب من شكل الأسهم المقيدة مؤقتا، بس ملقيناش تأكيد إنه كده. اكتتاب 24 لـ 30 نوفمبر 2026 حسب FoudaLens.",
  "rung": null,
  "range": null,
  "profile": {
@@ -23,5 +24,6 @@
   "price_shown": "0",
   "last_updated": "10/11/2026",
   "source": "arabfinance.com/en/home/companyprofile/mlic (fetched 28 Nov 2026)"
- }
+ },
+ "status_kind": "par_like_unconfirmed"
 }
