@@ -1,7 +1,7 @@
 import React from 'react';
 // Status banner + one currency map. Data: stock_status.json (static, data engineer). Nothing is estimated here.
 const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
-const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : ''; };
+export const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : ''; };
 type SS = { rows: Record<string, any>; cur: Record<string, string>; unconf: Record<string, boolean>; vend: Record<string, boolean>; nc: Record<string, boolean>; fs: Record<string, string>; session: string };
 const lj = (u: string) => fetch(u + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
 let P: Promise<SS | null> | null = null;
@@ -33,6 +33,13 @@ const label = (s: any, session: string): string => {
   return String(s.status_ar);
 };
 // The gap line shows only when the flag is true AND the page (source) price really differs from the close in the banner.
+export function useSV(): { rows: Record<string, any>; cur: Record<string, string>; unconf: Record<string, boolean>; lab: (k: string) => string } | null | undefined { const m = useSS(); if (!m) return m; return { rows: m.rows, cur: m.cur, unconf: m.unconf, lab: (k: string) => (m.rows[k] ? label(m.rows[k], m.session) : '') }; }
+type SVT = { cur: Record<string, string>; unconf: Record<string, boolean> } | null | undefined;
+// List price cell: number + unit for USD codes (+ caveat when the currency file marks it unconfirmed).
+export const unitPx = (sv: SVT, k: string, v: number | string | null | undefined): React.ReactNode => {
+  if (v == null || v === '') return undefined; const usd = !!(sv && sv.cur[k] === 'USD');
+  return <><bdi dir="ltr">{v}</bdi>{usd ? <> دولار{sv && sv.unconf[k] ? <small style={{ display: 'block', fontWeight: 400, fontSize: 11, color: '#a5aab2' }}>(حسب المصدر)</small> : null}</> : null}</>;
+};
 export function useLabel(k: string): string { const m = useSS(); const s = m && m.rows[k]; return s && m ? label(s, m.session) : ''; }
 export const gapOn = (s: any): boolean => !!s && s.price_gap_flag === true && typeof s.tv_reference_price === 'number' && typeof s.last_close === 'number' && s.tv_reference_price !== s.last_close;
 export function StatusBanner({ k }: { k: string }) {
@@ -42,11 +49,11 @@ export function StatusBanner({ k }: { k: string }) {
   const usd = (m.cur[k] || 'EGP') === 'USD'; const un = usd ? 'دولار' : 'جنيه';
   const unconf = usd && !!m.unconf[k];
   const sp = typeof s.last_trade_price_starta === 'number' && px != null && s.last_trade_price_starta !== px;
-  const dormant = s.status === 'dormant';
+  const dormant = s.status === 'dormant'; const tls = s.status === 'temporary_listing_sme';
   const bd = lag ? '#3a424e' : '#e0a030';
   return <section dir="rtl" role="status" aria-label="حالة السهم" className="ss-b" style={{ boxSizing: 'border-box', width: '100%', margin: '10px 0 14px', padding: '12px 14px', borderRadius: 12, border: '1px solid ' + bd, borderRightWidth: 4, background: '#111822', color: '#e6e9ee', textAlign: 'right', lineHeight: 1.8, fontSize: 14, overflowWrap: 'anywhere' }}>
     <b>{label(s, m.session)}</b>
-    {lag ? <>{d ? <> - السعر لحد {d}{px != null ? <> (<bdi dir="ltr">{px}</bdi> {un})</> : null}</> : null}{s.starta_last_bar ? <>، والتحليل لحد {arD(s.starta_last_bar)}</> : null}</> : dormant ? (px != null ? <> - آخر سعر <bdi dir="ltr">{px}</bdi> {un}</> : null)
+    {tls ? null : lag ? <>{d ? <> - السعر لحد {d}{px != null ? <> (<bdi dir="ltr">{px}</bdi> {un})</> : null}</> : null}{s.starta_last_bar ? <>، والتحليل لحد {arD(s.starta_last_bar)}</> : null}</> : dormant ? (px != null ? <> - آخر سعر <bdi dir="ltr">{px}</bdi> {un}</> : null)
       : <>{d ? <> - آخر تداول {d}</> : null}{px != null ? <>{sp ? <> · {s.last_close_note ? 'آخر إقفال' : 'إقفال رسمي'} </> : <> بسعر </>}<bdi dir="ltr">{px}</bdi> {un}{unconf ? ' (العملة حسب المصدر)' : ''}</> : null}</>}
     {gapOn(s) ? <div style={{ fontSize: 13, color: '#b4bac4', marginTop: 2 }}>آخر سعر تداول <bdi dir="ltr">{px}</bdi> {un}، وسعر المصدر <bdi dir="ltr">{s.tv_reference_price}</bdi> والفرق بينهم سببه مش معروف عندنا</div> : null}
   </section>;
@@ -54,12 +61,12 @@ export function StatusBanner({ k }: { k: string }) {
 // Inside the combo / signal blocks: no second banner, one short line.
 export function BlockNone({ k }: { k: string }) {
   const m = useSS(); const s = m && m.rows[k]; if (!s || !m) return null;
-  const why = s.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا' : s.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش' : s.status === 'halted' ? 'لأن السهم ' + label(s, m.session) : 'لأن ' + label(s, m.session);
-  return <p className="eg-note ss-n" style={{ margin: '8px 0' }}>مفيش علامة ولا مقارنة تاريخية للسهم ده {why}</p>;
+  const why = s.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا' : s.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش' : s.status === 'temporary_listing_sme' ? 'لأن السهم مقيد مؤقتًا' : s.status === 'halted' ? 'لأن السهم ' + label(s, m.session) : 'لأن ' + label(s, m.session);
+  return <p className="eg-note ss-n" style={{ margin: '8px 0' }}>مفيش إشارة ولا مقارنة تاريخية للسهم ده {why}</p>;
 }
 
 // One short line near the price on USD pages + the currency caveat for codes the data file flags as unconfirmed.
 export function UsdNote({ k }: { k: string }) {
-  const c = useCur(k); const st = useStatus(k); if (!c.usd) return null;
+  const c = useCur(k); const st = useStatus(k); if (!c.usd || (st && st.status === 'not_trading_yet')) return null;
   return <p className="eg-note ss-u" style={{ margin: '6px 0' }}>السعر بالدولار{c.unconf && !st ? ' (العملة حسب المصدر)' : ''}</p>;
 }
