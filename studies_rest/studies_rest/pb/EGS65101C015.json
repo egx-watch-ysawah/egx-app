@@ -1,0 +1,19 @@
+{
+ "code": "EGS65101C015",
+ "name_ar": null,
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no book value and no positive P/E",
+  "feed 52-week low = high = last price: no trading range",
+  "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found"
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 5,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 5 ثابت في بيانات السوق). مفيش ملف للشركة في Arab Finance ولا أي مصدر مجاني تاني لقيته.",
+ "rung": null,
+ "range": null
+}
