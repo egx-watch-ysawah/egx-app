@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks, the 21 B1-B3 batch stocks and the 20 B4-B6 batch stocks (52 in all). Source: TradingView scanner (free, delayed, single source).
+"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks, the 21 B1-B3 batch stocks and the 20 B4-B6 batch stocks and the 20 C1 batch stocks (72 in all). Source: TradingView scanner (free, delayed, single source).
 Writes peer_compare.json. Peer groups use the feed's own labels (not EGX official sectors).
 Rules: medians exclude the stock; only positive values count; n<3 => no comparison; n<5 => quality 'weak'.
 If the feed fails or returns too few rows, the old data is kept, marked status=stale, and the run exits 1 (job fails = alert).
@@ -65,6 +65,27 @@ G={
  'EGAL':('Aluminum + Steel',lambda r:r['industry'] in ('Aluminum','Steel')),
  'CLHO':('Hospital/Nursing Management',lambda r:r['industry']=='Hospital/Nursing Management'),
  'CCAP':('Investment Managers',lambda r:r['industry']=='Investment Managers'),
+ # C1 batch added 28 Nov: studies_rest stocks that have flow data and a viable peer group. Group choices are by feed label only; reasons are in NOTES below.
+ 'AIFI':('Agricultural Commodities/Milling',lambda r:r['industry']=='Agricultural Commodities/Milling'),
+ 'ALCN':('Other Transportation',lambda r:r['industry']=='Other Transportation'),
+ 'ASCM':('Construction Materials',lambda r:r['industry']=='Construction Materials'),
+ 'DAPH':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'EGCH':('Chemicals: Agricultural',lambda r:r['industry']=='Chemicals: Agricultural'),
+ 'EHDR':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'ELSH':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'EMFD':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'GBCO':('Wholesale Distributors',lambda r:r['industry']=='Wholesale Distributors'),
+ 'GPIM':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'HELI':('Homebuilding',lambda r:r['industry']=='Homebuilding'),
+ 'IDRE':('Homebuilding',lambda r:r['industry']=='Homebuilding'),
+ 'IEEC':('Engineering & Construction',lambda r:r['industry']=='Engineering & Construction'),
+ 'MPCO':('Agricultural Commodities/Milling',lambda r:r['industry']=='Agricultural Commodities/Milling'),
+ 'NCCW':('Engineering & Construction',lambda r:r['industry']=='Engineering & Construction'),
+ 'OBRI':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'PRDC':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'SDTI':('Hotels/Resorts/Cruise lines',lambda r:r['industry']=='Hotels/Resorts/Cruise lines'),
+ 'SIPC':('Pharmaceuticals: Major',lambda r:r['industry']=='Pharmaceuticals: Major'),
+ 'ZMID':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
 }
 NOTES={ # structural explanations only (design choices that do not depend on today's data). Data-state sentences are generated from the reason fields.
  'ORHD':'Uses the wider Real Estate Development group because the feed label (Homebuilding) has too few stocks.',
@@ -113,7 +134,28 @@ NOTES={ # structural explanations only (design choices that do not depend on tod
  'OCDI':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
  'EGAL':'Group combines the feed Aluminum and Steel industries, both primary metal producers, because the Aluminum industry alone is too small.',
  'CLHO':'Group is the feed industry (Hospital/Nursing Management, hospital operators). It is not widened to the wider Health Services sector.',
- 'CCAP':'Group is the feed industry (Investment Managers, asset and investment management). It is not mixed with investment banks and brokers, a different business.'}
+ 'CCAP':'Group is the feed industry (Investment Managers, asset and investment management). It is not mixed with investment banks and brokers, a different business.',
+ # C1. Structural explanations only; no fixed numbers that depend on the data of the day.
+ 'AIFI':'Group is the feed industry, the same group as ISMA and POUL, which mixes poultry, feed, sugar and milling companies, so the spread is wide.',
+ 'ALCN':'Group is the feed industry (Other Transportation, transport and logistics), the same group as ETRS. It is not widened: the rest of the Transportation sector is marine shipping, a different business.',
+ 'ASCM':'Group is the feed industry, the same group as MCQE, and is not widened.',
+ 'DAPH':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'EGCH':'Group is the feed industry (agricultural chemicals and fertilizers), the same group as ABUK, MFPC and ICFC.',
+ 'EHDR':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'ELSH':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'EMFD':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'GBCO':'Group is the feed industry (Wholesale Distributors, wholesale traders). It is not widened to the whole Distribution Services sector, which mixes food and electronics distribution.',
+ 'GPIM':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'HELI':'Group is the feed industry (Homebuilding, residential builders) and is not widened to the wider real-estate development group.',
+ 'IDRE':'Group is the feed industry (Homebuilding, residential builders) and is not widened to the wider real-estate development group.',
+ 'IEEC':'Group is the feed industry, the same group as ORAS, and is not widened to a broader sector.',
+ 'MPCO':'Group is the feed industry, the same group as ISMA and POUL, which mixes poultry, feed, sugar and milling companies, so the spread is wide.',
+ 'NCCW':'Group is the feed industry, the same group as ORAS, and is not widened to a broader sector.',
+ 'OBRI':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'PRDC':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'SDTI':'Group is the feed industry (Hotels/Resorts/Cruise lines, hotels and resorts). It is not widened to the wider Consumer Services sector, which mixes movies and other services.',
+ 'SIPC':'Group is the feed industry, the same group as RMDA and MCRO, and is not widened to the whole Health Technology sector.',
+ 'ZMID':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.'}
 def make_note(c,res):
     parts=[NOTES[c]] if c in NOTES else []
     for key,lab in (('pb','P/B'),('pe','P/E')):
