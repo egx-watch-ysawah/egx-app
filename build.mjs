@@ -15,6 +15,6 @@ fs.writeFileSync('dist/index.html',fs.readFileSync('dist/index.html','utf8').rep
 fs.writeFileSync('dist/sw.js', fs.readFileSync('sw.js', 'utf8').replace('__V__', stamp));
 console.log('built', stamp);
 
-for (const f of ['flow_signal.json', 'flow_stats.json', 'peer_compare.json', 'egx_holidays.json', 'flow_combo_COMI.json', 'flow_combo_TMGH.json']) if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f);
+for (const f of ['flow_signal.json', 'flow_stats.json', 'peer_compare.json', 'egx_holidays.json', ...fs.readdirSync('.').filter(f => /^flow_combo_[A-Z0-9]+\.json$/.test(f))]) if (fs.existsSync(f)) fs.copyFileSync(f, 'dist/' + f);
 if(fs.existsSync('gold/scenario.json')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/scenario.json','dist/gold/scenario.json');}
 if(fs.existsSync('gold/history.jsonl')){fs.mkdirSync('dist/gold',{recursive:true});fs.copyFileSync('gold/history.jsonl','dist/gold/history.jsonl');}
