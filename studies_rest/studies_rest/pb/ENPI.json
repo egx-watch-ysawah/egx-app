@@ -1,0 +1,27 @@
+{
+ "code": "ENPI",
+ "name_ar": "الهندسية للصناعات البترولية والكيماوية - إنبي",
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "USD line, no reliable USD peer group",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS39022C016, market NOPL, sector Energy & Support Services, profile last updated 30/06/2026, price shown 0. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "USD",
+ "price": 0.125,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: السهم متسعّر بالدولار ومفيش شركات مسعّرة بالدولار من نفس النشاط تتقارن بيها بشكل موثوق، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 0.125 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Energy & Support Services، آخر تحديث للملف 30/06/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS39022C016",
+  "market": "NOPL",
+  "sector": "Energy & Support Services",
+  "price_shown": "0",
+  "last_updated": "30/06/2026",
+  "source": "arabfinance.com/en/home/companyprofile/enpi (fetched 28 Nov 2026)"
+ }
+}
