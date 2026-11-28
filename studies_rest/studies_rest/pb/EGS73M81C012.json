@@ -1,0 +1,28 @@
+{
+ "method": "none",
+ "rung": null,
+ "range": null,
+ "currency": "EGP",
+ "price": 5,
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش بيانات مالية، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 5 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق SME والقطاع Real Estate، آخر تحديث للملف 23/04/2026.",
+ "review_flags": [
+  "no financials in feed",
+  "feed 52-week low = high = last price: no trading range",
+  "National Asset Management And Investment (NAMI), SME market, real estate per Arab Finance",
+  "Arab Finance profile: ISIN EGS73M81C012, market SME, sector Real Estate, profile last updated 23/04/2026. The profile does not say why there is no trading."
+ ],
+ "code": "EGS73M81C012",
+ "name_ar": null,
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "profile": {
+  "isin": "EGS73M81C012",
+  "market": "SME",
+  "sector": "Real Estate",
+  "price_shown": null,
+  "last_updated": "23/04/2026",
+  "source": "arabfinance.com/en/home/companyprofile/egs73m81c012 (fetched 28 Nov 2026)"
+ }
+}
