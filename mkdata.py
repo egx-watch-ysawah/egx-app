@@ -107,6 +107,7 @@ for k,s in SYM.items():
         if not (old.get('qualityChecked') or old.get('windowOnly')):raise
         out['stocks'][k]=old;out['refresh_errors'][k]=type(error).__name__
 out['flows']=None
+if previous.get('patch_note'):out['patch_note']=previous['patch_note']  # carry the manual patch note forward; a refresh must not silently drop it
 payload=json.dumps(out,ensure_ascii=False,separators=(',',':'),allow_nan=False)
 Path('data.next.json').write_text(payload);Path('data.next.json').replace('data.json')
 import os;print(os.path.getsize('data.json'))
