@@ -4,6 +4,7 @@ import { URL_INDEX } from '../feed';
 import { xHome } from './Explain';
 import { MarketClock } from './MarketClock';
 import { ResultCard } from './ResultCard';
+import { useUni, UniSub } from './Universe';
 
 const INDICES_URL = 'https://raw.githubusercontent.com/egx-watch-ysawah/egx-app/main/indices.json';
 const fin = (x: any): x is number => typeof x === 'number' && isFinite(x);
@@ -16,6 +17,7 @@ let LC_P: Promise<any> | null = null;
 export const getLc = (): Promise<any> => LC_P || (LC_P = LC_FILES.reduce((p: Promise<any>, f) => p.then(x => x || fetch(f, { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null)), Promise.resolve(null)));
 export const FLAG: Record<string, string> = { 'single-source': 'مصدر واحد', single: 'مصدر واحد', unconfirmed: 'غير مؤكد' };
 export function HomePanel() {
+  const U = useUni();
   const [lc, setLc] = useState<any>(null);
   useEffect(() => { let on = true; getLc().then(l => on && setLc(l)); return () => { on = false; }; }, []);
   const flag = (code: string) => { const st = lc && lc.stocks && lc.stocks[code] && lc.stocks[code].status; return st && st !== 'confirmed' ? (FLAG[st] || 'غير مؤكد') : null; };
@@ -84,5 +86,6 @@ export function HomePanel() {
     <p className="chp-x">{xHome.value}</p>
     <p className="hp-na">القطاعات: غير متوفر، مفيش تقسيم قطاعي رسمي من البورصة هنا. أسهم محددة بس عليها تصنيف مزود البيانات في صفحة تحليلها.</p>
     <p className="hp-note">الأسهم المحسوبة: <bdi dir="ltr">{rows.length}</bdi> سهم من <bdi dir="ltr">EGX 30</bdi> و<bdi dir="ltr">EGX 70</bdi>{Array.isArray(ix.rows) && ix.rows.length > rows.length ? <>، لا يشمل <bdi dir="ltr">{ix.rows.length - rows.length}</bdi> أسهم بياناتها ناقصة أو مش مظبوطة.</> : '.'} أسعار متأخرة من Starta Markets. مش توصية.</p>
+    <UniSub u={U} />
   </section>;
 }
