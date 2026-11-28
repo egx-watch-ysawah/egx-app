@@ -23,7 +23,7 @@ import { FlowCombo } from './ui2026/FlowCombo';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
 import { StatusBanner, useCur, useCurMap, useNty, useStatus, useSV, unitPx } from './ui2026/StockStatus';
-import { DecisionCard } from './ui2026/DecisionCard';
+import { DecisionCard, CARD_ON } from './ui2026/DecisionCard';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -259,15 +259,15 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       <p className="eg-note">{stx ? null : <>إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> {s.nohist ? null : <>· <L>{s.historyCount}</L> جلسة{code === 'MTIE' && PVN() ? ' (آخر 3 سنين)' : ''}</>}</>} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
       {(() => { const rw = ix0 && Array.isArray(ix0.rows) ? ix0.rows.find((r: any) => r.code === code) : null; const iso = String((s && s.date) || (rw && rw.date) || '').slice(0, 10); const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso); return m && !stx && !s.nohist ? <p className="eg-note">التحليل على إقفال <bdi dir="ltr">{m[3] + '/' + m[2] + '/' + m[1]}</bdi></p> : null; })()}
       {s.nohist ? <p className="eg-note"><b>تنبيه:</b> مفيش تاريخ أسعار حديث عند المصدر، فالقراءة الفنية والشارت والسيناريوهات المبنية على السعر غير متاحة. {stx ? '' : <>آخر سعر عند المصدر: <bdi>{s.close}</bdi> {cur.short}. </>}الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}
-      <StockChips s={s} code={code} />
-      <StockGuide topCard={['COMI','MASR','BONY','HRHO','UNIP','PHAR','ORHD'].includes(code) ? <DecisionCard code={code} close={s.close} date={s.date} /> : null} s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <>{code === 'COMI' ? null : <WideFin k={code} />}{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
+      {code === 'VLMRA' ? null : <StockChips s={s} code={code} />}
+      <StockGuide topCard={CARD_ON.has(code) && !stx ? <DecisionCard code={code} close={s.close} date={s.date} /> : null} s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <>{(code === 'COMI' || code === 'TMGH') && CARD_ON.has(code) ? null : <WideFin k={code} />}{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
       {fairNew || held ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
       {held ? null : <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} code={code} /> : null}</OnTab>}
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
       
       <OnTab id="t">{s.short ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم قصير (أقل من 260 جلسة)، فالمؤشرات الفنية والشارت والسيناريوهات أقل موثوقية. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
-      <OnTab id="t"><TechnicalSummary s={s} /></OnTab>
-      {FAIR6.includes(code) ? null : <OnTab id="t"><div className="sm fs-in"><FlowCombo k={code} /></div></OnTab>}
+      <OnTab id="t">{code === 'VLMRA' ? null : <TechnicalSummary s={s} />}</OnTab>
+      {FAIR6.includes(code) || code === 'VLMRA' ? null : <OnTab id="t"><div className="sm fs-in"><FlowCombo k={code} /></div></OnTab>}
       <OnTab id="t">{code === 'VLMRA' || s.jump || s.short || s.nohist ? null : <ScenarioBlock s={s} />}</OnTab>
       {held ? null : <OnTab id="f"><TeamBlock code={code} /></OnTab>}
       {held ? null : <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>}
