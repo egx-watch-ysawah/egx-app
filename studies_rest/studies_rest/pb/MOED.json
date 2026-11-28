@@ -1,0 +1,51 @@
+{
+ "code": "MOED",
+ "name_ar": "المصرية لنظم التعليم الحديثة",
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 0.46,
+ "price_date": "2026-11-26",
+ "own_bvps": 3.8997,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 0.12,
+ "peer_level": "industry_small",
+ "peer_group_feed_label": "Miscellaneous Commercial Services",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "RACC",
+   "name_ar": null,
+   "pb": 1.0141803212611202,
+   "price": 7.8
+  },
+  {
+   "code": "SCTS",
+   "name_ar": null,
+   "pb": 10.383210085230251,
+   "price": 450.62
+  }
+ ],
+ "multiples": {
+  "low": 1.014,
+  "median": 5.699,
+  "high": 10.383,
+  "min": 1.0141803212611202,
+  "max": 10.383210085230251
+ },
+ "range": {
+  "low": 3.955,
+  "base": null,
+  "high": 40.491
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "peer P/B spread very wide (min 1.01, max 10.38, median 10.38)",
+  "feed drift: own P/B moved 3.77 (12:21 file) -> 0.12 (28 Nov pull)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
