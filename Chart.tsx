@@ -134,7 +134,7 @@ function LegacyStockChart({ rows, n: n0, t, plan }: { rows: Row[]; n: number; t:
             <b>{r[0]}</b>{hideOpen() ? null : <span>فتح {r[1]}</span>}<span>أعلى {r[2]}</span><span>أقل {r[3]}</span><span>إقفال {r[4]}</span>
             <span dir="ltr" className={chgp >= 0 ? 'u' : 'd'}>{chgp >= 0 ? '+' : ''}{chgp.toFixed(1)}%</span>
             <span>حجم {(r[5] / 1000).toFixed(0)} ألف سهم</span><span>زخم RSI {r[8]}</span>
-            {sel != null && <button type="button" className="eg-x" onClick={() => setSel(null)}>×</button>}
+            {sel != null && <button type="button" className="eg-x" onClick={() => setSel(null)} aria-label="إغلاق">✕</button>}
         </div>
         {price}
         <label className="eg-scrub" dir="rtl">حرّك على الأيام <b dir="ltr">{r[0]} · {r[4]}</b><input aria-label="اختار شمعة من الشارت" type="range" min="0" max={cnt - 1} value={safeSel ?? cnt - 1} onChange={e => setSel(Number(e.target.value))} /></label>
