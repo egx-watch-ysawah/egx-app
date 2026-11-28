@@ -26,9 +26,9 @@ jobs:
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
           git add peer_compare.json
-          git diff --cached --quiet || (git commit -m "data: peer compare" && git push)
+          git diff --cached --quiet || (git commit -m "data: peer compare" && git pull --rebase --autostash -q && git push)
       - name: Open issue on failure
-        if: failure()
+        if: failure() && (github.event_name != 'schedule' || github.event.schedule == '0 15 * * 0-4')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
