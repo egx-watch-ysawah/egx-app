@@ -32,7 +32,7 @@ const Head = ({ k, h }: { k: string; h: any }) => { const nm = useNames(); const
 // Inside the stock page's السعر العادل tab: no duplicate panel, only the way to the new page.
 export function FairCard({ code }: { code: string }) {
   if (!FAIR6.includes(code)) return null;
-  return <Link to="/fair" className="fs-link"><span><b>تحليل الأسهم دي</b><small>علامة التجميع ومقارنة بالشركات اللي زيها، للأسهم دي في صفحة واحدة.</small></span><em aria-hidden="true">‹</em></Link>;
+  return <Link to="/fair" className="fs-link"><span><b>تحليل الأسهم دي</b><small>إشارة التجميع ومقارنة بالشركات اللي زيها، للأسهم دي في صفحة واحدة.</small></span><em aria-hidden="true">‹</em></Link>;
 }
 // Mounted inside the stock page's الفني tab (guide.tsx) for the six: flow signal + peer comparison, each with its own plain unavailable state.
 export function FairInline({ code }: { code: string }) {
@@ -41,10 +41,10 @@ export function FairInline({ code }: { code: string }) {
 }
 export function FairSix() {
   const h = useHeads();
-  return <div className="eg-pad fs"><h1 className="fs-h">تحليل الأسهم دي: علامة التجميع والمقارنة</h1><span className="fs-tag">تجريبي</span>
+  return <div className="eg-pad fs"><h1 className="fs-h">تحليل الأسهم دي: إشارة التجميع والمقارنة</h1><span className="fs-tag">تجريبي</span>
     {h === undefined ? null : FAIR6.map(k => <React.Fragment key={k}><Head k={k} h={h[k]} /><FlowSignal k={k} /><Peers code={k} /></React.Fragment>)}
   </div>;
 }
 export function FairLink() {
-  return <Link to="/fair" className="fs-link"><span><b>تحليل الأسهم دي</b><small>علامة التجميع ومقارنة بالشركات اللي زيها. مش نصيحة.</small></span><em aria-hidden="true">‹</em></Link>;
+  return <Link to="/fair" className="fs-link"><span><b>تحليل الأسهم دي</b><small>إشارة التجميع ومقارنة بالشركات اللي زيها. مش نصيحة.</small></span><em aria-hidden="true">‹</em></Link>;
 }
