@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStatus, useCur, gapOn } from './StockStatus';
+import { useStatus, useCur, gapOn, useLabel } from './StockStatus';
 import { useStarta, inSessionNow } from '../feed';
 import { feedWin } from './FlowLive';
 import { FlowSignal, staleBySession, useHolidays } from './FlowSignal';
@@ -50,12 +50,12 @@ function Metric({ code, s, k, cw }: { code: string; s: any; k: 'pb' | 'pe'; cw: 
   return { head, det };
 }
 export function Peers({ code }: { code: string }) {
-  const st = useStatus(code); const cu = useCur(code);
+  const st = useStatus(code); const cu = useCur(code); const lb = useLabel(code);
   const hol = useHolidays(); const fd = useStarta();
   const [j, setJ] = React.useState<any>(undefined);
   React.useEffect(() => { fetch('peer_compare.json?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then(setJ); }, []);
   if (j === undefined || hol === undefined || !cu.ready) return null;
-  if (st || cu.nc) { const why = cu.nc && !st ? 'لأن عملة السهم مش مؤكدة عندنا.' : gapOn(st) ? 'لأن السعر مش مؤكد.' : st.status === 'thin' ? 'لأن حجم التداول صغير.' : st.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا.' : st.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش.' : 'لأن تداوله واقف.'; return <><div className="sm-sec">مقارنة بالشركات اللي زيه</div><div className="sm-card pr"><style>{CSS}</style><div className="na"><b>مفيش مقارنة للسهم ده</b><br />{why}</div></div></>; }
+  if (st || cu.nc) { const why = cu.nc && !st ? 'لأن عملة السهم مش مؤكدة عندنا.' : gapOn(st) ? 'لأن السعر مش مؤكد.' : st.status === 'thin' ? 'لأن ' + lb + '.' : st.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا.' : st.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش.' : 'لأن تداوله واقف.'; return <><div className="sm-sec">مقارنة بالشركات اللي زيه</div><div className="sm-card pr"><style>{CSS}</style><div className="na"><b>مفيش مقارنة للسهم ده</b><br />{why}</div></div></>; }
   const s = j && j.stocks && j.stocks[code];
   if (!s) return <><div className="sm-sec">مقارنة بالشركات اللي زيه</div><div className="sm-card pr"><style>{CSS}</style><div className="na"><b>غير متوفر</b><br />ملف المقارنة مش متاح دلوقتي.</div></div></>;
   const stale = j.status === 'stale' || (typeof j.up_to_date === 'boolean' ? !j.up_to_date : (j.expected_session && j.price_session ? j.price_session < j.expected_session : staleBySession(j.price_session || j.generated_utc, hol)));
