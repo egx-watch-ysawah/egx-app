@@ -3,9 +3,9 @@ import { arD } from './StockStatus';
 
 // Home "نتيجتنا" card. Reads result_card.json (written daily by the scoring side). Live data only: nothing is invented here.
 const isN = (v: any): v is number => typeof v === 'number' && isFinite(v) && v >= 0 && Math.floor(v) === v;
-const card: React.CSSProperties = { background: '#111822', border: '1px solid #1e252f', borderRadius: 14, padding: 14, margin: '12px 0' };
-const box: React.CSSProperties = { flex: 1, background: '#0b0f12', border: '1px solid #1e252f', borderRadius: 10, padding: 10, textAlign: 'center' };
-const big: React.CSSProperties = { display: 'block', fontSize: 22, fontWeight: 700 };
+const card: React.CSSProperties = { background: '#111822', color: '#e6e9ee', border: '1px solid #1e252f', borderRadius: 14, padding: 14, margin: '12px 0' };
+const box: React.CSSProperties = { flex: 1, color: '#e6e9ee', background: '#0b0f12', border: '1px solid #1e252f', borderRadius: 10, padding: 10, textAlign: 'center' };
+const big: React.CSSProperties = { display: 'block', fontSize: 22, fontWeight: 700, color: '#e6e9ee' };
 const sm: React.CSSProperties = { fontSize: 12, color: '#a5aab2' };
 const note: React.CSSProperties = { fontSize: 12, color: '#a5aab2', lineHeight: 1.7, margin: '6px 0 0' };
 const MAX_AGE_DAYS = 4;
@@ -31,7 +31,7 @@ export function ResultCard() {
   const ok = d && p && ['early', 'ok', 'no_signals_today'].includes(d.state) && isN(d.total_matured) && isN(d.total_hits) && d.total_hits <= d.total_matured && isN(d.events_today) && isN(d.hits_today) && d.hits_today <= d.events_today;
   const future = !!p && p.ms > Date.now() + 3600000;
   const stale = !!p && !future && Date.now() - p.ms > MAX_AGE_DAYS * 86400000;
-  const head = <h3 style={{ margin: '0 0 4px', fontSize: 17 }}>نتيجتنا</h3>;
+  const head = <h3 style={{ margin: '0 0 4px', fontSize: 17, color: '#e6e9ee' }}>نتيجتنا</h3>;
   if (!ok || future || stale) {
     return <section style={card} aria-label="نتيجتنا">{head}
       <p style={{ ...note, fontSize: 13, margin: 0 }}>{!ok || future ? 'غير متوفر: نتيجة الإشارات في الملف مش مظبوطة' : <>غير متوفر: آخر تحديث لنتيجة الإشارات قديم ({stamp}).</>}</p>
@@ -44,7 +44,7 @@ export function ResultCard() {
   const t = (n: number) => <bdi dir="ltr">{n}</bdi>;
   const method = typeof d.method_note_ar === 'string' && d.method_note_ar.trim() ? d.method_note_ar : null;
   const foot = <>{method ? <p style={note}>{method}</p> : null}
-    <p style={{ ...note, borderTop: '1px solid #1e252f', paddingTop: 8, marginTop: 10 }}>آخر تحديث: {stamp}{typeof d.session_date === 'string' ? <> · جلسة {arD(d.session_date)}</> : null}</p>
+    <p style={{ ...note, borderTop: '1px solid #1e252f', paddingTop: 8, marginTop: 10 }}>آخر تحديث للنتيجة: {stamp}{typeof d.session_date === 'string' ? <> · آخر جلسة تداول: {arD(d.session_date)}</> : null}</p>
     <p style={note}>مش توصية بشراء أو بيع.</p></>;
   if (early) {
     return <section style={card} aria-label="نتيجتنا">{head}
