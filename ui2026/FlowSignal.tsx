@@ -1,5 +1,6 @@
 import React from 'react';
 import { DATA } from '../data';
+import { FlowLive } from './FlowLive';
 // HRHO-only panel: "علامة تجميع". pound verdicts. Numbers come from flow_signal.json (daily) and flow_stats.json (history test, dated).
 type Cond = { value: { x: number; ok: boolean }; close: { pos: number; ok: boolean }; flow: { share: number; aboveAvg: boolean | null; ok: boolean } };
 type Sig = { asof: string; stocks: Record<string, { date: string; fired: boolean; deduped?: boolean; conditions: Cond }> };
@@ -59,12 +60,17 @@ export function FlowSignal({ k }: { k: string }) {
   return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div>
     <div className="sm-card fx"><style>{FX_CSS}</style>
       {stale ? <div className="fx-na"><b>غير متوفر</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة مش متاحة دلوقتي'}</span></div> : me && <>
-        <div className="fx-g" style={{margin:'0 0 8px',color:'#b4bac4',fontSize:13,lineHeight:1.7}}>إحنا مش شايفين مين بيشتري، دي بصمة سعر وحجم.</div>
         <div className={'fx-v ' + (me.fired ? 'y' : 'g')}><span className="fx-vi">{me.fired ? '▲' : '—'}</span><div><b>{me.fired ? 'فيه علامة تجميع على السهم في آخر جلسة' : 'مفيش علامة تجميع في آخر جلسة'}</b><small>جلسة {arD(me.date)}{me.deduped ? ' · جت بعد علامة قريبة (أقل من 5 جلسات)، فمش بتتعد مرة تانية في الاختبار' : ''}</small><small style={{display:"block"}}>ده وصف للي حصل، مش توقع.</small></div></div>
+        <div className="fx-bn"><b>تستفيد منها إزاي:</b> لو العلامة ظهرت، افتح الشارت وراجع السهم بنفسك قبل أي قرار. مش توقع ولا توصية.</div></>}
+      <FlowLive k={k} />
+      <details className="sm-tip sm-tipd"><summary>التفاصيل والاختبار التاريخي</summary>
+      {!stale && me && <>
+        <div className="fx-g" style={{margin:'0 0 8px',color:'#b4bac4',fontSize:13,lineHeight:1.7}}>إحنا مش شايفين مين بيشتري، دي بصمة سعر وحجم.</div>
         <div className="fx-cs"><span className={'fx-c ' + (me.conditions.value.ok ? 'y' : 'n')}><span>{me.conditions.value.ok ? '✓' : '✗'}&nbsp;{me.conditions.value.x < 0.5 ? <>التداول أقل من نص المعتاد (<bdi dir="ltr">{me.conditions.value.x.toFixed(2)}</bdi> من المعتاد، ولازم أكتر من ضعفين)</> : <>التداول&nbsp;<bdi dir="ltr">{me.conditions.value.x.toFixed(me.conditions.value.x < 1 ? 2 : 1)}</bdi>&nbsp;{me.conditions.value.x < 1 ? 'من المعتاد' : me.conditions.value.x < 2 ? 'ضعف المعتاد' : 'أضعاف المعتاد'}{me.conditions.value.ok ? '' : ' (لازم أكتر من ضعفين)'}</>}</span></span>
           <span className={'fx-c ' + (me.conditions.close.ok ? 'y' : 'n')}>{me.conditions.close.ok ? '✓' : '✗'} الإقفال في الثلث الأعلى من مدى الجلسة (أقل سعر لأعلى سعر)</span>
           <span className={'fx-c ' + (me.conditions.flow.ok ? 'y' : 'n')}><span>{me.conditions.flow.ok ? '✓' : '✗'}&nbsp;حجم آخر 10 جلسات: <bdi dir="ltr">{me.conditions.flow.share}%</bdi> في جلسات صعود (لازم أكتر من <bdi dir="ltr">60%</bdi>){me.conditions.flow.aboveAvg === null ? '' : <> والسعر {me.conditions.flow.aboveAvg ? 'فوق' : 'تحت'} متوسط آخر 20 جلسة (لازم فوقه)</>}</span></span>
-          </div></>}
+          </div>
+      </>}
       {small ? <div className="fx-na"><b>عينة صغيرة، مش كفاية</b><span>العلامة ظهرت {ps.signals} مرات بس في السهم ده من {ps.sinceLabel}. ده قليل، فمش هنقول إنها نفعت أو لا. مفيش أرقام ولا حكم.</span></div> : rows.length === 0 ? <div className="fx-na"><b>اختبار العلامة على تاريخ السهم ده: غير متوفر</b><span>لسه ما اتعملش اختبار على أسعار {k} القديمة، فمفيش أرقام عن اللي حصل بعد العلامة. العلامة نفسها (فوق) محسوبة من بيانات آخر جلسة.</span></div> : <>
       <div className="fx-t">هل العلامة بتفيد؟</div>
       <div className="fx-g" style={{margin:'4px 0 8px',color:'#b4bac4',lineHeight:1.7}}>نسأل: لو اشتريت من غير علامة، هتكسب نفس الكسب؟ لو أيوه، العلامة ملهاش لازمة. لو كسبت أقل، العلامة بتفيد. الأرقام دي بتقول: لو اشتريت بـ <bdi dir="ltr">100</bdi> جنيه، بقوا كام في المتوسط بعد المدة. "كسب" معناها إن سعر السهم بعد المدة بقى أعلى من يوم الشراء. (العلامة ظهرت في السهم ده {N(ps.signals)} مرة قبل كده)</div>
@@ -82,9 +88,10 @@ export function FlowSignal({ k }: { k: string }) {
         <span>{ps.recent ? <>آخر <bdi dir="ltr">{ps.recent.n}</bdi> مرات اتقفلت بعد 20 جلسة: <bdi dir="ltr">{ps.recent.wins}</bdi> كسبت و<bdi dir="ltr">{ps.recent.losses}</bdi> خسرت. ده السجل القريب، ممكن يختلف عن السجل الطويل.</> : 'السجل القريب (آخر المرات): غير متوفر للسهم ده.'}</span></div>
       </>}
       <small className="fx-g">{!hist ? 'مش نصيحة' : <>اللي حصل قبل كده، مش وعد · اتجرب {arD(st ? st.tested : '')} على بيانات لحد {ps && ps.toLabel ? ps.toLabel : 'غير متوفر'} · أسعار يومية مجانية من Starta Markets · مش نصيحة</>}</small>
+      </details>
     </div></>;
 }
-const FX_CSS = `.fx-hn{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0b0f12;font-size:12.5px;line-height:1.8;color:#b4bac4}.fx-hn b{display:block;color:#edeef0;font-size:13px}.fx-hn span{display:block}.fx-v{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;margin-bottom:10px}.fx-v.y{background:#25b89622}.fx-v.g{background:#1e252f}.fx-vi{font-size:22px;font-weight:700;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}.fx-v.y .fx-vi{background:#25b896;color:#0b0f12}.fx-v.g .fx-vi{background:#3a4350;color:#edeef0}
+const FX_CSS = `.fx-bn{margin-top:8px;font-size:13.5px;line-height:1.8;color:#b4bac4}.fx-bn b{color:#25b896}.fx-hn{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0b0f12;font-size:12.5px;line-height:1.8;color:#b4bac4}.fx-hn b{display:block;color:#edeef0;font-size:13px}.fx-hn span{display:block}.fx-v{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;margin-bottom:10px}.fx-v.y{background:#25b89622}.fx-v.g{background:#1e252f}.fx-vi{font-size:22px;font-weight:700;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}.fx-v.y .fx-vi{background:#25b896;color:#0b0f12}.fx-v.g .fx-vi{background:#3a4350;color:#edeef0}
 .fx-v b{display:block;font-size:16px;color:#edeef0;line-height:1.4}.fx-v small{color:#b4bac4;font-size:12px}
 .fx-cs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.fx-c{font-size:12px;padding:5px 9px;border-radius:999px;min-height:28px;display:inline-flex;align-items:center}.fx-c.y{background:#25b89622;color:#25b896}.fx-c.n{background:#de575b22;color:#de575b}.fx-c.g{background:#1e252f;color:#b4bac4}
 .fx-t{font-size:14px;font-weight:600;color:#edeef0;margin:16px 0 4px;line-height:1.5;border-top:1px solid #1e252f;padding-top:14px}
