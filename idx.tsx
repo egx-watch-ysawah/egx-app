@@ -22,6 +22,7 @@ import { FAIR6 } from './ui2026/FairSix';
 import { FlowCombo } from './ui2026/FlowCombo';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
+import { StatusBanner, useCur, useCurMap, useNty, useStatus } from './ui2026/StockStatus';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -114,6 +115,8 @@ import { useUN, UnNote, unLabel } from './unavail';
 const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
 
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
+  const cmap = useCurMap();
+  const nty = useNty();
   const [d0, err] = useJson('idx/index.json');
   const sf = useStarta();
   const d = React.useMemo(() => overlay(d0, sf), [d0, sf]);
@@ -143,8 +146,8 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
     {nq && rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في EGX 30 أو EGX 70.</p>}
     {rows.map((r: any) => {
       const to = r.full ? '/' + r.code.toLowerCase() : '/s/' + r.code;
-      const vl = <><span className="ls-c1"><bdi dir="ltr">{r.vol != null ? shortN(r.vol) : '-'}</bdi> <bdi>سهم</bdi></span><span className="ls-c2">{r.val != null && r.code !== 'VLMRA' ? <><bdi dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</bdi> <bdi>مليون جنيه</bdi></> : null}</span></>;
-      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} flag={<LcFlag code={r.code} small />} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={r.code === "VLMRA" ? <span className="ls-na">غير متوفر</span> : <ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={r.price != null ? fmt(r.price) : undefined} chg={r.code === 'VLMRA' ? null : r.chg} na={r.code === 'VLMRA' ? 'السعر بالدولار، مش معروض بالجنيه' : undefined} volLine={vl} />;
+      const vl = <><span className="ls-c1"><bdi dir="ltr">{r.vol != null && !(nty && nty[r.code]) ? shortN(r.vol) : '-'}</bdi> <bdi>سهم</bdi></span><span className="ls-c2">{r.val != null && !(nty && nty[r.code]) && !(cmap && cmap[r.code] === 'USD') ? <><bdi dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</bdi> <bdi>مليون جنيه</bdi></> : null}</span></>;
+      return <ListRow key={r.code} to={to} off={!(r.ok || r.full)} name={r.name} code={r.code} flag={<LcFlag code={r.code} small />} tag={nq ? (r.lists.includes('egx30') ? 'EGX 30' : r.lists.includes('egx70') ? 'EGX 70' : '') : undefined} badge={statusBadge(r)} score={voteScore(r)} spark={<ListSpark c={spk && spk[r.code] ? spk[r.code].c : undefined} />} price={nty && nty[r.code] ? undefined : r.price != null ? fmt(r.price) : undefined} chg={nty && nty[r.code] || cmap && cmap[r.code] === 'USD' ? null : r.chg} na={nty && nty[r.code] ? 'مقيد مؤقتًا ولسه ماتداولش' : cmap && cmap[r.code] === 'USD' ? 'السعر بالدولار، مش معروض بالجنيه' : undefined} volLine={vl} />;
     })}
     <p className="eg-note">آخر تحديث للقايمة: <L>{(() => { try { const t = new Date(d.asof); return t.toLocaleDateString('en-GB', { timeZone: 'Africa/Cairo', day: '2-digit', month: '2-digit' }) + ' ' + t.toLocaleTimeString('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }); } catch { return String(d.asof).slice(0, 10); } })()}</L> · الأسهم اللي فيها تاريخ ناقص بتظهر بالسعر بس.</p>
   </div>;
@@ -215,6 +218,8 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   const reviewed = isReviewed(code);
   const v7NR = isV7(code) && !reviewed && !NEW(code);
   const fairNew = useFairNew(code);
+  const cur = useCur(code);
+  const stx = useStatus(code);
   const pgT = usePage(code);
   const UNS = useUN();
   const unr = UNS && !NEW(code) ? UNS.map[String(code).toUpperCase()] || null : null;
@@ -229,6 +234,8 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
+  if (code === 'VLMR') return <OtherLight code={code} row={null} reason="" />;
+  if (stx && stx.status === 'not_trading_yet') return <OtherLight code={code} row={cl.row || null} reason="" />;
   if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} unNode={unr && !cl.row ? <div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div> : undefined} />{unr && cl.row ? <div className="eg-pad"><div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div></div> : null}</>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
@@ -240,13 +247,13 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   return <div className="eg-pad">
     <Link className="eg-back" to={back}>← {back === '/others' ? 'باقي الأسهم' : back === '/egx70' ? 'EGX 70' : 'EGX 30'}</Link>
     <div className="eg-in">
-      <h2 className="eg-h ix-top">{unr && unr.name_ar ? unr.name_ar : NEW(code) && pgT && pgT.title_ar_short ? pgT.title_ar_short : s.name} {/^EGS/.test(code) ? null : <span dir="ltr">({code})</span>}</h2><TopWarn k={code}/>{unr ? <UnNote r={unr} /> : null}
-      <p className="eg-note">إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> {s.nohist ? null : <>· <L>{s.historyCount}</L> جلسة{code === 'MTIE' && PVN() ? ' (آخر 3 سنين)' : ''}</>} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
-      {s.nohist ? <p className="eg-note"><b>تنبيه:</b> مفيش تاريخ أسعار حديث عند المصدر، فالقراءة الفنية والشارت والسيناريوهات المبنية على السعر غير متاحة. آخر سعر عند المصدر: <bdi>{s.close}</bdi> ج.م. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}
+      <h2 className="eg-h ix-top">{unr && unr.name_ar ? unr.name_ar : NEW(code) && pgT && pgT.title_ar_short ? pgT.title_ar_short : s.name} {/^EGS/.test(code) ? null : <span dir="ltr">({code})</span>}</h2><TopWarn k={code}/><StatusBanner k={code} />{unr ? <UnNote r={unr} /> : null}
+      <p className="eg-note">{stx ? null : <>إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> {s.nohist ? null : <>· <L>{s.historyCount}</L> جلسة{code === 'MTIE' && PVN() ? ' (آخر 3 سنين)' : ''}</>}</>} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
+      {s.nohist ? <p className="eg-note"><b>تنبيه:</b> مفيش تاريخ أسعار حديث عند المصدر، فالقراءة الفنية والشارت والسيناريوهات المبنية على السعر غير متاحة. {stx ? '' : <>آخر سعر عند المصدر: <bdi>{s.close}</bdi> {cur.short}. </>}الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}
       <StockChips s={s} code={code} />
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
       {fairNew || held ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
-      {held ? null : <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} /> : null}</OnTab>}
+      {held ? null : <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} code={code} /> : null}</OnTab>}
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
       
       <OnTab id="t">{s.short ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم قصير (أقل من 260 جلسة)، فالمؤشرات الفنية والشارت والسيناريوهات أقل موثوقية. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
