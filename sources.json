@@ -560,7 +560,7 @@
     },
     {
      "type": "press_or_news",
-     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "label_ar": "مصدر: بيان صحفي أو خبر، استُخدم للمقارنة فقط، مش قوائم مودعة",
      "url": "https://www.fawry.com/wp-content/uploads/2026/11/Fawry-Earnings-Release-3Q26-English-v3.pdf"
     }
    ],
@@ -592,12 +592,12 @@
     },
     {
      "type": "press_or_news",
-     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "label_ar": "مصدر: بيان صحفي أو خبر، استُخدم للمقارنة فقط، مش قوائم مودعة",
      "url": "https://ir.te.eg/IRMedia/Financial_Information/Earnings_Release/2026/Earnings_Release87c899ff-a6a7-4c31-bd1d-a6236c2c40d6.pdf"
     },
     {
      "type": "press_or_news",
-     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "label_ar": "مصدر: بيان صحفي أو خبر، استُخدم للمقارنة فقط، مش قوائم مودعة",
      "url": "https://ir.te.eg/IRMedia/Financial_Information/Earnings_Release/2026/Earnings_Release6e0e975f-190e-438d-926e-1ac077443e9c.pdf"
     }
    ],
@@ -613,7 +613,7 @@
     },
     {
      "type": "press_or_news",
-     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "label_ar": "مصدر: بيان صحفي أو خبر، استُخدم للمقارنة فقط، مش قوائم مودعة",
      "url": "https://irfiles.technologyverse.com/swdy2/Elsewedy-Electric-ER-3Q2026-E-.pdf"
     }
    ],
@@ -624,7 +624,7 @@
    "sources": [
     {
      "type": "filed_statements",
-     "label_ar": "القوائم المالية المجمعة 9 شهور سبتمبر 2026 (إيضاح ربح السهم رقم 13)",
+     "label_ar": "القوائم المالية المجمعة 9 شهور سبتمبر 2026 (ملاحظة رقم 13 في القوائم)",
      "url": "https://foudalens.com/disclosures/COMI.CA/financial_statement/2026-11-10_297290_2.pdf"
     },
     {
@@ -634,7 +634,7 @@
     },
     {
      "type": "press_or_news",
-     "label_ar": "مصدر خارجي (بيان صحفي أو خبر) استُخدم للمقارنة فقط، مش قوائم مودعة",
+     "label_ar": "مصدر: بيان صحفي أو خبر، استُخدم للمقارنة فقط، مش قوائم مودعة",
      "url": "https://enterpriseam.com/egypt/2026/11/10/cibs-3q-net-income-falls-17-y-o-y-9m-core-earnings-grow-18/"
     }
    ],
