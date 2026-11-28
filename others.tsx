@@ -81,7 +81,7 @@ export function OthersList() {
     <p className="chp-x">{xList.range}</p>
     <ListHead mid="مدى اليوم" />
     {rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في الأسهم الباقية. جرب EGX 30 أو EGX 70.</p>}
-    {rows.slice(0, 120).map(r => { const st = status(r); return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={NMO[r.symbol] || r.name_ar || r.name_en} code={r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={nty && nty[r.symbol] ? undefined : <DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={nty && nty[r.symbol] ? undefined : fmt(r.last_price)} chg={nty && nty[r.symbol] ? null : r.change_percent || 0} na={nty && nty[r.symbol] ? 'مقيد مؤقتًا ولسه ماتداولش' : undefined} volLine={nty && nty[r.symbol] ? undefined : <span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
+    {rows.slice(0, 120).map(r => { const st = nty && nty[r.symbol] ? '' : status(r); return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={NMO[r.symbol] || r.name_ar || r.name_en} code={r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={nty && nty[r.symbol] ? undefined : <DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={nty && nty[r.symbol] ? undefined : fmt(r.last_price)} chg={nty && nty[r.symbol] ? null : r.change_percent || 0} na={nty && nty[r.symbol] ? 'مقيد مؤقتًا ولسه ماتداولش' : undefined} volLine={nty && nty[r.symbol] ? undefined : <span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
     {rows.length > 120 && <p className="eg-note">معروض أول 120 سهم. اكتب في البحث عشان توصل لباقي الأسهم.</p>}
   </div>;
 }
