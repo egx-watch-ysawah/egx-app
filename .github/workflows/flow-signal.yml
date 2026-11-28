@@ -12,15 +12,32 @@ name: flow-signal
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 13 * * 0-4"
-    - cron: "0 15 * * 0-4"  # retry 17:00 Cairo for late bars
+    - cron: "30 13 * * 0-4"   # 15:30 Cairo
+    - cron: "0 15 * * 0-4"    # retry 17:00 Cairo for late bars
+    - cron: "30 16 * * 0-4"   # retry 18:30 Cairo (Starta throttles runner IPs for hours; the cache resumes)
+    - cron: "30 17 * * 0-4"   # last retry 19:30 Cairo, the only scheduled run that opens the failure issue
 permissions: { contents: write, issues: write }
 concurrency:
   group: flow-signal
 jobs:
-  run:
+  gate:
+    # Skip the whole run when flow_signal.json already has the expected session (later retries then cost nothing).
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    outputs:
+      fresh: ${{ steps.f.outputs.fresh }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+      - id: f
+        run: |
+          if python3 scripts/check_flow_session.py flow_signal.json egx_holidays.json; then echo fresh=true >> "$GITHUB_OUTPUT"; else echo fresh=false >> "$GITHUB_OUTPUT"; fi
+  run:
+    needs: gate
+    if: needs.gate.outputs.fresh != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -61,6 +78,7 @@ jobs:
           PY
           fi
       - name: Cache Starta history (resumable, per-symbol backoff)
+        timeout-minutes: 40   # step limit, so the cache save below still runs and progress is kept
         run: python3 scripts/fetch_flow_hist.py flow_hist
       - name: Flow signal
         run: FLOW_HIST_DIR=flow_hist python3 scripts/flow_signal.py flow_signal.json
@@ -75,7 +93,7 @@ jobs:
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
           git add flow_signal.json flow_stats.json
-          git diff --cached --quiet || (git commit -m "flow signal refresh" && git push)
+          git diff --cached --quiet || (git commit -m "flow signal refresh" && git pull --rebase --autostash -q && git push)
       - name: Flow combo (one file per stock; failure never blocks the signal)
         id: combo
         continue-on-error: true
@@ -86,7 +104,7 @@ jobs:
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
           git add flow_combo_*.json
-          git diff --cached --quiet || (git commit -m "flow combo refresh" && git pull --rebase -q && git push)
+          git diff --cached --quiet || (git commit -m "flow combo refresh" && git pull --rebase --autostash -q && git push)
       - name: Save history cache (even if an earlier step failed)
         if: always()
         uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
@@ -94,7 +112,7 @@ jobs:
           path: flow_hist
           key: flow-hist-${{ github.run_id }}
       - name: Open issue on failure
-        if: failure() || steps.combo.outcome == 'failure'
+        if: (failure() || steps.combo.outcome == 'failure') && (github.event_name != 'schedule' || github.event.schedule == '30 17 * * 0-4')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
