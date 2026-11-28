@@ -4,18 +4,19 @@ on:
     branches: [main]
   workflow_dispatch:
   workflow_run:
-    workflows: [gold-scenario]
+    workflows: [gold-scenario, flow-signal, peer-compare]
     types: [completed]
     branches: [main]
   schedule:
     - cron: "30 13 * * 0-4"
+    - cron: "45 17 * * 0-4"   # safety net: deploy whatever the evening data jobs committed (19:45 Cairo winter)
 permissions:
   contents: write
   pages: write
   id-token: write
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   build:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
@@ -41,7 +42,7 @@ jobs:
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
           git add data.json
-          git diff --cached --quiet || (git commit -m "daily data refresh" && git push)
+          git diff --cached --quiet || (git commit -m "daily data refresh" && git pull --rebase --autostash -q && git push)
       - name: Refresh index data (EGX 30 / EGX 70)
         if: (github.event_name != 'push' && github.event_name != 'workflow_run') || hashFiles('idx/index.json') == ''
         run: |
@@ -51,7 +52,7 @@ jobs:
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
           git add idx
-          git diff --cached --quiet || (git commit -m "index data refresh" && git push)
+          git diff --cached --quiet || (git commit -m "index data refresh" && git pull --rebase --autostash -q && git push)
       - run: pip install pillow && python make_icons.py
       - run: npm install && npm run build
       - uses: actions/upload-pages-artifact@v3
