@@ -1,6 +1,5 @@
 import { tdP } from './feed';
 import { SummaryTab } from './ui2026/SummaryTab';
-import { FlowSignal } from './ui2026/FlowSignal';
 import { FinancialTab } from './ui2026/FinancialTab';
 import React, { useEffect, useState } from 'react';
 import { SourcedFair, SIX, SummaryWorry } from './fv6';
@@ -15,6 +14,9 @@ const p1 = (v: number) => iso((v > 0 ? '+' : '') + v.toFixed(1) + '%');
 import { PVN, NEW, pageOf, loadPilotM, usePage } from './page';
 import { FinTabBlock } from './finblock';
 const n1 = (n: number) => iso(n.toLocaleString('en-GB', { maximumFractionDigits: PVN() && Math.abs(n) < 1 ? 2 : 1 }));
+const covOld = (t: string) => { const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']; let best = 0; const re = /(\d{1,2}) (يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر) (\d{4})/g; let m: RegExpExecArray | null; while ((m = re.exec(t || ''))) best = Math.max(best, Date.UTC(+m[3], M.indexOf(m[2]), +m[1])); return best > 0 && (Date.now() - best) / 864e5 > 90; };
+// A card carries a target or opinion if its source or text says so (any source name).
+const covOpinion = (r: string[]) => /هدف|الهدف|أهداف|المستهدف|توصية|بتغطي|S&P|TradingView|EFG/.test((r[0] || '') + ' ' + (r[1] || ''));
 const pvVol = (s: any, v: any) => { const b = (s.bars || []); const lv = b.length ? b[b.length - 1][5] : null; const lead = lv != null && Number.isFinite(lv) ? 'آخر جلسة اتداول فيها ' + Math.round(lv).toLocaleString('en-US') + ' سهم، يعني ' + Math.round(s.volx * 100) + '% من المتوسط في آخر 20 جلسة. ده مقارنة بنفس السهم. الحجم من مصدر واحد، وبيعكس البيانات وقت اللقطة، وآخر شمعة ممكن تكون قبل المزاد الأخير.' : 'آخر جلسة اتداولت بحوالي ' + Math.round(s.volx * 100) + '% من المتوسط في آخر 20 جلسة. ده مقارنة بنفس السهم. الحجم من مصدر واحد، وبيعكس البيانات وقت اللقطة، وآخر شمعة ممكن تكون قبل المزاد الأخير.'; return lead + (s.plan && s.plan.tv != null ? ' السيولة المعتادة (الرقم الأوسط لقيمة التداول اليومي في آخر 60 جلسة) حوالي ' + s.plan.tv + ' مليون جنيه في اليوم، وده حاجة تانية.' : ''); };
 const MT_ATT = 'مجمل الربح 1,815.7 مليون مقابل 1,759.4، زاد 3% بس، والإيراد زاد 15.6%. يعني التكلفة المباشرة زادت أسرع من المبيعات، فمن كل جنيه مبيعات فضل ربح أقل من السنة اللي فاتت قبل المصاريف العامة. الربع التالت: المجمل زاد 11% (657.1 مليون مقابل 592.1) والإيراد زاد 17%، فالهامش 9.9% (أحسن من متوسط الـ9 شهور 9.4% لكن أقل من 10.4% في نفس الربع السنة اللي فاتت). ';
 const MT_LIM = 'فحص محدود من غير تحفظات: المراجع فحص القوائم فحص أخف من التدقيق الكامل، ومكتبش إنه مش موافق على أي بند.';
@@ -368,7 +370,7 @@ ISPH: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '4 ج
 ISMA: { rows: [] },
 ICFC: { rows: [] },
 HDBK: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '4 جهات. متوسط الهدف 81.44 (من 54.90 لـ104.00)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
-ELKA: { rows: [['almezan.news (18 نوفمبر 2026)', 'ربح مجمع 485.25 مليون مقابل 66.82 مليون (+626%)', 'مطابق للقوائم'], ['آراء الجهات الخارجية', 'لم أتحقق منها', 'لسه ناقص']] },
+ELKA: { rows: [['almezan.news (18 نوفمبر 2026)', 'ربح مجمع 485.25 مليون مقابل 66.82 مليون (+626%)', 'مطابق للقوائم'], ['آراء الجهات الخارجية', 'غير متحقق منها', 'لسه ناقص']] },
 EFIH: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '4 جهات. متوسط الهدف 28.10 (من 25.80 لـ30.69)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
 EFID: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '5 جهات: متوسط الهدف 24.72 (من 18.10 لـ29.10)', 'لقطة الصفحة بتاريخ 23 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
 EAST: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '2 جهات: متوسط الهدف 44.45 (من 41.40 لـ47.50)، بدون تصنيف معلن', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
@@ -409,23 +411,24 @@ SWDY: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '3 ج
   MASR: { rows: [
     ['S&P Global Market Intelligence (عن stockanalysis.com)', '3 جهات. متوسط الهدف 11.70 (من 11.09 لـ12.30)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور'],
     ['الجهات اللي بتغطي السهم (من موقع علاقات المستثمرين)', 'الأهلي فاروس، أركام كابيتال، بلتون، HC، نعيم، بايونيرز. أسمائهم بدون توصية كل واحد', 'تاريخ القائمة غير منشور'] ] },
-  HRHO: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '4 جهات خارجيين. متوسط السعر المستهدف عندهم 35.74 جنيه (من 30.10 لـ43.00). دي آراء الجهات دي مش رأي التطبيق ومش توصية', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
+  HRHO: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', '4 جهات خارجية. متوسط السعر المستهدف عندهم 35.74 جنيه (من 30.10 لـ43.00). دي آراء الجهات دي مش رأي التطبيق ومش توصية', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
   ORHD: { rows: [['S&P Global Market Intelligence (عن stockanalysis.com)', 'جهتين. متوسط الهدف 17.42 (من 16.88 لـ17.96)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور']] },
   BONY: { rows: [
     ['S&P Global Market Intelligence (عن stockanalysis.com)', '3 جهات. متوسط الهدف 6.27 (من 5.75 لـ6.64)', 'تاريخ التوقع غير منشور؛ آخر سعر على الصفحة 24 سبتمبر 2026'],
     ['TradingView', 'جهتين خلال آخر 3 شهور. الأهداف من 5.23 لـ6.64', 'تاريخ التوصيات غير منشور. المصدرين مش متفقين في الحد الأدنى (5.23 عند TradingView، 5.75 عند S&P)'] ] },
   PHAR: { rows: [
-    ['EFG Hermes Research', 'هدف 100 جنيه', 'سعر الإقفال المرجعي 24 فبراير 2026 (81.6). نسخة من تقرير EFG Hermes مؤرخة 28 أبريل 2026. الهدف تحت سعر السوق الحالي والتقرير قديم'],
-    ['S&P Global Market Intelligence (عن stockanalysis.com)', 'جهتين. متوسط الهدف 108.20 (من 100.00 لـ116.40)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور'] ] },
+    ['EFG Hermes Research', 'هدف 100 جنيه', 'سعر الإقفال المرجعي 24 فبراير 2026 (81.6). نسخة من تقرير EFG Hermes مؤرخة 28 أبريل 2026. التقرير قديم'],
+    ['S&P Global Market Intelligence (عن stockanalysis.com)', 'هدفين. متوسط الهدف 108.20 (من 100.00 لـ116.40)', 'لقطة الصفحة 25 نوفمبر 2026. تاريخ كل توصية غير منشور'] ] },
   UNIP: { rows: [] },
 };
 
 function CoverageBox({ k }: { k: string }) {
   const c = COV[k]; if (!c) return null;
+  if (PVN() && NEW(k)) return null; // the summary body shows the coverage rows and the news line in one place
   return <div className="gd-it mid cov-box"><div className="gd-h"><span>{PVN() && NEW(k) ? 'آراء منشورة' : 'آراء الجهات الخارجية'}</span></div>
     {(PVN() && NEW(k) && pageOf(k).external_coverage_line_ar ? [] : c.rows).length === 0 && <p>{PVN() && NEW(k) ? 'غير متوفر، ما لقيناش رأي منشور عن السهم ده.' : k in EXTRA_REC ? 'غير منشور' : 'مفيش آراء من جهات خارجية لهذا السهم في المصادر المجانية.'}</p>}
-    {(PVN() && NEW(k) && pageOf(k).external_coverage_line_ar ? [] : c.rows).map((r: string[], i: number) => <div className="cov-row" key={i}><b>{r[0]}</b><p>{r[1]}</p><small>{r[2]}</small></div>)}
-    {PVN() && NEW(k) ? null : <p className="gd-foot">{'دي آراء جهات خارجية، مش رأي التطبيق ومش توصية. أهداف شركات سمسرة، والمصادر ممكن تختلف في العدد. أسماء الجهات مع توصية كل واحد مش متاحة مجانًا. الأهداف غالبًا محسوبة على أسعار أقدم من ' + tdP() + ' (صفحات stockanalysis بتتحدث متأخرة)، فنسبة الفرق عن السعر الحالي مش دقيقة.'}</p>}</div>;
+    {(PVN() && NEW(k) && pageOf(k).external_coverage_line_ar ? [] : c.rows).map((r: string[], i: number) => <div className="cov-row" key={i}><b>{r[0]}</b><p>{r[1]}{covOpinion(r) && r[1].indexOf('مش رأي التطبيق') < 0 ? '. دي آراء الجهات دي مش رأي التطبيق ومش توصية' : ''}</p><small>{covOld(r[2]) ? 'قديمة (أكتر من 90 يوم): ' : ''}{r[2]}</small></div>)}
+    {PVN() && NEW(k) ? <p className="gd-foot">دي آراء جهات خارجية، مش رأي التطبيق ومش توصية.</p> : <p className="gd-foot">{'دي آراء جهات خارجية، مش رأي التطبيق ومش توصية. أهداف شركات سمسرة، والمصادر ممكن تختلف في العدد. أسماء الجهات مع توصية كل واحد مش متاحة مجانًا. الأهداف غالبًا محسوبة على أسعار أقدم من ' + tdP() + ' (صفحات stockanalysis بتتحدث متأخرة)، فنسبة الفرق عن السعر الحالي مش دقيقة.'}</p>}</div>;
 }
 
 function DecisionCard({ s, k }: { s: any; k: string }) {
@@ -466,7 +469,7 @@ function TrendVerdict({ s }: { s: any }) {
 function DecSum({ s, k }: { s: any; k: string }) {
   const d = pvDec(k);
   let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
-  if (SIX.includes(k)) rng = 'نطاق السعر العادل ومصادر كل طريقة: راجع تبويب السعر العادل.';
+  if (SIX.includes(k)) rng = '';
   else if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.51 / 7.20 / 7.89 (تقديري).';
   else if (FV[k] && FV[k].nocmp) rng = 'نطاق الدراسة بالدولار، والسعر على الصفحة دي بالجنيه، فمفيش مقارنة. التفاصيل في تبويب السعر العادل.';
   else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق الدراسة (محافظ / متوسط / متفائل) ' + f(e * (m.mult || [6.67, 10, 17.36])[0]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[1]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[2]) + ' (حدود الدراسة في تبويب السعر العادل).'; } }
@@ -519,12 +522,11 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
   const held = HELD.includes(k);
   return <><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
-    <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
+    <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', FAIR6.includes(k) ? 'التجميع والمقارنة' : 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && !(NEW(k) && pmS && pmS.dec_ar) && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
-    {tab === 't' && !nop ? <FlowSignal k={k} /> : null}
     <div className="gd-body">
-      {FAIR6.includes(k) && tab === 'v' ? <FairCard code={k} /> : HELD.includes(k) && tab !== 't' ? (unNote || <p className="gd-sum">{HELD_MSG}</p>) : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? (NEW(k) && pmS && pmS.dec_ar ? <SummaryTab s={s} k={k} p={pmS} legacy={<DecisionCard s={s} k={k} />} /> : <DecisionCard s={s} k={k} />) : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
+      {FAIR6.includes(k) && tab === 'v' ? <FairCard code={k} /> : HELD.includes(k) && tab !== 't' ? (unNote || <p className="gd-sum">{HELD_MSG}</p>) : nop && tab === 't' ? <p className="gd-sum">القراءة الفنية مش معروضة للسهم ده.<small>سعر السهم في الداتا مش متطابق مع سعر الدراسة بالدولار، فمستويات السعر والمؤشرات ممكن تكون بوحدة غلط.</small></p> : fairNew && tab === 'v' ? null : light && tab === 'f' ? finNode : light && tab === 'v' ? fairNode : !light && tab === 'v' && WIDE.includes(k) && fairNode ? fairNode : tab === 'd' ? (NEW(k) && pmS && pmS.dec_ar ? <SummaryTab s={s} k={k} p={pmS} cov={((COV[k] && COV[k].rows) || []).map((r: string[]) => ({ src: r[0], txt: r[1] + (covOpinion(r) && r[1].indexOf('مش رأي التطبيق') < 0 ? '. دي آراء الجهات دي مش رأي التطبيق ومش توصية' : ''), when: (covOld(r[2]) ? 'قديمة (أكتر من 90 يوم): ' : '') + r[2] }))} legacy={<DecisionCard s={s} k={k} />} /> : <DecisionCard s={s} k={k} />) : tab === 'v' ? (SIX.includes(k) ? <WideFair k={k} fallback={<SourcedFair k={k} />} /> : fairCard(s, k, r)) : <>
         {tab === 'f' ? <p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p> : <details className="gd-det"><summary>وصف السعر بالكلام</summary><p className="gd-sum">{tab === 'f' ? (NEW(k) && pmS && pmS.fin_summary_ar ? pmS.fin_summary_ar : finSummary(k, r)) : techSummary(s)}<small>{tab === 'f' ? (NEW(k) && pmS && pmS.statements_line_date_ar ? pmS.statements_line_date_ar : 'من القوائم المالية الأصلية، 9 شهور لحد 30 سبتمبر 2026.') : 'وصف للي حصل لحد إقفال ' + s.date + '، مش توقع.'}</small></p></details>}
         <Det>{items.map((it, i) => <div key={i} className={'gd-it ' + (it.tone || '')}>
           <div className={'gd-h' + (PVN() ? ' gd-h2' : '')}><span>{it.label}</span>{PVN() && String(it.value).indexOf(' · ') > 0 ? <Val1 v={String(it.value).split(' · ')[0]} /> : <Val v={it.value} />}</div>{PVN() && String(it.value).indexOf(' · ') > 0 ? <p className="gd-sub">{String(it.value).split(' · ').slice(1).join(' · ')}</p> : null}
