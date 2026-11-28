@@ -1,0 +1,27 @@
+{
+ "code": "KNGC",
+ "name_ar": null,
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no book value and no positive P/E",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS3C6Q1C018, market NOPL, sector Industrial Goods , Services and Automobiles, profile last updated 08/04/2026. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 10,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 10 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Industrial Goods , Services and Automobiles، آخر تحديث للملف 08/04/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS3C6Q1C018",
+  "market": "NOPL",
+  "sector": "Industrial Goods , Services and Automobiles",
+  "price_shown": null,
+  "last_updated": "08/04/2026",
+  "source": "arabfinance.com/en/home/companyprofile/kngc (fetched 28 Nov 2026)"
+ }
+}
