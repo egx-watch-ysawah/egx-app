@@ -1,0 +1,27 @@
+{
+ "code": "EGWA",
+ "name_ar": null,
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no book value and no positive P/E",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS42091C016, market SME, sector Shipping & Transportation Services, profile last updated 28/12/2022, price shown 0. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 5,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 5 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق SME والقطاع Shipping & Transportation Services، آخر تحديث للملف 28/12/2022.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS42091C016",
+  "market": "SME",
+  "sector": "Shipping & Transportation Services",
+  "price_shown": "0",
+  "last_updated": "28/12/2022",
+  "source": "arabfinance.com/en/home/companyprofile/egwa (fetched 28 Nov 2026)"
+ }
+}
