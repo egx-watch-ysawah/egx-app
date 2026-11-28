@@ -1,0 +1,27 @@
+{
+ "code": "GEOS",
+ "name_ar": null,
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no book value and no positive P/E",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS51LQ1C018, market NOPL, sector Contracting & Construction Engineering, profile last updated 13/08/2025. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 1,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 1 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Contracting & Construction Engineering، آخر تحديث للملف 13/08/2025.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS51LQ1C018",
+  "market": "NOPL",
+  "sector": "Contracting & Construction Engineering",
+  "price_shown": null,
+  "last_updated": "13/08/2025",
+  "source": "arabfinance.com/en/home/companyprofile/geos (fetched 28 Nov 2026)"
+ }
+}
