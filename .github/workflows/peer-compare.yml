@@ -1,0 +1,38 @@
+# Daily peer comparison for the six held stocks. Runs after the EGX close (13:30 UTC = 15:30 Cairo winter).
+# peer_compare.py is stdlib-only (no pip install needed). On feed failure it keeps the old data,
+# marks it status=stale and exits 1; the job also fails if the written file is not up_to_date.
+# Any failure opens an issue.
+name: peer-compare
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 13 * * 0-4"
+    - cron: "0 15 * * 0-4"  # retry 17:00 Cairo for late bars
+permissions: { contents: write, issues: write }
+concurrency:
+  group: peer-compare
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build peer_compare.json
+        run: python3 peer_compare.py peer_compare.json
+      - name: Freshness gate (up_to_date)
+        run: python3 -c "import json, sys; sys.exit(0 if json.load(open('peer_compare.json')).get('up_to_date') else 1)"
+      - name: Commit if changed
+        run: |
+          git config user.name "egx-bot"
+          git config user.email "egx-bot@users.noreply.github.com"
+          git add peer_compare.json
+          git diff --cached --quiet || (git commit -m "data: peer compare" && git push)
+      - name: Open issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --title "peer-compare job failed" \
+            --body "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+# End of workflow
