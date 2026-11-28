@@ -30,12 +30,21 @@ jobs:
         run: python3 scripts/check_flow_session.py flow_signal.json egx_holidays.json
       - name: Flow stats backtest
         run: python3 scripts/build_flow_stats.py flow_hist flow_stats.json "$(python3 -c "import json; print(json.load(open('flow_signal.json'))['session'])")"
+      - name: Guard refreshed signal
+        run: python3 scripts/guard_refresh.py flow_signal.json
       - name: Commit if changed
         run: |
           git config user.name "egx-bot"
           git config user.email "egx-bot@users.noreply.github.com"
-          git add flow_signal.json flow_stats.json
+          git add flow_signal.json flow_stats.json flow_hist
           git diff --cached --quiet || (git commit -m "flow signal refresh" && git push)
+      - name: Commit partial history cache
+        if: always()
+        run: |
+          git config user.name "egx-bot"
+          git config user.email "egx-bot@users.noreply.github.com"
+          git add flow_hist
+          git diff --cached --quiet || (git commit -m "flow history cache (partial)" && git push)
       - name: Open issue on failure
         if: failure()
         env:
