@@ -33,6 +33,7 @@ function FlowComboBody({ k }: { k: string }) {
   const stale = typeof t.date !== 'string' || staleBySession(t.date, hol);
   const hd = <div className="sm-sec" style={{ marginTop: 18 }}>لما نفس الحالة دي حصلت قبل كده في السهم ده، حصل إيه؟</div>;
   if (stale) return <>{hd}<div className="sm-card fc"><style>{CSS}</style><div className="fx-na"><b>غير متوفر</b><span>حالة السهم قديمة: آخر جلسة عندنا {arD(t.date)} وفيه جلسة أحدث.</span></div></div></>;
+  if (t.valid === false) { const h0 = c.history || {}; return <>{hd}<div className="sm-card fc"><style>{CSS}</style><div className="fx-na"><b>غير متوفر</b><span>السهم ليه {L(h0.sessions)} جلسة بس في البيانات المتاحة ({arD(h0.firstDate || h0.from)} إلى {arD(h0.to)})، والحساب محتاج {L(60)} جلسة على الأقل قبل ما أي شرط يتقاس، فمفيش أرقام نعرضها.</span></div></div></>; }
   const b = c.combos[s]; const hs = c.history;
   return <>{hd}<div className="sm-card fc"><style>{CSS}</style>
     {c.test ? <div className="fc-test">اختبار فقط: حالة مفروضة ({s}) مش حالة السهم الحقيقية</div> : null}
@@ -53,6 +54,7 @@ function FlowComboBody({ k }: { k: string }) {
         <div className="fc-d">الشروط: أ = قيمة التداول أكتر من ضعف متوسط آخر 60 جلسة. ب = الإقفال في الثلث الأعلى من مدى اليوم. ج = أكتر من 60% من حجم آخر 10 جلسات في أيام صاعدة والسعر فوق متوسط 20 جلسة.</div>
         <div className="fc-d">الأسعار زي ما هي من المصدر، بدون تكاليف تداول ولا توزيعات. الحالات بتتجمع في موجات فمش مستقلة. الأسهم الحالية بس. وصف تاريخي مش وعد. الأرقام من تاريخ السهم ده لوحده.</div>
       </details></>}
+    {hs.shortHistory === true ? <div className="fc-d">تاريخ السهم قصير ({L(hs.sessions)} جلسة)، فالأرقام دي من عينة صغيرة وممكن تتغير كتير مع الأيام.</div> : null}
     <small className="fx-g">{hs.firstDayIsListing === true ? 'من أول يوم تداول للسهم' : (hs.startLabelAr ? String(hs.startLabelAr) : 'من أول يوم في البيانات المتاحة')} ({arD(hs.firstDate || hs.from)}) إلى {arD(hs.to)} ({L(hs.sessions)} جلسة){hs.statsFrom ? <>، والحساب بيبدأ من {arD(hs.statsFrom)}</> : null} · أسعار يومية مجانية من Starta Markets · مش نصيحة</small>
   </div></>;
 }
