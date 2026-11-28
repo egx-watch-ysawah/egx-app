@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from './shim';
 import { FAIR6 } from './ui2026/FairSix';
+import { useUni, UniSub } from './ui2026/Universe';
 
 // "الدراسة غير متوافرة حاليا": stocks with no study yet. Data-only: a name, a code, a status and a short reason.
 // No numbers, no valuation, no opinion. Data: studies_rest/studies_rest/unavailable.json ([{code,name_ar,reason_ar,extra?}]).
@@ -31,23 +32,31 @@ const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u06
 
 export function AllStocks() {
   const st = useUN();
+  const U = useUni();
   const [q, setQ] = useState('');
   const all = useMemo(() => {
     if (!st) return [];
+    if (U && U.ok) {
+      // Membership and count come from universe.json; the study files only add names and reasons.
+      const rs = new Set(st.ready.map(U.canon)); const m2: Record<string, UnRow> = {};
+      st.rows.forEach(r => { const c = U.canon(String(r.code).toUpperCase()); if (!m2[c] || String(r.code).toUpperCase() === c) m2[c] = r; });
+      return [...U.s30, ...U.s70, ...U.sO].map(c => { const u = m2[c] || null; return { code: c, name: st.names[c] || (u && u.name_ar) || (/^EGS/i.test(c) ? '' : c), un: rs.has(c) ? null as UnRow | null : u }; }).sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+    }
     const rs = new Set(st.ready);
     const un = st.rows.filter(r => !rs.has(String(r.code).toUpperCase())).map(r => ({ code: String(r.code).toUpperCase(), name: r.name_ar || r.code, un: r }));
     const unc = new Set(un.map(x => x.code));
     const rd = st.ready.filter(c => !unc.has(c)).map(c => ({ code: c, name: st.names[c] || c, un: null as UnRow | null }));
     return [...rd, ...un].sort((a, b) => a.name.localeCompare(b.name, 'ar'));
-  }, [st]);
+  }, [st, U]);
   const nq = normQ(q);
   const rows = useMemo(() => (nq ? all.filter(x => (normQ(x.code) + ' ' + normQ(x.name)).includes(nq)) : all), [all, nq]);
-  if (!st) return <div className="eg-pad"><h2 className="eg-h">كل الأسهم</h2><p className="eg-note">بحمّل القايمة...</p></div>;
+  if (!st || U === undefined) return <div className="eg-pad"><h2 className="eg-h">كل الأسهم</h2><p className="eg-note">بحمّل القايمة...</p></div>;
   return <div className="eg-pad ix un-all">
-    <h2 className="eg-h">كل الأسهم <span className="ix-n" id="un-count">{nq ? '· نتايج البحث (' + rows.length + ')' : '(' + all.length + ' سهم)'}</span></h2>
+    <h2 className="eg-h">كل الأسهم <span className="ix-n" id="un-count">{nq ? '· نتايج البحث (' + rows.length + ')' : U && U.ok ? '(' + U.total + ' سهم)' : ''}</span></h2>
+    <UniSub u={U} />
     <p className="eg-note">كل سهم بيفتح على صفحته. اللي مالوش دراسة متوافرة دلوقتي مكتوب جنبه حالته والسبب.</p>
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث في كل الأسهم" /></label>
     {rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده.</p>}
-    {rows.map(x => <Link key={x.code} to={'/s/' + x.code} className="ix-r"><div className="un-top"><b>{x.name}</b><small dir="ltr">{x.code}</small></div>{x.un ? <UnNote r={x.un} /> : <span className="un-badge un-ok">دراسة متوافرة</span>}</Link>)}
+    {rows.map(x => <Link key={x.code} to={'/s/' + x.code} className="ix-r"><div className="un-top"><b>{x.name}</b><small dir="ltr">{/^EGS/i.test(x.code) ? '' : x.code}</small></div>{x.un ? <UnNote r={x.un} /> : <span className="un-badge un-ok">دراسة متوافرة</span>}</Link>)}
   </div>;
 }
