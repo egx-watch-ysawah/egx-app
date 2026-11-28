@@ -127,7 +127,7 @@
    "status": "confirmed"
   },
   "EFIH": {
-   "name": "e-finance for Digital and Financial Investments S.A.E.",
+   "name": "اي فاينانس للاستثمارات المالية والرقمية",
    "close": 24.61,
    "chg_pct": -1.56,
    "volume": 1465117,
@@ -163,7 +163,7 @@
    "status": "single"
   },
   "RMDA": {
-   "name": "Tenth of Ramadan Pharmaceutical Industries & Diagnostic-Rameda",
+   "name": "راميدا",
    "close": 5.01,
    "chg_pct": -0.79,
    "volume": 1635179,
@@ -307,7 +307,7 @@
    "status": "confirmed"
   },
   "VLMRA": {
-   "name": "Valmore Holding",
+   "name": "فالمور القابضة للاستثمار",
    "close": 25.9,
    "chg_pct": 1.37,
    "volume": 3866653,
@@ -343,7 +343,7 @@
    "status": "confirmed"
   },
   "FWRY": {
-   "name": "Fawry For Banking Technology And Electronic Payment",
+   "name": "فوري لتكنولوجيا البنوك والمدفوعات الالكترونية",
    "close": 17.2,
    "chg_pct": -0.29,
    "volume": 1393633,
@@ -439,7 +439,7 @@
    "status": "confirmed"
   },
   "OFH": {
-   "name": "O B Financial Holding",
+   "name": "أو بي المالية القابضة",
    "close": 0.695,
    "chg_pct": -0.71,
    "volume": 5801877,
@@ -571,7 +571,7 @@
    "status": "confirmed"
   },
   "ISMQ": {
-   "name": "Iron & Steel for Mines & Quarries",
+   "name": "الحديد والصلب للمناجم والمحاجر",
    "close": 6.4,
    "chg_pct": -0.78,
    "volume": 1047352,
@@ -583,7 +583,7 @@
    "status": "confirmed"
   },
   "MCRO": {
-   "name": "Macro Group Pharmaceutical S.A.E.",
+   "name": "ماكرو جروب للمستحضرات الطبية",
    "close": 1.3,
    "chg_pct": 0,
    "volume": 19865179,
@@ -691,7 +691,7 @@
    "status": "confirmed"
   },
   "TAQA": {
-   "name": "TAQA Arabia",
+   "name": "طاقة عربية",
    "close": 13.46,
    "chg_pct": 0.52,
    "volume": 383673,
@@ -716,7 +716,7 @@
    "status": "confirmed"
   },
   "IEEC": {
-   "name": "Industrial & Engineering Enterprises Co.",
+   "name": "المشروعات الصناعية والهندسية",
    "close": 0.634,
    "chg_pct": 2.92,
    "volume": 17687831,
@@ -812,7 +812,7 @@
    "status": "confirmed"
   },
   "ACTF": {
-   "name": "Act Financial",
+   "name": "أكت فاينانشال للاستشارات",
    "close": 2.14,
    "chg_pct": -2.28,
    "volume": 2981244,
@@ -873,7 +873,7 @@
    "note": "two sources differ; shown value is the history-file close"
   },
   "CNFN": {
-   "name": "Contact Financial Holding SAE",
+   "name": "كونتكت المالية القابضة",
    "close": 3.84,
    "chg_pct": 1.86,
    "volume": 862147,
@@ -897,7 +897,7 @@
    "status": "confirmed"
   },
   "ATLC": {
-   "name": "ايه تي ليس",
+   "name": "التوفيق للتأجير التمويلي",
    "close": 5.24,
    "chg_pct": 3.15,
    "volume": 2426897,
@@ -1030,7 +1030,7 @@
    "status": "confirmed"
   },
   "VALU": {
-   "name": "U Consumer Finance S.A.E",
+   "name": "يو للتمويل الاستهلاكي",
    "close": 9.26,
    "chg_pct": 0.11,
    "volume": 808110,
@@ -1151,7 +1151,7 @@
    "status": "confirmed"
   },
   "GDWA": {
-   "name": "Gadwa For Industrial Development",
+   "name": "جدوى للتنمية الصناعية",
    "close": 0.505,
    "chg_pct": -0.59,
    "volume": 16888561,
@@ -1163,7 +1163,7 @@
    "status": "confirmed"
   },
   "BONY": {
-   "name": "Bonyan for Development and Trade",
+   "name": "بنيان للتنمية والتجارة",
    "close": 4.1,
    "chg_pct": 0.49,
    "volume": 1697340,
@@ -1175,7 +1175,7 @@
    "status": "single"
   },
   "GOUR": {
-   "name": "Gourmet Egypt.Com Foods",
+   "name": "جورميه إيجيبت دوت كوم للأغذية",
    "close": 13.42,
    "chg_pct": 0.37,
    "volume": 450444,
@@ -1211,7 +1211,7 @@
    "status": "confirmed"
   },
   "PRDC": {
-   "name": "Pioneers Properties for Urban Development",
+   "name": "بايونيرز بروبرتيز للتنمية العمرانية",
    "close": 6.17,
    "chg_pct": 0,
    "volume": 1035851,
