@@ -66,7 +66,7 @@ function FlowComboBody({ k }: { k: string }) {
         {Array.isArray(b.events20) && b.events20.length > 0 ? <div className="fc-d"><div>آخر {L(b.events20.length)} حالات خلصت مدتها، التغير بعد {L(20)} جلسة:</div><div className="fc-ev">{b.events20.map((e: any, i: number) => nn(e.ret20) ? <span key={i} className="fc-e">{arD(e.date)}: <b className={e.ret20 >= 0 ? 'up' : 'dn'}>{L(pc(e.ret20))}</b></span> : null)}</div></div> : null}
         {Array.isArray(c.limitsAr) ? c.limitsAr.filter((x: any) => typeof x === 'string' && x).map((x: string, i: number) => <div key={i} className="fc-d">{x}.</div>) : null}
         {Array.isArray(b.excluded20) && b.excluded20.length > 0 ? <div className="fc-d">{b.excluded20.length === 1 ? 'حالة واحدة اتشالت' : b.excluded20.length === 2 ? 'حالتين اتشالوا' : <>{L(b.excluded20.length)} {b.excluded20.length <= 10 ? 'حالات اتشالوا' : 'حالة اتشالوا'}</>} من حساب النتايج.</div> : null}
-        <div className="fc-d">الشروط: أ = قيمة التداول أكتر من ضعف متوسط آخر 60 جلسة. ب = الإقفال في الثلث الأعلى من مدى اليوم. ج = أكتر من 60% من حجم آخر 10 جلسات في أيام صاعدة والسعر فوق متوسط 20 جلسة.</div>
+        <div className="fc-d">الشروط: أ = قيمة التداول أكتر من مرتين متوسط آخر 60 جلسة. ب = الإقفال في الثلث الأعلى من مدى اليوم. ج = أكتر من 60% من حجم آخر 10 جلسات في أيام صاعدة والسعر فوق متوسط 20 جلسة.</div>
         <div className="fc-d">الأسعار زي ما هي من المصدر، بدون تكاليف تداول ولا توزيعات. الحالات بتتجمع في موجات فمش مستقلة. الأسهم الحالية بس. وصف تاريخي مش وعد. الأرقام من تاريخ السهم ده لوحده.</div>
       </details></>}
     {hs.shortHistory === true ? <div className="fc-d">تاريخ السهم قصير ({L(hs.sessions)} جلسة)، فالأرقام دي من عينة صغيرة وممكن تتغير كتير مع الأيام.</div> : null}
