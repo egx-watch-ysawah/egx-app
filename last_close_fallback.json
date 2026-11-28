@@ -355,7 +355,7 @@
    "status": "confirmed"
   },
   "HELI": {
-   "name": "مصر الجديدة للاسكان",
+   "name": "مصر الجديدة للإسكان",
    "close": 6.3,
    "chg_pct": 1.12,
    "volume": 7861030,
@@ -535,7 +535,7 @@
    "status": "confirmed"
   },
   "EHDR": {
-   "name": "المصريين للاسكان",
+   "name": "المصريين للإسكان",
    "close": 2.01,
    "chg_pct": 0,
    "volume": 1410032,
@@ -547,7 +547,7 @@
    "status": "confirmed"
   },
   "ELSH": {
-   "name": "الشمس للاسكان",
+   "name": "الشمس للإسكان",
    "close": 10.37,
    "chg_pct": -0.67,
    "volume": 1919845,
@@ -1139,7 +1139,7 @@
    "status": "confirmed"
   },
   "ELKA": {
-   "name": "القاهرة للاسكان",
+   "name": "القاهرة للإسكان",
    "close": 1.4,
    "chg_pct": 0.72,
    "volume": 5116134,
