@@ -14,7 +14,7 @@ function Margin({ label, ft, key1 }: { label: string; ft: any; key1: string }) {
   const ks = nums(r).filter(q => typeof x?.[q] === 'number' && r[q]);
   if (ks.length < 1) return null;
   const max = Math.max(...ks.map(q => Math.abs(x[q] / r[q] * 100)), 1);
-  return <div className="sm-pair"><div className="sm-ph"><b>{label} ÷ الإيراد</b>{ks.length > 1 && <Delta p={(x[ks[0]] / r[ks[0]] - x[ks[1]] / r[ks[1]]) * 100} suf=" نقطة" />}</div>
+  return <div className="sm-pair"><div className="sm-ph"><b>{label} على الإيراد</b>{ks.length > 1 && <Delta p={(x[ks[0]] / r[ks[0]] - x[ks[1]] / r[ks[1]]) * 100} suf=" نقطة" />}</div>
     {ks.map((q, i) => { const m = x[q] / r[q] * 100; return <div className="sm-br" key={q}><span className="sm-pl">{PER[q] || q}</span><u><i className={i ? 'gr' : 'gr2'} style={{ width: Math.max(2, Math.abs(m) / max * 100) + '%' }} /></u><bdi dir="ltr" className="sm-n">{m.toFixed(1)}%</bdi></div>; })}
     {ks.length > 1 && <small className="sm-u">الفرق بنقاط مئوية. نسبة محسوبة من أرقام القوائم.</small>}
     <Tip t={T.margin(ks.length > 1 ? (x[ks[0]] / r[ks[0]] - x[ks[1]] / r[ks[1]]) * 100 : null)} /></div>;
@@ -37,7 +37,7 @@ export function FinancialTab({ p }: { p: any }) {
   return <div className="sm">
     <div className="sm-sec">الأرباح <small>({ft.unit_ar || ''})</small></div>
     <div className="sm-card">{pairBlock(INC)}</div>
-    {ft.revenue && bankish && <div className="sm-card sm-miss"><div className="sm-un"><span>غير متوفر</span><p>الهوامش مش معروضة: الربح قبل الضريبة أكتر من 60% من الإيراد، وغالبًا الإيراد هنا مش مبيعات، فالمقارنة بين الشركات مضللة.</p></div></div>}
+    {ft.revenue && bankish && <div className="sm-card sm-miss"><div className="sm-un"><span>غير متوفر</span><p>الهوامش مش معروضة: الربح قبل الضريبة أكتر من 60% من الإيراد، وفي الشركات دي الإيراد مش بالضرورة مبيعات، فالمقارنة بين الشركات مضللة.</p></div></div>}
     {ft.revenue && !bankish && <><div className="sm-sec">الهوامش</div>
       <div className="sm-card"><Margin label="مجمل الربح" ft={ft} key1="gross" /><Margin label="الربح قبل الضريبة" ft={ft} key1="pretax" /><Margin label="ربح مساهمي الأم" ft={ft} key1="parent_profit" /><Margin label="صافي الربح" ft={ft} key1="net_profit" /></div></>}
     {present(BAL).some(x => typeof ft[x] === 'object') && <><div className="sm-sec">الميزانية والنقدية</div><div className="sm-card">{pairBlock(BAL)}</div></>}
