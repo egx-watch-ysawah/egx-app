@@ -9,7 +9,7 @@ export function Delta({ p, suf = '%' }: { p: number | null; suf?: string }) {
   return <span className={'sm-d ' + (up ? 'up' : 'dn')} dir="ltr">{up ? '▲' : '▼'} {up ? '+' : ''}{p.toFixed(1)}{suf}</span>;
 }
 // Two-period comparison: current bar coloured by direction, previous grey.
-export const Tip = ({ t }: { t?: string }) => t ? <p className="sm-tip"><b>إزاي تستفيد: </b>{t}</p> : null;
+export const Tip = ({ t }: { t?: string }) => t ? <details className="sm-tip sm-tipd"><summary>إزاي تستفيد</summary><p>{t}</p></details> : null;
 export function PairBars({ label, a, b, la, lb, unit, tip }: { label: string; a: number; b: number; la: string; lb: string; unit?: string; tip?: string }) {
   const m = Math.max(Math.abs(a), Math.abs(b)) || 1;
   const p = pct(a, b);
