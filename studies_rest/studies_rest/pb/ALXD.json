@@ -1,0 +1,27 @@
+{
+ "code": "ALXD",
+ "name_ar": "الإسكندرية للاستثمارات والتنمية العمرانية",
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no industry label in feed",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS66DU1C015, market NOPL, sector Real Estate, profile last updated 26/08/2026. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 5,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 5 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Real Estate، آخر تحديث للملف 26/08/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS66DU1C015",
+  "market": "NOPL",
+  "sector": "Real Estate",
+  "price_shown": null,
+  "last_updated": "26/08/2026",
+  "source": "arabfinance.com/en/home/companyprofile/alxd (fetched 28 Nov 2026)"
+ }
+}
