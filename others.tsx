@@ -169,7 +169,7 @@ export function OtherLight({ code, row, reason, unNode }: { code: string; row: a
     <StatusBanner k={code} />
     <UsdNote k={code} />
     {CARD_ON.has(code) ? <DecisionCard code={code} /> : null}
-    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'مفيش سعر حالي ولا تغيير ولا حجم.' : nty.status === 'new_listing' ? 'مفيش سعر ولا تغيير ولا حجم، لأن مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'مفيش سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
+    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'مفيش سعر حالي ولا تغيير ولا حجم.' : nty.status === 'new_listing' ? (typeof nty.last_close === 'number' && nty.last_close > 0 ? 'مفيش تغيير ولا حجم عندنا، لأن السعر من مصدر واحد.' : 'مفيش سعر ولا تغيير ولا حجم، لأن مفيش سعر مؤكد عندنا للإدراج الجديد.') : 'مفيش سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
     <FairInline code={code} />
   </div>;
   return <div className="eg-pad">{back}
