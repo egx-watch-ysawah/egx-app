@@ -468,11 +468,11 @@ function TrendVerdict({ s }: { s: any }) {
 
 function DecSum({ s, k }: { s: any; k: string }) {
   const d = pvDec(k);
-  let rng = 'نطاق السعر العادل: راجع تبويب السعر العادل.';
+  let rng = '';
   if (SIX.includes(k)) rng = '';
   else if (k === 'BONY') rng = 'السعر ' + f(s.close) + ' مقابل قيمة دفترية 6.51 / 7.20 / 7.89 (تقديري).';
-  else if (FV[k] && FV[k].nocmp) rng = 'نطاق الدراسة بالدولار، والسعر على الصفحة دي بالجنيه، فمفيش مقارنة. التفاصيل في تبويب السعر العادل.';
-  else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق الدراسة (محافظ / متوسط / متفائل) ' + f(e * (m.mult || [6.67, 10, 17.36])[0]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[1]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[2]) + ' (حدود الدراسة في تبويب السعر العادل).'; } }
+  else if (FV[k] && FV[k].nocmp) rng = 'نطاق الدراسة بالدولار، والسعر على الصفحة دي بالجنيه، فمفيش مقارنة.';
+  else { const m = FV[k]; if (m) { const e = (m.profit / m.shares) * (4 / 3); rng = 'السعر ' + f(s.close) + ' مقابل نطاق الدراسة (محافظ / متوسط / متفائل) ' + f(e * (m.mult || [6.67, 10, 17.36])[0]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[1]) + ' / ' + f(e * (m.mult || [6.67, 10, 17.36])[2]) + '.'; } }
   return <section className="dec-sum" aria-label="ملخص القراءة">
     <div className="dec-row"><b>اللي بيحركه</b><span>{d.up[0]}{d.down[0] ? ' · ' + d.down[0] : ''}</span></div>
     <div className="dec-row"><b>اللي يغير القراءة</b><span>{d.flip}</span></div>
@@ -506,7 +506,8 @@ export function OnTab({ id, children }: { id: string; children: React.ReactNode 
 }
 
 export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart, fairNew, unNote }: { unNote?: React.ReactNode; fairNew?: boolean; s: any; k: string; r: any; light?: boolean; fin?: React.ReactNode; fair?: React.ReactNode; chart?: React.ReactNode }) {
-  const [tab, setTab0] = useState<'t' | 'f' | 'v' | 'd'>(s.nohist ? 'f' : 't');
+  const [tabRaw, setTab0] = useState<'t' | 'f' | 'v' | 'd'>(s.nohist ? 'f' : 't');
+  const tab: 't' | 'f' | 'v' | 'd' = tabRaw === 'v' && !FAIR6.includes(k) ? (s.nohist ? 'f' : 't') : tabRaw;
   const setTab = (t: 't' | 'f' | 'v' | 'd') => { setTab0(t); setGuide(t, true); };
   React.useEffect(() => { const g = s.nohist ? 'f' : 't'; setGuide(g, true); return () => setGuide(g, false); }, [k]);
   const [pmS, setPmS] = useState<any>(null);
@@ -522,7 +523,7 @@ export function StockGuide({ s, k, r, light, fin: finNode, fair: fairNode, chart
   const held = HELD.includes(k);
   return <><section className="gd" aria-label="ملخص السهم">
     <style>{CSS}</style>
-    <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{tb('v', FAIR6.includes(k) ? 'تجميع ومقارنة' : 'السعر العادل')}{!light && !nop && tb('d', 'الخلاصة')}</div>
+    <div className="gd-tabs">{!s.nohist && tb('t', 'الفني')}{tb('f', 'المالي')}{FAIR6.includes(k) ? tb('v', 'تجميع ومقارنة') : null}{!light && !nop && tb('d', 'الخلاصة')}</div>
     {!nop && tab === 't' && <TrendVerdict s={s} />}{!light && !held && tab === 'd' && !(NEW(k) && pmS && pmS.dec_ar) && <DecSum s={s} k={k} />}
     {tab === 't' && !nop ? chart : null}
     <div className="gd-body">
