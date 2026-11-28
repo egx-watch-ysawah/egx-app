@@ -1,0 +1,27 @@
+{
+ "code": "MITR",
+ "name_ar": "مصر للسياحة",
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no industry label in feed",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS79031C018, market NOPL, sector Travel & Leisure, profile last updated 14/05/2026, price shown 0. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 6,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 6 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Travel & Leisure، آخر تحديث للملف 14/05/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS79031C018",
+  "market": "NOPL",
+  "sector": "Travel & Leisure",
+  "price_shown": "0",
+  "last_updated": "14/05/2026",
+  "source": "arabfinance.com/en/home/companyprofile/mitr (fetched 28 Nov 2026)"
+ }
+}
