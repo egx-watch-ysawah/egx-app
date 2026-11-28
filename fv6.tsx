@@ -7,7 +7,7 @@ let cache: Promise<any> | null = null;
 const load = () => cache || (cache = fetch('studies_rest/studies_rest/fair_value_sourced_six.json?t=' + Math.floor(Date.now() / 300000), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(noCodes).catch(() => null));
 // Display-only: the content files name the two scenarios T1/T3 (and the removed T2); readers see words, not codes.
 export const noCodes: any = (x: any) => typeof x === 'string' ? x.replace(/\bT1\b/g, 'سيناريو 1').replace(/\bT3\b/g, 'سيناريو 2').replace(/\bT2\b/g, 'الطريقة التالتة') : Array.isArray(x) ? x.map(noCodes) : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, noCodes(v)])) : x;
-const STALE_AN = 'أهداف الجهات الخارجية من صفحات stockanalysis وغالبًا محسوبة على أسعار أقدم من ' + tdP() + '، فنسبة الفرق عن السعر الحالي مش دقيقة.';
+const STALE_AN = 'أهداف الجهات الخارجية من صفحات stockanalysis وممكن تكون محسوبة على أسعار أقدم من ' + tdP() + '، فنسبة الفرق عن السعر الحالي مش دقيقة.';
 const num = (v: any) => typeof v === 'number' && isFinite(v);
 const reasonLine = (status: string, reason: string) => { const r = String(reason || ''); const st = String(status || ''); return !st || r.startsWith(st.split(' ')[0]) ? r : st + ': ' + r; };
 const PEERS = 'مضاعفات الأقران من stockanalysis آخر 12 شهر ومن تواريخ مختلفة، وربحنا 9 شهور محوّلة لسنة كاملة: الأساس مش متطابق.';
