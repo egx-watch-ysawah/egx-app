@@ -1,0 +1,462 @@
+{
+ "generated_at": "2026-11-28T13:45:00+02:00",
+ "session": "2026-11-26",
+ "note": "last_traded = date of the last daily bar with volume above 0 in the Starta feed; no date is estimated. status_ar needs native review. currency = quote currency of the source line (TradingView). last_close = close of the last Starta bar with volume above 0 (a real trade). tv_reference_price = TradingView close on 2026-11-28 12:11 EET (volume 0 for most of these, so it is not a trade price); where price_gap_flag is true the two sources disagree and the reason is not known. last_close = official closing price (from a second source) where one exists; last_trade_price_starta = price of the last trade in the Starta feed. For thin stocks they differ, because the official close does not follow tiny trades.",
+ "stocks": [
+  {
+   "code": "BIDI",
+   "status": "halted",
+   "status_ar": "موقوف عن التداول",
+   "last_traded": "2026-07-20",
+   "last_close": 2.12,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "status halted/liquidation: flow expert via parent (not verified by me)",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 2.12,
+   "tv_vs_last_close_pct": 0.0,
+   "price_gap_flag": false,
+   "second_check": {
+    "source": "TradingView scanner 2026-11-28; stockanalysis has no data for BIDI",
+    "says": "price equals the Starta last close, no volume since",
+    "agrees": null,
+    "checked": "2026-11-28"
+   }
+  },
+  {
+   "code": "EPPK",
+   "status": "halted",
+   "status_ar": "موقوف عن التداول",
+   "last_traded": "2026-09-09",
+   "last_close": 9.78,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "status halted/liquidation: flow expert via parent (not verified by me)",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 9.78,
+   "tv_vs_last_close_pct": 0.0,
+   "price_gap_flag": false,
+   "last_trade_price_starta": 9.78,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/EPPK/history/ (read 2026-11-28)",
+    "says": "second source agrees: close 9.78 on 2026-09-09 (235,214 shares), flat 9.78 with no volume after",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": false
+  },
+  {
+   "code": "RTVC",
+   "status": "halted",
+   "status_ar": "موقوف عن التداول",
+   "last_traded": "2026-11-11",
+   "last_close": 3.11,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "status halted/liquidation: flow expert via parent (not verified by me)",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 3.11,
+   "tv_vs_last_close_pct": -0.6,
+   "price_gap_flag": false,
+   "last_trade_price_starta": 3.13,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/RTVC/history/ (read 2026-11-28)",
+    "says": "second source: last real session 2026-11-11 close 3.11 (1,518,981 shares), flat 3.11 with no volume every day since",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": false
+  },
+  {
+   "code": "CFGH",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-11-25",
+   "last_close": 0.104,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "USD",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 0.107,
+   "tv_vs_last_close_pct": 2.9,
+   "price_gap_flag": true,
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "issuer IR: par value USD 0.7, capital USD 32,917,500",
+    "url": "https://concretefashiongroup.com/investor-relations/share-information/"
+   },
+   "second_check": {
+    "source": "TradingView scanner 2026-11-28; stockanalysis page is stale (last data 2026-11-23)",
+    "says": "Starta 11-25 bar (9,300 shares, 0.104) could not be confirmed; TradingView close 0.107 with change +2.9% and volume 0 on 11-26; stockanalysis shows 0.107 and 16,250 shares on 11-23 (Starta 0.106, same volume)",
+    "agrees": null,
+    "checked": "2026-11-28"
+   }
+  },
+  {
+   "code": "DEIN",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-10-29",
+   "last_close": 10.35,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 10.35,
+   "tv_vs_last_close_pct": -16.7,
+   "price_gap_flag": false,
+   "last_trade_price_starta": 12.42,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/DEIN/history/ (read 2026-11-28)",
+    "says": "second source: on 2026-10-29 the trade (5 shares) was at 12.42 (high=low) but the official close is 10.35; same on every trade day since September",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": true
+  },
+  {
+   "code": "GPPL",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-11-15",
+   "last_close": 1.4,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "USD",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 1.4,
+   "tv_vs_last_close_pct": 5.3,
+   "price_gap_flag": false,
+   "currency_second_source": {
+    "status": "confirmed (exchange data vendor, Mubasher)",
+    "says": "Mubasher stock page: par value 1.0 US Dollar",
+    "url": "https://english.mubasher.info/markets/EGX/stocks/gppl/"
+   },
+   "last_trade_price_starta": 1.33,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/GPPL/history/ (read 2026-11-28)",
+    "says": "second source: trade of 1,100 shares at 1.33 but official close 1.40",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": true
+  },
+  {
+   "code": "SAIB",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-11-18",
+   "last_close": 2.53,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "USD",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 2.53,
+   "tv_vs_last_close_pct": -16.5,
+   "price_gap_flag": false,
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "issuer IR: nominal value 10 USD, capital USD 331,025,000; also named among dollar-traded EGX shares by Daily News Egypt 2016",
+    "url": "https://www.saib.com.eg/en/investors-relations/shareholders-info/"
+   },
+   "last_trade_price_starta": 3.03,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/SAIB/history/ (read 2026-11-28)",
+    "says": "second source: trade of 57 shares at 3.03 (high=low) but official close 2.53",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": true
+  },
+  {
+   "code": "ICLE",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-10-27",
+   "last_close": 15.76,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 15.76,
+   "tv_vs_last_close_pct": -16.7,
+   "price_gap_flag": false,
+   "last_trade_price_starta": 18.91,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/ICLE/history/ (read 2026-11-28)",
+    "says": "second source: trade of 458 shares at 18.91 (high=low) but official close 15.76",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": true
+  },
+  {
+   "code": "MISR",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-09-03",
+   "last_close": 5.51,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 5.51,
+   "tv_vs_last_close_pct": -4.7,
+   "price_gap_flag": true,
+   "last_close_note": "TradingView official close 5.51; Starta last trade price 5.78 (1 share, 2026-09-03). Same pattern as the other thin stocks but no second source page exists (stockanalysis has no data).",
+   "last_trade_price_starta": 5.78,
+   "second_check": {
+    "source": "TradingView scanner 2026-11-28 12:11",
+    "says": "close 5.51, volume 0",
+    "agrees": null,
+    "checked": "2026-11-28"
+   }
+  },
+  {
+   "code": "NDRL",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-10-07",
+   "last_close": 4.69,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "USD",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 4.69,
+   "tv_vs_last_close_pct": -16.5,
+   "price_gap_flag": false,
+   "currency_second_source": {
+    "status": "confirmed (Mubasher news of the company assembly)",
+    "says": "capital USD 8 million, par split from USD 4 to USD 1.6, 5 million shares; 5.0M shares x 4.69 = USD 23.45M matches Simply Wall St market cap US$23.45m",
+    "url": "https://www.mubasher.info/news/3182843"
+   },
+   "last_trade_price_starta": 5.62,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/NDRL/history/ (read 2026-11-28)",
+    "says": "second source: trade of 10 shares at 5.62 (high=low) but official close 4.69",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": true
+  },
+  {
+   "code": "SPHT",
+   "status": "thin",
+   "status_ar": "تداوله واقف",
+   "last_traded": "2026-11-02",
+   "last_close": 1.42,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0",
+   "source_timestamp": "2026-11-28",
+   "currency": "USD",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 1.42,
+   "tv_vs_last_close_pct": 2.9,
+   "price_gap_flag": false,
+   "currency_second_source": {
+    "status": "not confirmed from issuer or exchange",
+    "says": "only data aggregators say USD (decypha, stockanalysis, gomarketcap, startamarkets); EGX 2015 list gives no currency for it",
+    "url": "https://www.decypha.com/en/stock-overview/public/EGX/SPHT"
+   },
+   "last_trade_price_starta": 1.38,
+   "last_close_meaning": "official close (stockanalysis and TradingView); last_trade_price_starta = price of the last trade in the Starta feed",
+   "second_check": {
+    "source": "stockanalysis.com/quote/egx/SPHT/history/ (read 2026-11-28)",
+    "says": "second source: trade of 2 shares at 1.38 but official close 1.42",
+    "agrees": true,
+    "checked": "2026-11-28"
+   },
+   "price_gap_explained": true
+  },
+  {
+   "code": "MEGM",
+   "status": "dormant",
+   "status_ar": "مفيش تداول من أبريل 2022",
+   "last_traded": "2022-04-28",
+   "last_close": 12.54,
+   "source_last_traded": "startamarkets.com/api/v1/egx/history/<CODE>, last bar with volume>0, fetched by the flow expert 2026-11-28 (flow_hist batches)",
+   "source_status": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET: volume of last session (2026-11-26) = 0; only 12 bars in the feed, last in 2022",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 12.54,
+   "tv_vs_last_close_pct": 0.0,
+   "price_gap_flag": false,
+   "second_check": {
+    "source": "TradingView scanner 2026-11-28; stockanalysis shows flat 12.54 with no volume through 2026-11-23",
+    "says": "price equals the Starta last close, no volume since",
+    "agrees": true,
+    "checked": "2026-11-28"
+   }
+  },
+  {
+   "code": "FERC",
+   "status": "feed_lag",
+   "status_ar": "بيانات السهم متأخرة عندنا (السهم بيتداول عادي)",
+   "last_traded": "2026-11-26",
+   "last_close": 63.02,
+   "source_last_traded": "stockanalysis.com/quote/egx/FERC: close 63.02, volume 13,299 on 2026-11-26 (history page shows daily trading through 2026-11-24); TradingView scanner 2026-11-28 12:11: close 63.02, volume 13,299; Reuters block trade 2026-11-17 (1.6M shares, EGP 110.7M)",
+   "source_status": "Starta history API has no bars after 2026-10-22 although the stock trades daily: feed gap, not a halt",
+   "source_timestamp": "2026-11-28",
+   "currency": "EGP",
+   "source_currency": "TradingView scanner EGX snapshot 2026-11-28 12:11 EET (currency field)",
+   "tv_reference_price": 63.02,
+   "tv_vs_last_close_pct": 0.0,
+   "price_gap_flag": false,
+   "starta_last_bar": "2026-10-22"
+  },
+  {
+   "code": "PMSC",
+   "status": "not_trading_yet",
+   "status_ar": "مقيد مؤقتًا ولسه ماتداولش",
+   "last_traded": null,
+   "last_close": null,
+   "reference_price": 10.0,
+   "currency": "USD",
+   "status_note": "EGX temporary listing 2026-06-28: capital USD 120M, 12M shares, par USD 10; the 10.00 price is the par value, no trade recorded; the Financial Regulatory Authority must approve before dealing starts. TradingView volume 0, no 30-day average.",
+   "source_status": "https://mondovisione.com/media-and-resources/news/egx-rings-the-bell-for-the-temporary-listing-of-4-state-owned-companieo-2026630/ ; https://www.alwafd.news/5904974",
+   "source_timestamp": "2026-11-28",
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "EGX press release: par value US$ 10.00, capital US$ 120 million",
+    "url": "https://mondovisione.com/media-and-resources/news/egx-rings-the-bell-for-the-temporary-listing-of-4-state-owned-companieo-2026630/"
+   }
+  },
+  {
+   "code": "EEP",
+   "name": "Egypt Education Platform",
+   "status": "not_trading_yet",
+   "status_ar": "مقيد مؤقتًا ولسه ماتداولش",
+   "last_traded": null,
+   "last_close": null,
+   "reference_price": 1.0,
+   "currency": "EGP",
+   "status_note": "EGX temporary listing (committee 2026-05-06, trading symbol EEPM.CA, from 2026-05-13): 199,375,000 shares, par EGP 10, capital EGP 1,993,750,000. Press (Arab Finance) says the FRA approved cutting par from EGP 10 to EGP 1; the price 1.00 is that par/reference, not a trade. No trade in the Starta data. A public offering of about 25% is reported as planned (Nov-Dec 2026, press, unconfirmed). TradingView volume 0.",
+   "source_status": "https://beta.egx.com.eg/en/news/287800 ; https://www.arabfinance.com/en/news/newdetails/egypt-education-platform-eyes-25-perent-stake-offering-on-egx-in-november ; https://www.egyin.com/article/120141",
+   "source_timestamp": "2026-11-28",
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "EGX listing decision gives par/capital in EGP",
+    "url": "https://beta.egx.com.eg/en/news/287800"
+   },
+   "par_note": "EGX decision says par EGP 10; the par cut to EGP 1 is reported by Arab Finance (FRA approval), not seen on an EGX page."
+  },
+  {
+   "code": "NMIN",
+   "name": "El Nasr Mining",
+   "status": "not_trading_yet",
+   "status_ar": "مقيد مؤقتًا ولسه ماتداولش",
+   "last_traded": null,
+   "last_close": null,
+   "reference_price": 10.0,
+   "currency": "EGP",
+   "status_note": "EGX temporary listing (shares added to EGX database 2026-04-09): capital EGP 600M, 60M shares, par EGP 10; six months to meet final listing requirements and offer shares. Price 10.00 = par, no trade recorded; the EGX decision (per Mubasher) says trading stays suspended until the conditions are met. The six-month period ended about 2026-10-09; any extension was not found. TradingView volume 0.",
+   "source_status": "https://english.mubasher.info/news/4593626/EGX-greenlights-provisional-listing-of-El-Nasr-Mining-at-EGP-600m-capital/",
+   "source_timestamp": "2026-11-28",
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "EGX listing decision gives par/capital in EGP",
+    "url": "https://english.mubasher.info/news/4593626/EGX-greenlights-provisional-listing-of-El-Nasr-Mining-at-EGP-600m-capital/"
+   }
+  },
+  {
+   "code": "OCAP",
+   "name": "OG Capital for Investments (SPAC)",
+   "status": "not_trading_yet",
+   "status_ar": "مقيد مؤقتًا ولسه ماتداولش",
+   "last_traded": null,
+   "last_close": null,
+   "reference_price": 1.0,
+   "currency": "EGP",
+   "status_note": "EGX temporary listing 2026-05-19, first SPAC: issued capital EGP 10M, 10M shares, par EGP 1; EGX decision: no trading allowed for three months and until the acquisition is complete. Enterprise (2026-11-22) says its board approved a capital increase to EGP 100M (100M shares at EGP 1) on 2026-11-18. Price 1.00 = par. FoudaLens: has not started trading. TradingView volume 0.",
+   "source_status": "https://foudalens.com/en/news/288532 ; https://foudalens.com/en/stock/OCAP.CA ; https://enterpriseam.com/egypt/2026/11/22/og-capital-clears-the-spac-capital-floor-three-months-late/",
+   "source_timestamp": "2026-11-28",
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "EGX listing decision gives par/capital in EGP",
+    "url": "https://foudalens.com/en/news/288532"
+   }
+  },
+  {
+   "code": "EGS65621C012",
+   "name": "El Nasr Housing and Development (ENHD)",
+   "status": "not_trading_yet",
+   "status_ar": "مقيد مؤقتًا ولسه ماتداولش",
+   "last_traded": null,
+   "last_close": null,
+   "reference_price": 5.0,
+   "currency": "EGP",
+   "status_note": "EGX temporary listing (committee 2026-04-22): capital EGP 350M, 70M shares, par EGP 5, ISIN EGS65621C012 (state-owned programme, six months to offer). Price 5.00 = par, no trade recorded. TradingView volume 0.",
+   "source_status": "https://beta.egx.com.eg/en/news/286968 ; https://www.egyin.com/article/117154 ; https://www.egypttoday.com/Article/3/146633/EGX-approves-temporary-listing-of-6-state-owned-firms-within",
+   "source_timestamp": "2026-11-28",
+   "currency_second_source": {
+    "status": "confirmed",
+    "says": "EGX listing decision gives par/capital in EGP",
+    "url": "https://beta.egx.com.eg/en/news/286968"
+   }
+  }
+ ],
+ "scan_zero_volume_no_history": {
+  "method": "TradingView scanner snapshot 2026-11-28 (298 EGX stocks): every stock with last-session volume 0 and no bars in the Starta histories I hold (49 with volume 0 in total, 12 of those have history). Each was then checked against EGX decisions, press and FoudaLens pages. Starta was not re-queried.",
+  "confirmed_temporary_listing_not_trading": {
+   "EEP": "EGX 2026-05-10",
+   "NMIN": "EGX via Mubasher 2026-04-12",
+   "OCAP": "EGX 2026-05-19",
+   "EGS65621C012": "EGX 2026-04-23",
+   "EGOTH": "FoudaLens: temp listing 2026-05-14, capital EGP 3bn, 30M shares, par EGP 100, price 100 = par",
+   "MITR": "FoudaLens: temp listing 2026-05-14, 20.96M shares, par EGP 6, price 6",
+   "NFCI": "FoudaLens: temp listing 2026-05-14, 63M shares, par EGP 10, price 10",
+   "ALXD": "FoudaLens: has not started trading",
+   "MMHC": "FoudaLens: has not started trading",
+   "NBCC": "FoudaLens: has not started trading",
+   "TOUR": "FoudaLens: has not started trading",
+   "CID": "FoudaLens IPO tracker lists it as upcoming"
+  },
+  "par_like_price_zero_volume_not_individually_confirmed": {
+   "ACFR": "price 10",
+   "ANCC": "price 10",
+   "APPF": "price 100",
+   "EFAC": "price 10",
+   "EGS65101C015": "price 5",
+   "EGS65861C014": "price 5 (Egyptian Contracting Co. AL ABD; named in the 2026-04-22 temp-listing batch per Egypt Today)",
+   "EGS72L31C011": "price 0.1 (SOLARSOL)",
+   "GROV": "price 1 (SPAC)",
+   "SPRK": "price 10 (SPAC)",
+   "SIEG": "price 10",
+   "SINA": "price 15 (Sinai Manganese, same April batch)",
+   "KNGC": "price 10",
+   "NAMI": "price 5 (National Asset Management, same April batch)",
+   "YAYT": "price 10 (Spring & Transport, same April batch)",
+   "HDST": "price 0.1",
+   "GEOS": "price 1",
+   "RMTV": "price 100",
+   "MLIC": "price 1; IPO subscription 2026-11-24 to 11-30 per FoudaLens"
+  },
+  "unconfirmed_note": "These 18 look like temporary listings (par-like price, zero volume, several named in the April/May state-owned batches) but I did not find a decision page for each. Treat as not_trading_yet only once confirmed; until then show \"no trades in our data\".",
+  "trade_normally_volume_0_only_today": {
+   "EITP": "last close EGP 7.60 on 2026-11-11 (FoudaLens)",
+   "IRAX": "last close EGP 1,250 on 2026-11-18 (FoudaLens)",
+   "WATP": "last close EGP 26.00 on 2026-11-18 (FoudaLens); TradingView shows 24.15",
+   "DCCC": "listed with history on stockanalysis",
+   "POCO": "listed with history on stockanalysis",
+   "EGWA": "listed per FoudaLens"
+  }
+ }
+}
