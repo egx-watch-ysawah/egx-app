@@ -1,0 +1,68 @@
+{
+ "code": "EGCH",
+ "name_ar": "كيما",
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 5 شركة من نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 10.11,
+ "price_date": "2026-11-26",
+ "own_bvps": 18.45,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 0.55,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Chemicals: Agricultural",
+ "n_peers": 5,
+ "peers": [
+  {
+   "code": "MFPC",
+   "name_ar": "موبكو",
+   "pb": 2.2329977463656885,
+   "price": 36.79
+  },
+  {
+   "code": "NEDA",
+   "name_ar": null,
+   "pb": 2.6472606843659103,
+   "price": 2.43
+  },
+  {
+   "code": "ABUK",
+   "name_ar": "ابوقير للاسمدة",
+   "pb": 2.874952664407077,
+   "price": 73.49
+  },
+  {
+   "code": "RKAZ",
+   "name_ar": null,
+   "pb": 4.0900865089908685,
+   "price": 3.91
+  },
+  {
+   "code": "EFIC",
+   "name_ar": null,
+   "pb": 4.911872016244707,
+   "price": 152.49
+  }
+ ],
+ "multiples": {
+  "low": 2.647,
+  "median": 2.875,
+  "high": 4.09,
+  "min": 2.2329977463656885,
+  "max": 4.911872016244707
+ },
+ "range": {
+  "low": 48.842,
+  "base": 53.043,
+  "high": 75.462
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "feed drift: peer P/B changed vs 12:21 file: NEDA"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
