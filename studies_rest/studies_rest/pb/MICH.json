@@ -1,0 +1,213 @@
+{
+ "code": "MICH",
+ "name_ar": null,
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 29 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 45.02,
+ "price_date": "2026-11-26",
+ "own_bvps": 12.27,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 3.67,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Process Industries",
+ "n_peers": 29,
+ "peers": [
+  {
+   "code": "MEGM",
+   "name_ar": null,
+   "pb": 0.3689440873179442,
+   "price": 12.54
+  },
+  {
+   "code": "EGCH",
+   "name_ar": "كيما",
+   "pb": 0.46718671803410045,
+   "price": 10.11
+  },
+  {
+   "code": "EPPK",
+   "name_ar": null,
+   "pb": 0.9781252000256032,
+   "price": 9.78
+  },
+  {
+   "code": "UNIP",
+   "name_ar": "يونيباك",
+   "pb": 1.3530420277095592,
+   "price": 0.292
+  },
+  {
+   "code": "POUL",
+   "name_ar": "القاهرة للدواجن",
+   "pb": 1.5882132716960862,
+   "price": 6.83
+  },
+  {
+   "code": "GTWL",
+   "name_ar": null,
+   "pb": 1.7932153696489332,
+   "price": 124
+  },
+  {
+   "code": "IFAP",
+   "name_ar": null,
+   "pb": 1.8782838939224693,
+   "price": 15.89
+  },
+  {
+   "code": "MFPC",
+   "name_ar": "موبكو",
+   "pb": 2.2329977463656885,
+   "price": 36.79
+  },
+  {
+   "code": "SKPC",
+   "name_ar": "سيدي كرير للبتروكيماويات",
+   "pb": 2.4541761898163372,
+   "price": 14.7
+  },
+  {
+   "code": "SUGR",
+   "name_ar": null,
+   "pb": 2.612510889848687,
+   "price": 49.63
+  },
+  {
+   "code": "NEDA",
+   "name_ar": null,
+   "pb": 2.6472606843659103,
+   "price": 2.43
+  },
+  {
+   "code": "ABUK",
+   "name_ar": "ابوقير للاسمدة",
+   "pb": 2.874952664407077,
+   "price": 73.49
+  },
+  {
+   "code": "CEFM",
+   "name_ar": null,
+   "pb": 3.210277165158947,
+   "price": 120.06
+  },
+  {
+   "code": "MEPA",
+   "name_ar": "العبوات الطبية",
+   "pb": 3.6603849123509393,
+   "price": 1.28
+  },
+  {
+   "code": "RKAZ",
+   "name_ar": null,
+   "pb": 4.0900865089908685,
+   "price": 3.91
+  },
+  {
+   "code": "EFIC",
+   "name_ar": null,
+   "pb": 4.911872016244707,
+   "price": 152.49
+  },
+  {
+   "code": "EPCO",
+   "name_ar": null,
+   "pb": 4.9535454095132225,
+   "price": 8.2
+  },
+  {
+   "code": "UEFM",
+   "name_ar": null,
+   "pb": 5.02916386769749,
+   "price": 476
+  },
+  {
+   "code": "MILS",
+   "name_ar": null,
+   "pb": 5.911320374907329,
+   "price": 132.44
+  },
+  {
+   "code": "SPIN",
+   "name_ar": null,
+   "pb": 6.260187167254668,
+   "price": 14.71
+  },
+  {
+   "code": "ISMA",
+   "name_ar": "الاسماعيلية مصر للدواجن",
+   "pb": 7.998389183538827,
+   "price": 18.67
+  },
+  {
+   "code": "MPCO",
+   "name_ar": "المنصورة للدواجن",
+   "pb": 8.39355446833341,
+   "price": 1.87
+  },
+  {
+   "code": "SCFM",
+   "name_ar": null,
+   "pb": 11.461996899228208,
+   "price": 209
+  },
+  {
+   "code": "MOSC",
+   "name_ar": null,
+   "pb": 11.544806853316063,
+   "price": 283.41
+  },
+  {
+   "code": "ELNA",
+   "name_ar": null,
+   "pb": 13.380824684585098,
+   "price": 39.22
+  },
+  {
+   "code": "DTPP",
+   "name_ar": null,
+   "pb": 17.00743852902866,
+   "price": 57.32
+  },
+  {
+   "code": "AIFI",
+   "name_ar": "اطلس لاستصلاح الاراضى",
+   "pb": 17.574692442882252,
+   "price": 2.5
+  },
+  {
+   "code": "APSW",
+   "name_ar": null,
+   "pb": 30.584781012967948,
+   "price": 7.5
+  },
+  {
+   "code": "SNFC",
+   "name_ar": null,
+   "pb": 39.09336660428363,
+   "price": 11.28
+  }
+ ],
+ "multiples": {
+  "low": 2.233,
+  "median": 4.09,
+  "high": 8.394,
+  "min": 0.3689440873179442,
+  "max": 39.09336660428363
+ },
+ "range": {
+  "low": 27.399,
+  "base": 50.185,
+  "high": 102.989
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.37, max 39.09, median 4.09)",
+  "feed drift: peer P/B changed vs 12:21 file: NEDA,CEFM,MILS,SCFM"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B5"
+}
