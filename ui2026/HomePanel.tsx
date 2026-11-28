@@ -80,7 +80,7 @@ export function HomePanel() {
       <div className="hp-b" dir="ltr"><i className="g" style={{ width: Math.max(3, (r.val / lm) * 100) + '%' }} /></div>
       <span className="hp-v" dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</span></Link>)}
     <p className="chp-x">{xHome.value}</p>
-    <p className="hp-na">القطاعات: غير متوفر، مفيش تقسيم قطاعي رسمي من البورصة هنا. الأسهم الستة بس عليها تصنيف مزود البيانات في صفحة تحليلها.</p>
+    <p className="hp-na">القطاعات: غير متوفر، مفيش تقسيم قطاعي رسمي من البورصة هنا. أسهم محددة بس عليها تصنيف مزود البيانات في صفحة تحليلها.</p>
     <p className="hp-note">الأسهم المحسوبة: <bdi dir="ltr">{rows.length}</bdi> سهم من <bdi dir="ltr">EGX 30</bdi> و<bdi dir="ltr">EGX 70</bdi>{Array.isArray(ix.rows) && ix.rows.length > rows.length ? <>، لا يشمل <bdi dir="ltr">{ix.rows.length - rows.length}</bdi> أسهم بياناتها ناقصة أو مش مظبوطة.</> : '.'} أسعار متأخرة من Starta Markets. مش توصية.</p>
   </section>;
 }
