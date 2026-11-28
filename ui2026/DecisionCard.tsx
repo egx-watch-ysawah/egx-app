@@ -124,32 +124,44 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
   const [d, setD] = useState<any>(undefined);
   const stx = useStatus(code);
   // status stocks: price is the last real close with its own date (none for stocks that never traded)
-  const sp = stx && !['not_trading_yet', 'new_listing', 'temporary_listing_sme'].includes(stx.status) && typeof stx.last_close === 'number' && stx.last_close > 0 && stx.last_traded ? stx : null;
+  const sp = stx && !['not_trading_yet', 'temporary_listing_sme'].includes(stx.status) && typeof stx.last_close === 'number' && stx.last_close > 0 && stx.last_traded ? stx : null;
   useEffect(() => { let on = true; pload(code).then(j => on && setD(j)); return () => { on = false; }; }, [code]);
   const style = <style>{CSS + PBCSS}</style>;
+  const sess = '2026-11-26';
+  const ddiff = (a: string, b: string) => Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 864e5);
+  const stale = !!sp && ['halted', 'dormant', 'thin'].includes(stx.status) && ddiff(String(sp.last_traded), sess) > 14;
   const date = dt ? String(dt).slice(0, 10) : '';
   if (d === undefined) return null;
   const method = d && d.method ? String(d.method) : 'pb_peers';
   const hist = method === 'price_history_52w', usd = !!d && (d.currency === 'USD' || method === 'usd_pb_peers');
   const unit = usd ? 'دولار' : 'جنيه';
   // USD stocks: no currency conversion, compare in USD only, with the file's own price
-  const price = sp ? sp.last_close : stx ? null : usd ? (d && typeof d.price === 'number' ? d.price : null) : (typeof close === 'number' && close > 0 ? close : null);
-  const pdt = sp ? String(sp.last_traded) : usd ? String(d && d.as_of || '') : date;
+  // pages that pass no live close (status pages): use the file price with the file's own date
+  const fpx = !stx && !usd && !(typeof close === 'number' && close > 0) && d && typeof d.price === 'number' && d.price > 0 ? d.price : null;
+  const eff = date || (fpx != null ? String(d.price_date || d.as_of || '') : '');
+  const price = sp ? sp.last_close : stx ? null : fpx != null ? fpx : usd ? (d && typeof d.price === 'number' ? d.price : null) : (typeof close === 'number' && close > 0 ? close : null);
+  const pdt = sp ? String(sp.last_traded) : usd ? String(d && d.as_of || '') : eff;
   const head = <div className="dc-top"><span className="dc-t">ملخص القرار</span><span className="dc-tag">تجريبي</span></div>;
   const foot = <p className="dc-ft">دي قراءة تحليلية مش توصية بشراء أو بيع، والقرار النهائي قرارك ومسؤوليتك.</p>;
-  const px = price != null && pdt ? <div className="dc-px"><N v={price} /><small>{unit}، {usd ? 'سعر ' : 'إقفال '}{dateAr(pdt)}</small></div> : null;
+  const placeholder = (!stx || stx.status === 'no_trades_in_data') && !!d && d.method === 'none' && (Array.isArray(d.review_flags) ? d.review_flags : []).some((f: any) => /52-week low = high = last price/.test(String(f)));
+  const newl = !!d && !!d.single_source && d.single_source.is_single_source === true;
+  const sinceFirst = !!d && d.range_label === 'since_first_trade';
+  const px = !placeholder && price != null && pdt ? <div className="dc-px"><N v={price} /><small>{unit}، {usd ? 'سعر ' : 'إقفال '}{dateAr(pdt)}</small>{newl || (sp && stx && stx.status === 'new_listing') ? <p className="dc-ft">السعر من مصدر واحد.</p> : null}</div> : null;
   const rg = d && d.range && typeof d.range.low === 'number' && typeof d.range.high === 'number' ? d.range : null;
   const neg = !!d && !!rg && !hist && (rg.low <= 0 || (typeof d.own_bvps === 'number' && d.own_bvps <= 0));
   if (!d || !rg || neg) {
     const line = neg ? 'القيمة الدفترية للسهم بالسالب، فمفيش نطاق P/B ليه معنى.' : !d ? 'مفيش نطاق سعر تقديري للسهم ده.' : d.method === 'none' && d.confidence_ar ? String(d.confidence_ar) : 'مفيش نطاق: ' + (d.missing_ar ? String(d.missing_ar).replace(/[.،]$/, '') : NOR(String(d.status || ''), String(d.missing || ''))) + '.';
-    return <section className="dc" aria-label="ملخص القرار">{style}{head}{px}<div className="dc-v">{line}</div>{d && d.profile && d.profile.last_updated ? <p className="dc-ft">ملف الشركة على موقع arabfinance.com آخر تحديث له: <bdi dir="ltr">{String(d.profile.last_updated)}</bdi>.</p> : null}{foot}</section>;
+    return <section className="dc" aria-label="ملخص القرار">{style}{head}{px}{placeholder ? <div className="dc-ft">مفيش تداول في بياناتنا.</div> : null}<div className="dc-v">{line}</div>{d && d.profile && d.profile.last_updated ? <p className="dc-ft">ملف الشركة على موقع arabfinance.com آخر تحديث له: <bdi dir="ltr">{String(d.profile.last_updated)}</bdi>.</p> : null}{foot}</section>;
   }
   const mm = d.multiples || {};
   const tag = String(d.confidence_ar || '').split(':')[0] || 'ثقة منخفضة';
   const weak = d.tier === 3 || /ضعيفة/.test(tag);
-  const same = price != null && !!pdt && (!!sp || usd || d.price_date === date || (hist && String(d.as_of) === date));
+  const same = price != null && !!pdt && (!!sp || usd || (d.price_date || d.as_of) === eff || (hist && String(d.as_of) === eff));
   const flat = rg.low === rg.high;
-  const far = same && !weak && price != null && price > 0 && rg.low > 0 && rg.high > 0 ? (price * 2.5 <= rg.low ? { dir: 'تحته', x: rg.low / price } : price >= rg.high * 2.5 ? { dir: 'فوقه', x: price / rg.high } : null) : null;
+  const W52 = sinceFirst || (stx && stx.status === 'new_listing') ? 'من أول تداول' : 'في آخر 52 أسبوع';
+  const hiPb = typeof d.own_pb_at_price === 'number' && d.own_pb_at_price >= 20;
+  const far = same && !stale && price != null && price > 0 && rg.low > 0 && rg.high > 0 ? (price * 2.5 <= rg.low ? { dir: 'تحته', x: rg.low / price } : price >= rg.high * 2.5 ? { dir: 'فوقه', x: price / rg.high } : null) : null;
+  const noRg = !hist && !flat && (weak || !!far || hiPb);
   const lo = Math.min(rg.low, price != null ? price : rg.low) * 0.94, hi = Math.max(rg.high, price != null ? price : rg.high) * 1.04, X = (v: number) => (hi > lo ? ((v - lo) / (hi - lo)) * 100 : 50);
   const pos = same ? (price! > rg.high ? 'فوق' : price! < rg.low ? 'تحت' : 'جوه') : '';
   const bvDate = /[\u0600-\u06FF]|^\d/.test(String(d.own_bvps_date || '')) ? String(d.own_bvps_date) : 'آخر ربع في بيانات السوق، تاريخه مش معروف';
@@ -171,7 +183,7 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
   const peers: any[] = Array.isArray(d.peers) ? d.peers : [];
   const rs = /pulled (\d+) Nov (\d{4})/.exec(String(d.range_source || ''));
   const pdate = d.peer_data_date_ar ? String(d.peer_data_date_ar)
-    : hist ? 'مدى الـ52 أسبوع من بيانات السوق' + (rs ? ' (سحبة ' + rs[1] + ' نوفمبر ' + rs[2] + ')' : '') + '، وسعر الإقفال ' + dateAr(String(d.as_of || '')).split(' ').slice(1).join(' ') + '.'
+    : hist ? (W52 === 'من أول تداول' ? 'مدى السعر من أول تداول من بيانات السوق' : 'مدى الـ52 أسبوع من بيانات السوق') + (rs ? ' (سحبة ' + rs[1] + ' نوفمبر ' + rs[2] + ')' : '') + '، وسعر الإقفال ' + dateAr(String(d.as_of || '')).split(' ').slice(1).join(' ') + '.'
     : 'بيانات الشركات المقارنة بتاريخ ' + dateAr(String(d.as_of || '')).split(' ').slice(1).join(' ') + '.';
   const mline = d.method_ar ? String(d.method_ar) : 'نطاق من مقارنة السعر بالقيمة الدفترية (P/B) للشركات المشابهة';
   return <section className="dc" aria-label="ملخص القرار">{style}
@@ -179,28 +191,31 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
     <div className="dc-top" style={{ marginTop: 8 }}><span className="dc-pbt">{hist ? 'مدى سعر تاريخي' : usd ? 'P/B بالدولار' : 'مقارنة P/B بس، مش زي بطاقة الطريقتين'}</span><span className={'dc-pbt' + (weak ? ' w' : '')}>{tag}</span></div>
     <p className="dc-ft" style={{ marginTop: 8 }}>الطريقة: {mline}</p>
     {px}
-    {hist ? (flat ? <div className="dc-rg">أدنى وأعلى سعر في آخر 52 أسبوع متساويين: <b><N v={rg.low} /></b> {unit}، يعني مفيش مدى.</div> : <div className="dc-rg">أدنى وأعلى سعر في آخر 52 أسبوع: من <b><N v={rg.low} /></b> لـ <b><N v={rg.high} /></b> {unit}.</div>)
-      : <div className="dc-rg">نطاق تقديري {usd ? 'بالدولار ' : ''}من مقارنة السعر بالقيمة الدفترية (P/B) بس: من <b><N v={rg.low} /></b> لـ <b><N v={rg.high} /></b> {unit}.</div>}
-    {!flat && <><div className="dc-bar" role="img" aria-label="السعر مقابل النطاق">
+    {hist ? (flat ? <div className="dc-rg">أدنى وأعلى سعر {W52} متساويين: <b><N v={rg.low} /></b> {unit}، يعني مفيش مدى.</div> : <div className="dc-rg">أدنى وأعلى سعر {W52}: من <b><N v={rg.low} /></b> لـ <b><N v={rg.high} /></b> {unit}.</div>)
+      : noRg ? null : <div className="dc-rg">نطاق تقديري {usd ? 'بالدولار ' : ''}من مقارنة السعر بالقيمة الدفترية (P/B) بس: من <b><N v={rg.low} /></b> لـ <b><N v={rg.high} /></b> {unit}.</div>}
+    {!flat && !noRg && <><div className="dc-bar" role="img" aria-label="السعر مقابل النطاق">
       <div className="dc-ov" style={{ left: X(rg.low) + '%', width: Math.max(1, X(rg.high) - X(rg.low)) + '%' }} />
-      {price != null && same && <><div className="dc-pt" style={{ left: X(price) + '%' }} /><div className="dc-pl" style={{ left: Math.min(88, Math.max(12, X(price))) + '%' }}><bdi dir="ltr">{f2(price)}</bdi></div></>}
+      {price != null && same && !stale && <><div className="dc-pt" style={{ left: X(price) + '%' }} /><div className="dc-pl" style={{ left: Math.min(88, Math.max(12, X(price))) + '%' }}><bdi dir="ltr">{f2(price)}</bdi></div></>}
     </div>
     <div className="dc-ax"><span>{f2(lo)}</span><span>{f2(hi)}</span></div></>}
-    {hist ? <div className="dc-v">{same && !flat ? 'السعر ' + pos + ' مدى آخر 52 أسبوع.' : 'ده مدى سعر آخر 52 أسبوع.'}<span>ده مدى سعر حصل فعلا، مش تقدير للسعر العادل ولا حكم.</span></div>
-      : weak ? <div className="dc-v">ثقة ضعيفة جدا، فالنطاق ده للاطلاع بس.<span>منقارنش بيه السعر ولا بنقول حكم.</span></div>
+    {hist ? <div className="dc-v">{same && !flat ? 'السعر ' + pos + (W52 === 'من أول تداول' ? ' مدى سعر من أول تداول.' : ' مدى آخر 52 أسبوع.') : (W52 === 'من أول تداول' ? 'ده مدى سعر من أول تداول.' : 'ده مدى سعر آخر 52 أسبوع.')}<span>ده مدى سعر حصل فعلا، مش تقدير للسعر العادل ولا حكم.</span></div>
+      : stale ? <div className="dc-v">آخر تداول كان يوم {dateAr(String(sp.last_traded))}، فمش بنقارن السعر القديم بالنطاق.<span>النطاق ده من أرقام 2026، والسعر مش من نفس الفترة.</span></div>
+      : weak ? <div className="dc-v">ثقة ضعيفة جدا، فمش بنعرض نطاق سعر.<span>الأرقام تحت للاطلاع بس، ومنقارنش بيها السعر ولا بنقول حكم.</span></div>
+      : far ? <div className="dc-v">السعر بعيد جدا عن نطاق المقارنة، فمش بنعرض النطاق.<span>الأرقام تحت للاطلاع بس، ومفيش حكم.</span></div>
+      : hiPb ? <div className="dc-v">السعر بيساوي <N v={d.own_pb_at_price} /> مرة القيمة الدفترية للسهم، ودي نسبة عالية جدا، فمش بنعرض نطاق.<span>الشركة ما وضحتش سبب النسبة دي، ومفيش حكم.</span></div>
       : same ? <div className="dc-v">السعر {pos} النطاق ده.<span>ده وصف للأرقام الحالية، مش حكم.</span></div>
-      : stx && price == null ? <div className="dc-v">مفيش مقارنة للسعر بالنطاق.<span>السهم لسه ماتداولش، فمفيش سعر تداول نقارن بيه.</span></div>
+      : stx && price == null ? <div className="dc-v">مفيش مقارنة للسعر بالنطاق.<span>{stx.status === 'not_trading_yet' ? 'السهم لسه ماتداولش، فمفيش سعر تداول نقارن بيه.' : stx.status === 'new_listing' ? 'السهم إدراج جديد ومفيش سعر مؤكد من مصدر بياناتنا.' : stx.status === 'temporary_listing_sme' ? 'السهم مقيد مؤقتا ومفيش تداول حديث نقارن بيه.' : 'مفيش سعر تداول حديث نقارن بيه.'}</span></div>
       : <div className="dc-v">مفيش مقارنة للسعر بالنطاق.<span>تاريخ إقفال الصفحة غير تاريخ بيانات النطاق.</span></div>}
     <ol>
       {typeof d.own_bvps === 'number' && d.own_bvps <= 0 && <li>القيمة الدفترية للسهم بالسالب (<N v={d.own_bvps} /> جنيه للسهم، {bvSrc})، فمقارنة P/B ملهاش معنى.</li>}
-      {d.own_pb_at_price != null && typeof d.own_bvps === 'number' && d.own_bvps > 0 && <li>السعر بيساوي <N v={d.own_pb_at_price} /> مرة القيمة الدفترية للسهم (<N v={d.own_bvps} /> جنيه للسهم، {bvSrc}{conv ? ' ' : '، '}{bvDate}).</li>}
+      {!stale && d.own_pb_at_price != null && typeof d.own_bvps === 'number' && d.own_bvps > 0 && <li>السعر بيساوي <N v={d.own_pb_at_price} /> مرة القيمة الدفترية للسهم (<N v={d.own_bvps} /> جنيه للسهم، {bvSrc}{conv ? ' ' : '، '}{bvDate}).</li>}
       {typeof mm.low === 'number' && typeof mm.high === 'number' && <li>{d.n_peers} شركة {LEVEL[d.peer_level] || (usd ? 'مسعّرة بالدولار' : 'مشابهة')} بتتداول على P/B من <N v={mm.low} /> لـ <N v={mm.high} /> مرة{typeof mm.median === 'number' ? <>، والوسيط <N v={mm.median} /></> : null}. بنضرب ده في القيمة الدفترية للسهم.</li>}
       <li>{d.confidence_ar}</li>
-      {far && <li>السعر الحالي بعيد جدا عن النطاق ({far.dir} بحوالي <bdi dir="ltr">{far.x.toFixed(1)}</bdi> مرات)، فالقراءة دي للاستدلال بس.</li>}
+      {far && <li>السعر الحالي بعيد جدا عن {noRg ? 'نطاق المقارنة' : 'النطاق'} ({far.dir} بحوالي <bdi dir="ltr">{far.x.toFixed(1)}</bdi> مرات)، فالقراءة دي للاستدلال بس.</li>}
       {conv && <li>النطاق بيتحرك مع سعر صرف الدولار.</li>}
       {flags}
     </ol>
-    {peers.length > 0 && <details className="dc-det"><summary>الشركات المقارنة ({peers.length})</summary><ul>{peers.map((p: any, i: number) => <li key={i}>{nameOf(p)}: P/B <N v={+p.pb} /></li>)}</ul></details>}
+    {peers.length > 0 && !(stale && stx.status === 'thin') && <details className="dc-det"><summary>الشركات المقارنة ({peers.length})</summary><ul>{peers.map((p: any, i: number) => <li key={i}>{nameOf(p)}: P/B <N v={+p.pb} /></li>)}</ul></details>}
     <p className="dc-ft">{pdate}</p>
     {foot}
   </section>;
@@ -209,7 +224,9 @@ function PBCard({ code, close, date: dt }: { code: string; close?: number; date?
 // batches switched on (B1 = portfolio, B2 = rest of EGX30, B3 = 65 EGX70/others); each batch passes the gate before it is added
 const B2 = ["EMFD", "ETEL", "ISPH", "MCQE", "MFPC", "PHDC", "RAYA", "EFIH", "GBCO", "RMDA", "TMGH", "CLHO", "EFID", "ORAS", "SKPC", "BTFH", "EAST", "ABUK", "CCAP", "JUFO", "VLMRA", "AMOC", "EGAL", "FWRY", "HELI", "ADIB", "ALCN"];
 const B3 = ["UEGC", "ASCM", "LCSW", "CSAG", "OFH", "ARAB", "COSG", "POUL", "PRCL", "DSCW", "MPRC", "ETRS", "EHDR", "ELSH", "EXPA", "ISMQ", "MCRO", "MEPA", "ATQA", "MTIE", "OCDI", "ZMID", "EGTS", "ISMA", "ENGC", "TAQA", "AMER", "IEEC", "SVCE", "AMIA", "SCEM", "ICFC", "KABO", "MPCO", "SWDY", "ACTF", "AIH", "MPCI", "ASPI", "OBRI", "CNFN", "HDBK", "ATLC", "IDRE", "DAPH", "CIEB", "ZEOT", "SIPC", "MOED", "GPIM", "SDTI", "VALU", "NCCW", "NIPH", "AIFI", "ARCC", "ELEC", "ORWE", "OIH", "ELKA", "GDWA", "GOUR", "MBSC", "EGCH", "PRDC"];
-export const CARD_ON = new Set<string>([...TWO, ...B2, ...B3]);
+const B4 = ["AALR", "ACAMD", "ACAP", "ACFR", "ACGC", "ADCI", "ADPC", "ADRI", "AFDI", "AFMC", "AIDC", "AJWA", "ALUM", "ALXD", "AMES", "AMII", "AMPI", "ANCC", "APSW", "AREH", "AXPH", "BIDI", "BIGP", "BINV", "BIOC", "BQDC", "CAED", "CANA", "CCRS", "CEFM", "CERA", "CFGH", "CICH", "CID", "CIRA", "COPR", "CPCI", "CPME", "CRST", "DCCC", "DEIN", "DGTZ", "DOMT", "DTPP", "EALR", "EASB", "EBSC", "ECAP", "EDFM", "EEII", "EEP", "EFAC", "EFIC", "EGAS", "EGBE", "EGOTH", "EGREF", "EGS65101C015", "EGS65621C012", "EGS65861C014", "EGS72L31C011", "EGS73M81C012", "EGSA", "EGWA", "ELAB", "ELNA", "ELWA", "ENPI", "EOSB", "EPCO", "EPPK", "FAIT", "FAITA", "FCMD", "FERC", "FIRE", "FNAR", "FTNS", "GEOS", "GGCC", "GGRN", "GIHD", "GMCI", "GPPL", "GRCA", "GROV", "GSSC", "GTEX", "GTWL"];
+const B5 = ["HALN", "HBCO", "HDST", "IBCT", "ICID", "ICLE", "IFAP", "INEG", "INFI", "IRON", "KNGC", "KORA", "KRDI", "KWIN", "KZPC", "LUTS", "MAAL", "MBEG", "MEGM", "MENA", "MFSC", "MHOT", "MICH", "MILS", "MIPH", "MISR", "MITR", "MLIC", "MMAT", "MMHC", "MOIL", "MOIN", "MOSC", "NAHO", "NAPR", "NARE", "NBCC", "NDRL", "NEDA", "NFCI", "NHPS", "NINH", "NMIN", "OCAP", "OCPH", "ODIN", "OLFI", "PHGC", "PHTV", "PMSC", "POCO", "PRMH", "QNBE", "RACC", "RAKT", "RKAZ", "ROTO", "RREI", "RTVC", "RUBX", "SAIB", "SAUD", "SCFM", "SCTS", "SEIG", "SEIGA", "SIEG", "SINA", "SMFR", "SNFC", "SPHT", "SPIN", "SPMD", "SUGR", "TALM", "TANM", "TOUR", "TRTO", "TWSA", "TYCN", "UBEE", "UEFM", "UNIT", "UPMS", "UTOP", "VERT", "WCDF", "WKOL", "YAYT"];
+export const CARD_ON = new Set<string>([...TWO, ...B2, ...B3, ...B4]);
 export function DecisionCard({ code, close, date }: { code: string; close?: number; date?: string }) {
   return TWO.includes(code) ? <TwoCard code={code} close={close} date={date} /> : <PBCard code={code} close={close} date={date} />;
 }
