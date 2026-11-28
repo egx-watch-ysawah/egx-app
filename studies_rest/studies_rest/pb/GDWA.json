@@ -1,0 +1,68 @@
+{
+ "code": "GDWA",
+ "name_ar": "جدوى للتنمية الصناعية",
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 5 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 0.505,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.76,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 0.66,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Producer Manufacturing",
+ "n_peers": 5,
+ "peers": [
+  {
+   "code": "LCSW",
+   "name_ar": "ليسيكو",
+   "pb": 0.8365577674601034,
+   "price": 43.34
+  },
+  {
+   "code": "CERA",
+   "name_ar": null,
+   "pb": 2.3306258076426065,
+   "price": 1.01
+  },
+  {
+   "code": "SWDY",
+   "name_ar": "السويدي اليكتريك",
+   "pb": 3.5255856614221313,
+   "price": 115.93
+  },
+  {
+   "code": "ATQA",
+   "name_ar": "عتاقة",
+   "pb": 4.628076674396333,
+   "price": 9.52
+  },
+  {
+   "code": "AMII",
+   "name_ar": null,
+   "pb": 5.522109487924332,
+   "price": 7.87
+  }
+ ],
+ "multiples": {
+  "low": 2.331,
+  "median": 3.526,
+  "high": 4.628,
+  "min": 0.8365577674601034,
+  "max": 5.522109487924332
+ },
+ "range": {
+  "low": 1.771,
+  "base": 2.679,
+  "high": 3.517
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "feed drift: peer P/B changed vs 12:21 file: AMII"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
