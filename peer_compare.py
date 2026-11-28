@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks, the 21 B1-B3 batch stocks and the 20 B4-B6 batch stocks and the 20 C1 batch stocks and the 19 D1 batch stocks and the 13 D3 batch stocks and the 17 D4 batch stocks and the 23 D5 batch stocks and the 23 D6 batch stocks and the 22 D7 batch stocks and the 10 D8 batch stocks and the 26 D2 batch stocks (225 in all). Source: TradingView scanner (free, delayed, single source).
+"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks, the 21 B1-B3 batch stocks and the 20 B4-B6 batch stocks and the 20 C1 batch stocks and the 19 D1 batch stocks and the 13 D3 batch stocks and the 17 D4 batch stocks and the 23 D5 batch stocks and the 23 D6 batch stocks and the 22 D7 batch stocks and the 10 D8 batch stocks and the 26 D2 batch stocks (223 in all). Source: TradingView scanner (free, delayed, single source).
 Writes peer_compare.json. Peer groups use the feed's own labels (not EGX official sectors).
 Rules: medians exclude the stock; only positive values count; n<3 => no comparison; n<5 => quality 'weak'.
 If the feed fails or returns too few rows, the old data is kept, marked status=stale, and the run exits 1 (job fails = alert).
@@ -7,7 +7,7 @@ Unchanged data keeps its old generated_utc; checked_utc says when it was last ch
 import json,sys,datetime,statistics as st,urllib.request
 from pathlib import Path
 OUT=Path(sys.argv[1] if len(sys.argv)>1 else 'peer_compare.json')
-COLS=['name','close','sector','industry','price_earnings_ttm','price_book_fq','time']
+COLS=['name','close','sector','industry','price_earnings_ttm','price_book_fq','time','earnings_per_share_basic_ttm','book_value_per_share_fq']
 # stock -> (label, filter on feed row). Group definitions are fixed here, so a change is a visible code change.
 G={
  'ORHD':('Real Estate Development (wider group; feed label is Homebuilding)',lambda r:r['industry']=='Real Estate Development'),
@@ -481,6 +481,17 @@ def make_note(c,res):
         if r=='no_own_figure': parts.append('The feed has no own %s for this stock.'%lab)
         elif r=='no_peers': parts.append('Fewer than 3 peers with a %s in the feed group, so no %s comparison.'%(lab,lab))
     return ' '.join(parts) or None
+REVIEWED_BVPS={'CNFN':3.68}  # CNFN has no studies_rest page; BVPS from its reviewed study in guide.tsx (reviewed 2026-11-25): parent equity 4,400.1m / 1,196.3m shares
+def reviewed_bvps(c):
+    # Book value per share from the stock's reviewed study page (9M 2026 statements, as of 30 Sep 2026). Only positive values count.
+    # BONY excluded: its study book value is a valuer's upper bound (asset revaluation), not the reported equity,
+    # and the UI has no way to flag that, so a computed P/B would mislead. BONY keeps quality 'none' for P/B.
+    if c=='BONY': return None
+    try:
+        v=json.loads(Path('studies_rest/studies_rest/pages/%s.json'%c).read_text())['stocks'][c]['book_value']['value']
+        return v if isinstance(v,(int,float)) and v>0 else None
+    except Exception:
+        return REVIEWED_BVPS.get(c)
 BANK_INDUSTRIES={'Regional Banks','Major Banks'}
 # Second share line of the same company (identical market cap in the feed). Excluded as a peer so one company is not counted twice.
 DUP={'VLMRA','FAITA'}
@@ -531,6 +542,16 @@ for c,(label,f) in G.items():
     me=rows.get(c);peers=[r for k,r in rows.items() if k!=c and k not in DUP and f(r)]
     rd=lambda v:round(v,2) if v else None
     res={'group':label,'feed_industry':me['industry'] if me else None,'price_session':sess(me) if me else None,'price':me['close'] if me else None,'pb':rd(pos(me['price_book_fq'])) if me else None,'pe':rd(pos(me['price_earnings_ttm'])) if me else None}
+    # Own-figure fallback when the feed's ratio fields are null: compute from feed components (same source, same session), then from the reviewed study's book value per share.
+    if me and res['pb'] is None:
+        bv=pos(me.get('book_value_per_share_fq'))
+        if bv and res['price']: res['pb']=rd(res['price']/bv);res['pb_src']='feed:book_value_per_share_fq'
+        else:
+            bv=reviewed_bvps(c)
+            if bv and res['price']: res['pb']=rd(res['price']/bv);res['pb_src']='reviewed-study:book value per share (9M 2026 statements, as of 30 Sep 2026)'
+    if me and res['pe'] is None:
+        eps=pos(me.get('earnings_per_share_basic_ttm'))
+        if eps and res['price']: res['pe']=rd(res['price']/eps);res['pe_src']='feed:earnings_per_share_basic_ttm'
     for key,fld in (('pb','price_book_fq'),('pe','price_earnings_ttm')):
         v=sorted(x for x in (pos(r[fld]) for r in peers) if x is not None)
         n=len(v);res['n_'+key]=n;res['median_'+key]=med(v) if n>=3 else None
