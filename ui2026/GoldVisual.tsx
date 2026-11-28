@@ -151,7 +151,7 @@ export function GramCard() {
   const g24 = lp.p * l.fx.r / 31.1035; const n = (v: number) => Math.round(v).toLocaleString('en-US');
   return <section className="gd-card gm" id="gld-gram"><h3>سعر الجرام بالجنيه</h3>
     <div className="gm-g">{rows.map(([t, k]) => <span key={k}><i>{t}</i><b dir="ltr">{n(g24 * k / 24)}</b></span>)}<span><i>الجنيه الذهب (8 جرام عيار 21)</i><b dir="ltr">{n(g24 * 21 / 24 * 8)}</b></span></div>
-    <p className="gv-f">محسوب: الأونصة {f2(lp.p)} ({lp.src}{lp.live ? '، ' + stamp(lp.at) : ''}) × الدولار {l.fx.r.toFixed(2)} (ExchangeRate-API، {l.fx.at ? dmy(l.fx.at) : ''}) ÷ 31.1035. من غير مصنعية وضريبة المحل.</p></section>;
+    <p className="gv-f">محسوب: الأونصة {f2(lp.p)} ({lp.src}{lp.live ? '، ' + stamp(lp.at) : ''}) في الدولار {l.fx.r.toFixed(2)} (ExchangeRate-API، {l.fx.at ? dmy(l.fx.at) : ''}) على 31.1035. من غير مصنعية وضريبة المحل.</p></section>;
 }
 
 export function OwnChart() {
