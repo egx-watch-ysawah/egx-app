@@ -1,6 +1,6 @@
 {
  "price_session": "2026-11-26",
- "generated_utc": "2026-11-28T11:30:27Z",
+ "generated_utc": "2026-11-28T11:48:52Z",
  "source": "TradingView scanner egypt/scan (single source, not cross-checked, reuse terms unverified)",
  "expected_session": "2026-11-26",
  "up_to_date": true,
@@ -2387,7 +2387,7 @@
    "median_pb": 2.13,
    "vs_pb": "dearer",
    "range_pb": [
-    1.335323878245003,
+    1.1804922515952596,
     11.360592344306996
    ],
    "comparable_pb": true,
@@ -2397,7 +2397,7 @@
    "median_pe": null,
    "vs_pe": null,
    "range_pe": [
-    6.89507494646681,
+    6.475,
     53.278688524590166
    ],
    "comparable_pe": false,
@@ -2806,7 +2806,7 @@
    "median_pb": 4.05,
    "vs_pb": null,
    "range_pb": [
-    1.335323878245003,
+    1.1804922515952596,
     11.360592344306996
    ],
    "comparable_pb": false,
@@ -2816,7 +2816,7 @@
    "median_pe": null,
    "vs_pe": null,
    "range_pe": [
-    6.89507494646681,
+    6.475,
     53.278688524590166
    ],
    "comparable_pe": false,
@@ -4515,7 +4515,7 @@
    "median_pb": 4.05,
    "vs_pb": null,
    "range_pb": [
-    1.335323878245003,
+    1.1804922515952596,
     11.360592344306996
    ],
    "comparable_pb": false,
@@ -4525,7 +4525,7 @@
    "median_pe": null,
    "vs_pe": null,
    "range_pe": [
-    6.89507494646681,
+    6.475,
     53.278688524590166
    ],
    "comparable_pe": false,
@@ -5234,7 +5234,7 @@
    "median_pb": 4.05,
    "vs_pb": null,
    "range_pb": [
-    1.335323878245003,
+    1.1804922515952596,
     11.360592344306996
    ],
    "comparable_pb": false,
@@ -5244,7 +5244,7 @@
    "median_pe": null,
    "vs_pe": null,
    "range_pe": [
-    6.89507494646681,
+    6.475,
     53.278688524590166
    ],
    "comparable_pe": false,
@@ -7188,5 +7188,5 @@
    "note": "Group is the feed industry, the same group as ISMA and POUL, which mixes poultry, feed, sugar and milling companies, so the spread is wide. The feed has no own P/E for this stock."
   }
  },
- "checked_utc": "2026-11-28T11:30:27Z"
+ "checked_utc": "2026-11-28T11:48:52Z"
 }
