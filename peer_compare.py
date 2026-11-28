@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily peer comparison for the six held stocks plus the 5 P0 pilot stocks (11 in all). Source: TradingView scanner (free, delayed, single source).
+"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks and the 21 B1-B3 batch stocks (32 in all). Source: TradingView scanner (free, delayed, single source).
 Writes peer_compare.json. Peer groups use the feed's own labels (not EGX official sectors).
 Rules: medians exclude the stock; only positive values count; n<3 => no comparison; n<5 => quality 'weak'.
 If the feed fails or returns too few rows, the old data is kept, marked status=stale, and the run exits 1 (job fails = alert).
@@ -22,13 +22,56 @@ G={
  'TMGH':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
  'SWDY':('Electrical Products',lambda r:r['industry']=='Electrical Products'),
  'EAST':('Tobacco',lambda r:r['industry']=='Tobacco'),
+ # B1-B3 batches added 28 Nov (one cumulative package). Group choices are by feed label only; reasons are in NOTES below.
+ 'TAQA':('Electric Utilities',lambda r:r['industry']=='Electric Utilities'),
+ 'SKPC':('Chemicals: Specialty + Agricultural',lambda r:r['industry'] in ('Chemicals: Specialty','Chemicals: Agricultural')),
+ 'ABUK':('Chemicals: Agricultural',lambda r:r['industry']=='Chemicals: Agricultural'),
+ 'ORAS':('Engineering & Construction',lambda r:r['industry']=='Engineering & Construction'),
+ 'PHDC':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'ADIB':('Regional Banks',lambda r:r['industry']=='Regional Banks'),
+ 'FWRY':('Technology Services',lambda r:r['sector']=='Technology Services'),
+ 'RMDA':('Pharmaceuticals: Major',lambda r:r['industry']=='Pharmaceuticals: Major'),
+ 'RAYA':('Technology Services',lambda r:r['sector']=='Technology Services'),
+ 'ORWE':('Home Furnishings',lambda r:r['industry']=='Home Furnishings'),
+ 'MFPC':('Chemicals: Agricultural',lambda r:r['industry']=='Chemicals: Agricultural'),
+ 'MCQE':('Construction Materials',lambda r:r['industry']=='Construction Materials'),
+ 'LCSW':('Producer Manufacturing',lambda r:r['sector']=='Producer Manufacturing'),
+ 'JUFO':('Food: Meat/Fish/Dairy',lambda r:r['industry']=='Food: Meat/Fish/Dairy'),
+ 'ISPH':('Medical Distributors',lambda r:r['industry']=='Medical Distributors'),
+ 'ISMA':('Agricultural Commodities/Milling',lambda r:r['industry']=='Agricultural Commodities/Milling'),
+ 'ICFC':('Chemicals: Agricultural',lambda r:r['industry']=='Chemicals: Agricultural'),
+ 'HDBK':('Regional Banks',lambda r:r['industry']=='Regional Banks'),
+ 'ELKA':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'EFIH':('Technology Services',lambda r:r['sector']=='Technology Services'),
+ 'EFID':('Food: Specialty/Candy',lambda r:r['industry']=='Food: Specialty/Candy'),
 }
 NOTES={ # structural explanations only (design choices that do not depend on today's data). Data-state sentences are generated from the reason fields.
  'ORHD':'Uses the wider Real Estate Development group because the feed label (Homebuilding) has too few stocks.',
  'COMI':'Banks are compared on P/B first. P/E is secondary and must not be read alone.',
  'ETEL':'Group is the feed industry and is not widened to a broader sector.',
  'SWDY':'Group is the feed industry and is not widened to a broader sector.',
- 'EAST':'Group is the feed industry and is not widened to a broader sector.'}
+ 'EAST':'Group is the feed industry and is not widened to a broader sector.',
+ 'TAQA':'Group is the feed industry (Electric Utilities). It is not widened to the whole Utilities sector, which mixes gas distribution with power generation.',
+ 'SKPC':'Group combines the two feed chemicals industries (Specialty and Agricultural) because Specialty alone has too few stocks with figures. Both are chemical producers in the same feed sector.',
+ 'ABUK':'Group is the feed industry and is not widened to a broader sector.',
+ 'ORAS':'Group is the feed industry and is not widened to a broader sector.',
+ 'PHDC':'Group is the feed industry and is not widened to a broader sector.',
+ 'ADIB':'Banks are compared on P/B first. P/E is secondary and must not be read alone.',
+ 'FWRY':'Uses the wider Technology Services sector because the feed industry (Packaged Software) has too few stocks with figures. All members are technology companies; the comparison is flagged weak.',
+ 'RMDA':'Group is the feed industry (Pharmaceuticals: Major, 9 peers with P/B and 5 with P/E) and is not widened, same treatment as ETEL, SWDY and EAST.',
+ 'RAYA':'Uses the wider Technology Services sector because the feed industry (Information Technology Services) has only one other stock, with no figures. All members are technology companies; the comparison is flagged weak.',
+ 'ORWE':'Group is the feed industry (Home Furnishings). It is not widened: the wider Consumer Durables sector is mostly real-estate developers, a different business.',
+ 'MFPC':'Group is the feed industry (Chemicals: Agricultural, mainly fertilizer makers) and is not widened.',
+ 'MCQE':'Group is the feed industry (Construction Materials, cement and related) and is not widened.',
+ 'LCSW':'Uses the wider Producer Manufacturing sector because the feed industry (Building Products) has only 2 peers with a P/B. The sector is all industrial manufacturers; the comparison is flagged weak.',
+ 'JUFO':'Group is the feed industry (Food: Meat/Fish/Dairy). It is not widened: the wider Consumer Non-Durables sector mixes tobacco, personal care and sweets, which are different businesses.',
+ 'ISPH':'Group is the feed industry (Medical Distributors) and is not widened to wholesale distributors or pharma makers, which have a different business model.',
+ 'ISMA':'Group is the feed industry (Agricultural Commodities/Milling), which mixes poultry, feed, sugar and milling companies, so the spread is wide.',
+ 'ICFC':'Group is the feed industry (agricultural chemicals and fertilizers).',
+ 'HDBK':'Banks are compared on P/B first. P/E is secondary and must not be read alone.',
+ 'ELKA':'Group is the feed industry (Real Estate Development), the same group used for ORHD, MASR, BONY and TMGH. P/B is read against asset-heavy peers.',
+ 'EFIH':'Uses the wider Technology Services sector because the feed industry (Packaged Software) has only 2 peers with a P/B. Same treatment as FWRY and RAYA; the comparison is flagged weak.',
+ 'EFID':'Group is the feed industry (Food: Specialty/Candy) and is not widened to the wider Consumer Non-Durables sector, which mixes unlike businesses.'}
 def make_note(c,res):
     parts=[NOTES[c]] if c in NOTES else []
     for key,lab in (('pb','P/B'),('pe','P/E')):
