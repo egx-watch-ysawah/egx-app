@@ -8,14 +8,15 @@
   "feed 52-week low = high = last price: no trading range",
   "Arab Finance profile: ISIN EGS42121C011, market NOPL, sector Shipping & Transportation Services, profile last updated 15/12/2022. The profile does not say why there is no trading.",
   "stockanalysis.com: last close 20 Feb 2025, no volume (1.818 flat)",
-  "Mubasher page: last update 7 April 2008, not usable"
+  "Mubasher page: last update 7 April 2008, not usable",
+  "status from stock_status.json scan_zero_volume_no_history (listed_no_recent_trades)"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 10,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 10 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Shipping & Transportation Services، آخر تحديث للملف 15/12/2022.",
+ "confidence_ar": "ثقة منعدمة: آخر سعر ظاهر في بيانات السوق 10 جنيه (رقم مدوّر) ومفيش نطاق سعري. مدرج في البورصة حسب FoudaLens، بس مفيش حجم تداول، وآخر إقفال حقيقي لقيناه 1.818 جنيه يوم 20 فبراير 2025 حسب stockanalysis.",
  "rung": null,
  "range": null,
  "profile": {
@@ -25,5 +26,6 @@
   "price_shown": null,
   "last_updated": "15/12/2022",
   "source": "arabfinance.com/en/home/companyprofile/dccc (fetched 28 Nov 2026)"
- }
+ },
+ "status_kind": "listed_no_recent_trades"
 }

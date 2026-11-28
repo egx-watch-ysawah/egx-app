@@ -61,5 +61,13 @@
  "name_ar": null,
  "app_batch": "B4",
  "as_of": "2026-11-26",
- "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar"
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "price_date": "2026-11-26",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "basis": "P/B only",
+ "status": "range",
+ "tier": 2,
+ "own_bvps": 0.5592,
+ "own_pb_at_price": 15.75,
+ "own_bvps_source": "feed book_value_per_share_fq (TradingView)"
 }

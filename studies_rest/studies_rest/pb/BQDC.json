@@ -4,14 +4,15 @@
  "app_batch": "B4",
  "as_of": "2026-11-26",
  "review_flags": [
-  "no book value and no positive P/E"
+  "no book value and no positive P/E",
+  "new listing: first trade 2026-11-02 (bank announcement, Forbes Middle East), so the feed 52-week range covers about 3.5 weeks only"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 5.33,
  "method": "price_history_52w",
  "confidence": "low",
- "confidence_ar": "ثقة منخفضة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر. ده أدنى وأعلى سعر في آخر 52 أسبوع بس، مش تقدير للسعر العادل.",
+ "confidence_ar": "ثقة منخفضة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر. ده أدنى وأعلى سعر من أول تداول (2 نوفمبر 2026) لحد 26 نوفمبر بس، مش تقدير للسعر العادل.",
  "rung": 6,
  "method_ar": "مدى سعر تاريخي بس، مش تقدير للسعر العادل",
  "range": {
@@ -20,5 +21,11 @@
   "high": 5.91
  },
  "range_source": "TradingView scanner price_52_week_low/high, pulled 28 Nov 2026",
- "price_marker": "inside"
+ "price_marker": "inside",
+ "range_label": "since_first_trade",
+ "single_source": {
+  "is_single_source": true,
+  "source": "TradingView only",
+  "as_of": "2026-11-26 close"
+ }
 }

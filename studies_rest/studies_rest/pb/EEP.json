@@ -6,14 +6,17 @@
  "review_flags": [
   "no industry label in feed",
   "feed 52-week low = high = last price: no trading range",
-  "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found"
+  "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found",
+  "status from stock_status.json v17 (not_trading_yet): https://beta.egx.com.eg/en/news/287800"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 1,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 1 ثابت في بيانات السوق). مفيش ملف للشركة في Arab Finance ولا أي مصدر مجاني تاني لقيته.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. مقيد مؤقتا في البورصة ولسه ماتداولش، والسعر الظاهر 1 جنيه هو القيمة الاسمية للسهم بعد التخفيض حسب Arab Finance (قرار البورصة بيقول 10 جنيه، ومش مؤكد على صفحة البورصة)، مش سعر تداول (آخر معلومة عندنا: 25 نوفمبر 2026).",
  "rung": null,
- "range": null
+ "range": null,
+ "status_kind": "confirmed_temporary_listing",
+ "status_source": "https://beta.egx.com.eg/en/news/287800"
 }

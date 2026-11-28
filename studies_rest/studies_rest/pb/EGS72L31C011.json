@@ -6,14 +6,16 @@
  "review_flags": [
   "no book value and no positive P/E",
   "feed 52-week low = high = last price: no trading range",
-  "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found"
+  "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found",
+  "status from stock_status.json scan_zero_volume_no_history (par_like_unconfirmed)"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 0.1,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 0.1 ثابت في بيانات السوق). مفيش ملف للشركة في Arab Finance ولا أي مصدر مجاني تاني لقيته.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. السعر الظاهر 0.1 جنيه رقم مدوّر مش سعر تداول. السبب: حجم التداول صفر، وقريب من شكل الأسهم المقيدة مؤقتا، بس ملقيناش تأكيد إنه كده. ملقيناش قرار مؤكد للسهم ده.",
  "rung": null,
- "range": null
+ "range": null,
+ "status_kind": "par_like_unconfirmed"
 }

@@ -6,14 +6,15 @@
  "review_flags": [
   "no industry label in feed",
   "feed 52-week low = high = last price: no trading range",
-  "Arab Finance profile: ISIN EGS38411C012, market NOPL, sector Basic Resources, profile last updated 26/11/2026. The profile does not say why there is no trading."
+  "Arab Finance profile: ISIN EGS38411C012, market NOPL, sector Basic Resources, profile last updated 26/11/2026. The profile does not say why there is no trading.",
+  "status from stock_status.json v17 (not_trading_yet): https://foudalens.com/en/news/288203"
  ],
  "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
  "currency": "EGP",
  "price": 10,
  "method": "none",
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 10 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Basic Resources، آخر تحديث للملف 26/11/2026.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. مقيد مؤقتا في البورصة ولسه ماتداولش، والسعر الظاهر 10 جنيه هو القيمة الاسمية للسهم مش سعر تداول (آخر معلومة عندنا: 6 نوفمبر 2026).",
  "rung": null,
  "range": null,
  "profile": {
@@ -23,5 +24,7 @@
   "price_shown": null,
   "last_updated": "26/11/2026",
   "source": "arabfinance.com/en/home/companyprofile/cid (fetched 28 Nov 2026)"
- }
+ },
+ "status_kind": "confirmed_temporary_listing",
+ "status_source": "https://foudalens.com/en/news/288203"
 }

@@ -63,7 +63,7 @@ export function StatusBanner({ k }: { k: string }) {
 // Inside the combo / signal blocks: no second banner, one short line.
 export function BlockNone({ k }: { k: string }) {
   const m = useSS(); const s = m && m.rows[k]; if (!s || !m) return null;
-  const why = s.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا' : s.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش' : s.status === 'new_listing' ? 'لأن السهم إدراج جديد ومفيش عندنا سعر أو تاريخ مؤكد' : s.status === 'temporary_listing_sme' ? 'لأن السهم مقيد مؤقتًا' : s.status === 'halted' ? 'لأن السهم ' + label(s, m.session) : 'لأن ' + label(s, m.session);
+  const why = s.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا' : s.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش' : s.status === 'new_listing' ? (s.status_block_ar ? String(s.status_block_ar) : 'لأن السهم إدراج جديد ومفيش عندنا سعر أو تاريخ مؤكد') : s.status === 'temporary_listing_sme' ? 'لأن السهم مقيد مؤقتًا' : s.status === 'halted' ? 'لأن السهم ' + label(s, m.session) : s.status === 'no_trades_in_data' ? (s.status_block_ar ? String(s.status_block_ar) : 'لأن مفيش تداول في بياناتنا') : 'لأن ' + label(s, m.session);
   return <p className="eg-note ss-n" style={{ margin: '8px 0' }}>مفيش إشارة ولا مقارنة تاريخية للسهم ده {why}</p>;
 }
 

@@ -5,12 +5,13 @@
  "currency": "EGP",
  "price": 5,
  "confidence": "none",
- "confidence_ar": "ثقة منعدمة: مفيش بيانات مالية، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 5 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق SME والقطاع Real Estate، آخر تحديث للملف 23/04/2026.",
+ "confidence_ar": "ثقة منعدمة: مفيش تداول في بياناتنا ومفيش نطاق سعري. السعر الظاهر 5 جنيه رقم مدوّر مش سعر تداول. السبب: حجم التداول صفر، وقريب من شكل الأسهم المقيدة مؤقتا، بس ملقيناش تأكيد إنه كده. اتذكر في دفعة القيد المؤقت بتاعة أبريل 2026، بس ملقيناش قرار مؤكد للسهم نفسه.",
  "review_flags": [
   "no financials in feed",
   "feed 52-week low = high = last price: no trading range",
   "National Asset Management And Investment (NAMI), SME market, real estate per Arab Finance",
-  "Arab Finance profile: ISIN EGS73M81C012, market SME, sector Real Estate, profile last updated 23/04/2026. The profile does not say why there is no trading."
+  "Arab Finance profile: ISIN EGS73M81C012, market SME, sector Real Estate, profile last updated 23/04/2026. The profile does not say why there is no trading.",
+  "status from stock_status.json scan_zero_volume_no_history (par_like_unconfirmed)"
  ],
  "code": "EGS73M81C012",
  "name_ar": null,
@@ -24,5 +25,6 @@
   "price_shown": null,
   "last_updated": "23/04/2026",
   "source": "arabfinance.com/en/home/companyprofile/egs73m81c012 (fetched 28 Nov 2026)"
- }
+ },
+ "status_kind": "par_like_unconfirmed"
 }
