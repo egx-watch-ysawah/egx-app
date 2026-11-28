@@ -43,7 +43,7 @@ export function ListRow({ to, off, name, code, tag, flag, badge, score, spark, p
       <div className="ls-m">{badge && <Badge {...badge} />}{score && <Score n={score[0]} of={score[1]} />}</div>
       {volLine && <div className="ls-v">{volLine}</div>}</div>
     <div className="ls-s">{spark}</div>
-    <div className="ls-p">{na ? <small>غير متوفر</small> : <><span dir="ltr">{price ?? '-'}</span>{chg != null && <small className={chg >= 0 ? 'u' : 'd'} dir="ltr">{chg >= 0 ? '▲' : '▼'} {Math.abs(chg).toFixed(2)}%</small>}</>}</div>
+    <div className="ls-p">{na ? <small>غير متوفر</small> : <><span dir="ltr">{price ?? '-'}</span>{chg != null && <small className={Math.abs(chg) < 0.005 ? 'f' : chg >= 0 ? 'u' : 'd'} dir="ltr">{Math.abs(chg) < 0.005 ? '–' : chg >= 0 ? '▲' : '▼'} {Math.abs(chg).toFixed(2)}%</small>}</>}</div>
     </div>{na && <div className="ls-nt">{na}</div>}
   </>;
   return to && !off ? <Link to={to} className="ls-r">{body}</Link> : <div className={'ls-r' + (off ? ' off' : '')}>{body}</div>;
