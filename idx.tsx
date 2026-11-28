@@ -19,6 +19,7 @@ import { useStudy, StudyFin, StudyFair } from './studyrest';
 import { WIDE, WideFair, WideFin } from './wide';
 import { V7Card, isV7, useFairNew } from './v7';
 import { FAIR6 } from './ui2026/FairSix';
+import { FlowCombo } from './ui2026/FlowCombo';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
@@ -228,7 +229,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
-  if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />{unr ? <div className="eg-pad"><div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div></div> : null}</>;
+  if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} unNode={unr && !cl.row ? <div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div> : undefined} />{unr && cl.row ? <div className="eg-pad"><div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div></div> : null}</>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
@@ -250,6 +251,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       
       <OnTab id="t">{s.short ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم قصير (أقل من 260 جلسة)، فالمؤشرات الفنية والشارت والسيناريوهات أقل موثوقية. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}{s.jump ? <p className="eg-note"><b>تنبيه:</b> تاريخ سعر السهم فيه قفزة أكبر من 25% في يوم واحد، فالمؤشرات الفنية والشارت والسيناريوهات المبنية على السعر مش موثوقة. الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم ومش متأثرة.</p> : null}</OnTab>
       <OnTab id="t"><TechnicalSummary s={s} /></OnTab>
+      {FAIR6.includes(code) ? null : <OnTab id="t"><div className="sm fs-in"><FlowCombo k={code} /></div></OnTab>}
       <OnTab id="t">{code === 'VLMRA' || s.jump || s.short || s.nohist ? null : <ScenarioBlock s={s} />}</OnTab>
       {held ? null : <OnTab id="f"><TeamBlock code={code} /></OnTab>}
       {held ? null : <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>}
