@@ -3,9 +3,9 @@ import { NewsBlock } from './news';
 import { useStudy, StudyLight, StudyLightFair } from './studyrest';
 import { FairInline, FAIR6 } from './ui2026/FairSix';
 import { FlowCombo } from './ui2026/FlowCombo';
-import { StatusBanner, UsdNote, useCur, useStatus, useNty } from './ui2026/StockStatus';
+import { StatusBanner, UsdNote, useCur, useStatus, useNty, useSV, unitPx, arD } from './ui2026/StockStatus';
 const ComboOnly = ({ code }: { code: string }) => FAIR6.includes(code) ? null : <div className="sm fs-in"><FlowCombo k={code} /></div>;
-const NMO: Record<string, string> = {"EEP": "منصة مصر للتعليم", "NMIN": "النصر للتعدين", "OCAP": "أو جى كابيتال للاستثمارات ذات غرض الاستحواذ", "EGS370O1C013": "الشركة الوطنية للطباعة", "EGS65621C012": "النصر للاسكان والتعمير"}; // official Arabic names where the feed has only English
+const NMO: Record<string, string> = {"EEP": "منصة مصر للتعليم", "NMIN": "النصر للتعدين", "OCAP": "أو جى كابيتال للاستثمارات ذات غرض الاستحواذ", "EGS370O1C013": "الشركة الوطنية للطباعة", "EGS65621C012": "النصر للإسكان والتعمير", "EGOTH": "المصرية العامة للسياحة والفنادق - إيجوث", "MITR": "مصر للسياحة", "NFCI": "النصر للأسمدة والصناعات الكيماوية", "CID": "تنمية الصناعات الكيماوية - سيد", "ALXD": "الإسكندرية للاستثمارات والتنمية العمرانية", "NBCC": "النصر للمباني والإنشاءات - ايجيكو", "TOUR": "التعمير السياحي", "MMHC": "المعمورة للتعمير والتنمية السياحية", "PMSC": "خدمات البترول البحرية", "ELAB": "المصرية لإنتاج الألكيل بنزين الخطي - إيلاب", "ENPI": "الهندسية للصناعات البترولية والكيماوية - إنبي"}; // official Arabic names where the feed has only English
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
@@ -56,6 +56,7 @@ const Label = () => <p className="eg-note ot-lb"><b>بيانات آلية فقط
 
 export function OthersList() {
   const nty = useNty();
+  const sv = useSV();
   const [d, err] = useData();
   const [q, setQ] = useState('');
   const rows = useMemo(() => {
@@ -81,7 +82,7 @@ export function OthersList() {
     <p className="chp-x">{xList.range}</p>
     <ListHead mid="مدى اليوم" />
     {rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في الأسهم الباقية. جرب EGX 30 أو EGX 70.</p>}
-    {rows.slice(0, 120).map(r => { const st = nty && nty[r.symbol] ? '' : status(r); return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={NMO[r.symbol] || r.name_ar || r.name_en} code={r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={nty && nty[r.symbol] ? undefined : <DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={nty && nty[r.symbol] ? undefined : fmt(r.last_price)} chg={nty && nty[r.symbol] ? null : r.change_percent || 0} na={nty && nty[r.symbol] ? 'مقيد مؤقتًا ولسه ماتداولش' : undefined} volLine={nty && nty[r.symbol] ? undefined : <span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
+    {rows.slice(0, 120).map(r => { const sr = sv && sv.rows[r.symbol]; const nt = !!(nty && nty[r.symbol]); const lag = !nt && sr && sr.status === 'feed_lag'; const sx = !nt && !lag && sr && typeof sr.last_close === 'number'; const st = nt ? '' : lag ? 'بيانات متأخرة' : sx ? (sr.status === 'temporary_listing_sme' ? 'مقيد مؤقتًا (SME)' : sv.lab(r.symbol)) : status(r); const hid = nt || sx; return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={NMO[r.symbol] || r.name_ar || r.name_en} code={r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={hid ? undefined : <DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={nt ? undefined : sx ? <>{unitPx(sv, r.symbol, sr.last_close)}</> : r.last_price != null ? unitPx(sv, r.symbol, fmt(r.last_price)) : fmt(r.last_price)} chg={hid ? null : r.change_percent || 0} na={nt ? 'مقيد مؤقتًا ولسه ماتداولش' : undefined} volLine={hid ? (sx && sr.status === 'temporary_listing_sme' && sr.last_close_as_of ? <span style={{ fontSize: 11, color: '#a5aab2', whiteSpace: 'normal' }}>بيانات المصدر <bdi style={{ whiteSpace: 'nowrap' }}>{arD(sr.last_close_as_of)}</bdi></span> : undefined) : <span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
     {rows.length > 120 && <p className="eg-note">معروض أول 120 سهم. اكتب في البحث عشان توصل لباقي الأسهم.</p>}
   </div>;
 }
@@ -136,18 +137,18 @@ export function OtherLight({ code, row, reason, unNode }: { code: string; row: a
   const back = <Link className="eg-back" to="/others">← باقي الأسهم</Link>;
   if (code === 'VLMR') return <div className="eg-pad">{back}<p className="eg-note">غير متوفر: السهم ده مش معروض في التطبيق.</p></div>;
   if (!row) return <div className="eg-pad">{back}
-    {study ? <h2 className="eg-h">{study.record.name} <L>{code}</L></h2> : null}
+    {study || nty || NMO[code] ? <h2 className="eg-h">{NMO[code] || (study && study.record.name) || (nty && nty.name) || ''} <L>{code}</L></h2> : null}
     <StatusBanner k={code} />
     <UsdNote k={code} />
-    {unNode ? unNode : <p className="eg-note">غير متوفر: {reason || 'مفيش بيانات للسهم ده.'}{study ? ' (سعر السوق والقراءة الفنية). الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
+    {unNode ? unNode : <p className="eg-note">غير متوفر: {reason || (nty && nty.status === 'temporary_listing_sme' ? 'مفيش بيانات تداول حديثة.' : nty && nty.status === 'not_trading_yet' ? 'لسه ماتداولش فمفيش سعر.' : 'مفيش بيانات للسهم ده.')}{study ? ' (سعر السوق والقراءة الفنية). الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
     <FairInline code={code} />
     <ComboOnly code={code} />
     {study ? <><StudyLight st={study} /><StudyLightFair st={study} /><TeamBlock code={code} /><NewsBlock code={code} /></> : null}</div>;
-  if (nty && nty.status === 'not_trading_yet') return <div className="eg-pad">{back}
-    <h2 className="eg-h">{NMO[code] || nty.name || row.name_ar || row.name_en} <L>{code}</L></h2>
+  if (nty && (nty.status === 'not_trading_yet' || nty.status === 'temporary_listing_sme')) return <div className="eg-pad">{back}
+    <h2 className="eg-h">{NMO[code] || row.name_ar || nty.name || row.name_en} <L>{code}</L></h2>
     <StatusBanner k={code} />
     <UsdNote k={code} />
-    <p className="eg-note">غير متوفر: سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.</p>
+    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'غير متوفر: سعر حالي ولا تغيير ولا حجم.' : 'غير متوفر: سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
     <FairInline code={code} />
   </div>;
   return <div className="eg-pad">{back}
