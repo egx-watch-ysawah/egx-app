@@ -41,7 +41,7 @@ export function HomePanel() {
     return () => { on = false; };
   }, []);
   if (!ix) return <section className="hp"><p className="eg-note">بحمّل...</p></section>;
-  const rows: any[] = ix.rows ? ix.rows.filter((r: any) => fin(r.chg) && r.ok !== false) : [];
+  const rows: any[] = ix.rows ? ix.rows.filter((r: any) => fin(r.chg) && (r.ok !== false || r.full === true)) : [];
   if (!rows.length) return <section className="hp"><p className="hp-na">غير متوفر: مقدرتش أقرا بيانات الأسهم دلوقتي.</p></section>;
   const date = (rows.find((r: any) => r.date) || {}).date as string | undefined;
   const up = rows.filter(r => r.chg > 0).length, dn = rows.filter(r => r.chg < 0).length, fl = rows.length - up - dn;
@@ -55,8 +55,8 @@ export function HomePanel() {
   const brd = (a: any[]) => ({ u: a.filter(r => r.chg > 0).length, d: a.filter(r => r.chg < 0).length, n: a.length });
   const Row = ({ r, w }: { r: any; w: number }) => <Link to={'/s/' + r.code} className="hp-r">
     <span className="hp-n"><b title={r.name}>{r.name}</b><small dir="ltr">{r.code}{flag(r.code) ? <em className="hp-fl"> · {flag(r.code)}</em> : null}</small></span>
-    <div className="hp-b" dir="ltr"><i className={r.chg >= 0 ? 'u' : 'd'} style={{ width: Math.max(3, (Math.abs(r.chg) / w) * 100) + '%' }} /></div>
-    <span className={'hp-v ' + (r.chg >= 0 ? 'u' : 'd')} dir="ltr">{r.chg >= 0 ? '▲' : '▼'} {Math.abs(r.chg).toFixed(2)}%</span>
+    <div className="hp-b" dir="ltr"><i className={r.chg > 0 ? 'u' : r.chg < 0 ? 'd' : 'g'} style={{ width: Math.max(3, (Math.abs(r.chg) / w) * 100) + '%' }} /></div>
+    <span className={'hp-v ' + (r.chg > 0 ? 'u' : r.chg < 0 ? 'd' : 'f')} dir="ltr">{r.chg > 0 ? '▲' : r.chg < 0 ? '▼' : '–'} {Math.abs(r.chg).toFixed(2)}%</span>
   </Link>;
   const Br = ({ t, a }: { t: string; a: { u: number; d: number; n: number } }) => <div className="hp-br"><span>{t}</span>
     <div className="hp-st" dir="ltr"><i className="u" style={{ flex: a.u }} /><i className="f" style={{ flex: a.n - a.u - a.d }} /><i className="d" style={{ flex: a.d }} /></div>
@@ -71,7 +71,7 @@ export function HomePanel() {
     <div className="hp-st big" dir="ltr"><i className="u" style={{ flex: up }} /><i className="f" style={{ flex: fl }} /><i className="d" style={{ flex: dn }} /></div>
     <div className="hp-lg" dir="ltr"><span className="u">▲ {up} طالع</span><span className="f">{fl} ثابت</span><span className="d">▼ {dn} نازل</span></div>
     <p className="chp-x">{xHome.breadth}</p>
-    {e30.length ? <Br t="EGX 30" a={brd(e30)} /> : null}{e70.length ? <Br t="EGX 70" a={brd(e70)} /> : null}
+    {e30.length ? <Br t={'EGX 30 · ' + e30.length + ' من 30'} a={brd(e30)} /> : null}{e70.length ? <Br t={'EGX 70 · ' + e70.length + ' من 70'} a={brd(e70)} /> : null}
     <h3 className="hp-h">الأقوى</h3>{top.map(r => <Row key={r.code} r={r} w={mx} />)}
     <p className="chp-x">{xHome.movers}</p>
     <h3 className="hp-h">الأضعف</h3>{bot.map(r => <Row key={r.code} r={r} w={mx} />)}
@@ -80,7 +80,7 @@ export function HomePanel() {
       <div className="hp-b" dir="ltr"><i className="g" style={{ width: Math.max(3, (r.val / lm) * 100) + '%' }} /></div>
       <span className="hp-v" dir="ltr">{Math.round(r.val / 1e6).toLocaleString('en-US')}</span></Link>)}
     <p className="chp-x">{xHome.value}</p>
-    <p className="hp-na">القطاعات: غير متوفر، مفيش بيانات تصنيف قطاعي للأسهم في مصادر التطبيق دلوقتي.</p>
-    <p className="hp-note">الأسهم المحسوبة: {rows.length} من EGX 30 و70 وبعض الأسهم. أسعار متأخرة من Starta Markets. مش توصية.</p>
+    <p className="hp-na">القطاعات: غير متوفر، مفيش تقسيم قطاعي رسمي من البورصة هنا. الأسهم الستة بس عليها تصنيف مزود البيانات في صفحة تحليلها.</p>
+    <p className="hp-note">الأسهم المحسوبة: <bdi dir="ltr">{rows.length}</bdi> سهم من <bdi dir="ltr">EGX 30</bdi> و<bdi dir="ltr">EGX 70</bdi>{Array.isArray(ix.rows) && ix.rows.length > rows.length ? <>، لا يشمل <bdi dir="ltr">{ix.rows.length - rows.length}</bdi> أسهم بياناتها ناقصة أو مش مظبوطة.</> : '.'} أسعار متأخرة من Starta Markets. مش توصية.</p>
   </section>;
 }
