@@ -20,9 +20,11 @@ function Metric({ code, s, k, cw }: { code: string; s: any; k: 'pb' | 'pe'; cw: 
   const what = isPb ? 'قيمة الشركة في دفاترها' : 'الربح';
   const title = <div className="t">{name} <bdi dir="ltr">({isPb ? 'P/B' : 'P/E'})</bdi></div>;
   const un = (why: React.ReactNode) => ({ head: <div className="na"><b>{name}: غير متوفر</b><br />{why}</div>, det: null, why });
+  const ownLab = isPb ? 'السعر على القيمة في الدفاتر للسهم ده' : 'السعر على الربح للسهم ده';
+  const ownWhat = isPb ? 'سعر السهم على قيمته في الدفاتر، من المصدر المنشور' : 'سعر السهم على ربحه، من المصدر المنشور، وممكن يختلف عن حسابنا في صفحة السهم';
   const need = isPb ? 'القيمة في الدفاتر' : 'الربح'; const rs = s['reason_' + k];
   if (s['comparable_' + k] === false) {
-    if (rs === 'no_peers') return un(<>{own != null ? <>السهم ده <bdi dir="ltr">{own.toFixed(2)}</bdi>، و</> : ''}{(n || 0) > 0 ? <>فيه {plNo(n || 0)} شبهه معاها {need}، فمفيش مقارنة.</> : <>مفيش شركة تانية شبهه في تصنيف المصدر معاها {need}، فمفيش مقارنة.</>}</>);
+    if (rs === 'no_peers') return un(<>{own != null ? <>{ownLab} <bdi dir="ltr">{own.toFixed(2)}</bdi> ({ownWhat})، و</> : ''}{(n || 0) > 0 ? <>فيه {plNo(n || 0)} شبهه معاها {need}، فمفيش مقارنة.</> : <>مفيش شركة تانية شبهه في تصنيف المصدر معاها {need}، فمفيش مقارنة.</>}</>);
     if (rs === 'no_own_figure') return un(<>المصدر مطلعش {need} للسهم ده، فمفيش مقارنة.</>);
     return un(<>المقارنة مش متاحة للسهم ده دلوقتي.</>);
   }
@@ -30,7 +32,7 @@ function Metric({ code, s, k, cw }: { code: string; s: any; k: 'pb' | 'pe'; cw: 
   if (own == null && (n == null || n < 3)) return un(<>المصدر مطلعش {isPb ? 'القيمة في الدفاتر' : 'الربح'} للسهم ده، {(n || 0) <= 0 ? 'وكمان مفيش ولا شركة شبهه معاها الرقم ده' : 'وكمان مفيش غير ' + plNo(n || 0) + ' شبهه بالرقم ده'}، فمفيش مقارنة.</>);
   if (own == null) return un(<>المصدر مطلعش {isPb ? 'القيمة في الدفاتر' : 'الربح'} للسهم ده، فمفيش مقارنة.</>);
   if (s.quality === 'weak' || (typeof n === 'number' && n < 5)) return un(<>الشركات اللي شبهه قليلة ({plNo(n || 0)}){s['range_' + k + '_show'] === false ? ' وأرقامها متباعدة جدًا' : ''}، فالمقارنة مش مضمونة.</>);
-  if (md == null || (showR && !rg)) return un(<>السهم ده <bdi dir="ltr">{own.toFixed(2)}</bdi>، بس الشركات اللي شبهه قليلة ({plNo(n || 0)}).</>);
+  if (md == null || (showR && !rg)) return un(<>{ownLab} <bdi dir="ltr">{own.toFixed(2)}</bdi> ({ownWhat})، بس الشركات اللي شبهه قليلة ({plNo(n || 0)}).</>);
   const cap = showR ? Math.max(3 * md, own * 1.2) : 0, cut = showR && rg[1] > cap, ax = showR ? (cut ? cap : rg[1]) * 1.05 : Math.max(md, own) * 1.6; const X = (v: number) => Math.min(100, Math.max(0, v / Math.max(ax, own * 1.05) * 100));
   const small = n < 10; const sec = !isPb && !!s.pe_secondary;
   const vs = s['vs_' + k] === 'cheaper' ? 'أقل من الوسط' : s['vs_' + k] === 'dearer' ? 'أعلى من الوسط' : s['vs_' + k] === 'same' ? 'قريب من الوسط' : '';
