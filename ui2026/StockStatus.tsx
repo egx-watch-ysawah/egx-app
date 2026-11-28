@@ -33,6 +33,7 @@ const label = (s: any, session: string): string => {
   return String(s.status_ar);
 };
 // The gap line shows only when the flag is true AND the page (source) price really differs from the close in the banner.
+export function useLabel(k: string): string { const m = useSS(); const s = m && m.rows[k]; return s && m ? label(s, m.session) : ''; }
 export const gapOn = (s: any): boolean => !!s && s.price_gap_flag === true && typeof s.tv_reference_price === 'number' && typeof s.last_close === 'number' && s.tv_reference_price !== s.last_close;
 export function StatusBanner({ k }: { k: string }) {
   const m = useSS(); const s = m && m.rows[k]; if (!s || !m) return null;
