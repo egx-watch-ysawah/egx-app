@@ -1,0 +1,81 @@
+{
+ "code": "CAED",
+ "name_ar": null,
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 7 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 31 أغسطس 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 99.2,
+ "price_date": "2026-11-26",
+ "own_bvps": 7.11,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 31 أغسطس 2026",
+ "own_pb_at_price": 13.95,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Consumer Services",
+ "n_peers": 7,
+ "peers": [
+  {
+   "code": "ELWA",
+   "name_ar": null,
+   "pb": 0.653371633075909,
+   "price": 1.11
+  },
+  {
+   "code": "MPRC",
+   "name_ar": "مدينة الانتاج الاعلامى",
+   "pb": 1.6874661851726378,
+   "price": 36.71
+  },
+  {
+   "code": "MHOT",
+   "name_ar": null,
+   "pb": 3.4971631564658403,
+   "price": 15.2
+  },
+  {
+   "code": "TALM",
+   "name_ar": "تعليم لخدمات الإدارة",
+   "pb": 6.498858220648452,
+   "price": 19.95
+  },
+  {
+   "code": "SDTI",
+   "name_ar": "شارم دريمز",
+   "pb": 8.731937414191682,
+   "price": 84.08
+  },
+  {
+   "code": "CIRA",
+   "name_ar": null,
+   "pb": 8.73365516950325,
+   "price": 37.25
+  },
+  {
+   "code": "MMAT",
+   "name_ar": null,
+   "pb": 9.647097625329815,
+   "price": 4.68
+  }
+ ],
+ "multiples": {
+  "low": 2.592,
+  "median": 6.499,
+  "high": 8.733,
+  "min": 0.653371633075909,
+  "max": 9.647097625329815
+ },
+ "range": {
+  "low": 18.431,
+  "base": 46.207,
+  "high": 62.09
+ },
+ "price_marker": "above_all",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.65, max 9.65, median 6.50)",
+  "feed drift: peer P/B changed vs 12:21 file: MHOT"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B4"
+}
