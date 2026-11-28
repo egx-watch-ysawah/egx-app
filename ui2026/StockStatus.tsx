@@ -25,7 +25,9 @@ function useSS(): SS | null | undefined { const [m, setM] = React.useState<SS | 
 export function useStatus(k: string): any { const m = useSS(); return m ? m.rows[k] || null : null; }
 export function useCurMap(): Record<string, string> | undefined { const m = useSS(); return m === undefined ? undefined : m ? m.cur : {}; }
 export function useCur(k: string): { word: string; short: string; usd: boolean; ready: boolean; unconf: boolean; nc: boolean; fs: string } { const m = useSS(); const usd = !!(m && m.cur[k] === 'USD'); const ready = m !== undefined; const unconf = !!(m && m.unconf[k]); const nc = !!(m && m.nc[k]); const fs = (m && m.fs[k]) || 'EGP'; return usd ? { word: 'دولار', short: 'دولار', usd, ready, unconf, nc, fs } : { word: 'جنيه', short: 'ج.م', usd, ready, unconf, nc, fs }; }
-export function useNty(): Record<string, boolean> | undefined { const m = useSS(); if (m === undefined) return undefined; const o: Record<string, boolean> = {}; if (m) for (const k of Object.keys(m.rows)) if (m.rows[k].status === 'not_trading_yet') o[k] = true; return o; }
+export function useNty(): Record<string, boolean> | undefined { const m = useSS(); if (m === undefined) return undefined; const o: Record<string, boolean> = {}; if (m) for (const k of Object.keys(m.rows)) if (m.rows[k].status === 'not_trading_yet' || m.rows[k].status === 'new_listing') o[k] = true; return o; }
+// Codes whose status row says the stock has not traded yet (used for the "لسه ماتداولوش" count).
+export function useNotTraded(): string[] | undefined { const m = useSS(); if (m === undefined) return undefined; return m ? Object.keys(m.rows).filter(k => m.rows[k].status === 'not_trading_yet') : []; }
 // Egypt trading week: Sun-Thu. Count trading days after `from` up to `to` (holidays not subtracted).
 const tdays = (from: string, to: string) => { const a = Date.parse(from + 'T00:00:00Z'), b = Date.parse(to + 'T00:00:00Z'); if (!isFinite(a) || !isFinite(b) || b <= a) return 0; let n = 0; for (let t = a + 864e5; t <= b; t += 864e5) { const w = new Date(t).getUTCDay(); if (w !== 5 && w !== 6) n++; } return n; };
 const label = (s: any, session: string): string => {
@@ -53,7 +55,7 @@ export function StatusBanner({ k }: { k: string }) {
   const bd = lag ? '#3a424e' : '#e0a030';
   return <section dir="rtl" role="status" aria-label="حالة السهم" className="ss-b" style={{ boxSizing: 'border-box', width: '100%', margin: '10px 0 14px', padding: '12px 14px', borderRadius: 12, border: '1px solid ' + bd, borderRightWidth: 4, background: '#111822', color: '#e6e9ee', textAlign: 'right', lineHeight: 1.8, fontSize: 14, overflowWrap: 'anywhere' }}>
     <b>{label(s, m.session)}</b>
-    {tls ? null : lag ? <>{d ? <> - السعر لحد {d}{px != null ? <> (<bdi dir="ltr">{px}</bdi> {un})</> : null}</> : null}{s.starta_last_bar ? <>، والتحليل لحد {arD(s.starta_last_bar)}</> : null}</> : dormant ? (px != null ? <> - آخر سعر <bdi dir="ltr">{px}</bdi> {un}</> : null)
+    {tls ? null : s.status === 'new_listing' ? null : lag ? <>{d ? <> - السعر لحد {d}{px != null ? <> (<bdi dir="ltr">{px}</bdi> {un})</> : null}</> : null}{s.starta_last_bar ? <>، والتحليل لحد {arD(s.starta_last_bar)}</> : null}</> : dormant ? (px != null ? <> - آخر سعر <bdi dir="ltr">{px}</bdi> {un}</> : null)
       : <>{d ? <> - آخر تداول {d}</> : null}{px != null ? <>{sp ? <> · {s.last_close_note ? 'آخر إقفال' : 'إقفال رسمي'} </> : <> بسعر </>}<bdi dir="ltr">{px}</bdi> {un}{unconf ? ' (العملة حسب المصدر)' : ''}</> : null}</>}
     {gapOn(s) ? <div style={{ fontSize: 13, color: '#b4bac4', marginTop: 2 }}>آخر سعر تداول <bdi dir="ltr">{px}</bdi> {un}، وسعر المصدر <bdi dir="ltr">{s.tv_reference_price}</bdi> والفرق بينهم سببه مش معروف عندنا</div> : null}
   </section>;
@@ -61,12 +63,12 @@ export function StatusBanner({ k }: { k: string }) {
 // Inside the combo / signal blocks: no second banner, one short line.
 export function BlockNone({ k }: { k: string }) {
   const m = useSS(); const s = m && m.rows[k]; if (!s || !m) return null;
-  const why = s.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا' : s.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش' : s.status === 'temporary_listing_sme' ? 'لأن السهم مقيد مؤقتًا' : s.status === 'halted' ? 'لأن السهم ' + label(s, m.session) : 'لأن ' + label(s, m.session);
+  const why = s.status === 'feed_lag' ? 'لأن بيانات السهم متأخرة عندنا' : s.status === 'not_trading_yet' ? 'لأن السهم لسه ماتداولش' : s.status === 'new_listing' ? 'لأن السهم إدراج جديد ومفيش عندنا سعر أو تاريخ مؤكد' : s.status === 'temporary_listing_sme' ? 'لأن السهم مقيد مؤقتًا' : s.status === 'halted' ? 'لأن السهم ' + label(s, m.session) : 'لأن ' + label(s, m.session);
   return <p className="eg-note ss-n" style={{ margin: '8px 0' }}>مفيش إشارة ولا مقارنة تاريخية للسهم ده {why}</p>;
 }
 
 // One short line near the price on USD pages + the currency caveat for codes the data file flags as unconfirmed.
 export function UsdNote({ k }: { k: string }) {
-  const c = useCur(k); const st = useStatus(k); if (!c.usd || (st && st.status === 'not_trading_yet')) return null;
+  const c = useCur(k); const st = useStatus(k); if (!c.usd || (st && (st.status === 'not_trading_yet' || st.status === 'new_listing'))) return null;
   return <p className="eg-note ss-u" style={{ margin: '6px 0' }}>السعر بالدولار{c.unconf && !st ? ' (العملة حسب المصدر)' : ''}</p>;
 }
