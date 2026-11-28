@@ -1,0 +1,50 @@
+{
+ "code": "ETRS",
+ "name_ar": "إيجيترانس",
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 11.03,
+ "price_date": "2026-11-26",
+ "own_bvps": 5.36,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 2.06,
+ "peer_level": "industry_small",
+ "peer_group_feed_label": "Other Transportation",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "CSAG",
+   "name_ar": "القناة للتوكيلات الملاحية",
+   "pb": 5.025522493754294,
+   "price": 38.18
+  },
+  {
+   "code": "ALCN",
+   "name_ar": "الاسكندرية لتداول الحاويات",
+   "pb": 11.350808749719631,
+   "price": 30.87
+  }
+ ],
+ "multiples": {
+  "low": 5.026,
+  "median": 8.188,
+  "high": 11.351,
+  "min": 5.025522493754294,
+  "max": 11.350808749719631
+ },
+ "range": {
+  "low": 26.937,
+  "base": null,
+  "high": 60.84
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "feed drift: peer P/B changed vs 12:21 file: CSAG"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
