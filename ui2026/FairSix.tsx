@@ -1,33 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import D from './fair_six.json';
-// Six-stock fair-value view. Text, numbers and bar widths are the approved preview4 content, unchanged.
-// Colors: green = value above market price, red = below. The sign is also written (+/−), so color is never the only cue.
-const sgn = (s: string) => s.replace('−', '−');
-const FairOne = ({ c }: { c: any }) => <section className="fs-c" aria-label={c.code}>
-      <header><b>{c.code}</b><span>{c.name}</span><em dir="ltr">{c.px}</em></header>
-      <p className="fs-dt">السعر: {c.dt}</p>
-      {c.rows.map((r: any, i: number) => <div key={i} className="fs-r">
-        {r.na ? <div className="fs-l"><span>{r.nm}</span><span className="fs-na">{r.na}</span></div> : <>
-          <div className="fs-l"><span>{r.nm}</span><b className={r.dir} dir="ltr">{r.dir === 'up' ? '▲ ' : '▼ '}{sgn(r.pc)}</b><strong className={r.dir} dir="ltr">{r.v}</strong></div>
-          <div className="fs-b"><i>سعره في البورصة دلوقتي</i><div className="fs-t" dir="ltr"><div className="fs-f p" style={{ width: r.w[0] + '%' }} /></div><u>{r.u[0]}</u></div>
-          <div className="fs-b"><i>قيمته بالحساب</i><div className="fs-t" dir="ltr"><div className={'fs-f ' + r.dir} style={{ width: r.w[1] + '%' }} /></div><u>{r.u[1]}</u></div></>}
-        <div className="fs-d">{r.d}</div>
-      </div>)}
-      <p className="fs-s">{c.sm}</p>
-    </section>;
-export const FAIR6: string[] = (D as any).cards.map((c: any) => c.code);
-// Same card as #/fair, shown inside the stock page's السعر العادل tab (one source of truth: fair_six.json).
+import { DATA } from '../data';
+import { FlowSignal } from './FlowSignal';
+import { Peers } from './Peers';
+// Six-stock page: flow signal + peer comparison. The old fair-value cards are cancelled for these stocks.
+export const FAIR6: string[] = ['MASR', 'ORHD', 'HRHO', 'PHAR', 'BONY', 'UNIP'];
+const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : ''; };
+const lj = (u: string) => fetch(u + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
+// Price and its session date come only from the pipeline files: flow_signal.json (close + date), else peer_compare.json (price + price_session).
+function useHeads() {
+  const [h, setH] = React.useState<Record<string, { px: number; dt: string }> | undefined>(undefined);
+  React.useEffect(() => { Promise.all([lj('flow_signal.json'), lj('peer_compare.json')]).then(([f, p]) => {
+    const o: Record<string, { px: number; dt: string }> = {};
+    for (const k of FAIR6) {
+      const a = f && f.stocks && f.stocks[k], b = p && p.stocks && p.stocks[k];
+      if (a && typeof a.close === 'number' && typeof a.date === 'string') o[k] = { px: a.close, dt: a.date };
+      else if (b && typeof b.price === 'number' && typeof b.price_session === 'string') o[k] = { px: b.price, dt: b.price_session };
+      else if (b && typeof b.price === 'number' && p && typeof p.price_session === 'string') o[k] = { px: b.price, dt: p.price_session };
+    }
+    setH(o); }); }, []);
+  return h;
+}
+const Head = ({ k, h }: { k: string; h: any }) => <section className="fs-c" aria-label={k}><header><b>{k}</b><span>{(DATA as any).stocks && (DATA as any).stocks[k] ? (DATA as any).stocks[k].name : ''}</span></header>
+  <p className="fs-dt">{h ? <>سعر الإقفال: <bdi dir="ltr">{h.px.toFixed(h.px < 1 ? 3 : 2)}</bdi> جنيه، جلسة {arD(h.dt)}</> : 'سعر الإقفال: غير متوفر (ملف الأسعار مش متاح دلوقتي)'}</p></section>;
+// Inside the stock page's السعر العادل tab: no duplicate panel, only the way to the new page.
 export function FairCard({ code }: { code: string }) {
-  const c = (D as any).cards.find((x: any) => x.code === code);
-  if (!c) return null;
-  return <div className="fs fs-in"><span className="fs-tag">تجريبي · معاينة فقط</span><FairOne c={c} /><p className="fs-ft">{(D as any).foot}</p></div>;
+  if (!FAIR6.includes(code)) return null;
+  return <Link to="/fair" className="fs-link"><span><b>تحليل الأسهم الستة</b><small>علامة التجميع ومقارنة بالشركات اللي زيها، للأسهم الستة في صفحة واحدة.</small></span><em aria-hidden="true">‹</em></Link>;
+}
+// Mounted inside the stock page's الفني tab (guide.tsx) for the six: flow signal + peer comparison, each with its own plain unavailable state.
+export function FairInline({ code }: { code: string }) {
+  if (!FAIR6.includes(code)) return null;
+  return <div className="sm fs-in"><FlowSignal k={code} /><Peers code={code} /></div>;
 }
 export function FairSix() {
-  return <div className="eg-pad fs"><h1 className="fs-h">القيمة العادلة: الأسهم الستة</h1><span className="fs-tag">تجريبي · معاينة فقط</span>
-    {(D as any).cards.map((c: any) => <FairOne key={c.code} c={c} />)}
-    <p className="fs-ft">{(D as any).foot}</p></div>;
+  const h = useHeads();
+  return <div className="eg-pad fs"><h1 className="fs-h">تحليل الأسهم الستة: علامة التجميع والمقارنة</h1><span className="fs-tag">تجريبي</span>
+    {h === undefined ? null : FAIR6.map(k => <React.Fragment key={k}><Head k={k} h={h[k]} /><FlowSignal k={k} /><Peers code={k} /></React.Fragment>)}
+  </div>;
 }
 export function FairLink() {
-  return <Link to="/fair" className="fs-link"><span><b>القيمة العادلة: الأسهم الستة</b><small>كام يساوي السهم بالحساب مقابل سعره. تجريبي.</small></span><em aria-hidden="true">‹</em></Link>;
+  return <Link to="/fair" className="fs-link"><span><b>تحليل الأسهم الستة</b><small>علامة التجميع ومقارنة بالشركات اللي زيها. مش نصيحة.</small></span><em aria-hidden="true">‹</em></Link>;
 }
