@@ -67,5 +67,5 @@ export function StudyLight({ st }: { st: any }) {
   return <details className="eg-ex"><summary>الأداء المالي · قراءة من القوائم، مش مراجَعة</summary><div className="eg-exb"><StudyFin st={st} /></div></details>;
 }
 export function StudyLightFair({ st }: { st: any }) {
-  return <details className="eg-ex"><summary>السعر العادل · {st.fair_value && st.fair_value.status}</summary><div className="eg-exb"><StudyFair st={st} /></div></details>;
+  return <details className="eg-ex"><summary>تقدير الدراسة · {st.fair_value && st.fair_value.status}</summary><div className="eg-exb"><StudyFair st={st} /></div></details>;
 }
