@@ -1,0 +1,146 @@
+{
+ "price_session": "2026-11-26",
+ "generated_utc": "2026-11-27T22:07:48Z",
+ "source": "TradingView scanner egypt/scan (single source, not cross-checked, reuse terms unverified)",
+ "expected_session": "2026-11-26",
+ "up_to_date": true,
+ "note": "Peer groups are the feed's own labels, not EGX official sectors. Medians exclude the stock itself. Hint only, not fair value.",
+ "stocks": {
+  "ORHD": {
+   "group": "Real Estate Development (wider group; feed puts ORHD in \"Homebuilding\", 4 peers)",
+   "feed_industry": "Homebuilding",
+   "price_session": "2026-11-26",
+   "price": 10.45,
+   "pb": 2.01,
+   "pe": null,
+   "n_pb": 24,
+   "median_pb": 2.56,
+   "vs_pb": "cheaper",
+   "range_pb": [
+    0.4189898155546976,
+    20.324786762634155
+   ],
+   "n_pe": 9,
+   "median_pe": 10.36,
+   "vs_pe": null,
+   "range_pe": [
+    4.415855354659249,
+    201.97977798204062
+   ],
+   "quality": "ok"
+  },
+  "MASR": {
+   "group": "Real Estate Development",
+   "feed_industry": "Real Estate Development",
+   "price_session": "2026-11-26",
+   "price": 6.35,
+   "pb": null,
+   "pe": 4.42,
+   "n_pb": 24,
+   "median_pb": 2.56,
+   "vs_pb": null,
+   "range_pb": [
+    0.4189898155546976,
+    20.324786762634155
+   ],
+   "n_pe": 8,
+   "median_pe": 11.47,
+   "vs_pe": "cheaper",
+   "range_pe": [
+    7.57673044818287,
+    201.97977798204062
+   ],
+   "quality": "ok"
+  },
+  "BONY": {
+   "group": "Real Estate Development",
+   "feed_industry": "Real Estate Development",
+   "price_session": "2026-11-26",
+   "price": 4.1,
+   "pb": null,
+   "pe": null,
+   "n_pb": 24,
+   "median_pb": 2.56,
+   "vs_pb": null,
+   "range_pb": [
+    0.4189898155546976,
+    20.324786762634155
+   ],
+   "n_pe": 9,
+   "median_pe": 10.36,
+   "vs_pe": null,
+   "range_pe": [
+    4.415855354659249,
+    201.97977798204062
+   ],
+   "quality": "none"
+  },
+  "HRHO": {
+   "group": "Investment Banks/Brokers",
+   "feed_industry": "Investment Banks/Brokers",
+   "price_session": "2026-11-26",
+   "price": 26.98,
+   "pb": 1.07,
+   "pe": null,
+   "n_pb": 9,
+   "median_pb": 3.35,
+   "vs_pb": "cheaper",
+   "range_pb": [
+    0.8284534635831287,
+    5.120101137800253
+   ],
+   "n_pe": 2,
+   "median_pe": null,
+   "vs_pe": null,
+   "range_pe": [
+    12.058555079688269,
+    33.69565217391304
+   ],
+   "quality": "ok"
+  },
+  "PHAR": {
+   "group": "Pharmaceuticals (Health Technology sector)",
+   "feed_industry": "Pharmaceuticals: Other",
+   "price_session": "2026-11-26",
+   "price": 99.4,
+   "pb": 2.68,
+   "pe": 15.4,
+   "n_pb": 10,
+   "median_pb": 5.53,
+   "vs_pb": "cheaper",
+   "range_pb": [
+    1.360986142883997,
+    12.086502573417839
+   ],
+   "n_pe": 6,
+   "median_pe": 20.91,
+   "vs_pe": "cheaper",
+   "range_pe": [
+    13.79753836429399,
+    124.54318138103481
+   ],
+   "quality": "ok"
+  },
+  "UNIP": {
+   "group": "Containers/Packaging",
+   "feed_industry": "Pulp & Paper",
+   "price_session": "2026-11-26",
+   "price": 0.292,
+   "pb": 1.35,
+   "pe": null,
+   "n_pb": 4,
+   "median_pb": 2.32,
+   "vs_pb": "cheaper",
+   "range_pb": [
+    0.3689440873179442,
+    17.00743852902866
+   ],
+   "n_pe": 0,
+   "median_pe": null,
+   "vs_pe": null,
+   "range_pe": null,
+   "quality": "weak"
+  }
+ },
+ "checked_utc": "2026-11-27T22:07:48Z"
+}
