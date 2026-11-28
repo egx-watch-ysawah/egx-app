@@ -18,7 +18,7 @@ export function Ticker() {
     <Link key={i.k + suffix} to={'/' + i.k.toLowerCase()} className="tk-i" tabIndex={suffix ? -1 : 0} aria-hidden={suffix ? true : undefined}>
       <b dir="ltr">{i.k}</b>
       <span dir="ltr">{fmt(i.close)}</span>
-      <em dir="ltr" className={i.d >= 0 ? 'u' : 'd'}>{i.d >= 0 ? '▲' : '▼'} {(i.d >= 0 ? '+' : '') + i.d.toFixed(2)}%</em>
+      <em dir="ltr" className={Math.abs(i.d) < 0.005 ? 'f' : i.d >= 0 ? 'u' : 'd'}>{Math.abs(i.d) < 0.005 ? '–' : i.d >= 0 ? '▲' : '▼'} {(Math.abs(i.d) < 0.005 ? '' : i.d >= 0 ? '+' : '') + (Math.abs(i.d) < 0.005 ? '0.00' : i.d.toFixed(2))}%</em>
     </Link>
   ));
   return (
