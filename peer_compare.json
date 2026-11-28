@@ -1,13 +1,13 @@
 {
  "price_session": "2026-11-26",
- "generated_utc": "2026-11-27T22:07:48Z",
+ "generated_utc": "2026-11-28T06:06:03Z",
  "source": "TradingView scanner egypt/scan (single source, not cross-checked, reuse terms unverified)",
  "expected_session": "2026-11-26",
  "up_to_date": true,
  "note": "Peer groups are the feed's own labels, not EGX official sectors. Medians exclude the stock itself. Hint only, not fair value.",
  "stocks": {
   "ORHD": {
-   "group": "Real Estate Development (wider group; feed puts ORHD in \"Homebuilding\", 4 peers)",
+   "group": "Real Estate Development (wider group; feed label is Homebuilding)",
    "feed_industry": "Homebuilding",
    "price_session": "2026-11-26",
    "price": 10.45,
@@ -20,6 +20,9 @@
     0.4189898155546976,
     20.324786762634155
    ],
+   "comparable_pb": true,
+   "range_pb_show": false,
+   "reason_pb": null,
    "n_pe": 9,
    "median_pe": 10.36,
    "vs_pe": null,
@@ -27,7 +30,15 @@
     4.415855354659249,
     201.97977798204062
    ],
-   "quality": "ok"
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_own_figure",
+   "quality_pb": "ok",
+   "quality_pe": "ok",
+   "quality": "ok",
+   "quality_reason": null,
+   "pe_secondary": false,
+   "note": "Uses the wider Real Estate Development group because the feed label (Homebuilding) has too few stocks. The feed has no own P/E for this stock."
   },
   "MASR": {
    "group": "Real Estate Development",
@@ -43,6 +54,9 @@
     0.4189898155546976,
     20.324786762634155
    ],
+   "comparable_pb": false,
+   "range_pb_show": false,
+   "reason_pb": "no_own_figure",
    "n_pe": 8,
    "median_pe": 11.47,
    "vs_pe": "cheaper",
@@ -50,7 +64,15 @@
     7.57673044818287,
     201.97977798204062
    ],
-   "quality": "ok"
+   "comparable_pe": true,
+   "range_pe_show": false,
+   "reason_pe": null,
+   "quality_pb": "ok",
+   "quality_pe": "ok",
+   "quality": "ok",
+   "quality_reason": null,
+   "pe_secondary": false,
+   "note": "The feed has no own P/B for this stock."
   },
   "BONY": {
    "group": "Real Estate Development",
@@ -66,6 +88,9 @@
     0.4189898155546976,
     20.324786762634155
    ],
+   "comparable_pb": false,
+   "range_pb_show": false,
+   "reason_pb": "no_own_figure",
    "n_pe": 9,
    "median_pe": 10.36,
    "vs_pe": null,
@@ -73,7 +98,15 @@
     4.415855354659249,
     201.97977798204062
    ],
-   "quality": "none"
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_own_figure",
+   "quality_pb": "ok",
+   "quality_pe": "ok",
+   "quality": "none",
+   "quality_reason": "no_own_figure",
+   "pe_secondary": false,
+   "note": "The feed has no own P/B for this stock. The feed has no own P/E for this stock."
   },
   "HRHO": {
    "group": "Investment Banks/Brokers",
@@ -89,6 +122,9 @@
     0.8284534635831287,
     5.120101137800253
    ],
+   "comparable_pb": true,
+   "range_pb_show": true,
+   "reason_pb": null,
    "n_pe": 2,
    "median_pe": null,
    "vs_pe": null,
@@ -96,7 +132,15 @@
     12.058555079688269,
     33.69565217391304
    ],
-   "quality": "ok"
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_own_figure",
+   "quality_pb": "ok",
+   "quality_pe": "none",
+   "quality": "ok",
+   "quality_reason": null,
+   "pe_secondary": false,
+   "note": "The feed has no own P/E for this stock."
   },
   "PHAR": {
    "group": "Pharmaceuticals (Health Technology sector)",
@@ -112,6 +156,9 @@
     1.360986142883997,
     12.086502573417839
    ],
+   "comparable_pb": true,
+   "range_pb_show": true,
+   "reason_pb": null,
    "n_pe": 6,
    "median_pe": 20.91,
    "vs_pe": "cheaper",
@@ -119,7 +166,15 @@
     13.79753836429399,
     124.54318138103481
    ],
-   "quality": "ok"
+   "comparable_pe": true,
+   "range_pe_show": false,
+   "reason_pe": null,
+   "quality_pb": "ok",
+   "quality_pe": "ok",
+   "quality": "ok",
+   "quality_reason": null,
+   "pe_secondary": false,
+   "note": null
   },
   "UNIP": {
    "group": "Containers/Packaging",
@@ -135,12 +190,175 @@
     0.3689440873179442,
     17.00743852902866
    ],
+   "comparable_pb": true,
+   "range_pb_show": false,
+   "reason_pb": null,
    "n_pe": 0,
    "median_pe": null,
    "vs_pe": null,
    "range_pe": null,
-   "quality": "weak"
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_own_figure",
+   "quality_pb": "weak",
+   "quality_pe": "none",
+   "quality": "weak",
+   "quality_reason": null,
+   "pe_secondary": false,
+   "note": "The feed has no own P/E for this stock."
+  },
+  "COMI": {
+   "group": "Regional Banks",
+   "feed_industry": "Regional Banks",
+   "price_session": "2026-11-26",
+   "price": 124.25,
+   "pb": 1.64,
+   "pe": 6.29,
+   "n_pb": 9,
+   "median_pb": 0.9,
+   "vs_pb": "dearer",
+   "range_pb": [
+    0.21231921396573689,
+    2.283549583907523
+   ],
+   "comparable_pb": true,
+   "range_pb_show": true,
+   "reason_pb": null,
+   "n_pe": 9,
+   "median_pe": 4.2,
+   "vs_pe": "dearer",
+   "range_pe": [
+    2.564780128394448,
+    7.882761657777561
+   ],
+   "comparable_pe": true,
+   "range_pe_show": true,
+   "reason_pe": null,
+   "quality_pb": "ok",
+   "quality_pe": "ok",
+   "quality": "ok",
+   "quality_reason": null,
+   "pe_secondary": true,
+   "note": "Banks are compared on P/B first. P/E is secondary and must not be read alone."
+  },
+  "ETEL": {
+   "group": "Major Telecommunications",
+   "feed_industry": "Major Telecommunications",
+   "price_session": "2026-11-26",
+   "price": 135.9,
+   "pb": 2.8,
+   "pe": 7.74,
+   "n_pb": 0,
+   "median_pb": null,
+   "vs_pb": null,
+   "range_pb": null,
+   "comparable_pb": false,
+   "range_pb_show": false,
+   "reason_pb": "no_peers",
+   "n_pe": 0,
+   "median_pe": null,
+   "vs_pe": null,
+   "range_pe": null,
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_peers",
+   "quality_pb": "none",
+   "quality_pe": "none",
+   "quality": "none",
+   "quality_reason": "no_peers",
+   "pe_secondary": false,
+   "note": "Group is the feed industry and is not widened to a broader sector. Fewer than 3 peers with a P/B in the feed group, so no P/B comparison. Fewer than 3 peers with a P/E in the feed group, so no P/E comparison."
+  },
+  "TMGH": {
+   "group": "Real Estate Development",
+   "feed_industry": "Real Estate Development",
+   "price_session": "2026-11-26",
+   "price": 79.24,
+   "pb": null,
+   "pe": null,
+   "n_pb": 24,
+   "median_pb": 2.56,
+   "vs_pb": null,
+   "range_pb": [
+    0.4189898155546976,
+    20.324786762634155
+   ],
+   "comparable_pb": false,
+   "range_pb_show": false,
+   "reason_pb": "no_own_figure",
+   "n_pe": 9,
+   "median_pe": 10.36,
+   "vs_pe": null,
+   "range_pe": [
+    4.415855354659249,
+    201.97977798204062
+   ],
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_own_figure",
+   "quality_pb": "ok",
+   "quality_pe": "ok",
+   "quality": "none",
+   "quality_reason": "no_own_figure",
+   "pe_secondary": false,
+   "note": "The feed has no own P/B for this stock. The feed has no own P/E for this stock."
+  },
+  "SWDY": {
+   "group": "Electrical Products",
+   "feed_industry": "Electrical Products",
+   "price_session": "2026-11-26",
+   "price": 115.93,
+   "pb": 3.53,
+   "pe": 15.22,
+   "n_pb": 0,
+   "median_pb": null,
+   "vs_pb": null,
+   "range_pb": null,
+   "comparable_pb": false,
+   "range_pb_show": false,
+   "reason_pb": "no_peers",
+   "n_pe": 0,
+   "median_pe": null,
+   "vs_pe": null,
+   "range_pe": null,
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_peers",
+   "quality_pb": "none",
+   "quality_pe": "none",
+   "quality": "none",
+   "quality_reason": "no_peers",
+   "pe_secondary": false,
+   "note": "Group is the feed industry and is not widened to a broader sector. Fewer than 3 peers with a P/B in the feed group, so no P/B comparison. Fewer than 3 peers with a P/E in the feed group, so no P/E comparison."
+  },
+  "EAST": {
+   "group": "Tobacco",
+   "feed_industry": "Tobacco",
+   "price_session": "2026-11-26",
+   "price": 33.03,
+   "pb": 6.83,
+   "pe": 11.16,
+   "n_pb": 0,
+   "median_pb": null,
+   "vs_pb": null,
+   "range_pb": null,
+   "comparable_pb": false,
+   "range_pb_show": false,
+   "reason_pb": "no_peers",
+   "n_pe": 0,
+   "median_pe": null,
+   "vs_pe": null,
+   "range_pe": null,
+   "comparable_pe": false,
+   "range_pe_show": false,
+   "reason_pe": "no_peers",
+   "quality_pb": "none",
+   "quality_pe": "none",
+   "quality": "none",
+   "quality_reason": "no_peers",
+   "pe_secondary": false,
+   "note": "Group is the feed industry and is not widened to a broader sector. Fewer than 3 peers with a P/B in the feed group, so no P/B comparison. Fewer than 3 peers with a P/E in the feed group, so no P/E comparison."
   }
  },
- "checked_utc": "2026-11-28T00:57:06Z"
+ "checked_utc": "2026-11-28T06:06:03Z"
 }
