@@ -1211,19 +1211,6 @@
    "sessionsSinceLastFire": 31,
    "date": "2026-11-26"
   },
-  "VLMR": {
-   "fired": false,
-   "rawFired": false,
-   "A_valueGt2xMed60": false,
-   "B_closeTopThird": false,
-   "C_upVolShareAndGtSma20": false,
-   "volXmed60": 1.45,
-   "upShare10": 0.24,
-   "close": 0.644,
-   "lastFire": "2026-11-10",
-   "sessionsSinceLastFire": 12,
-   "date": "2026-11-26"
-  },
   "VLMRA": {
    "fired": true,
    "rawFired": true,
