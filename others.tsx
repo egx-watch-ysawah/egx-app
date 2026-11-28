@@ -13,6 +13,7 @@ import { NEW } from './page';
 import { xList } from './ui2026/ExplainLists';
 import { ListHead, ListRow, ListNote, DayRange } from './ui2026/Lists';
 import { useUni, UniSub } from './ui2026/Universe';
+import { DecisionCard, CARD_ON } from './ui2026/DecisionCard';
 // "باقي الأسهم": Starta symbols that are not in EGX 30, EGX 70 or the portfolio pages. Automatic data only, no review, no verdict.
 const URL_STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const URL_HIST = 'https://startamarkets.com/api/v1/egx/history/';
@@ -152,13 +153,14 @@ export function OtherLight({ code, row, reason, unNode }: { code: string; row: a
   const U = useUni();
   const UNn = useUnNames();
   const back = <Link className="eg-back" to="/others">← باقي الأسهم</Link>;
-  if (U && U.ok && !(U.s30.has(U.canon(code)) || U.s70.has(U.canon(code)) || U.sO.has(U.canon(code))) && !FAIR6.includes(code)) return <div className="eg-pad">{back}<p className="eg-note">غير متوفر: السهم ده مش موجود في قايمة الأسهم عندنا.</p></div>;
-  if (code === 'VLMR') return <div className="eg-pad">{back}<p className="eg-note">غير متوفر: السهم ده مش معروض في التطبيق.</p></div>;
+  if (U && U.ok && !(U.s30.has(U.canon(code)) || U.s70.has(U.canon(code)) || U.sO.has(U.canon(code))) && !FAIR6.includes(code)) return <div className="eg-pad">{back}<p className="eg-note">السهم ده مش موجود في قايمة الأسهم عندنا.</p></div>;
+  if (code === 'VLMR') return <div className="eg-pad">{back}<p className="eg-note">السهم ده مش معروض في التطبيق.</p></div>;
   if (!row) return <div className="eg-pad">{back}
     {study || nty || NMO[code] || (UNn && UNn[code]) ? <h2 className="eg-h">{NMO[code] || (UNn && UNn[code]) || (study && study.record.name) || (nty && nty.name) || ''} <L>{code}</L></h2> : null}
     <StatusBanner k={code} />
     <UsdNote k={code} />
-    {unNode ? unNode : <p className="eg-note">غير متوفر: {study ? 'سعر السوق والقراءة الفنية. ' : ''}{reason || (nty && nty.status === 'temporary_listing_sme' ? 'مفيش بيانات تداول حديثة.' : nty && nty.status === 'not_trading_yet' ? 'لسه ماتداولش فمفيش سعر.' : nty && nty.status === 'new_listing' ? 'مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'مفيش بيانات للسهم ده.')}{study ? ' الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
+    {CARD_ON.has(code) ? <DecisionCard code={code} /> : null}
+    {unNode ? unNode : <p className="eg-note">مش معروض: {study ? 'سعر السوق والقراءة الفنية. ' : ''}{reason || (nty && nty.status === 'temporary_listing_sme' ? 'مفيش بيانات تداول حديثة.' : nty && nty.status === 'not_trading_yet' ? 'لسه ماتداولش فمفيش سعر.' : nty && nty.status === 'new_listing' ? 'مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'مفيش بيانات للسهم ده.')}{study ? ' الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
     <FairInline code={code} />
     <ComboOnly code={code} />
     {study ? <><StudyLight st={study} /><StudyLightFair st={study} /><TeamBlock code={code} /><NewsBlock code={code} /></> : null}</div>;
@@ -166,7 +168,8 @@ export function OtherLight({ code, row, reason, unNode }: { code: string; row: a
     <h2 className="eg-h">{NMO[code] || row.name_ar || nty.name || row.name_en} <L>{code}</L></h2>
     <StatusBanner k={code} />
     <UsdNote k={code} />
-    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'غير متوفر: سعر حالي ولا تغيير ولا حجم.' : nty.status === 'new_listing' ? 'غير متوفر: سعر ولا تغيير ولا حجم، لأن مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'غير متوفر: سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
+    {CARD_ON.has(code) ? <DecisionCard code={code} /> : null}
+    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'مفيش سعر حالي ولا تغيير ولا حجم.' : nty.status === 'new_listing' ? 'مفيش سعر ولا تغيير ولا حجم، لأن مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'مفيش سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
     <FairInline code={code} />
   </div>;
   return <div className="eg-pad">{back}
@@ -175,7 +178,8 @@ export function OtherLight({ code, row, reason, unNode }: { code: string; row: a
     <Label />
     <div className="ot-px"><b dir="ltr">{fmt(row.last_price)}</b><small>{cur.short}</small><span className={row.change_percent >= 0 ? 'u' : 'd'} dir="ltr">{row.change_percent >= 0 ? '▲' : '▼'} {Math.abs(row.change_percent || 0).toFixed(2)}%</span></div>
     <UsdNote k={code} />
-    <p className="eg-note">غير متوفر: القراءة الفنية والسيناريو والرسم. السبب: {reason}</p>
+    {CARD_ON.has(code) ? <DecisionCard code={code} /> : null}
+    <p className="eg-note">مش معروض: القراءة الفنية والسيناريو والرسم. السبب: {reason}</p>
     <OtherFacts row={row} code={code} />
     <FairInline code={code} />
     <ComboOnly code={code} />
