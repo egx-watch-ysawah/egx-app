@@ -38,7 +38,7 @@ def conds(df):
     v = df.close * df.volume
     med60 = v.shift(1).rolling(60).median()
     A = v > 2 * med60
-    B = ((df.close - df.low) / (df.high - df.low).replace(0, np.nan)) >= (2/3)
+    B = ((df.close - df.low) / (df.high - df.low).replace(0, np.nan)) >= (2/3 - 1e-9)
     up = df.close > df.close.shift(1)
     us = (df.volume * up).rolling(10).sum() / df.volume.rolling(10).sum()
     C = (us > 0.6) & (df.close > df.close.rolling(20).mean())
@@ -67,7 +67,10 @@ def raw_flagged_suspended(rows, last_date):
             return True
     return False
 
+EXCLUDE = {'VLMR'}  # removed from the app's flow stats (builder's VLMR removal package)
 for sym in sorted(H):
+    if sym in EXCLUDE:
+        continue
     df = load_df(H[sym])
     if len(df) < 260:
         continue
