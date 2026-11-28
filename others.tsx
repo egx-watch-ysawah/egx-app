@@ -1,7 +1,9 @@
 import { TeamBlock } from './scen';
 import { NewsBlock } from './news';
 import { useStudy, StudyLight, StudyLightFair } from './studyrest';
-import { FairInline } from './ui2026/FairSix';
+import { FairInline, FAIR6 } from './ui2026/FairSix';
+import { FlowCombo } from './ui2026/FlowCombo';
+const ComboOnly = ({ code }: { code: string }) => FAIR6.includes(code) ? null : <div className="sm fs-in"><FlowCombo k={code} /></div>;
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from './shim';
 import { RefreshBar } from './refresh';
@@ -123,13 +125,14 @@ export function OtherFacts({ row: r }: { row: any }) {
   </div></details>;
 }
 
-export function OtherLight({ code, row, reason }: { code: string; row: any; reason: string }) {
+export function OtherLight({ code, row, reason, unNode }: { code: string; row: any; reason: string; unNode?: React.ReactNode }) {
   const study = useStudy(code);
   const back = <Link className="eg-back" to="/others">← باقي الأسهم</Link>;
   if (!row) return <div className="eg-pad">{back}
     {study ? <h2 className="eg-h">{study.record.name} <L>{code}</L></h2> : null}
-    <p className="eg-note">غير متوفر: {reason || 'مفيش بيانات للسهم ده.'}{study ? ' (سعر السوق والقراءة الفنية). الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>
+    {unNode ? unNode : <p className="eg-note">غير متوفر: {reason || 'مفيش بيانات للسهم ده.'}{study ? ' (سعر السوق والقراءة الفنية). الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
     <FairInline code={code} />
+    <ComboOnly code={code} />
     {study ? <><StudyLight st={study} /><StudyLightFair st={study} /><TeamBlock code={code} /><NewsBlock code={code} /></> : null}</div>;
   return <div className="eg-pad">{back}
     <h2 className="eg-h">{row.name_ar || row.name_en} <L>{code}</L></h2>
@@ -138,6 +141,7 @@ export function OtherLight({ code, row, reason }: { code: string; row: any; reas
     <p className="eg-note">غير متوفر: القراءة الفنية والسيناريو والرسم. السبب: {reason}</p>
     <OtherFacts row={row} />
     <FairInline code={code} />
+    <ComboOnly code={code} />
     {study ? <><StudyLight st={study} /><StudyLightFair st={study} /></> : null}
     <TeamBlock code={code} />
     <NewsBlock code={code} />
