@@ -1,0 +1,27 @@
+{
+ "code": "MMHC",
+ "name_ar": "المعمورة للتعمير والتنمية السياحية",
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no industry label in feed",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS651F1C014, market NOPL, sector Travel & Leisure, profile last updated 28/06/2026. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 10,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 10 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Travel & Leisure، آخر تحديث للملف 28/06/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS651F1C014",
+  "market": "NOPL",
+  "sector": "Travel & Leisure",
+  "price_shown": null,
+  "last_updated": "28/06/2026",
+  "source": "arabfinance.com/en/home/companyprofile/mmhc (fetched 28 Nov 2026)"
+ }
+}
