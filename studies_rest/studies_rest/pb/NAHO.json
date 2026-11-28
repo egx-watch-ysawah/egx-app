@@ -1,0 +1,25 @@
+{
+ "code": "NAHO",
+ "name_ar": null,
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "range is in USD, no currency conversion",
+  "USD line, no reliable USD peer group"
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "USD",
+ "price": 0.124,
+ "method": "price_history_52w",
+ "confidence": "low",
+ "confidence_ar": "ثقة منخفضة: السهم متسعّر بالدولار ومفيش شركات مسعّرة بالدولار من نفس النشاط تتقارن بيها بشكل موثوق. ده أدنى وأعلى سعر في آخر 52 أسبوع بس، مش تقدير للسعر العادل.",
+ "rung": 6,
+ "method_ar": "مدى سعر تاريخي بس، مش تقدير للسعر العادل",
+ "range": {
+  "low": 0.1,
+  "base": null,
+  "high": 0.158
+ },
+ "range_source": "TradingView scanner price_52_week_low/high, pulled 28 Nov 2026",
+ "price_marker": "inside"
+}
