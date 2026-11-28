@@ -1,0 +1,49 @@
+{
+ "method": "pb_peers",
+ "rung": 4,
+ "method_ar": "نطاق من P/B لـ4 شركات من قطاع التكنولوجيا (الصناعة فيها 3 بس)، من الأدنى للأعلى",
+ "currency": "EGP",
+ "price": 20.9,
+ "peer_level": "sector",
+ "n_peers": 4,
+ "range": {
+  "low": 19.25,
+  "base": 38.39,
+  "high": 68.83
+ },
+ "multiples": {
+  "low": 3.6,
+  "median": 7.17,
+  "high": 12.85
+ },
+ "peers": [
+  {
+   "code": "RAYA",
+   "pb": 3.5952443104962146
+  },
+  {
+   "code": "FWRY",
+   "pb": 5.7771433369720375
+  },
+  {
+   "code": "EFIH",
+   "pb": 8.558928273329252
+  },
+  {
+   "code": "VERT",
+   "pb": 12.8526122517109
+  }
+ ],
+ "price_marker": "inside",
+ "confidence": "low",
+ "confidence_ar": "ثقة منخفضة: إدراج جديد (21 أكتوبر 2026)، 4 شركات مشابهة بس، ومفيش ربحية",
+ "review_flags": [
+  "IPO 21 Oct 2026 (offer price 24.50 per TradingView page and Arab Finance), about 5 weeks of trading; peers are fintech/software, not lenders like Halan itself",
+  "feed 52-week low shows 0.10, not usable, so no 52-week range given"
+ ],
+ "code": "HALN",
+ "name_ar": null,
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar"
+}
