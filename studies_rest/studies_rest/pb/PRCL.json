@@ -1,0 +1,24 @@
+{
+ "code": "PRCL",
+ "name_ar": "شينى",
+ "app_batch": "B3",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "negative book value (feed -6.02225, no reviewed statements), TTM EPS null"
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 17.81,
+ "method": "price_history_52w",
+ "confidence": "low",
+ "confidence_ar": "ثقة منخفضة: القيمة الدفترية سالبة وربح السهم آخر 12 شهر مش متاح. ده أدنى وأعلى سعر في آخر 52 أسبوع بس، مش تقدير للسعر العادل.",
+ "rung": 6,
+ "method_ar": "مدى سعر تاريخي بس، مش تقدير للسعر العادل",
+ "range": {
+  "low": 13.49,
+  "base": null,
+  "high": 38.25
+ },
+ "range_source": "TradingView scanner price_52_week_low/high, pulled 28 Nov 2026",
+ "price_marker": "inside"
+}

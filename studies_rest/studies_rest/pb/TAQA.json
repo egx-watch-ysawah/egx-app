@@ -1,0 +1,51 @@
+{
+ "code": "TAQA",
+ "name_ar": "طاقة عربية",
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 13.5,
+ "price_date": "2026-11-26",
+ "own_bvps": 1.5011,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 8.99,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Utilities",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "EGAS",
+   "name_ar": null,
+   "pb": 1.3912942827585708,
+   "price": 48.08
+  },
+  {
+   "code": "EGTS",
+   "name_ar": "المصرية للمنتجعات السياحية",
+   "pb": 25.04808810162971,
+   "price": 11.85
+  }
+ ],
+ "multiples": {
+  "low": 1.391,
+  "median": 13.22,
+  "high": 25.048,
+  "min": 1.3912942827585708,
+  "max": 25.04808810162971
+ },
+ "range": {
+  "low": 2.088,
+  "base": null,
+  "high": 37.6
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "statement book value 1.50 differs from feed-implied 3.27 (ratio 0.46)",
+  "peer P/B spread very wide (min 1.39, max 25.05, median 25.05)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}

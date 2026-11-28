@@ -1,0 +1,69 @@
+{
+ "code": "RKAZ",
+ "name_ar": null,
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 5 شركة من نفس النشاط، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 3.91,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.956,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 4.09,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Chemicals: Agricultural",
+ "n_peers": 5,
+ "peers": [
+  {
+   "code": "EGCH",
+   "name_ar": "كيما",
+   "pb": 0.46718671803410045,
+   "price": 10.11
+  },
+  {
+   "code": "MFPC",
+   "name_ar": "موبكو",
+   "pb": 2.2329977463656885,
+   "price": 36.79
+  },
+  {
+   "code": "NEDA",
+   "name_ar": null,
+   "pb": 2.6472606843659103,
+   "price": 2.43
+  },
+  {
+   "code": "ABUK",
+   "name_ar": "ابوقير للاسمدة",
+   "pb": 2.874952664407077,
+   "price": 73.49
+  },
+  {
+   "code": "EFIC",
+   "name_ar": null,
+   "pb": 4.911872016244707,
+   "price": 152.49
+  }
+ ],
+ "multiples": {
+  "low": 2.233,
+  "median": 2.647,
+  "high": 2.875,
+  "min": 0.46718671803410045,
+  "max": 4.911872016244707
+ },
+ "range": {
+  "low": 2.135,
+  "base": 2.531,
+  "high": 2.748
+ },
+ "price_marker": "above_all",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.47, max 4.91, median 2.65)",
+  "feed drift: peer P/B changed vs 12:21 file: NEDA"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B5"
+}

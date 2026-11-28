@@ -1,0 +1,27 @@
+{
+ "code": "TOUR",
+ "name_ar": "التعمير السياحي",
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no book value and no positive P/E",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS65021C015, market SME, sector Travel & Leisure, profile last updated 26/08/2026. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 10,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 10 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق SME والقطاع Travel & Leisure، آخر تحديث للملف 26/08/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS65021C015",
+  "market": "SME",
+  "sector": "Travel & Leisure",
+  "price_shown": null,
+  "last_updated": "26/08/2026",
+  "source": "arabfinance.com/en/home/companyprofile/tour (fetched 28 Nov 2026)"
+ }
+}

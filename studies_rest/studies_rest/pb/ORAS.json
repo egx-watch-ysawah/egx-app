@@ -1,0 +1,72 @@
+{
+ "code": "ORAS",
+ "name_ar": "اوراسكوم كونستراكشون ليميتد",
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 6 شركات من نفس النشاط، القيمة الدفترية للسهم من قوائم مراجعة بالدولار بتاريخ 30 سبتمبر 2026 ومحوّلة للجنيه، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 790,
+ "price_date": "2026-11-26",
+ "own_bvps": 508.75,
+ "own_bvps_source": "reviewed statements (USD, converted to EGP)",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 1.55,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Engineering & Construction",
+ "n_peers": 6,
+ "peers": [
+  {
+   "code": "GGCC",
+   "name_ar": null,
+   "pb": 1.202018088395992,
+   "price": 0.517
+  },
+  {
+   "code": "IEEC",
+   "name_ar": "المشروعات الصناعية والهندسية",
+   "pb": 2.5746192893401014,
+   "price": 0.634
+  },
+  {
+   "code": "AREH",
+   "name_ar": null,
+   "pb": 3.1670377222413846,
+   "price": 1.01
+  },
+  {
+   "code": "FNAR",
+   "name_ar": null,
+   "pb": 3.4997912468913945,
+   "price": 9.64
+  },
+  {
+   "code": "NCCW",
+   "name_ar": "النصر للأعمال المدنية",
+   "pb": 3.9740800811726995,
+   "price": 5.17
+  },
+  {
+   "code": "CRST",
+   "name_ar": null,
+   "pb": 5.5994199162101195,
+   "price": 1.39
+  }
+ ],
+ "multiples": {
+  "low": 2.723,
+  "median": 3.333,
+  "high": 3.856,
+  "min": 1.202018088395992,
+  "max": 5.5994199162101195
+ },
+ "range": {
+  "low": 1385.186,
+  "base": 1695.875,
+  "high": 1961.49
+ },
+ "price_marker": "below_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B2"
+}

@@ -1,0 +1,27 @@
+{
+ "method": "none",
+ "currency": "USD",
+ "price": 0.95,
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: السهم متسعّر بالدولار ومفيش مقارنة موثوقة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 0.95 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Non-bank financial services، آخر تحديث للملف 09/03/2023.",
+ "review_flags": [
+  "USD line, no reliable USD peer group",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS67032C010, market NOPL, sector Non-bank financial services, profile last updated 09/03/2023, price shown 0. The profile does not say why there is no trading."
+ ],
+ "code": "SEIGA",
+ "name_ar": null,
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS67032C010",
+  "market": "NOPL",
+  "sector": "Non-bank financial services",
+  "price_shown": "0",
+  "last_updated": "09/03/2023",
+  "source": "arabfinance.com/en/home/companyprofile/seiga (fetched 28 Nov 2026)"
+ }
+}

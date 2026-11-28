@@ -1,0 +1,48 @@
+{
+ "code": "SPMD",
+ "name_ar": null,
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 0.317,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.0565,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 5.61,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Health Services",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "NINH",
+   "name_ar": null,
+   "pb": 5.206324037927239,
+   "price": 14.71
+  },
+  {
+   "code": "CLHO",
+   "name_ar": "مستشفى كليوباترا",
+   "pb": 5.517452775968428,
+   "price": 14.4
+  }
+ ],
+ "multiples": {
+  "low": 5.206,
+  "median": 5.362,
+  "high": 5.517,
+  "min": 5.206324037927239,
+  "max": 5.517452775968428
+ },
+ "range": {
+  "low": 0.294,
+  "base": null,
+  "high": 0.312
+ },
+ "price_marker": "above_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B5"
+}

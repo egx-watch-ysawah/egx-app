@@ -1,0 +1,54 @@
+{
+ "code": "VERT",
+ "name_ar": null,
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 3 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 3.85,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.2995,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 12.85,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Technology Services",
+ "n_peers": 3,
+ "peers": [
+  {
+   "code": "RAYA",
+   "name_ar": "راية",
+   "pb": 3.5952443104962146,
+   "price": 6.06
+  },
+  {
+   "code": "FWRY",
+   "name_ar": "فوري لتكنولوجيا البنوك والمدفوعات الالكترونية",
+   "pb": 5.7771433369720375,
+   "price": 17.2
+  },
+  {
+   "code": "EFIH",
+   "name_ar": "اي فاينانس للاستثمارات المالية والرقمية",
+   "pb": 8.558928273329252,
+   "price": 24.61
+  }
+ ],
+ "multiples": {
+  "low": 3.595,
+  "median": 5.777,
+  "high": 8.559,
+  "min": 3.5952443104962146,
+  "max": 8.558928273329252
+ },
+ "range": {
+  "low": 1.077,
+  "base": 1.73,
+  "high": 2.563
+ },
+ "price_marker": "above_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B5"
+}

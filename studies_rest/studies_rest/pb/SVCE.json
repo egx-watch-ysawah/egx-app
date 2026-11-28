@@ -1,0 +1,72 @@
+{
+ "code": "SVCE",
+ "name_ar": "جنوب الوادي للاسمنت",
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 6 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 8.45,
+ "price_date": "2026-11-26",
+ "own_bvps": 15.6635,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 0.54,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Non-Energy Minerals",
+ "n_peers": 6,
+ "peers": [
+  {
+   "code": "ASCM",
+   "name_ar": "اسيك للتعدين",
+   "pb": 0.7855556293334076,
+   "price": 44.01
+  },
+  {
+   "code": "SCEM",
+   "name_ar": "اسمنت سيناء",
+   "pb": 3.3278770812590843,
+   "price": 96.53
+  },
+  {
+   "code": "EGAL",
+   "name_ar": "مصر للالومنيوم",
+   "pb": 3.5599740614812996,
+   "price": 292.5
+  },
+  {
+   "code": "MBSC",
+   "name_ar": "مصر بنى سويف للأسمنت",
+   "pb": 3.6279428113082757,
+   "price": 330
+  },
+  {
+   "code": "MCQE",
+   "name_ar": "مصر للأسمنت - قنا",
+   "pb": 3.90918099852772,
+   "price": 173.49
+  },
+  {
+   "code": "ALUM",
+   "name_ar": null,
+   "pb": 6.2137884648869735,
+   "price": 18.2
+  }
+ ],
+ "multiples": {
+  "low": 3.386,
+  "median": 3.594,
+  "high": 3.839,
+  "min": 0.7855556293334076,
+  "max": 6.2137884648869735
+ },
+ "range": {
+  "low": 53.035,
+  "base": 56.294,
+  "high": 60.13
+ },
+ "price_marker": "below_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}

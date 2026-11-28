@@ -1,0 +1,27 @@
+{
+ "code": "OCAP",
+ "name_ar": "أو جى كابيتال للاستثمارات ذات غرض الاستحواذ",
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no industry label in feed",
+  "feed 52-week low = high = last price: no trading range",
+  "Arab Finance profile: ISIN EGS699Z1C014, market NOPL, sector Non-bank financial services, profile last updated 19/05/2026. The profile does not say why there is no trading."
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 1,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 1 ثابت في بيانات السوق). حسب ملف الشركة في Arab Finance: السوق NOPL والقطاع Non-bank financial services، آخر تحديث للملف 19/05/2026.",
+ "rung": null,
+ "range": null,
+ "profile": {
+  "isin": "EGS699Z1C014",
+  "market": "NOPL",
+  "sector": "Non-bank financial services",
+  "price_shown": null,
+  "last_updated": "19/05/2026",
+  "source": "arabfinance.com/en/home/companyprofile/ocap (fetched 28 Nov 2026)"
+ }
+}

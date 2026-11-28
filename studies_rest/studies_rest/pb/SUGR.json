@@ -1,0 +1,117 @@
+{
+ "code": "SUGR",
+ "name_ar": null,
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 13 شركة من نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 49.63,
+ "price_date": "2026-11-26",
+ "own_bvps": 19.0,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 2.61,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Agricultural Commodities/Milling",
+ "n_peers": 13,
+ "peers": [
+  {
+   "code": "POUL",
+   "name_ar": "القاهرة للدواجن",
+   "pb": 1.5882132716960862,
+   "price": 6.83
+  },
+  {
+   "code": "IFAP",
+   "name_ar": null,
+   "pb": 1.8782838939224693,
+   "price": 15.89
+  },
+  {
+   "code": "CEFM",
+   "name_ar": null,
+   "pb": 3.210277165158947,
+   "price": 120.06
+  },
+  {
+   "code": "EPCO",
+   "name_ar": null,
+   "pb": 4.9535454095132225,
+   "price": 8.2
+  },
+  {
+   "code": "UEFM",
+   "name_ar": null,
+   "pb": 5.02916386769749,
+   "price": 476
+  },
+  {
+   "code": "MILS",
+   "name_ar": null,
+   "pb": 5.911320374907329,
+   "price": 132.44
+  },
+  {
+   "code": "ISMA",
+   "name_ar": "الاسماعيلية مصر للدواجن",
+   "pb": 7.998389183538827,
+   "price": 18.67
+  },
+  {
+   "code": "MPCO",
+   "name_ar": "المنصورة للدواجن",
+   "pb": 8.39355446833341,
+   "price": 1.87
+  },
+  {
+   "code": "SCFM",
+   "name_ar": null,
+   "pb": 11.461996899228208,
+   "price": 209
+  },
+  {
+   "code": "MOSC",
+   "name_ar": null,
+   "pb": 11.544806853316063,
+   "price": 283.41
+  },
+  {
+   "code": "ELNA",
+   "name_ar": null,
+   "pb": 13.380824684585098,
+   "price": 39.22
+  },
+  {
+   "code": "AIFI",
+   "name_ar": "اطلس لاستصلاح الاراضى",
+   "pb": 17.574692442882252,
+   "price": 2.5
+  },
+  {
+   "code": "SNFC",
+   "name_ar": null,
+   "pb": 39.09336660428363,
+   "price": 11.28
+  }
+ ],
+ "multiples": {
+  "low": 4.954,
+  "median": 7.998,
+  "high": 11.545,
+  "min": 1.5882132716960862,
+  "max": 39.09336660428363
+ },
+ "range": {
+  "low": 94.117,
+  "base": 151.969,
+  "high": 219.351
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "peer P/B spread very wide (min 1.59, max 39.09, median 8.00)",
+  "feed drift: peer P/B changed vs 12:21 file: CEFM,MILS,SCFM"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B5"
+}

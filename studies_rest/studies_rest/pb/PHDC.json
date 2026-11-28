@@ -1,0 +1,176 @@
+{
+ "code": "PHDC",
+ "name_ar": "بالم هيلز",
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 23 شركة من نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 11.34,
+ "price_date": "2026-11-26",
+ "own_bvps": 7.1,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 1.6,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Real Estate Development",
+ "n_peers": 23,
+ "peers": [
+  {
+   "code": "ELKA",
+   "name_ar": "القاهرة للإسكان",
+   "pb": 0.4189898155546976,
+   "price": 1.4
+  },
+  {
+   "code": "PRDC",
+   "name_ar": "بايونيرز بروبرتيز للتنمية العمرانية",
+   "pb": 0.8689259680708435,
+   "price": 6.17
+  },
+  {
+   "code": "EMFD",
+   "name_ar": "إعمار مصر",
+   "pb": 0.9288705086267427,
+   "price": 12.25
+  },
+  {
+   "code": "ATLC",
+   "name_ar": "التوفيق للتأجير التمويلي",
+   "pb": 1.5645480576016435,
+   "price": 5.24
+  },
+  {
+   "code": "AMER",
+   "name_ar": "عامر جروب",
+   "pb": 1.6041885595781682,
+   "price": 3.45
+  },
+  {
+   "code": "ELSH",
+   "name_ar": "الشمس للإسكان",
+   "pb": 1.7490301905886319,
+   "price": 10.37
+  },
+  {
+   "code": "OCDI",
+   "name_ar": "سوديك",
+   "pb": 1.8252282115315754,
+   "price": 23.6
+  },
+  {
+   "code": "EHDR",
+   "name_ar": "المصريين للإسكان",
+   "pb": 1.9316521872837702,
+   "price": 2.01
+  },
+  {
+   "code": "ARAB",
+   "name_ar": "بورتو جروب",
+   "pb": 2.0119760479041915,
+   "price": 0.252
+  },
+  {
+   "code": "ZMID",
+   "name_ar": "زهراء المعادي",
+   "pb": 2.3822710478199185,
+   "price": 6.28
+  },
+  {
+   "code": "OBRI",
+   "name_ar": "العبور للاستثمار العقارى",
+   "pb": 2.513971425705063,
+   "price": 21.3
+  },
+  {
+   "code": "COPR",
+   "name_ar": null,
+   "pb": 2.6074878464549527,
+   "price": 0.413
+  },
+  {
+   "code": "TANM",
+   "name_ar": null,
+   "pb": 2.7770573997233745,
+   "price": 5.14
+  },
+  {
+   "code": "DAPH",
+   "name_ar": "التعمير والاستشارات الهندسية",
+   "pb": 2.9403958911321135,
+   "price": 81.1
+  },
+  {
+   "code": "ROTO",
+   "name_ar": null,
+   "pb": 3.2741653835235827,
+   "price": 30.45
+  },
+  {
+   "code": "UNIT",
+   "name_ar": null,
+   "pb": 3.3501524956584094,
+   "price": 15.51
+  },
+  {
+   "code": "CCRS",
+   "name_ar": null,
+   "pb": 3.800438213794039,
+   "price": 1.96
+  },
+  {
+   "code": "NHPS",
+   "name_ar": null,
+   "pb": 3.908712379261705,
+   "price": 55.31
+  },
+  {
+   "code": "MAAL",
+   "name_ar": null,
+   "pb": 4.148931885011479,
+   "price": 6.18
+  },
+  {
+   "code": "UTOP",
+   "name_ar": null,
+   "pb": 4.833841862963838,
+   "price": 81.7
+  },
+  {
+   "code": "GPIM",
+   "name_ar": "المصريين للاستثمار",
+   "pb": 13.411785065328372,
+   "price": 1.55
+  },
+  {
+   "code": "MENA",
+   "name_ar": null,
+   "pb": 15.450025556433252,
+   "price": 6.65
+  },
+  {
+   "code": "EALR",
+   "name_ar": null,
+   "pb": 20.324786762634155,
+   "price": 285.66
+  }
+ ],
+ "multiples": {
+  "low": 1.787,
+  "median": 2.607,
+  "high": 3.855,
+  "min": 0.4189898155546976,
+  "max": 20.324786762634155
+ },
+ "range": {
+  "low": 12.689,
+  "base": 18.513,
+  "high": 27.367
+ },
+ "price_marker": "below_all",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.42, max 20.32, median 2.61)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B2"
+}

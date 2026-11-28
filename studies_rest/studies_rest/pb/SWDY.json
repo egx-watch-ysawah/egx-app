@@ -1,0 +1,63 @@
+{
+ "code": "SWDY",
+ "name_ar": "السويدي اليكتريك",
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 4 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 115.93,
+ "price_date": "2026-11-26",
+ "own_bvps": 35.14,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 3.3,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Producer Manufacturing",
+ "n_peers": 4,
+ "peers": [
+  {
+   "code": "LCSW",
+   "name_ar": "ليسيكو",
+   "pb": 0.8365577674601034,
+   "price": 43.34
+  },
+  {
+   "code": "CERA",
+   "name_ar": null,
+   "pb": 2.3306258076426065,
+   "price": 1.01
+  },
+  {
+   "code": "ATQA",
+   "name_ar": "عتاقة",
+   "pb": 4.628076674396333,
+   "price": 9.52
+  },
+  {
+   "code": "AMII",
+   "name_ar": null,
+   "pb": 5.522109487924332,
+   "price": 7.87
+  }
+ ],
+ "multiples": {
+  "low": 0.837,
+  "median": 3.479,
+  "high": 5.522,
+  "min": 0.8365577674601034,
+  "max": 5.522109487924332
+ },
+ "range": {
+  "low": 29.397,
+  "base": 122.264,
+  "high": 194.047
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.84, max 5.52, median 4.63)",
+  "feed drift: peer P/B changed vs 12:21 file: AMII"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
