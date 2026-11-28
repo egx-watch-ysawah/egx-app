@@ -4,7 +4,7 @@ import { DATA } from '../data';
 import { FlowSignal } from './FlowSignal';
 import { Peers } from './Peers';
 // Six-stock page: flow signal + peer comparison. The old fair-value cards are cancelled for these stocks.
-export const FAIR6: string[] = ['MASR', 'ORHD', 'HRHO', 'PHAR', 'BONY', 'UNIP', 'COMI', 'ETEL', 'TMGH', 'SWDY', 'EAST', 'TAQA', 'SKPC', 'ABUK', 'ORAS', 'PHDC', 'ADIB', 'FWRY', 'RMDA', 'RAYA', 'ORWE', 'MFPC', 'MCQE', 'LCSW', 'JUFO', 'ISPH', 'ISMA', 'ICFC', 'HDBK', 'ELKA', 'EFIH', 'EFID'];
+export const FAIR6: string[] = ['MASR', 'ORHD', 'HRHO', 'PHAR', 'BONY', 'UNIP', 'COMI', 'ETEL', 'TMGH', 'SWDY', 'EAST', 'TAQA', 'SKPC', 'ABUK', 'ORAS', 'PHDC', 'ADIB', 'FWRY', 'RMDA', 'RAYA', 'ORWE', 'MFPC', 'MCQE', 'LCSW', 'JUFO', 'ISPH', 'ISMA', 'ICFC', 'HDBK', 'ELKA', 'EFIH', 'EFID', 'DSCW', 'ARCC', 'AMOC', 'UEGC', 'MEPA', 'ETRS', 'AMER', 'MCRO', 'ENGC', 'MPRC', 'ATQA', 'POUL', 'MTIE', 'MBSC', 'SCEM', 'EXPA', 'OCDI', 'EGAL', 'CLHO', 'CCAP'];
 const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
 const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : ''; };
 const lj = (u: string) => fetch(u + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
