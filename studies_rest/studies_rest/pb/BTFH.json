@@ -1,0 +1,90 @@
+{
+ "code": "BTFH",
+ "name_ar": "بلتون المالية",
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 9 شركة من نفس النشاط، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 2.17,
+ "price_date": "2026-11-26",
+ "own_bvps": 2.2204,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 0.98,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Investment Banks/Brokers",
+ "n_peers": 9,
+ "peers": [
+  {
+   "code": "ASPI",
+   "name_ar": "بايونيرز القابضة",
+   "pb": 0.8284534635831287,
+   "price": 0.307
+  },
+  {
+   "code": "HRHO",
+   "name_ar": "هيرميس",
+   "pb": 1.072478562354015,
+   "price": 26.98
+  },
+  {
+   "code": "PRMH",
+   "name_ar": null,
+   "pb": 1.3801248292009693,
+   "price": 2.01
+  },
+  {
+   "code": "AFDI",
+   "name_ar": null,
+   "pb": 2.3071214223484238,
+   "price": 44.33
+  },
+  {
+   "code": "EASB",
+   "name_ar": "المصرية العربية (ثمار) للأوراق المالية",
+   "pb": 3.3523524689125996,
+   "price": 5.47
+  },
+  {
+   "code": "KWIN",
+   "name_ar": null,
+   "pb": 3.5862858853995045,
+   "price": 65.63
+  },
+  {
+   "code": "EBSC",
+   "name_ar": "اصول إى إس بى للوساطة في الاوراق المالية",
+   "pb": 3.7368075544109476,
+   "price": 1.48
+  },
+  {
+   "code": "GRCA",
+   "name_ar": null,
+   "pb": 4.346307726178817,
+   "price": 34.35
+  },
+  {
+   "code": "EOSB",
+   "name_ar": null,
+   "pb": 5.120101137800253,
+   "price": 1.62
+  }
+ ],
+ "multiples": {
+  "low": 1.38,
+  "median": 3.352,
+  "high": 3.737,
+  "min": 0.8284534635831287,
+  "max": 5.120101137800253
+ },
+ "range": {
+  "low": 3.064,
+  "base": 7.444,
+  "high": 8.297
+ },
+ "price_marker": "below_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B2"
+}
