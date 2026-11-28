@@ -1,29 +1,18 @@
 import React from 'react';
-import { DATA } from '../data';
 import { FlowLive } from './FlowLive';
-import { FlowCombo, useCombo } from './FlowCombo';
+import { FlowCombo } from './FlowCombo';
 // HRHO-only panel: "علامة تجميع". pound verdicts. Numbers come from flow_signal.json (daily) and flow_stats.json (history test, dated).
 type Cond = { value: { x: number; ok: boolean }; close: { pos: number; ok: boolean }; flow: { share: number; aboveAvg: boolean | null; ok: boolean } };
 type Sig = { asof: string; stocks: Record<string, { date: string; fired: boolean; deduped?: boolean; conditions: Cond }> };
-type Stats = { tested: string; glitch?: string; perStock: Record<string, any> };
 const lj = (u: string) => fetch(u + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
-let SP: Promise<Sig | null> | null = null, TP: Promise<Stats | null> | null = null;
+let SP: Promise<Sig | null> | null = null;
 const nn = (v: any) => typeof v === 'number' && isFinite(v);
-const arDm = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? M[Number(m[2]) - 1] + ' ' + m[1] : ''; };
 const loadSig = () => SP || (SP = lj('flow_signal.json').then((j: any) => {
   if (!j || typeof j.session !== 'string' || !j.stocks || typeof j.stocks !== 'object') return null;
   const o: Sig = { asof: j.session, stocks: {} };
   for (const k of Object.keys(j.stocks)) { const v = j.stocks[k]; if (!v || !nn(v.volXmed60) || !nn(v.upShare10) || typeof v.date !== 'string') continue;
     const share = Math.round(v.upShare10 * 100); const C = !!v.C_upVolShareAndGtSma20;
     o.stocks[k] = { date: v.date, fired: !!v.rawFired, deduped: !!v.rawFired && !v.fired, conditions: { value: { x: v.volXmed60, ok: !!v.A_valueGt2xMed60 }, close: { pos: 0, ok: !!v.B_closeTopThird }, flow: { share, ok: C, aboveAvg: C ? true : share > 60 ? false : null } } } as any; }
-  return o; }));
-const loadStats = () => TP || (TP = lj('flow_stats.json').then((j: any) => {
-  if (!j || !j.perStock || typeof j.perStock !== 'object') return null;
-  const o: any = { tested: (j.asof || '').slice(0, 10), glitch: j.rule && typeof j.rule.glitchFilterAr === 'string' ? j.rule.glitchFilterAr : '', perStock: {} };
-  for (const k of Object.keys(j.perStock)) { const v = j.perStock[k]; if (!v || !v.history || !v.signals) continue;
-    const rows = [5, 10, 20].map(h => { const x = v['h' + h]; return x && { h, win: x.win, winAny: x.baseWin, avg: x.mean, avgAny: x.baseMean }; }).filter(Boolean);
-    const r = v.recentClosedSummary;
-    o.perStock[k] = { signals: v.signals.total, sessions: nn(v.history.sessions) ? v.history.sessions : null, sinceLabel: arDm(v.history.from), toLabel: arD(v.history.to), rows, worst: (v.worst || []).filter((w: any) => nn(w.ret20)).map((w: any) => ({ v: w.ret20, d: arD(w.date) })), raw: nn(v.signals.rawDaysAllTrue) ? v.signals.rawDaysAllTrue : null, firstLabel: typeof v.signals.firstSignal === 'string' ? arDm(v.signals.firstSignal) : Array.isArray(v.fireDates) && v.fireDates.length ? arDm([...v.fireDates].sort()[0]) : '', recent: r && nn(r.n) ? { n: r.n, wins: r.wins, losses: r.losses } : null }; }
   return o; }));
 const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
 const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : String(iso || ''); };
@@ -34,36 +23,19 @@ export const loadHolidays = () => HP || (HP = fetch('egx_holidays.json?t=' + Dat
 export const staleBySession = (iso: string, hol?: Set<string>) => { const f = new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()); const g = (t: string) => f.find(x => x.type === t)!.value; const today = g('year') + '-' + g('month') + '-' + g('day'); const hr = Number(g('hour'));
   const d = new Date(iso.slice(0, 10) + 'T00:00:00Z'); do { d.setUTCDate(d.getUTCDate() + 1); } while (d.getUTCDay() === 5 || d.getUTCDay() === 6 || (hol && hol.has(d.toISOString().slice(0, 10)))); const nx = d.toISOString().slice(0, 10); return today > nx || (today === nx && hr >= 15); };
 export const useHolidays = () => { const [h, setH] = React.useState<Set<string> | undefined>(undefined); React.useEffect(() => { let on = true; loadHolidays().then(x => on && setH(x)); return () => { on = false; }; }, []); return h; };
-const sess = (h: number) => (h <= 10 ? 'جلسات' : 'جلسة');
-const N = (v: number) => <bdi dir="ltr">{v}</bdi>;
-const verdict = (d: number): [any, string] => { const g = Math.abs(d).toFixed(1); return d >= 1 ? [<>العلامة زادت <bdi dir="ltr">{g}</bdi> جنيه</>, 'y'] : d > -1 ? [<>مفيش فرق يتحس: <bdi dir="ltr">{g}</bdi> جنيه بس</>, 'g'] : [<>العلامة نقصت <bdi dir="ltr">{g}</bdi> جنيه</>, 'n']; };
-const Bar = ({ label, v, max, hi }: { label: string; v: number; max: number; hi?: boolean }) => <div className="fx-dr"><span className="fx-dl">{label}</span>
-  <div className="fx-bar" dir="ltr"><i style={{ width: Math.max(2, (v - 100) / (max - 100) * 100) + '%', background: hi ? '#25b896' : '#6b7380' }} /></div><b className="fx-dn" dir="ltr">{v.toFixed(1)}</b></div>;
-function Block({ r, max }: { r: any; max: number }) {
-  const m1 = 100 * (1 + r.avg / 100), m2 = 100 * (1 + r.avgAny / 100); const v = verdict(m1 - m2);
-  return <div className="fx-b"><div className="fx-bh"><b>لو بعته بعد {N(r.h)} {sess(r.h)}</b></div>
-    <Bar label="اشتريت لما العلامة ظهرت" v={m1} max={max} hi /><Bar label="اشتريت في يوم عادي من غير علامة" v={m2} max={max} /><div className={'fx-chip ' + v[1]} style={{marginTop:8,display:'inline-block'}}>{v[0]}</div>
-    <div className="fx-g" style={{marginTop:6,fontSize:12,color:'#a5aab2',lineHeight:1.7}}>المرات اللي كسب فيها بعد العلامة: <bdi dir="ltr">{r.win}%</bdi> ومن غير علامة: <bdi dir="ltr">{r.winAny}%</bdi>{r.win <= r.winAny ? '، يعني الكسب مش أكتر.' : '.'}</div></div>;
-}
 export function FlowSignal({ k }: { k: string }) {
   const [sig, setSig] = React.useState<Sig | null | undefined>(undefined);
-  const [st, setSt] = React.useState<Stats | null | undefined>(undefined); const hol = useHolidays(); const combo = useCombo(k);
-  React.useEffect(() => { let on = true; loadSig().then(x => on && setSig(x)); loadStats().then(x => on && setSt(x)); return () => { on = false; }; }, []);
-  if (sig === undefined || st === undefined || hol === undefined || combo === undefined) return null;
-  if (sig === null) return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div><div className="sm-card fx"><style>{FX_CSS}</style><div className="fx-na"><b>غير متوفر</b><span>ملف العلامة اليومية مش متاح دلوقتي، فمعرضناش حاجة.</span></div></div></>;
-  const ps0 = st && st.perStock && st.perStock[k]; const ps = ps0 || {};
+  const hol = useHolidays();
+  React.useEffect(() => { let on = true; loadSig().then(x => on && setSig(x)); return () => { on = false; }; }, []);
+  if (sig === undefined || hol === undefined) return null;
+  if (sig === null) return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div><div className="sm-card fx"><style>{FX_CSS}</style><div className="fx-na"><b>غير متوفر</b><span>ملف العلامة اليومية مش متاح دلوقتي، فمعرضناش حاجة.</span></div></div><FlowCombo k={k} /></>;
   const me = sig && sig.stocks[k]; const stale = !me || staleBySession(me.date, hol);
-  const rows: any[] = (Array.isArray(ps.rows) ? ps.rows : []).filter((r: any) => [r.h, r.win, r.winAny, r.avg, r.avgAny].every(nn));
-  const r20 = rows.find(r => r.h === 20); const ord = [...rows].sort((a, b) => b.h - a.h);
-  const small = nn(ps.signals) && ps.signals < 30; const hist = rows.length > 0 && !small;
-  const noEdge = hist && ord.every(r => (100 * (1 + r.avg / 100) - 100 * (1 + r.avgAny / 100)) < 1);
-  const mx = Math.max(100.5, ...rows.map(r => 100 * (1 + Math.max(r.avg, r.avgAny) / 100)));
   return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div>
     <div className="sm-card fx"><style>{FX_CSS}</style>
       {stale ? <div className="fx-na"><b>غير متوفر</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة مش متاحة دلوقتي'}</span></div> : me && <>
         <div className={'fx-v ' + (me.fired ? 'y' : 'g')}><span className="fx-vi">{me.fired ? '▲' : '—'}</span><div><b>{me.fired ? 'فيه علامة تجميع على السهم في آخر جلسة' : 'مفيش علامة تجميع في آخر جلسة'}</b><small>جلسة {arD(me.date)}{me.deduped ? ' · جت بعد علامة قريبة (أقل من 5 جلسات)، فمش بتتعد مرة تانية في الاختبار' : ''}</small><small style={{display:"block"}}>ده وصف للي حصل، مش توقع.</small></div></div>
         <div className="fx-bn"><b>تستفيد منها إزاي:</b> لو العلامة ظهرت، افتح الشارت وراجع السهم بنفسك قبل أي قرار. مش توقع ولا توصية.</div></>}
-      {combo ? <FlowCombo k={k} /> : null}
+      <FlowCombo k={k} />
       <FlowLive k={k} />
       <details className="sm-tip sm-tipd"><summary>التفاصيل والاختبار التاريخي</summary>
       {!stale && me && <>
@@ -73,23 +45,7 @@ export function FlowSignal({ k }: { k: string }) {
           <span className={'fx-c ' + (me.conditions.flow.ok ? 'y' : 'n')}><span>{me.conditions.flow.ok ? '✓' : '✗'}&nbsp;حجم آخر 10 جلسات: <bdi dir="ltr">{me.conditions.flow.share}%</bdi> في جلسات صعود (لازم أكتر من <bdi dir="ltr">60%</bdi>){me.conditions.flow.aboveAvg === null ? '' : <> والسعر {me.conditions.flow.aboveAvg ? 'فوق' : 'تحت'} متوسط آخر 20 جلسة (لازم فوقه)</>}</span></span>
           </div>
       </>}
-      {combo ? null : small ? <div className="fx-na"><b>عينة صغيرة، مش كفاية</b><span>العلامة ظهرت {ps.signals} مرات بس في السهم ده من {ps.sinceLabel}. ده قليل، فمش هنقول إنها نفعت أو لا. مفيش أرقام ولا حكم.</span></div> : rows.length === 0 ? <div className="fx-na"><b>اختبار العلامة على تاريخ السهم ده: غير متوفر</b><span>لسه ما اتعملش اختبار على أسعار {k} القديمة، فمفيش أرقام عن اللي حصل بعد العلامة. العلامة نفسها (فوق) محسوبة من بيانات آخر جلسة.</span></div> : <>
-      <div className="fx-t">هل العلامة بتفيد؟</div>
-      <div className="fx-g" style={{margin:'4px 0 8px',color:'#b4bac4',lineHeight:1.7}}>نسأل: لو اشتريت من غير علامة، هتكسب نفس الكسب؟ لو أيوه، العلامة ملهاش لازمة. لو كسبت أقل، العلامة بتفيد. الأرقام دي بتقول: لو اشتريت بـ <bdi dir="ltr">100</bdi> جنيه، بقوا كام في المتوسط بعد المدة. "كسب" معناها إن سعر السهم بعد المدة بقى أعلى من يوم الشراء. (العلامة ظهرت في السهم ده {N(ps.signals)} مرة قبل كده)</div>
-      {ord.map(r => <Block key={r.h} r={r} max={mx} />)}
-      {noEdge && <div className="fx-w"><b>الإشارة ما ضافتش حاجة على السهم ده تاريخيًا</b></div>}
-      {Array.isArray(ps.worst) && ps.worst.length > 0 && <div className="fx-w"><b>أسوأ حاجة حصلت بعد العلامة: <bdi dir="ltr" className="dn">{(100 + Math.min(...ps.worst.filter((w: any) => nn(w.v)).map((w: any) => w.v))).toFixed(0)}</bdi> جنيه رجعلك من كل <bdi dir="ltr">100</bdi></b>
-        {ps.worst.filter((w: any) => nn(w.v)).map((w: any, i: number) => <span key={i}>{w.d}: بقوا <b dir="ltr" className="dn">{(100 + w.v).toFixed(0)}</b></span>)}</div>}
-      <div className="fx-hn"><b>خد بالك</b>
-        <span>الفترة المختبرة: البيانات بتبدأ من {ps.sinceLabel}، وأول علامة كانت {ps.firstLabel || 'غير متوفر'}، ولحد {ps.toLabel || 'غير متوفر'}. العلامة ظهرت {N(ps.signals)} مرة{ps.raw ? <>، من أصل <bdi dir="ltr">{ps.raw}</bdi> يوم استوفى الشروط قبل ما نشيل المتكرر في أقل من 5 جلسات</> : ''}.</span>
-        {st && st.glitch ? <span>{st.glitch}</span> : null}
-        {ps.sessions ? <span>الاختبار ده على {N(ps.sessions)} جلسة من Starta{(() => { const st = (DATA as any).stocks && (DATA as any).stocks[k]; const hc = st ? st.historyCount : null; if (!nn(hc)) return ''; return hc <= 760 ? (ps.sessions > hc ? <>، وصفحة السهم بتعرض <bdi dir="ltr">{hc}</bdi> جلسة بس</> : '') : ps.sessions > 760 ? <>، أطول من آخر 3 سنين اللي بتعرضهم صفحة السهم</> : ''; })()}.</span> : null}
-        <span>الأسعار المختبرة خام: مش معدلة بتوزيعات الأرباح ولا بالتقسيمات، وبدون عمولات ومصاريف تداول.</span>
-        <span>الأسهم المختبرة هي الموجودة دلوقتي بس، فالنتايج ممكن تطلع أحلى من الحقيقة.</span>
-        <span>العلامات بتيجي ورا بعض في فترات قريبة، فالمرات مش مستقلة عن بعض.</span>
-        <span>{ps.recent ? <>آخر <bdi dir="ltr">{ps.recent.n}</bdi> مرات اتقفلت بعد 20 جلسة: <bdi dir="ltr">{ps.recent.wins}</bdi> كسبت و<bdi dir="ltr">{ps.recent.losses}</bdi> خسرت. ده السجل القريب، ممكن يختلف عن السجل الطويل.</> : 'السجل القريب (آخر المرات): غير متوفر للسهم ده.'}</span></div>
-      </>}
-      <small className="fx-g">{!hist ? 'مش نصيحة' : <>اللي حصل قبل كده، مش وعد · اتجرب {arD(st ? st.tested : '')} على بيانات لحد {ps && ps.toLabel ? ps.toLabel : 'غير متوفر'} · أسعار يومية مجانية من Starta Markets · مش نصيحة</>}</small>
+      <small className="fx-g">مش نصيحة</small>
       </details>
     </div></>;
 }
