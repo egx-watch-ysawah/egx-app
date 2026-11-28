@@ -25,7 +25,7 @@ def compute(SYM,rows,srcnote,MG=()):
     df=df.sort_values('date').drop_duplicates('date').set_index('date')
     for c in df.columns:df[c]=pd.to_numeric(df[c],errors='coerce')
     df=df.dropna();df=df[(df.volume>0)&(df.low<=df[['open','close']].min(axis=1))&(df[['open','close']].max(axis=1)<=df.high)&(df.close>0)]
-    if len(df)<250:raise ValueError('under 250 clean rows (%d): no file'%len(df))
+    if len(df)<2:raise ValueError('fewer than 2 clean rows (%d): no file'%len(df))
     v=df.close*df.volume;med60=v.shift(1).rolling(60).median();A=v>2*med60
     B=((df.close-df.low)/(df.high-df.low).replace(0,np.nan))>=(2/3-1e-9)
     up=df.close>df.close.shift(1);us=(df.volume*up).rolling(10).sum()/df.volume.rolling(10).sum()
@@ -41,7 +41,9 @@ def compute(SYM,rows,srcnote,MG=()):
             if dts[j-1]<=g0 and dts[j]>=g1:dd_[j]=99;mgx[j]=(str(g0),str(g1))
     H=(5,10,20);fwd={};ok={};gapx={}
     for k in H:
-        f=np.full(n,np.nan);f[:-k]=cl[k:]/cl[:-k]-1;w=np.zeros(n,bool);g=np.zeros(n,bool)
+        f=np.full(n,np.nan)
+        if n>k:f[:-k]=cl[k:]/cl[:-k]-1
+        w=np.zeros(n,bool);g=np.zeros(n,bool)
         for i in range(n-k):
             g[i]=dd_[i+1:i+k+1].max()>10
             w[i]=not glitch[i+1:i+k+1].any() and not g[i]
@@ -61,13 +63,13 @@ def compute(SYM,rows,srcnote,MG=()):
     cur=combo[-1]
     out={'symbol':SYM,'pilot':True,'generated_at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=2))).isoformat(timespec='seconds'),
      'source':'startamarkets.com/api/v1/egx/history/<SYM> daily OHLCV (prices as given by Starta) - '+srcnote,
-     'history':{'firstDayIsListing':bool(LISTING.get(SYM) and LISTING[SYM]==str(df.index[0].date())),'listingDate':LISTING.get(SYM),'startLabelAr':('من أول يوم تداول للسهم' if (LISTING.get(SYM) and LISTING[SYM]==str(df.index[0].date())) else 'من أول يوم في البيانات المتاحة'),'firstDate':str(df.index[0].date()),'statsFrom':str(df.index[60].date()),'warmupSessions':60,'from':str(df.index[0].date()),'to':str(df.index[-1].date()),'sessions':int(n)},
+     'history':{'firstDayIsListing':bool(LISTING.get(SYM) and LISTING[SYM]==str(df.index[0].date())),'listingDate':LISTING.get(SYM),'startLabelAr':('من أول يوم تداول للسهم' if (LISTING.get(SYM) and LISTING[SYM]==str(df.index[0].date())) else 'من أول يوم في البيانات المتاحة'),'firstDate':str(df.index[0].date()),'statsFrom':(str(df.index[60].date()) if n>60 else None),'warmupSessions':60,'shortHistory':bool(n<250),'from':str(df.index[0].date()),'to':str(df.index[-1].date()),'sessions':int(n)},
      'rule':{'A':'traded value > 2x median of previous 60 sessions','B':'close in top third of day range (inclusive: (close-low)/(high-low) >= 2/3 - 1e-9)','C':'10-session up-day volume share > 60% and close > SMA20',
       'unit':'exact combination of met conditions (A,B,C: 7 non-zero combos); zero met = no calculation',
       'events':'a day is an event for a combination only if more than 5 sessions passed since the previous event of the SAME combination. n = events; rawDays = all days in that state',
       'closureFilter':'forward windows (5/10/20 sessions) that cross a MARKET-WIDE stretch of more than 10 calendar days without any trading in the 96-stock union are excluded from the return statistics and listed in excluded20 with the reason. market closure = the window crosses the market-wide gap 2011-01-27 to 2011-03-23 (documented closure; this includes a stock whose own gap starts 2011-01-27 and ends on or after 2011-03-23). data gap = it crosses the market-wide gap 2002-10-08 to 2002-10-24 (فجوة بيانات, no evidence of a closure). A stock own missing days that are not a market-wide gap do not exclude anything','glitchFilter':'forward windows containing a |daily move| > 25% day are excluded from the return statistics',
       'noPooling':'statistics come only from this stock\'s own history; no pooled fallback; n is always shown, also 0 and 1'},
-     'baseline':{f'h{k}':dict(n=int(len(base[k])),win=round(100*float((base[k]>0).mean()),1),mean=round(100*float(base[k].mean()),2)) for k in H},
+     'baseline':{f'h{k}':(dict(n=int(len(base[k])),win=round(100*float((base[k]>0).mean()),1),mean=round(100*float(base[k].mean()),2)) if len(base[k]) else dict(n=0,win=None,mean=None)) for k in H},
      'today':{'date':str(df.index[-1].date()),'valid':bool(valid[-1]),'state':cur,'A':bool(a[-1]),'B':bool(b_[-1]),'C':bool(c_[-1]),'noCalc':(cur=='' or cur is None),
        'volXmed60':round(float(v.iloc[-1]/med60.iloc[-1]),2) if pd.notna(med60.iloc[-1]) else None,'closePosInRange':round(float((df.close.iloc[-1]-df.low.iloc[-1])/(df.high.iloc[-1]-df.low.iloc[-1])),2) if df.high.iloc[-1]>df.low.iloc[-1] else None,'upShare10':round(float(us.iloc[-1]),2) if pd.notna(us.iloc[-1]) else None},
      'limitsAr':[],'combos':{}}
