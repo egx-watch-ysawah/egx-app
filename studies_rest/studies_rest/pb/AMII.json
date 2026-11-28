@@ -1,0 +1,62 @@
+{
+ "code": "AMII",
+ "name_ar": null,
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 4 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 7.87,
+ "price_date": "2026-11-26",
+ "own_bvps": 1.4252,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 5.52,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Producer Manufacturing",
+ "n_peers": 4,
+ "peers": [
+  {
+   "code": "LCSW",
+   "name_ar": "ليسيكو",
+   "pb": 0.8365577674601034,
+   "price": 43.34
+  },
+  {
+   "code": "CERA",
+   "name_ar": null,
+   "pb": 2.3306258076426065,
+   "price": 1.01
+  },
+  {
+   "code": "SWDY",
+   "name_ar": "السويدي اليكتريك",
+   "pb": 3.5255856614221313,
+   "price": 115.93
+  },
+  {
+   "code": "ATQA",
+   "name_ar": "عتاقة",
+   "pb": 4.628076674396333,
+   "price": 9.52
+  }
+ ],
+ "multiples": {
+  "low": 0.837,
+  "median": 2.928,
+  "high": 4.628,
+  "min": 0.8365577674601034,
+  "max": 4.628076674396333
+ },
+ "range": {
+  "low": 1.192,
+  "base": 4.173,
+  "high": 6.596
+ },
+ "price_marker": "above_all",
+ "review_flags": [
+  "feed drift: own P/B moved 5.04 (12:21 file) -> 5.52 (28 Nov pull)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B4"
+}
