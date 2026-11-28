@@ -1,0 +1,48 @@
+{
+ "code": "NINH",
+ "name_ar": null,
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 14.71,
+ "price_date": "2026-11-26",
+ "own_bvps": 2.8254,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 5.21,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Health Services",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "CLHO",
+   "name_ar": "مستشفى كليوباترا",
+   "pb": 5.517452775968428,
+   "price": 14.4
+  },
+  {
+   "code": "SPMD",
+   "name_ar": null,
+   "pb": 5.607641960021228,
+   "price": 0.317
+  }
+ ],
+ "multiples": {
+  "low": 5.517,
+  "median": 5.563,
+  "high": 5.608,
+  "min": 5.517452775968428,
+  "max": 5.607641960021228
+ },
+ "range": {
+  "low": 15.589,
+  "base": null,
+  "high": 15.844
+ },
+ "price_marker": "below_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B5"
+}
