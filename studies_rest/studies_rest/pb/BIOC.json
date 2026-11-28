@@ -1,0 +1,86 @@
+{
+ "code": "BIOC",
+ "name_ar": null,
+ "tier": 2,
+ "confidence_ar": "ثقة منخفضة جدا: P/B بس، 8 شركة من قطاع أوسع مش نفس النشاط، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 373.3,
+ "price_date": "2026-11-26",
+ "own_bvps": 26.1185,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 14.29,
+ "peer_level": "sector",
+ "peer_group_feed_label": "Distribution Services",
+ "n_peers": 8,
+ "peers": [
+  {
+   "code": "GBCO",
+   "name_ar": "جي بي اوتو",
+   "pb": 0.7787328670608329,
+   "price": 21.47
+  },
+  {
+   "code": "SMFR",
+   "name_ar": null,
+   "pb": 0.9855789342187148,
+   "price": 214.99
+  },
+  {
+   "code": "BIGP",
+   "name_ar": null,
+   "pb": 2.5764690950628255,
+   "price": 0.203
+  },
+  {
+   "code": "MTIE",
+   "name_ar": "إم تي أي",
+   "pb": 2.9651261746289115,
+   "price": 6.62
+  },
+  {
+   "code": "ISPH",
+   "name_ar": "ابن سينا فارما",
+   "pb": 3.2451050321618826,
+   "price": 10.1
+  },
+  {
+   "code": "IBCT",
+   "name_ar": null,
+   "pb": 3.5751226995994476,
+   "price": 10.3
+  },
+  {
+   "code": "MBEG",
+   "name_ar": null,
+   "pb": 5.129855969428551,
+   "price": 4.94
+  },
+  {
+   "code": "EGS3I0S1C019",
+   "name_ar": null,
+   "pb": 15.754931239829041,
+   "price": 8.81
+  }
+ ],
+ "multiples": {
+  "low": 2.179,
+  "median": 3.105,
+  "high": 3.964,
+  "min": 0.7787328670608329,
+  "max": 15.754931239829041
+ },
+ "range": {
+  "low": 56.906,
+  "base": 81.101,
+  "high": 103.529
+ },
+ "price_marker": "above_all",
+ "review_flags": [
+  "FCMD (Future Care, P/B 15.75, loss-making, recent listing) is a peer and raises the top of the range by 16% (103.53 vs 89.07 without it)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B4"
+}
