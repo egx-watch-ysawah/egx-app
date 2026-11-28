@@ -503,6 +503,9 @@ BANK_INDUSTRIES={'Regional Banks','Major Banks'}
 # Second share line of the same company (identical market cap in the feed). Excluded as a peer so one company is not counted twice.
 # VLMR is Valmore's USD line, removed from the app 28 Nov (user picked VLMRA, the EGP line), so Valmore is counted once, as VLMRA. FAITA is FAIT's USD line.
 DUP={'VLMR','FAITA'}
+# USD-priced lines (price in USD, not EGP). Approved by the user 28 Nov 13:52 (WhatsApp, USD handling: kept out of EGP totals and peer medians),
+# so they are excluded as peers everywhere. Their own entries stay; only their peer membership is removed.
+USD={'MOIL','NAHO','GTEX','EGBE','ELAB','ENPI','TRTO','EGSA','CFGH','SAIB','SPHT','NDRL','GPPL','PMSC'}
 # Stocks the feed does not carry at all (no price, no industry, no figures). They get an empty entry, not a job failure.
 NOFEED={'AIHC','EEPM','EGS220N1C016','EGS73M81C012','FCMD','HALN','SEIGA','SIDC'}
 def post(b):
@@ -547,7 +550,7 @@ out={'price_session':sd,'generated_utc':datetime.datetime.now(datetime.timezone.
  'source':'TradingView scanner egypt/scan (single source, not cross-checked, reuse terms unverified)',
  'expected_session':expected_session(),'up_to_date':sd==expected_session(),'note':'Peer groups are the feed\'s own labels, not EGX official sectors. Medians exclude the stock itself. Hint only, not fair value.','stocks':{}}
 for c,(label,f) in G.items():
-    me=rows.get(c);peers=[(k,r) for k,r in rows.items() if k!=c and k not in DUP and f(r)]
+    me=rows.get(c);peers=[(k,r) for k,r in rows.items() if k!=c and k not in DUP and k not in USD and f(r)]
     rd=lambda v:round(v,2) if v else None
     res={'group':label,'feed_industry':me['industry'] if me else None,'price_session':sess(me) if me else None,'price':me['close'] if me else None,'pb':rd(pos(me['price_book_fq'])) if me else None,'pe':rd(pos(me['price_earnings_ttm'])) if me else None}
     # Own-figure fallback when the feed's ratio fields are null: compute from feed components (same source, same session), then from the reviewed study's book value per share.
