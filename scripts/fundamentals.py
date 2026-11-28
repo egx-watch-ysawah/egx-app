@@ -7,6 +7,12 @@ COLS = ["name","description","close","market_cap_basic","sector","industry",
  "cash_f_operating_activities_ttm","free_cash_flow_ttm","gross_margin_ttm","operating_margin_ttm","net_margin_ttm","price_earnings_ttm"]
 REVIEWED = {"EXPA","CIEB","OCDI","EGAL","CLHO","CCAP","VLMRA","ASCM","ELKA","BTFH","ALCN","CNFN","GBCO","MCQE","AMOC","JUFO","EFID","MFPC","EAST","ORAS","DSCW","LCSW","ORWE","HDBK","RAYA","ISPH","RMDA","SKPC","HELI","EFIH","PHDC","ADIB","EMFD","ABUK","FWRY","TMGH","ETEL","SWDY","COMI","MASR","BONY","HRHO","UNIP","PHAR","ORHD"}
 LABEL = "آلي، غير مراجَع"
+# Derived figures from the reviewed study when the feed's figures contradict it. VLMRA (Valmore Holding, reviewed 2026-11-25, 9M2026
+# consolidated statements in USD, EY limited review unqualified, as of 30 Sep 2026): BVPS 21.94 EGP (parent equity $496.7m / 1,177.1m
+# shares, converted at 51.9854 EGP/USD), adjusted full-year EPS 4.00 EGP; at the 25.9 EGP close that is P/B 1.18 and P/E 6.5. The feed
+# carries BVPS 26.90 / EPS 5.21, which disagree with the filed statements, so the study figures win. Hard-coded until the 12M2026
+# statements land and the study is updated; keep peer_compare.py STUDY_PEER in sync.
+STUDY_DERIVED = {"VLMRA": {"bvps": 21.94, "pb": 1.18, "pe": 6.5}}
 # generic multiples: assumptions, not stock-specific targets
 MULT = {"standard": ("P/E", [5, 7, 9]), "bank": ("P/B", [0.8, 1.1, 1.5]),
         "real_estate": ("P/B", [0.6, 0.9, 1.3]), "holding": ("P/B", [0.6, 0.9, 1.2])}
@@ -51,8 +57,8 @@ def build(row):
         "price": r(px), "market_cap": num(d["market_cap_basic"]), "shares": sh,
         "period": d["fiscal_period_current"], "release_date": d["earnings_release_date"],
         "fields": {k: r(num(d[k]), 4) for k in COLS[9:24] if num(d[k]) is not None},
-        "derived": {"bvps": r(bv), "roe_ttm_pct": r(roe, 1), "pb": r(px / bv) if px and bv and bv > 0 else None,
-                    "pe": r(px / eps) if px and eps and eps > 0 else None},
+        "derived": dict({"bvps": r(bv), "roe_ttm_pct": r(roe, 1), "pb": r(px / bv) if px and bv and bv > 0 else None,
+                    "pe": r(px / eps) if px and eps and eps > 0 else None}, **STUDY_DERIVED.get(sym, {})),
         "fair_value": {"basis": basis, "multiples": mults, "low_base_high": fv, "status": ("تقدير آلي" if fv else ("راجع الدراسة المراجَعة" if sym in REVIEWED else "مفيش بيانات كفاية")), "reason": why,
                        "note": "مضاعفات عامة افتراضية، مش سعر مستهدف"},
         "source": "TradingView scanner (غير رسمي)"}
