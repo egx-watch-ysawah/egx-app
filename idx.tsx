@@ -47,7 +47,7 @@ const AR_NAMES: Record<string, string> = {
   PRDC: 'بايونيرز بروبرتيز',
 };
 const arName = (code: string, name: string) => (/[A-Za-z]{3}/.test(String(name || '')) && AR_NAMES[code]) || name;
-const getJson = (p: string) => cache[p] || (cache[p] = fetch(p, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); }));
+const getJson = (p: string) => cache[p] || (cache[p] = (/^idx\/[A-Z0-9]+\.json$/.test(p) && p !== 'idx/index.json' ? hasFile('idx', p.slice(4, -5)) : Promise.resolve(true)).then(h => { if (!h) throw new Error(p); return fetch(p, { cache: 'no-store' }); }).then(r => { if (!r.ok) throw new Error(p); return r.json(); }));
 function useJson(p: string) {
   const [d, setD] = useState<any>(null); const [e, setE] = useState(false);
   useEffect(() => { let on = true; getJson(p).then(x => { if (x && Array.isArray(x.rows)) x.rows.forEach((r: any) => { r.name = arName(r.code, r.name); }); else { const mm = /idx\/([A-Z0-9]+)\.json$/.exec(p); if (x && mm) x.name = arName(mm[1], x.name); } on && setD(x); }).catch(() => { delete cache[p]; on && setE(true); }); return () => { on = false; }; }, [p]);
@@ -112,6 +112,8 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
 }
 
 import { useUN, UnNote, unLabel } from './unavail';
+import { useUni, UniSub } from './ui2026/Universe';
+import { hasFile } from './ui2026/FileIndex';
 const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
 
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
@@ -120,6 +122,7 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   const sv = useSV();
   const [d0, err] = useJson('idx/index.json');
   const sf = useStarta();
+  const U = useUni();
   const d = React.useMemo(() => overlay(d0, sf), [d0, sf]);
   const [sort, setSort] = useState<'val' | 'up' | 'down'>('val');
   const [q, setQ] = useState('');
@@ -132,7 +135,8 @@ export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
   rows.sort((a: any, b: any) => sort === 'val' ? (b.val || 0) - (a.val || 0) : sort === 'up' ? (b.chg ?? -99) - (a.chg ?? -99) : (a.chg ?? 99) - (b.chg ?? 99));
   const chip = (id: 'val' | 'up' | 'down', n: string) => <button type="button" className={'eg-chip' + (sort === id ? ' on' : '')} onClick={() => setSort(id)}>{n}</button>;
   return <div className="eg-pad ix">
-    <h2 className="eg-h">{title} <span className="ix-n">{nq ? '· نتايج البحث (' + rows.length + ')' : '(' + rows.length + ' سهم)'}</span></h2>
+    <h2 className="eg-h">{title} <span className="ix-n">{nq ? '· نتايج البحث (' + rows.length + ')' : U && U.ok ? '(' + (which === 'egx30' ? U.n30 : U.n70) + ' سهم)' : ''}</span></h2>
+    <UniSub u={U} />
     <IndexSummary which={which} />
     <RefreshBar />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث عن سهم" autoComplete="off" /></label>
@@ -159,7 +163,7 @@ function Card({ k, f }: { k: string; f: any }) {
   const fl = f.fields || {}, dv = f.derived || {};
   const raw = k in fl ? fl[k] : k === 'pe' ? dv.pe : k === 'pb' ? dv.pb : k === 'roe_ttm_pct' ? dv.roe_ttm_pct : null;
   if (raw == null) return null;
-  const val = k === 'earnings_per_share_basic_ttm' ? raw.toFixed(2) + ' ج' : k === 'net_margin_ttm' || k === 'roe_ttm_pct' ? raw.toFixed(1) + '%' : k === 'pe' || k === 'pb' ? raw.toFixed(2) + '×' : big(raw) + ' ج';
+  const val = k === 'earnings_per_share_basic_ttm' ? raw.toFixed(2) + ' ج' : k === 'net_margin_ttm' || k === 'roe_ttm_pct' ? raw.toFixed(1) + '%' : k === 'pe' || k === 'pb' ? raw.toFixed(2) + ' مرة' : big(raw) + ' ج';
   return <div className="gd-it mid"><div className="gd-h"><span>{t.title}</span><b dir="ltr">{val}</b></div>
     <p><em>يعني إيه: </em>{t.what}</p><p><em>تأثيره على السهم: </em>{t.effect}</p>
     <p className="ix-lbl">{AUTO_LABEL} · {f.period}</p></div>;
@@ -171,8 +175,8 @@ function AutoFin({ f }: { f: any }) {
   const bits: string[] = [];
   const ni = fl.net_income_ttm ?? fl.net_income_fy;
   if (ni != null) bits.push((fl.net_income_ttm != null ? 'ربح آخر 12 شهر ' : 'ربح آخر سنة مالية ') + big(ni) + ' ج.م');
-  if (tpl === 'standard' || tpl === 'bank') { if (dv.pe != null) bits.push('السهم بيتداول بمضاعف ربحية ' + dv.pe.toFixed(1) + '×'); }
-  else if (dv.pb != null) bits.push('السهم بيتداول بـ ' + dv.pb.toFixed(2) + '× القيمة الدفترية');
+  if (tpl === 'standard' || tpl === 'bank') { if (dv.pe != null) bits.push('السهم بيتداول بمضاعف ربحية ' + dv.pe.toFixed(1) + ' مرة'); }
+  else if (dv.pb != null) bits.push('السهم بيتداول بـ ' + dv.pb.toFixed(2) + ' مرة القيمة الدفترية');
   return <>
     <p className="gd-sum">{bits.length ? bits.join('، ') + '.' : NO_DATA}<small>{AUTO_LABEL} · {f.period} · {TPL_NAME[tpl]}</small></p>
     <p className="gd-foot">{AUTO_NOTE}</p>
@@ -205,7 +209,9 @@ export function PageSwitch({ k, old }: { k: string; old: React.ReactElement }) {
 }
 function IdxStockInner({ code: codeP }: { code?: string }) {
   const prm = useParams();
-  const code = codeP || prm.code || '';
+  const U0 = useUni();
+  const code0 = codeP || prm.code || '';
+  const code = U0 && U0.ok && /^EGS/i.test(code0) ? U0.canon(code0) : code0; // an alias ISIN opens the canonical stock
   const [s1, err1] = useJson('idx/' + code + '.json');
   const cl = useClientStock(code, !!err1);
   const s = s1 || cl.s;
@@ -236,7 +242,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
   if (code === 'VLMR') return <OtherLight code={code} row={null} reason="" />;
-  if (stx && (stx.status === 'not_trading_yet' || stx.status === 'temporary_listing_sme')) return <OtherLight code={code} row={cl.row || null} reason="" />;
+  if (stx && (stx.status === 'not_trading_yet' || stx.status === 'new_listing' || stx.status === 'temporary_listing_sme')) return <OtherLight code={code} row={cl.row || null} reason="" />;
   if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} unNode={unr && !cl.row ? <div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div> : undefined} />{unr && cl.row ? <div className="eg-pad"><div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div></div> : null}</>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
@@ -250,6 +256,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
     <div className="eg-in">
       <h2 className="eg-h ix-top">{unr && unr.name_ar ? unr.name_ar : NEW(code) && pgT && pgT.title_ar_short ? pgT.title_ar_short : s.name} {/^EGS/.test(code) ? null : <span dir="ltr">({code})</span>}</h2><TopWarn k={code}/><StatusBanner k={code} />{unr ? <UnNote r={unr} /> : null}
       <p className="eg-note">{stx ? null : <>إقفال <bdi>{((d:string)=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?(+m[3])+' '+['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][+m[2]-1]+' '+m[1]:String(d||'')})(s.date)}</bdi> {s.nohist ? null : <>· <L>{s.historyCount}</L> جلسة{code === 'MTIE' && PVN() ? ' (آخر 3 سنين)' : ''}</>}</>} <span style={{ whiteSpace: 'nowrap' }}>من <a href={s.source} target="_blank" rel="noreferrer"><bdi>{s.sourceName}</bdi></a> · تحليل آلي</span></p>
+      {(() => { const rw = ix0 && Array.isArray(ix0.rows) ? ix0.rows.find((r: any) => r.code === code) : null; const iso = String((s && s.date) || (rw && rw.date) || '').slice(0, 10); const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso); return m && !stx && !s.nohist ? <p className="eg-note">التحليل على إقفال <bdi dir="ltr">{m[3] + '/' + m[2] + '/' + m[1]}</bdi></p> : null; })()}
       {s.nohist ? <p className="eg-note"><b>تنبيه:</b> مفيش تاريخ أسعار حديث عند المصدر، فالقراءة الفنية والشارت والسيناريوهات المبنية على السعر غير متاحة. {stx ? '' : <>آخر سعر عند المصدر: <bdi>{s.close}</bdi> {cur.short}. </>}الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}
       <StockChips s={s} code={code} />
       <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
@@ -266,6 +273,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       <OnTab id="t"><Glossary /></OnTab>
       {held ? null : <OnTab id="f">{reviewed ? <StudyMeta code={code} /> : null}</OnTab>}
       {held ? null : <OnTab id="f"><SourcesBar code={code} reviewed={reviewed} /></OnTab>}
+      {stx || (isV7(code) && !fairNew && !held) || !(reviewed || pgT || fairNew || held || isV7(code)) ? null : <OnTab id="f"><p className="eg-note">دي قراءة تحليلية مش توصية بشراء أو بيع، والقرار النهائي قرارك ومسؤوليتك.</p></OnTab>}
     </div>
   </div>;
 }
