@@ -109,7 +109,7 @@ function IndexSummary({ which }: { which: 'egx30' | 'egx70' }) {
   </section>;
 }
 
-import { useUN, UnNote } from './unavail';
+import { useUN, UnNote, unLabel } from './unavail';
 const normQ = (s: string) => String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
 
 export function IndexList({ which }: { which: 'egx30' | 'egx70' }) {
@@ -217,7 +217,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   const pgT = usePage(code);
   const UNS = useUN();
   const unr = UNS && !NEW(code) ? UNS.map[String(code).toUpperCase()] || null : null;
-  const unNode = unr ? <div className="gd-sum"><b>غير متوافر حاليا:</b> {unr.reason_ar}</div> : null;
+  const unNode = unr ? <div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div> : null;
   const held = HELD.includes(code);
   const finNew = !!(NEW(code) && pgT && pgT.fin_items_ar);
   const [tf, setTf] = useState<TF>('D'); const [n, setN] = useState(130);
@@ -228,7 +228,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
   useEffect(() => { (window as any).__egxOther = isOther; window.dispatchEvent(new Event('egx-nav')); return () => { (window as any).__egxOther = false; window.dispatchEvent(new Event('egx-nav')); }; }, [isOther]);
   const back = isOther ? '/others' : row && !row.lists.includes('egx30') ? '/egx70' : '/egx30';
   const tg = (key: keyof typeof t, name: string) => <button type="button" className={'eg-chip' + (t[key] ? ' on' : '')} aria-pressed={t[key]} onClick={() => setT({ ...t, [key]: !t[key] })}>{t[key] ? '✓ ' : ''}{name}</button>;
-  if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />{unr ? <div className="eg-pad"><div className="gd-sum"><b>غير متوافر حاليا:</b> {unr.reason_ar}</div></div> : null}</>;
+  if (err) return <><OtherLight code={code} row={cl.row || null} reason={cl.fail || ''} />{unr ? <div className="eg-pad"><div className="gd-sum"><b>{unLabel(code)}:</b> {unr.reason_ar}</div></div> : null}</>;
   if (!s) return <div className="eg-pad"><Link className="eg-back" to={back}>← رجوع</Link><p className="eg-note">بحمّل...</p></div>;
   const f = (fund && fund.stocks && fund.stocks[code]) || (fundR && fundR.stocks && fundR.stocks[code]);
   const chartNode = code === 'VLMRA' ? null : <Det title="الشارت" open>
