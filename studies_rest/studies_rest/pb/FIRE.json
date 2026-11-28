@@ -1,0 +1,24 @@
+{
+ "code": "FIRE",
+ "name_ar": null,
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no book value and no positive P/E"
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 4.98,
+ "method": "price_history_52w",
+ "confidence": "low",
+ "confidence_ar": "ثقة منخفضة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر. ده أدنى وأعلى سعر في آخر 52 أسبوع بس، مش تقدير للسعر العادل.",
+ "rung": 6,
+ "method_ar": "مدى سعر تاريخي بس، مش تقدير للسعر العادل",
+ "range": {
+  "low": 1.74,
+  "base": null,
+  "high": 6.01
+ },
+ "range_source": "TradingView scanner price_52_week_low/high, pulled 28 Nov 2026",
+ "price_marker": "inside"
+}
