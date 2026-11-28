@@ -24,7 +24,7 @@
   }
  },
  "counts": {
-  "confirmed": 85,
+  "confirmed": 84,
   "unconfirmed": 5,
   "single": 10
  },
@@ -362,18 +362,6 @@
    "sources": {
     "tradingview": 6.3,
     "history_file": 6.3
-   },
-   "history_date": "2026-11-26",
-   "status": "confirmed"
-  },
-  "VLMR": {
-   "name": "القابضة المصرية الكويتية",
-   "close": 0.644,
-   "chg_pct": -0.46,
-   "volume": 205450,
-   "sources": {
-    "tradingview": 0.644,
-    "history_file": 0.644
    },
    "history_date": "2026-11-26",
    "status": "confirmed"
