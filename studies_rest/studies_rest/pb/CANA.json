@@ -1,0 +1,72 @@
+{
+ "code": "CANA",
+ "name_ar": null,
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 6 شركة من نفس النشاط، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 32.22,
+ "price_date": "2026-11-26",
+ "own_bvps": 15.4413,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 2.09,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Regional Banks",
+ "n_peers": 6,
+ "peers": [
+  {
+   "code": "FAIT",
+   "name_ar": null,
+   "pb": 0.6473452029648082,
+   "price": 47.48
+  },
+  {
+   "code": "EXPA",
+   "name_ar": "البنك المصري لتنمية الصادرات",
+   "pb": 0.8996671926843085,
+   "price": 14.23
+  },
+  {
+   "code": "SAUD",
+   "name_ar": null,
+   "pb": 0.9792015257012289,
+   "price": 21.77
+  },
+  {
+   "code": "ADIB",
+   "name_ar": "مصرف أبو ظبي الإسلامي",
+   "pb": 1.4546287438183023,
+   "price": 45.98
+  },
+  {
+   "code": "COMI",
+   "name_ar": "البنك التجاري الدولي",
+   "pb": 1.6372901023737874,
+   "price": 124.25
+  },
+  {
+   "code": "HDBK",
+   "name_ar": "بنك التعمير والاسكان",
+   "pb": 2.283549583907523,
+   "price": 100.27
+  }
+ ],
+ "multiples": {
+  "low": 0.92,
+  "median": 1.217,
+  "high": 1.592,
+  "min": 0.6473452029648082,
+  "max": 2.283549583907523
+ },
+ "range": {
+  "low": 14.199,
+  "base": 18.791,
+  "high": 24.577
+ },
+ "price_marker": "above_all",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B4"
+}
