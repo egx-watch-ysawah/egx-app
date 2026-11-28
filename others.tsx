@@ -12,6 +12,7 @@ import { RefreshBar } from './refresh';
 import { NEW } from './page';
 import { xList } from './ui2026/ExplainLists';
 import { ListHead, ListRow, ListNote, DayRange } from './ui2026/Lists';
+import { useUni, UniSub } from './ui2026/Universe';
 // "باقي الأسهم": Starta symbols that are not in EGX 30, EGX 70 or the portfolio pages. Automatic data only, no review, no verdict.
 const URL_STOCKS = 'https://startamarkets.com/api/v1/egx/stocks';
 const URL_HIST = 'https://startamarkets.com/api/v1/egx/history/';
@@ -54,23 +55,37 @@ function useData() {
 const status = (r: Row) => r.is_stale ? 'آخر سعر قديم، ' + cairo(r.as_of) : !(r.volume > 0) ? 'مفيش تداول في آخر لقطة' : '';
 const Label = () => <p className="eg-note ot-lb"><b>بيانات آلية فقط، مش مراجَعة.</b> الأرقام من المصدر زي ما هي، من غير فحص قوائم ولا تحليل ولا رأي.</p>;
 
+let UNP: Promise<Record<string, string>> | null = null;
+// Arabic names for codes the feed does not carry, from the study files (names only).
+const useUnNames = (): Record<string, string> | undefined => {
+  const [m, setM] = useState<Record<string, string> | undefined>(undefined);
+  useEffect(() => { let on = true; (UNP || (UNP = fetch('studies_rest/studies_rest/unavailable.json', { cache: 'no-store' }).then(r => (r.ok ? r.json() : [])).catch(() => []).then((a: any) => { const o: Record<string, string> = {}; if (Array.isArray(a)) a.forEach((r: any) => { if (r && r.code && r.name_ar) o[String(r.code).toUpperCase()] = r.name_ar; }); return o; }))).then(x => on && setM(x)); return () => { on = false; }; }, []);
+  return m;
+};
 export function OthersList() {
   const nty = useNty();
   const sv = useSV();
   const [d, err] = useData();
   const [q, setQ] = useState('');
+  const U = useUni();
+  const cap = U && U.ok ? 400 : 120;
+  const unr = useUnNames();
   const rows = useMemo(() => {
     if (!d) return [];
     const nq = normQ(q);
-    const base = d.all.filter(r => !d.mine.has(r.symbol) && r.last_price > 0 && r.symbol !== 'VLMR');
+    // Membership comes from universe.json; the feed only adds prices. Codes with no feed price become no-price rows.
+    const feed: Record<string, Row> = {}; if (U && U.ok) for (const r of d.all) { const c = U.canon(r.symbol); if (!feed[c] || r.symbol === c) feed[c] = r; }
+    const nameOf = (c: string) => NMO[c] || (unr && unr[c]) || '';
+    const base: Row[] = U && U.ok ? [...U.sO].map(c => feed[c] ? { ...feed[c], symbol: c } : ({ symbol: c, name_ar: nameOf(c), name_en: (sv && sv.rows[c] && sv.rows[c].name) || (/^EGS/i.test(c) ? '' : c), last_price: 0, volume: 0 } as any as Row)) : d.all.filter(r => !d.mine.has(r.symbol) && r.last_price > 0 && r.symbol !== 'VLMR');
     const f = nq ? base.filter(r => (normQ(r.symbol) + ' ' + normQ(r.name_ar) + ' ' + normQ(r.name_en)).includes(nq)) : base;
-    return f.slice().sort((a, b) => (b.last_price * (b.volume || 0)) - (a.last_price * (a.volume || 0)));
-  }, [d, q]);
+    return f.slice().sort((a, b) => (b.last_price * (b.volume || 0)) - (a.last_price * (a.volume || 0)) || String(a.name_ar || a.name_en || a.symbol).localeCompare(String(b.name_ar || b.name_en || b.symbol), 'ar'));
+  }, [d, q, U, unr, sv]);
   if (err && !d) return <div className="eg-pad"><h2 className="eg-h">باقي الأسهم</h2><p className="eg-note">مقدرتش أوصل للمصدر دلوقتي. جرب تاني بعد شوية.</p></div>;
   if (!d) return <div className="eg-pad"><h2 className="eg-h">باقي الأسهم</h2><p className="eg-note">بحمّل القايمة...</p></div>;
   const at = d.all.reduce((m, r) => (!r.is_stale && r.as_of > m ? r.as_of : m), '');
   return <div className="eg-pad ix">
-    <h2 className="eg-h">باقي الأسهم <span className="ix-n">{q ? '· نتايج البحث (' + rows.length + ')' : '(' + rows.length + ' سهم)'}</span></h2>
+    <h2 className="eg-h">باقي الأسهم <span className="ix-n">{q ? '· نتايج البحث (' + rows.length + ')' : U && U.ok ? '(' + U.nO + ' سهم)' : ''}</span></h2>
+    <UniSub u={U} />
     <Label />
     <RefreshBar />
     <label className="ix-search"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="ادخل رمز أو اسم الشركة" aria-label="بحث في باقي الأسهم" /></label>
@@ -82,8 +97,8 @@ export function OthersList() {
     <p className="chp-x">{xList.range}</p>
     <ListHead mid="مدى اليوم" />
     {rows.length === 0 && <p className="eg-note">مفيش سهم بالاسم ده في الأسهم الباقية. جرب EGX 30 أو EGX 70.</p>}
-    {rows.slice(0, 120).map(r => { const sr = sv && sv.rows[r.symbol]; const nt = !!(nty && nty[r.symbol]); const lag = !nt && sr && sr.status === 'feed_lag'; const sx = !nt && !lag && sr && typeof sr.last_close === 'number'; const st = nt ? '' : lag ? 'بيانات متأخرة' : sx ? (sr.status === 'temporary_listing_sme' ? 'مقيد مؤقتًا (SME)' : sv.lab(r.symbol)) : status(r); const hid = nt || sx; return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={NMO[r.symbol] || r.name_ar || r.name_en} code={r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={hid ? undefined : <DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={nt ? undefined : sx ? <>{unitPx(sv, r.symbol, sr.last_close)}</> : r.last_price != null ? unitPx(sv, r.symbol, fmt(r.last_price)) : fmt(r.last_price)} chg={hid ? null : r.change_percent || 0} na={nt ? 'مقيد مؤقتًا ولسه ماتداولش' : undefined} volLine={hid ? (sx && sr.status === 'temporary_listing_sme' && sr.last_close_as_of ? <span style={{ fontSize: 11, color: '#a5aab2', whiteSpace: 'normal' }}>بيانات المصدر <bdi style={{ whiteSpace: 'nowrap' }}>{arD(sr.last_close_as_of)}</bdi></span> : undefined) : <span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
-    {rows.length > 120 && <p className="eg-note">معروض أول 120 سهم. اكتب في البحث عشان توصل لباقي الأسهم.</p>}
+    {rows.slice(0, cap).map(r => { const sr = sv && sv.rows[r.symbol]; const nt = !!(nty && nty[r.symbol]); const lag = !nt && sr && sr.status === 'feed_lag'; const sx = !nt && !lag && sr && typeof sr.last_close === 'number'; const npx = !nt && !lag && !sx && !(r.last_price > 0); const nl = !!(sr && sr.status === 'new_listing'); const st = nt ? (nl ? 'إدراج جديد' : '') : npx ? '' : lag ? 'بيانات متأخرة' : sx ? (sr.status === 'temporary_listing_sme' ? 'مقيد مؤقتًا (SME)' : sv.lab(r.symbol)) : status(r); const hid = nt || sx || npx; return <ListRow key={r.symbol} to={'/s/' + r.symbol} name={NMO[r.symbol] || r.name_ar || r.name_en} code={/^EGS/i.test(r.symbol) ? '' : r.symbol} badge={st ? { t: st, tone: 'gr' } : { t: 'بيانات آلية', tone: 'gr' }} spark={hid ? undefined : <DayRange lo={r.low} hi={r.high} last={r.last_price} />} price={nt ? undefined : sx ? <>{unitPx(sv, r.symbol, sr.last_close)}</> : r.last_price != null ? unitPx(sv, r.symbol, fmt(r.last_price)) : fmt(r.last_price)} chg={hid ? null : r.change_percent || 0} na={nt ? (nl ? 'إدراج جديد، مفيش سعر عندنا' : 'مقيد مؤقتًا ولسه ماتداولش') : npx ? 'مفيش سعر عندنا دلوقتي' : undefined} volLine={hid ? (sx && sr.status === 'temporary_listing_sme' && sr.last_close_as_of ? <span style={{ fontSize: 11, color: '#a5aab2', whiteSpace: 'normal' }}>بيانات المصدر <bdi style={{ whiteSpace: 'nowrap' }}>{arD(sr.last_close_as_of)}</bdi></span> : undefined) : <span className="ls-c1"><bdi dir="ltr">{big(r.volume || 0)}</bdi> <bdi>سهم</bdi></span>} />; })}
+    {rows.length > cap && <p className="eg-note">معروض أول {cap} سهم. اكتب في البحث عشان توصل لباقي الأسهم.</p>}
   </div>;
 }
 
@@ -122,8 +137,8 @@ export function OtherFacts({ row: r, code }: { row: any; code?: string }) {
       {m('أعلى / أقل اليوم', <L>{fmt(r.high)} / {fmt(r.low)}</L>)}
       {m('نطاق 52 أسبوع', r.high_52w && r.low_52w ? <L>{fmt(r.low_52w)} - {fmt(r.high_52w)}</L> : NA('المصدر مش بيدي النطاق'), in52 != null ? 'السعر عند ' + in52 + '% من النطاق' : undefined)}
       {m('القيمة السوقية', r.market_cap ? <L>{big(r.market_cap)}</L> : NA('المصدر مش بيدي القيمة السوقية للسهم ده'), r.market_cap && cur.word === 'جنيه' ? 'جنيه' : undefined)}
-      {own ? null : m('مضاعف الربحية P/E', r.pe_ratio != null ? <L>{(+r.pe_ratio).toFixed(1)}×</L> : NA('المصدر مش بيدي المضاعف'))}
-      {own ? null : m('السعر ÷ القيمة الدفترية P/B', r.pb_ratio != null ? <L>{(+r.pb_ratio).toFixed(2)}×</L> : NA('المصدر مش بيدي المضاعف'))}
+      {own ? null : m('مضاعف الربحية P/E', r.pe_ratio != null ? <L>{(+r.pe_ratio).toFixed(1)} مرة</L> : NA('المصدر مش بيدي المضاعف'))}
+      {own ? null : m('السعر على القيمة الدفترية P/B', r.pb_ratio != null ? <L>{(+r.pb_ratio).toFixed(2)} مرة</L> : NA('المصدر مش بيدي المضاعف'))}
       {own ? null : m('القطاع (بالمصدر)', r.sector_name ? <L>{r.sector_name}</L> : NA('المصدر مش بيحدده'))}
     </div>
     <p className="eg-note">الأرقام دي من Starta Markets زي ما هي. مفيش مراجعة ولا مقارنة بقوائم الشركة.</p>
@@ -134,21 +149,24 @@ export function OtherLight({ code, row, reason, unNode }: { code: string; row: a
   const study = useStudy(code);
   const cur = useCur(code);
   const nty = useStatus(code);
+  const U = useUni();
+  const UNn = useUnNames();
   const back = <Link className="eg-back" to="/others">← باقي الأسهم</Link>;
+  if (U && U.ok && !(U.s30.has(U.canon(code)) || U.s70.has(U.canon(code)) || U.sO.has(U.canon(code))) && !FAIR6.includes(code)) return <div className="eg-pad">{back}<p className="eg-note">غير متوفر: السهم ده مش موجود في قايمة الأسهم عندنا.</p></div>;
   if (code === 'VLMR') return <div className="eg-pad">{back}<p className="eg-note">غير متوفر: السهم ده مش معروض في التطبيق.</p></div>;
   if (!row) return <div className="eg-pad">{back}
-    {study || nty || NMO[code] ? <h2 className="eg-h">{NMO[code] || (study && study.record.name) || (nty && nty.name) || ''} <L>{code}</L></h2> : null}
+    {study || nty || NMO[code] || (UNn && UNn[code]) ? <h2 className="eg-h">{NMO[code] || (UNn && UNn[code]) || (study && study.record.name) || (nty && nty.name) || ''} <L>{code}</L></h2> : null}
     <StatusBanner k={code} />
     <UsdNote k={code} />
-    {unNode ? unNode : <p className="eg-note">غير متوفر: {reason || (nty && nty.status === 'temporary_listing_sme' ? 'مفيش بيانات تداول حديثة.' : nty && nty.status === 'not_trading_yet' ? 'لسه ماتداولش فمفيش سعر.' : 'مفيش بيانات للسهم ده.')}{study ? ' (سعر السوق والقراءة الفنية). الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
+    {unNode ? unNode : <p className="eg-note">غير متوفر: {study ? 'سعر السوق والقراءة الفنية. ' : ''}{reason || (nty && nty.status === 'temporary_listing_sme' ? 'مفيش بيانات تداول حديثة.' : nty && nty.status === 'not_trading_yet' ? 'لسه ماتداولش فمفيش سعر.' : nty && nty.status === 'new_listing' ? 'مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'مفيش بيانات للسهم ده.')}{study ? ' الدراسة المالية تحت من القوائم، مش مراجَعة.' : ''}</p>}
     <FairInline code={code} />
     <ComboOnly code={code} />
     {study ? <><StudyLight st={study} /><StudyLightFair st={study} /><TeamBlock code={code} /><NewsBlock code={code} /></> : null}</div>;
-  if (nty && (nty.status === 'not_trading_yet' || nty.status === 'temporary_listing_sme')) return <div className="eg-pad">{back}
+  if (nty && (nty.status === 'not_trading_yet' || nty.status === 'new_listing' || nty.status === 'temporary_listing_sme')) return <div className="eg-pad">{back}
     <h2 className="eg-h">{NMO[code] || row.name_ar || nty.name || row.name_en} <L>{code}</L></h2>
     <StatusBanner k={code} />
     <UsdNote k={code} />
-    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'غير متوفر: سعر حالي ولا تغيير ولا حجم.' : 'غير متوفر: سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
+    <p className="eg-note">{nty.status === 'temporary_listing_sme' ? 'غير متوفر: سعر حالي ولا تغيير ولا حجم.' : nty.status === 'new_listing' ? 'غير متوفر: سعر ولا تغيير ولا حجم، لأن مفيش سعر مؤكد عندنا للإدراج الجديد.' : 'غير متوفر: سعر ولا تغيير ولا حجم، لأن السهم لسه ماتداولش.'}</p>
     <FairInline code={code} />
   </div>;
   return <div className="eg-pad">{back}
