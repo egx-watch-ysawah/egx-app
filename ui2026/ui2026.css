@@ -137,3 +137,6 @@ html body em.hp-fl,html body .ls-t em.hp-fl,html body .ls-r em.hp-fl{display:inl
 .fs-link span{display:flex;flex-direction:column;gap:2px}.fs-link b{color:#edeef0;font-size:14.5px}.fs-link small{color:#a5aab2;font-size:12px}.fs-link em{font-style:normal;color:#a5aab2;font-size:22px}
 .fs h1.fs-h{color:#edeef0;opacity:1}.fs .fs-tag{display:block;width:fit-content}
 .fs .fs-dt{margin:0 0 6px;font-size:12.5px;color:#b4bac4}
+
+/* stock pages without the .gd layout: the floating settings, theme and install buttons sit at top:128px, so push the back link below them */
+body:has(.set-btn) .eg-pad:not(:has(.gd))>.eg-back:first-child{margin-top:54px}
