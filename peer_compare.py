@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks, the 21 B1-B3 batch stocks and the 20 B4-B6 batch stocks and the 20 C1 batch stocks (72 in all). Source: TradingView scanner (free, delayed, single source).
+"""Daily peer comparison for the six held stocks, the 5 P0 pilot stocks, the 21 B1-B3 batch stocks and the 20 B4-B6 batch stocks and the 20 C1 batch stocks and the 19 D1 batch stocks (91 in all). Source: TradingView scanner (free, delayed, single source).
 Writes peer_compare.json. Peer groups use the feed's own labels (not EGX official sectors).
 Rules: medians exclude the stock; only positive values count; n<3 => no comparison; n<5 => quality 'weak'.
 If the feed fails or returns too few rows, the old data is kept, marked status=stale, and the run exits 1 (job fails = alert).
@@ -86,6 +86,26 @@ G={
  'SDTI':('Hotels/Resorts/Cruise lines',lambda r:r['industry']=='Hotels/Resorts/Cruise lines'),
  'SIPC':('Pharmaceuticals: Major',lambda r:r['industry']=='Pharmaceuticals: Major'),
  'ZMID':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ # D1 batch added 28 Nov: unavailable-study stocks that have flow data (19 of the 20; VLMR held pending the VLMR/VLMRA line pick). Group choices are by feed label only; reasons are in NOTES below.
+ 'AIH':('Financial Conglomerates',lambda r:r['industry']=='Financial Conglomerates'),
+ 'AMIA':('Finance/Rental/Leasing',lambda r:r['industry']=='Finance/Rental/Leasing'),
+ 'ASPI':('Investment Banks/Brokers',lambda r:r['industry']=='Investment Banks/Brokers'),
+ 'ATLC':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
+ 'BTFH':('Investment Banks/Brokers',lambda r:r['industry']=='Investment Banks/Brokers'),
+ 'CIEB':('Major Banks',lambda r:r['industry']=='Major Banks'),
+ 'CNFN':('Finance/Rental/Leasing',lambda r:r['industry']=='Finance/Rental/Leasing'),
+ 'CSAG':('Other Transportation',lambda r:r['industry']=='Other Transportation'),
+ 'EGTS':('Electric Utilities',lambda r:r['industry']=='Electric Utilities'),
+ 'ISMQ':('Steel',lambda r:r['industry']=='Steel'),
+ 'KABO':('Apparel/Footwear',lambda r:r['industry']=='Apparel/Footwear'),
+ 'MOED':('Miscellaneous Commercial Services',lambda r:r['industry']=='Miscellaneous Commercial Services'),
+ 'MPCI':('Pharmaceuticals: Major',lambda r:r['industry']=='Pharmaceuticals: Major'),
+ 'OFH':('Financial Conglomerates',lambda r:r['industry']=='Financial Conglomerates'),
+ 'OIH':('Wireless Telecommunications',lambda r:r['industry']=='Wireless Telecommunications'),
+ 'PRCL':('Specialty Stores',lambda r:r['industry']=='Specialty Stores'),
+ 'SVCE':('Construction Materials',lambda r:r['industry']=='Construction Materials'),
+ 'VALU':('Finance/Rental/Leasing',lambda r:r['industry']=='Finance/Rental/Leasing'),
+ 'ZEOT':('Agricultural Commodities/Milling',lambda r:r['industry']=='Agricultural Commodities/Milling'),
 }
 NOTES={ # structural explanations only (design choices that do not depend on today's data). Data-state sentences are generated from the reason fields.
  'ORHD':'Uses the wider Real Estate Development group because the feed label (Homebuilding) has too few stocks.',
@@ -155,7 +175,27 @@ NOTES={ # structural explanations only (design choices that do not depend on tod
  'PRDC':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
  'SDTI':'Group is the feed industry (Hotels/Resorts/Cruise lines, hotels and resorts). It is not widened to the wider Consumer Services sector, which mixes movies and other services.',
  'SIPC':'Group is the feed industry, the same group as RMDA and MCRO, and is not widened to the whole Health Technology sector.',
- 'ZMID':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.'}
+ 'ZMID':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ # D1. Structural explanations only; no fixed numbers that depend on the data of the day.
+ 'AIH':'Group is the feed industry (Financial Conglomerates, holding companies with mixed portfolios). The holdings differ from company to company, so the spread is wide.',
+ 'AMIA':'Group is the feed industry (Finance/Rental/Leasing, leasing and finance companies) and is not widened.',
+ 'ASPI':'Group is the feed industry (Investment Banks/Brokers) and is not widened to a broader sector.',
+ 'ATLC':'Group is the feed industry, the same group used for the other real-estate developers. P/B is read against asset-heavy peers.',
+ 'BTFH':'Group is the feed industry (Investment Banks/Brokers) and is not widened to a broader sector.',
+ 'CIEB':'Group is the feed industry (Major Banks) and is not widened to regional banks. Banks are compared on P/B first. P/E is secondary and must not be read alone.',
+ 'CNFN':'Group is the feed industry (Finance/Rental/Leasing, leasing and finance companies) and is not widened.',
+ 'CSAG':'Group is the feed industry (Other Transportation, transport and logistics), the same group as ETRS and ALCN. It is not widened: the rest of the Transportation sector is marine shipping, a different business.',
+ 'EGTS':'Group is the feed industry (Electric Utilities), the same group as TAQA. It is not widened to the whole Utilities sector, which mixes gas distribution with power generation.',
+ 'ISMQ':'Group is the feed industry (Steel, steel producers) and is not widened.',
+ 'KABO':'Group is the feed industry (Apparel/Footwear), the same group as DSCW. It is not widened to the wider Consumer Non-Durables sector, which mixes tobacco, personal care and food, different businesses.',
+ 'MOED':'Group is the feed industry (Miscellaneous Commercial Services). The businesses inside the label differ, so the comparison is approximate.',
+ 'MPCI':'Group is the feed industry, the same group as RMDA, MCRO and SIPC, and is not widened to the whole Health Technology sector.',
+ 'OFH':'Group is the feed industry (Financial Conglomerates, holding companies with mixed portfolios). The holdings differ from company to company, so the spread is wide.',
+ 'OIH':'Group is the feed industry (Wireless Telecommunications). It is not widened: the other telecom labels are fixed-line and specialty carriers, a different business.',
+ 'PRCL':'Group is the feed industry (Specialty Stores). It is not widened to the wider Retail Trade sector, which mixes food and apparel retail, different businesses.',
+ 'SVCE':'Group is the feed industry, the same group as MCQE, and is not widened.',
+ 'VALU':'Group is the feed industry (Finance/Rental/Leasing, leasing and finance companies) and is not widened.',
+ 'ZEOT':'Group is the feed industry, the same group as ISMA and POUL, which mixes poultry, feed, sugar and milling companies, so the spread is wide.'}
 def make_note(c,res):
     parts=[NOTES[c]] if c in NOTES else []
     for key,lab in (('pb','P/B'),('pe','P/E')):
