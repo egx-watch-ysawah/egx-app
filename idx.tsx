@@ -23,6 +23,7 @@ import { FlowCombo } from './ui2026/FlowCombo';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
 import { StatusBanner, useCur, useCurMap, useNty, useStatus, useSV, unitPx } from './ui2026/StockStatus';
+import { DecisionCard } from './ui2026/DecisionCard';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
 import { AUTO_LABEL, AUTO_NOTE, AUTO_DISCLAIMER, NO_DATA, CARD_TEXT, CARDS, TPL_NOTE, TPL_NAME, FV_METHOD, Tpl } from './fundamentalsText';
 
@@ -259,7 +260,7 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       {(() => { const rw = ix0 && Array.isArray(ix0.rows) ? ix0.rows.find((r: any) => r.code === code) : null; const iso = String((s && s.date) || (rw && rw.date) || '').slice(0, 10); const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso); return m && !stx && !s.nohist ? <p className="eg-note">التحليل على إقفال <bdi dir="ltr">{m[3] + '/' + m[2] + '/' + m[1]}</bdi></p> : null; })()}
       {s.nohist ? <p className="eg-note"><b>تنبيه:</b> مفيش تاريخ أسعار حديث عند المصدر، فالقراءة الفنية والشارت والسيناريوهات المبنية على السعر غير متاحة. {stx ? '' : <>آخر سعر عند المصدر: <bdi>{s.close}</bdi> {cur.short}. </>}الدراسة المالية (المالي والسعر العادل والخلاصة) مبنية على القوائم.</p> : null}
       <StockChips s={s} code={code} />
-      <StockGuide s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
+      <StockGuide topCard={['COMI','MASR','BONY','HRHO','UNIP','PHAR','ORHD'].includes(code) ? <DecisionCard code={code} close={s.close} date={s.date} /> : null} s={s} k={code} r={reviewed ? reviewedRec(code) : null} light={!reviewed && !NEW(code)} fin={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <><WideFin k={code} />{reviewed || finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />}</> : finNew ? null : study ? <StudyFin st={study} /> : <AutoFin f={f} />} fair={unNode ? unNode : v7NR ? <div className="gd-sum">{NO_DATA}</div> : WIDE.includes(code) ? <WideFair k={code} fallback={study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} /> : study ? <StudyFair st={study} /> : <AutoFair f={f} close={s.close} />} chart={chartNode} fairNew={fairNew} unNote={unNode} />
       {fairNew || held ? null : <OnTab id="f"><V7Card k={code} /></OnTab>}
       {held ? null : <OnTab id="f">{cl.s && cl.row ? <OtherFacts row={cl.row} code={code} /> : null}</OnTab>}
       {held ? null : <OnTab id="f">{reviewed ? null : <NoteCard code={code} />}</OnTab>}
