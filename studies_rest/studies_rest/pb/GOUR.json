@@ -1,0 +1,50 @@
+{
+ "code": "GOUR",
+ "name_ar": "جورميه إيجيبت دوت كوم للأغذية",
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 13.42,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.9762,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 13.75,
+ "peer_level": "sector_small",
+ "peer_group_feed_label": "Retail Trade",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "MFSC",
+   "name_ar": null,
+   "pb": 9.176512605377974,
+   "price": 34.43
+  },
+  {
+   "code": "AFMC",
+   "name_ar": null,
+   "pb": 17.12569719314658,
+   "price": 130.71
+  }
+ ],
+ "multiples": {
+  "low": 9.177,
+  "median": 13.151,
+  "high": 17.126,
+  "min": 9.176512605377974,
+  "max": 17.12569719314658
+ },
+ "range": {
+  "low": 8.958,
+  "base": null,
+  "high": 16.718
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "feed drift: peer P/B changed vs 12:21 file: AFMC"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
