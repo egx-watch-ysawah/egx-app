@@ -18,7 +18,7 @@ import { NewsBlock } from './news';
 import { useStudy, StudyFin, StudyFair } from './studyrest';
 import { WIDE, WideFair, WideFin } from './wide';
 import { V7Card, isV7, useFairNew } from './v7';
-import { FAIR6, FairInline } from './ui2026/FairSix';
+import { FAIR6 } from './ui2026/FairSix';
 import { NEW, PVN, usePage, usePageGate } from './page';
 import { TopWarn } from './topwarn';
 import { StockGuide, OnTab, isReviewed, reviewedRec, HELD } from './guide';
@@ -254,7 +254,6 @@ function IdxStockInner({ code: codeP }: { code?: string }) {
       <OnTab id="t">{code === 'VLMRA' || s.jump || s.short || s.nohist ? null : <ScenarioBlock s={s} />}</OnTab>
       {held ? null : <OnTab id="f"><TeamBlock code={code} /></OnTab>}
       {held ? null : <OnTab id={reviewed ? 'd' : 'f'}><NewsBlock code={code} /></OnTab>}
-      {FAIR6.includes(code) ? <OnTab id="t"><FairInline code={code} /></OnTab> : null}
       <OnTab id="t"><Glossary /></OnTab>
       {held ? null : <OnTab id="f">{reviewed ? <StudyMeta code={code} /> : null}</OnTab>}
       {held ? null : <OnTab id="f"><SourcesBar code={code} reviewed={reviewed} /></OnTab>}
