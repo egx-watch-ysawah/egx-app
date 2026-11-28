@@ -69,7 +69,7 @@ except Exception as _e:
 if len(e30)!=30:errors['_egx30_count']='expected 30 got %d'%len(e30)
 for k in allc:
     t=ar.get(k) or en.get(k)
-    row=dict(code=k,name=(ar.get(k) or ['',k])[1],price=(ar.get(k) or [0,0,None])[2],chg=(ar.get(k) or [0,0,0,None])[3],vol=(ar.get(k) or [0,0,0,0,None])[4],lists=[x for x,l in (('egx30',e30),('egx70',e70)) if k in l],full=k in PORT,ok=False)
+    row=dict(code=k,name={'MASR':'مدينة مصر للإسكان والتعمير'}.get(k) or (ar.get(k) or ['',k])[1],price=(ar.get(k) or [0,0,None])[2],chg=(ar.get(k) or [0,0,0,None])[3],vol=(ar.get(k) or [0,0,0,0,None])[4],lists=[x for x,l in (('egx30',e30),('egx70',e70)) if k in l],full=k in PORT,ok=False)
     if row['price'] is not None and row['vol'] is not None:row['val']=row['price']*row['vol']
     if k not in PORT:
         try:
@@ -87,7 +87,7 @@ for k in allc:
               bars=[[str(i.date()),round(r.open,4),round(r.high,4),round(r.low,4),round(r.close,4),int(r.volume)] for i,r in df.tail(420).iterrows()],
               hi52=round(float(df.close.tail(250).max()),3),lo52=round(float(df.close.tail(250).min()),3),historyCount=len(df),historyWindowYears=3,source='https://startamarkets.com/symbol/'+k+'/history',sourceName='Starta Markets',qualityChecked=True,auto=True)
             write_atomic(Path('idx/'+k+'.json'),json.dumps(s,ensure_ascii=False,separators=(',',':'),allow_nan=False))
-            row.update(ok=True,date=s['date'],votes=votes,close=s['close'],chg5=s['chg5'])
+            row.update(ok=True,date=s['date'],votes=votes,close=s['close'],chg5=s['chg5'],atr_pct=round(atr/P*100,2))
             if row['price'] is None:row['price']=s['close']
         except Exception as e:
             errors[k]=type(e).__name__+':'+str(e)[:60]
