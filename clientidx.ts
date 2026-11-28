@@ -75,7 +75,7 @@ export function useClientStock(code: string, enabled: boolean) {
       try {
         const all = await fetch(STOCKS + '?t=' + Date.now(), { cache: 'no-store' }).then(x => x.json());
         const row: StartaFull | null = Array.isArray(all) ? all.find((x: any) => x.symbol === (FEEDSYM[code] || code)) || null : null;
-        if (!row) { on && setSt({ done: true, fail: 'السهم ده مش موجود عند المصدر دلوقتي.', row: null }); return; }
+        if (!row) { on && setSt({ done: true, fail: 'السهم ده مش موجود في مصدر الأسعار الحي دلوقتي.', row: null }); return; }
         const raw = await fetch(HIST + (FEEDSYM[code] || code), { cache: 'no-store' }).then(x => { if (!x.ok) throw 0; return x.json(); });
         const b = buildStock(code, row.name_ar || row.name_en, raw, row);
         on && setSt('s' in b ? { done: true, s: b.s, row } : { done: true, fail: b.fail, row });
