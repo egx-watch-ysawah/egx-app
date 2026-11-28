@@ -42,7 +42,7 @@ export function Signals() {
       <h2 className="eg-h" style={{ marginTop: 56 }}>الإشارات</h2>
       <p className="sg-note">وصف للي حصل لحد الإقفال، مش توصية. الأرقام من نفس بيانات صفحات الأسهم.</p>
       <h3 className="sg-h">إشارات اليوم</h3>
-      {fired.length === 0 ? <div className="sg-na">مفيش إشارة اتفعلت النهاردة في الأسهم الستة · {(DATA as any).stocks.HRHO?.date}</div> :
+      {fired.length === 0 ? <div className="sg-na">مفيش إشارة اتفعلت النهاردة في أسهم محددة · {(DATA as any).stocks.HRHO?.date}</div> :
         fired.map(x => (
           <div key={x.k + x.f} className="sg-c">
             <Link to={to(x.k)} className="sg-n"><b>{x.s.name}</b><small dir="ltr">{x.k}</small></Link>
@@ -55,7 +55,7 @@ export function Signals() {
             {x.bt && x.bt.n < MIN_N ? <div className="sg-na">عينة صغيرة (أقل من {MIN_N} إشارة)، النتيجة مش للاعتماد</div> : null}
             <div className="sg-f">إقفال {x.s.date} · {x.s.sourceName}</div>
           </div>))}
-      <p className="sg-note">باقي الأسهم (EGX 30 و70 غير الستة): الإشارات المفعّلة غير متوفرة هنا حاليًا، لأن بيانات الإشارة مش متضمنة في القايمة العامة.</p>
+      <p className="sg-note">باقي الأسهم (EGX 30 و70 غير الأسهم دي): الإشارات المفعّلة غير متوفرة هنا حاليًا، لأن بيانات الإشارة مش متضمنة في القايمة العامة.</p>
       <h3 className="sg-h">أقوى قراءة فنية (4 من 5 مؤشرات إيجابية أو أكتر)</h3>
       {err ? <div className="sg-na">مقدرتش أحمل القايمة</div> : !d ? <div className="sg-na">بحمّل...</div> : strong.length ? <><Head />{strong.map(r => <Row key={r.code} r={r} />)}</> : <div className="sg-na">مفيش</div>}
       <h3 className="sg-h">أضعف قراءة فنية (مؤشر واحد إيجابي أو أقل)</h3>
