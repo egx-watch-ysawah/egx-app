@@ -25,8 +25,9 @@ def compute(SYM,rows,srcnote,MG=()):
     df=df.sort_values('date').drop_duplicates('date').set_index('date')
     for c in df.columns:df[c]=pd.to_numeric(df[c],errors='coerce')
     df=df.dropna();df=df[(df.volume>0)&(df.low<=df[['open','close']].min(axis=1))&(df[['open','close']].max(axis=1)<=df.high)&(df.close>0)]
+    if len(df)<250:raise ValueError('under 250 clean rows (%d): no file'%len(df))
     v=df.close*df.volume;med60=v.shift(1).rolling(60).median();A=v>2*med60
-    B=((df.close-df.low)/(df.high-df.low).replace(0,np.nan))>=(2/3)
+    B=((df.close-df.low)/(df.high-df.low).replace(0,np.nan))>=(2/3-1e-9)
     up=df.close>df.close.shift(1);us=(df.volume*up).rolling(10).sum()/df.volume.rolling(10).sum()
     sma20=df.close.rolling(20).mean();C=(us>0.6)&(df.close>sma20)
     valid=(med60.notna()&sma20.notna()&us.notna()).values
@@ -34,9 +35,10 @@ def compute(SYM,rows,srcnote,MG=()):
     chg=np.abs(np.diff(cl)/cl[:-1]);glitch=np.zeros(n,bool);glitch[1:]=chg>0.25
     KEY=lambda x,y,z:('A' if x else '')+('B' if y else '')+('C' if z else '')
     combo=[KEY(a[i],b_[i],c_[i]) if valid[i] else None for i in range(n)]
-    dts=[x.date() for x in df.index];dd_=np.zeros(n,int)
+    dts=[x.date() for x in df.index];dd_=np.zeros(n,int);mgx={}
     for j in range(1,n):
-        if any(dts[j-1]<=a and dts[j]>=b for a,b in MG):dd_[j]=99;closure=np.zeros(n,bool)
+        for g0,g1 in MG:
+            if dts[j-1]<=g0 and dts[j]>=g1:dd_[j]=99;mgx[j]=(str(g0),str(g1))
     H=(5,10,20);fwd={};ok={};gapx={}
     for k in H:
         f=np.full(n,np.nan);f[:-k]=cl[k:]/cl[:-k]-1;w=np.zeros(n,bool);g=np.zeros(n,bool)
@@ -60,10 +62,10 @@ def compute(SYM,rows,srcnote,MG=()):
     out={'symbol':SYM,'pilot':True,'generated_at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=2))).isoformat(timespec='seconds'),
      'source':'startamarkets.com/api/v1/egx/history/<SYM> daily OHLCV (prices as given by Starta) - '+srcnote,
      'history':{'firstDayIsListing':bool(LISTING.get(SYM) and LISTING[SYM]==str(df.index[0].date())),'listingDate':LISTING.get(SYM),'startLabelAr':('من أول يوم تداول للسهم' if (LISTING.get(SYM) and LISTING[SYM]==str(df.index[0].date())) else 'من أول يوم في البيانات المتاحة'),'firstDate':str(df.index[0].date()),'statsFrom':str(df.index[60].date()),'warmupSessions':60,'from':str(df.index[0].date()),'to':str(df.index[-1].date()),'sessions':int(n)},
-     'rule':{'A':'traded value > 2x median of previous 60 sessions','B':'close in top third of day range','C':'10-session up-day volume share > 60% and close > SMA20',
+     'rule':{'A':'traded value > 2x median of previous 60 sessions','B':'close in top third of day range (inclusive: (close-low)/(high-low) >= 2/3 - 1e-9)','C':'10-session up-day volume share > 60% and close > SMA20',
       'unit':'exact combination of met conditions (A,B,C: 7 non-zero combos); zero met = no calculation',
       'events':'a day is an event for a combination only if more than 5 sessions passed since the previous event of the SAME combination. n = events; rawDays = all days in that state',
-      'closureFilter':'forward windows (5/10/20 sessions) that contain a stretch of more than 10 calendar days without bars are excluded from the return statistics and listed in excluded20 with the reason. market closure = the window contains the market-wide gap 2011-01-27 to 2011-03-23, or a gap of one stock that starts on 2011-01-27 and ends on or after 2011-03-23 (documented closure plus the days that stock did not trade after reopening). data gap = it contains exactly the market-wide gap 2002-10-08 to 2002-10-24 (فجوة بيانات, no evidence of a closure). stock gap = any other stretch where this stock own bars skip more than 10 days','glitchFilter':'forward windows containing a |daily move| > 25% day are excluded from the return statistics',
+      'closureFilter':'forward windows (5/10/20 sessions) that cross a MARKET-WIDE stretch of more than 10 calendar days without any trading in the 96-stock union are excluded from the return statistics and listed in excluded20 with the reason. market closure = the window crosses the market-wide gap 2011-01-27 to 2011-03-23 (documented closure; this includes a stock whose own gap starts 2011-01-27 and ends on or after 2011-03-23). data gap = it crosses the market-wide gap 2002-10-08 to 2002-10-24 (فجوة بيانات, no evidence of a closure). A stock own missing days that are not a market-wide gap do not exclude anything','glitchFilter':'forward windows containing a |daily move| > 25% day are excluded from the return statistics',
       'noPooling':'statistics come only from this stock\'s own history; no pooled fallback; n is always shown, also 0 and 1'},
      'baseline':{f'h{k}':dict(n=int(len(base[k])),win=round(100*float((base[k]>0).mean()),1),mean=round(100*float(base[k].mean()),2)) for k in H},
      'today':{'date':str(df.index[-1].date()),'valid':bool(valid[-1]),'state':cur,'A':bool(a[-1]),'B':bool(b_[-1]),'C':bool(c_[-1]),'noCalc':(cur=='' or cur is None),
@@ -73,17 +75,22 @@ def compute(SYM,rows,srcnote,MG=()):
         idx=ev.get(k,[]);e=dict(state=k,n=len(idx),rawDays=raw.get(k,0),dates=[str(df.index[i].date()) for i in idx])
         for h in H:e[f'h{h}']=stats(idx,h)
         e['open']=[str(df.index[i].date()) for i in idx if i+20>=n]  # events whose 20-session window is not finished yet
-        e['excluded20']=[dict(date=str(df.index[i].date()),reason=(('market closure (documented, 2011-01-27 to 2011-03-23)' if any(is_closure(dts[j-1],dts[j]) for j in range(i+1,i+21)) else ('data gap (market-wide, 2002-10-08 to 2002-10-24, no closure evidence)' if any((str(dts[j-1]),str(dts[j])) in DATAGAPS for j in range(i+1,i+21)) else 'stock gap (this stock has no bars for over 10 days inside the window)')) if gapx[20][i] else '25% single-day move inside the 20 sessions')) for i in idx if i+20<n and not ok[20][i]]  # never called open
+        def _why(i):
+            if not gapx[20][i]:return '25% single-day move inside the 20 sessions'
+            X={mgx[j] for j in range(i+1,i+21) if j in mgx}
+            if ('2011-01-27','2011-03-23') in X:return 'market closure (documented, 2011-01-27 to 2011-03-23)'
+            if X&DATAGAPS:return 'data gap (market-wide, 2002-10-08 to 2002-10-24, no closure evidence)'
+            return 'market-wide gap'
+        e['excluded20']=[dict(date=str(df.index[i].date()),reason=_why(i)) for i in idx if i+20<n and not ok[20][i]]  # never called open
         e['events20']=[{'date':str(df.index[i].date()),'ret20':round(100*float(fwd[20][i]),1)} for i in idx if ok[20][i]][-10:]
         out['combos'][k]=e
 
     gl=[(str(df.index[i-1].date()),str(df.index[i].date())) for i in range(1,n) if dd_[i]>10]  # market-wide closures crossed by this stock's bars
-    out['closures']=[dict(from_=a,to=b,kind=('market closure' if is_closure(datetime.date.fromisoformat(a),datetime.date.fromisoformat(b)) else ('data gap' if (a,b) in DATAGAPS else 'stock gap'))) for a,b in gl]
+    out['closures']=[dict(from_=a,to=b,kind=('market closure' if mgx[j]==('2011-01-27','2011-03-23') else ('data gap' if mgx[j] in DATAGAPS else 'market-wide gap'))) for j,(a,b) in ((j,(str(dts[j-1]),str(dts[j]))) for j in range(1,n) if dd_[j]>10)]
     rs=[x['reason'] for e in out['combos'].values() for x in e['excluded20']]
     L=[]
     if any(r.startswith('market closure') for r in rs):L.append('استبعدنا حالات حصلت قبل إغلاق السوق في يناير 2011')
     if any(r.startswith('data gap') for r in rs):L.append('استبعدنا حالات حصلت قبل فجوة في البيانات في أكتوبر 2002')
-    if any(r.startswith('stock gap') for r in rs):L.append('استبعدنا حالات فيها فترة طويلة من غير بيانات للسهم نفسه')
     out['limitsAr']=L
     return out
 
@@ -91,14 +98,17 @@ if __name__=='__main__':
     hist,outdir,session=sys.argv[1:4]
     for p in (os.path.join(os.path.dirname(os.path.abspath(__file__)),'flow_listing_dates.json'),'flow_listing_dates.json'):
         if os.path.exists(p):LISTING.update({k:v for k,v in json.load(open(p)).items() if not k.startswith('_')});break
-    H=json.load(open(os.path.join(hist,'chunk_0.json')))
-    MG=market_gaps(H);print('market-wide closures:',[(str(a),str(b)) for a,b in MG])
+    H0=json.load(open(os.path.join(hist,'chunk_0.json')));H=dict(H0)
+    for fn in sorted(os.listdir(hist)):
+        if fn.startswith('chunk_') and fn!='chunk_0.json':H.update(json.load(open(os.path.join(hist,fn))))
+    MG=market_gaps(H0);  # market-wide gaps ALWAYS from the chunk_0 union (the 96 stocks), never from extra stocks
+    print('market-wide closures:',[(str(a),str(b)) for a,b in MG])
     tmp=os.path.abspath(outdir).rstrip('/')+'.combo_tmp';shutil.rmtree(tmp,ignore_errors=True);os.makedirs(tmp)
     idx={};bad=[]
     for sym,rows in sorted(H.items()):
         try:
             o=compute(sym,rows,'full Starta history (flow_hist cache), as given by Starta',MG)
-            if o['history']['to']!=session or o['history']['sessions']<250:raise ValueError('last bar %s sessions %s'%(o['history']['to'],o['history']['sessions']))
+            if o['history']['to']!=session or False:raise ValueError('last bar %s, not %s'%(o['history']['to'],session))
             json.dump(o,open(os.path.join(tmp,'flow_combo_'+sym+'.json'),'w'),ensure_ascii=False,separators=(',',':'))
             idx[sym]=dict(state=o['today']['state'],n=(o['combos'][o['today']['state']]['n'] if o['today']['state'] else None),sessions=o['history']['sessions'],first=o['history']['firstDate'])
         except Exception as e:
