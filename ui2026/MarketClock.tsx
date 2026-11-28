@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-// EGX session: Sunday to Thursday, 10:00 to 14:15 Cairo time (stock-market-hours.com/markets/egx, read 2026-11-27).
+// EGX session: Sunday to Thursday, Cairo time: continuous trading 10:00 to 14:15, closing auction until 14:30 (EFG Hermes trading guide, exchange decision 681/2021, verified by the market-structure expert 2026-11-28).
 // Holidays: official national holidays 2026 from presidency.eg (read 2026-11-27). Dates after 2026 are NOT known here: no invented dates.
 const OPEN = 10 * 60, CLOSE = 14 * 60 + 15;
 const H_YEAR = 2026;
@@ -58,7 +58,7 @@ export function MarketClock() {
   return <div className={'mc ' + (s.st === 'open' ? 'on' : '')} role="status">
     <span className="mc-d" aria-hidden="true" />
     <div><b>{line}</b>
-      <small>بتوقيت القاهرة الآن {hm(s.c.min)} · جلسات الأحد للخميس 10:00 ص إلى 2:15 م.</small>
+      <small>بتوقيت القاهرة الآن {hm(s.c.min)} · تداول متواصل 10:00 ص–2:15 م، ومزاد إقفال لحد 2:30 م (الأحد للخميس).</small>
       {s.unknown ? <small>إجازات بعد 2026: غير متوفر هنا، راجع موقع البورصة قبل ما تعتمد على الموعد.</small> : null}
       <small>المواعيد: stock-market-hours.com، الإجازات الرسمية 2026: presidency.eg، قُرئت 27-11-2026. البورصة ممكن تغيّر أو تقفل أيام تانية بإعلان منها.</small></div>
   </div>;
