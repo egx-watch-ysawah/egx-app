@@ -16,6 +16,7 @@ e30=list(cols('en','SYML:EGX;EGX30'))
 e70=json.loads(Path('index70.json').read_text())['codes']
 # One company, two lines: VLMR is Valmore's USD line, VLMRA its EGP line (https://ir.valmore.com/en/share-and-corporate-information).
 # The feed lists both in EGX30, so the list had 31. Keep the EGP line (the app's prices and turnover are in pounds).
+NAME_AR=json.loads(Path('names_ar.json').read_text(encoding='utf-8'))  # official Arabic names where the feed's Arabic field is English (see names_ar.json)
 TWIN={'VLMR':'VLMRA'}
 e30=[c for c in e30 if not (c in TWIN and TWIN[c] in e30)]
 e70=[c for c in e70 if not (c in TWIN and TWIN[c] in e70)]
@@ -118,7 +119,7 @@ def build(k,row,final=False):
 flagged=[]
 for k in allc:
     t=ar.get(k) or en.get(k)
-    row=dict(code=k,name={'MASR':'مدينة مصر للإسكان والتعمير'}.get(k) or (ar.get(k) or ['',k])[1],price=(ar.get(k) or [0,0,None])[2],chg=(ar.get(k) or [0,0,0,None])[3],vol=(ar.get(k) or [0,0,0,0,None])[4],lists=[x for x,l in (('egx30',e30),('egx70',e70)) if k in l],full=k in PORT,ok=False)
+    row=dict(code=k,name={'MASR':'مدينة مصر للإسكان والتعمير'}.get(k) or NAME_AR.get(k) or (ar.get(k) or ['',k])[1],price=(ar.get(k) or [0,0,None])[2],chg=(ar.get(k) or [0,0,0,None])[3],vol=(ar.get(k) or [0,0,0,0,None])[4],lists=[x for x,l in (('egx30',e30),('egx70',e70)) if k in l],full=k in PORT,ok=False)
     if row['price'] is not None and row['vol'] is not None:row['val']=row['price']*row['vol']
     if k not in PORT:
         try:
