@@ -32,7 +32,7 @@ export function FlowSignal({ k }: { k: string }) {
   const me = sig && sig.stocks[k]; const stale = !me || staleBySession(me.date, hol);
   return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div>
     <div className="sm-card fx"><style>{FX_CSS}</style>
-      {stale ? <div className="fx-na"><b>غير متوفر</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة مش متاحة دلوقتي'}</span></div> : me && <>
+      {stale ? <div className="fx-na"><b>غير متوفر</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة اليومية مش بتغطي السهم ده'}</span></div> : me && <>
         <div className={'fx-v ' + (me.fired ? 'y' : 'g')}><span className="fx-vi">{me.fired ? '▲' : '—'}</span><div><b>{me.fired ? 'فيه علامة تجميع على السهم في آخر جلسة' : 'مفيش علامة تجميع في آخر جلسة'}</b><small>جلسة {arD(me.date)}{me.deduped ? ' · جت بعد علامة قريبة (أقل من 5 جلسات)، فمش بتتعد مرة تانية في الاختبار' : ''}</small><small style={{display:"block"}}>ده وصف للي حصل، مش توقع.</small></div></div>
         <div className="fx-bn"><b>تستفيد منها إزاي:</b> لو العلامة ظهرت، افتح الشارت وراجع السهم بنفسك قبل أي قرار. مش توقع ولا توصية.</div></>}
       <FlowCombo k={k} />
