@@ -1,0 +1,72 @@
+{
+ "code": "AREH",
+ "name_ar": null,
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 6 شركة من نفس النشاط، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 1.01,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.3,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 3.37,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Engineering & Construction",
+ "n_peers": 6,
+ "peers": [
+  {
+   "code": "GGCC",
+   "name_ar": null,
+   "pb": 1.202018088395992,
+   "price": 0.517
+  },
+  {
+   "code": "ORAS",
+   "name_ar": "اوراسكوم كونستراكشون ليميتد",
+   "pb": 1.5240366690127418,
+   "price": 790
+  },
+  {
+   "code": "IEEC",
+   "name_ar": "المشروعات الصناعية والهندسية",
+   "pb": 2.5746192893401014,
+   "price": 0.634
+  },
+  {
+   "code": "FNAR",
+   "name_ar": null,
+   "pb": 3.4997912468913945,
+   "price": 9.64
+  },
+  {
+   "code": "NCCW",
+   "name_ar": "النصر للأعمال المدنية",
+   "pb": 3.9740800811726995,
+   "price": 5.17
+  },
+  {
+   "code": "CRST",
+   "name_ar": null,
+   "pb": 5.5994199162101195,
+   "price": 1.39
+  }
+ ],
+ "multiples": {
+  "low": 1.787,
+  "median": 3.037,
+  "high": 3.856,
+  "min": 1.202018088395992,
+  "max": 5.5994199162101195
+ },
+ "range": {
+  "low": 0.536,
+  "base": 0.911,
+  "high": 1.157
+ },
+ "price_marker": "inside",
+ "review_flags": [],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B4"
+}
