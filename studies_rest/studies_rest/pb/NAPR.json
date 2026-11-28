@@ -1,0 +1,25 @@
+{
+ "method": "price_history_52w",
+ "currency": "EGP",
+ "price": 44.09,
+ "confidence": "low",
+ "confidence_ar": "ثقة منخفضة: مفيش قيمة دفترية ولا ربحية موجبة من أي مصدر. ده أدنى وأعلى سعر في آخر 52 أسبوع بس، مش تقدير للسعر العادل.",
+ "review_flags": [
+  "symbol NAPR matched to ISIN EGS370O1C013 (National Printing) by decypha.com and arabfinance.com company pages, not by the feed",
+  "no book value and no positive P/E"
+ ],
+ "code": "NAPR",
+ "name_ar": null,
+ "app_batch": "B5",
+ "as_of": "2026-11-26",
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "rung": 6,
+ "range": {
+  "low": 18,
+  "base": null,
+  "high": 57.8
+ },
+ "method_ar": "مدى سعر تاريخي بس، مش تقدير للسعر العادل",
+ "range_source": "TradingView scanner EGX:EGS370O1C013 price_52_week_low/high, pulled 28 Nov 2026",
+ "price_marker": "inside"
+}
