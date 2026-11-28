@@ -1,0 +1,92 @@
+{
+ "code": "MPCI",
+ "name_ar": "ممفيس للادوية",
+ "tier": 1,
+ "confidence_ar": "ثقة منخفضة: P/B بس، 9 شركة من نفس النشاط، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 314.33,
+ "price_date": "2026-11-26",
+ "own_bvps": 35.8986,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 8.76,
+ "peer_level": "industry",
+ "peer_group_feed_label": "Pharmaceuticals: Major",
+ "n_peers": 9,
+ "peers": [
+  {
+   "code": "MIPH",
+   "name_ar": null,
+   "pb": 1.360986142883997,
+   "price": 777
+  },
+  {
+   "code": "ADCI",
+   "name_ar": null,
+   "pb": 3.6841368844541997,
+   "price": 239.08
+  },
+  {
+   "code": "RMDA",
+   "name_ar": "راميدا",
+   "pb": 4.025777834919002,
+   "price": 5.01
+  },
+  {
+   "code": "OCPH",
+   "name_ar": null,
+   "pb": 5.135569758838449,
+   "price": 188.1
+  },
+  {
+   "code": "MCRO",
+   "name_ar": "ماكرو جروب للمستحضرات الطبية",
+   "pb": 5.413734227293549,
+   "price": 1.3
+  },
+  {
+   "code": "CPCI",
+   "name_ar": null,
+   "pb": 5.655230559359446,
+   "price": 539.96
+  },
+  {
+   "code": "AXPH",
+   "name_ar": null,
+   "pb": 6.0445620473204915,
+   "price": 1312.41
+  },
+  {
+   "code": "SIPC",
+   "name_ar": "سبأ",
+   "pb": 11.008016453595719,
+   "price": 4.71
+  },
+  {
+   "code": "NIPH",
+   "name_ar": "النيل للادوية",
+   "pb": 12.086502573417839,
+   "price": 276
+  }
+ ],
+ "multiples": {
+  "low": 4.026,
+  "median": 5.414,
+  "high": 6.045,
+  "min": 1.360986142883997,
+  "max": 12.086502573417839
+ },
+ "range": {
+  "low": 144.52,
+  "base": 194.345,
+  "high": 216.991
+ },
+ "price_marker": "above_all",
+ "review_flags": [
+  "feed drift: peer P/B changed vs 12:21 file: CPCI,NIPH"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
