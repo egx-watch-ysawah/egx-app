@@ -28,11 +28,17 @@ import { About, Info, Market } from './screen_info';
 import { HomePanel } from './ui2026/HomePanel';
 import { DisclaimerLine } from './ui2026/More';
 import { BonyFundamentals, DataAge, HoldingComparison, HoldingContext, PartialHistory, Portfolio, PortfolioVisual, averagePosition, calendarAge, consumeSetupFragment, parsePortfolio, setupMessage } from './screen_portfolio';
+// Unknown paths get a plain not-found page. The bare root keeps opening the portfolio screen as before.
+function Catch() {
+  const loc = useLocation();
+  if (loc.pathname === '/' || loc.pathname === '') return <Portfolio/>;
+  return <div className="eg-pad" style={{ paddingTop: 54 }}><h2 className="eg-h">الصفحة دي مش موجودة</h2><p className="eg-note">اللينك ده مش معروف عندنا.</p><Link className="eg-back" to="/home">← الرئيسية</Link></div>;
+}
 export function App() {
     return <FileCard lang="ar" dir="rtl">
         <div className="eg-top"><h1 className="eg-title">أسهمي</h1><span className="eg-live">محفظتي · بيانات يومية</span></div>
         <StocksSubTabs/>
-        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/>{goldOn()&&<Route path="/gold" element={<GoldTab/>}/>}<Route path="/others" element={<OthersList/>}/><Route path="/all" element={<AllStocks/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="/signals" element={<Signals/>}/><Route path="/fair" element={<FairSix/>}/><Route path="/home" element={<div className="eg-pad"><HomePanel/><Market/></div>}/><Route path="/more" element={<Info/>}/><Route path="/stocks" element={<Navigate to="/egx30" replace/>}/><Route path="*" element={<Portfolio/>}/></Routes>
+        <Routes>{KEYS.map(k=><Route key={k} path={"/"+k.toLowerCase()} element={<PageSwitch k={k} old={<Stock key={k} k={k}/>}/>}/>)}<Route path="/egx30" element={<IndexList which="egx30"/>}/><Route path="/egx70" element={<IndexList which="egx70"/>}/><Route path="/s/:code" element={<IdxStock/>}/>{goldOn()&&<Route path="/gold" element={<GoldTab/>}/>}<Route path="/others" element={<OthersList/>}/><Route path="/all" element={<AllStocks/>}/><Route path="/o/:code" element={<IdxStock/>}/><Route path="/signals" element={<Signals/>}/><Route path="/fair" element={<FairSix/>}/><Route path="/home" element={<div className="eg-pad"><HomePanel/><Market/></div>}/><Route path="/more" element={<Info/>}/><Route path="/stocks" element={<Navigate to="/egx30" replace/>}/><Route path="*" element={<Catch/>}/></Routes>
         <DisclaimerLine/>
     </FileCard>;
 }
