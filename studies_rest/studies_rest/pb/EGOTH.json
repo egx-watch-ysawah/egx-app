@@ -1,0 +1,19 @@
+{
+ "code": "EGOTH",
+ "name_ar": "المصرية العامة للسياحة والفنادق - إيجوث",
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "review_flags": [
+  "no industry label in feed",
+  "feed 52-week low = high = last price: no trading range",
+  "no Arab Finance profile, no stockanalysis page, no Yahoo ticker found"
+ ],
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar",
+ "currency": "EGP",
+ "price": 100,
+ "method": "none",
+ "confidence": "none",
+ "confidence_ar": "ثقة منعدمة: مفيش تصنيف نشاط للسهم في بيانات السوق، فمفيش شركات مشابهة، والسهم مفيهوش تداول بنطاق سعري (آخر سعر 100 ثابت في بيانات السوق). مفيش ملف للشركة في Arab Finance ولا أي مصدر مجاني تاني لقيته.",
+ "rung": null,
+ "range": null
+}
