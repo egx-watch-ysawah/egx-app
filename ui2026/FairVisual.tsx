@@ -154,7 +154,7 @@ export function PageFairHero({ d }: { d: any }) {
         <b className="fvs-v">{f2(v2)} <small>{g2 >= 0 ? '▲ +' : '▼ −'}{Math.abs(g2).toFixed(0)}%</small></b></div>; })}
       <p className="fvh-n" dir="rtl">الأساس: دخل متبقي بثلاث افتراضات لعائد حقوق الملكية النهائي (افتراض مش توقع). المصدر: StockAnalysis وصفحات Starta العامة عبر حاسبة خاصة، بتاريخ <bdi dir="ltr">{fs.as_of}</bdi>.</p>
     </div> : <p className="fvh-n">سيناريوهات مرجع التحقق: غير متوفر، {FS[code] && FS[code].reason ? FS[code].reason : 'مفيش بيانات منظمة للسهم ده'}.</p>}
-    <p className="fvh-n">{anv ? 'مستهدف المحللين: ' + f2(anv.value) + (anv.as_of_ar ? ' (' + anv.as_of_ar + ')' : '') : 'مستهدف المحللين: غير متوفر، مفيش مستهدف منشور من جهة خارجية.'}</p>
+    <p className="fvh-n">{anv ? 'مستهدف الجهات الخارجية: ' + f2(anv.value) + (anv.as_of_ar ? ' (' + anv.as_of_ar + ')' : '') : 'مستهدف الجهات الخارجية: غير متوفر، مفيش مستهدف منشور من جهة خارجية.'}</p>
     {fs ? <div className="fvh-as fva">
       {AS.map(([k, l, m]) => num(A[k]) ? <span key={k} className="fva-c"><i>{l}</i><b dir="ltr">{A[k]}%</b><small>{m}</small></span>
         : <span key={k} className="fva-c na"><i>{l}</i><b>غير متوفر</b><small>{why}</small></span>)}
