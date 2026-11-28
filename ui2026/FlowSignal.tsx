@@ -1,6 +1,7 @@
 import React from 'react';
 import { DATA } from '../data';
 import { FlowLive } from './FlowLive';
+import { FlowCombo, useCombo } from './FlowCombo';
 // HRHO-only panel: "علامة تجميع". pound verdicts. Numbers come from flow_signal.json (daily) and flow_stats.json (history test, dated).
 type Cond = { value: { x: number; ok: boolean }; close: { pos: number; ok: boolean }; flow: { share: number; aboveAvg: boolean | null; ok: boolean } };
 type Sig = { asof: string; stocks: Record<string, { date: string; fired: boolean; deduped?: boolean; conditions: Cond }> };
@@ -46,9 +47,9 @@ function Block({ r, max }: { r: any; max: number }) {
 }
 export function FlowSignal({ k }: { k: string }) {
   const [sig, setSig] = React.useState<Sig | null | undefined>(undefined);
-  const [st, setSt] = React.useState<Stats | null | undefined>(undefined); const hol = useHolidays();
+  const [st, setSt] = React.useState<Stats | null | undefined>(undefined); const hol = useHolidays(); const combo = useCombo(k);
   React.useEffect(() => { let on = true; loadSig().then(x => on && setSig(x)); loadStats().then(x => on && setSt(x)); return () => { on = false; }; }, []);
-  if (sig === undefined || st === undefined || hol === undefined) return null;
+  if (sig === undefined || st === undefined || hol === undefined || combo === undefined) return null;
   if (sig === null) return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div><div className="sm-card fx"><style>{FX_CSS}</style><div className="fx-na"><b>غير متوفر</b><span>ملف العلامة اليومية مش متاح دلوقتي، فمعرضناش حاجة.</span></div></div></>;
   const ps0 = st && st.perStock && st.perStock[k]; const ps = ps0 || {};
   const me = sig && sig.stocks[k]; const stale = !me || staleBySession(me.date, hol);
@@ -62,6 +63,7 @@ export function FlowSignal({ k }: { k: string }) {
       {stale ? <div className="fx-na"><b>غير متوفر</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة مش متاحة دلوقتي'}</span></div> : me && <>
         <div className={'fx-v ' + (me.fired ? 'y' : 'g')}><span className="fx-vi">{me.fired ? '▲' : '—'}</span><div><b>{me.fired ? 'فيه علامة تجميع على السهم في آخر جلسة' : 'مفيش علامة تجميع في آخر جلسة'}</b><small>جلسة {arD(me.date)}{me.deduped ? ' · جت بعد علامة قريبة (أقل من 5 جلسات)، فمش بتتعد مرة تانية في الاختبار' : ''}</small><small style={{display:"block"}}>ده وصف للي حصل، مش توقع.</small></div></div>
         <div className="fx-bn"><b>تستفيد منها إزاي:</b> لو العلامة ظهرت، افتح الشارت وراجع السهم بنفسك قبل أي قرار. مش توقع ولا توصية.</div></>}
+      {combo ? <FlowCombo k={k} /> : null}
       <FlowLive k={k} />
       <details className="sm-tip sm-tipd"><summary>التفاصيل والاختبار التاريخي</summary>
       {!stale && me && <>
@@ -71,7 +73,7 @@ export function FlowSignal({ k }: { k: string }) {
           <span className={'fx-c ' + (me.conditions.flow.ok ? 'y' : 'n')}><span>{me.conditions.flow.ok ? '✓' : '✗'}&nbsp;حجم آخر 10 جلسات: <bdi dir="ltr">{me.conditions.flow.share}%</bdi> في جلسات صعود (لازم أكتر من <bdi dir="ltr">60%</bdi>){me.conditions.flow.aboveAvg === null ? '' : <> والسعر {me.conditions.flow.aboveAvg ? 'فوق' : 'تحت'} متوسط آخر 20 جلسة (لازم فوقه)</>}</span></span>
           </div>
       </>}
-      {small ? <div className="fx-na"><b>عينة صغيرة، مش كفاية</b><span>العلامة ظهرت {ps.signals} مرات بس في السهم ده من {ps.sinceLabel}. ده قليل، فمش هنقول إنها نفعت أو لا. مفيش أرقام ولا حكم.</span></div> : rows.length === 0 ? <div className="fx-na"><b>اختبار العلامة على تاريخ السهم ده: غير متوفر</b><span>لسه ما اتعملش اختبار على أسعار {k} القديمة، فمفيش أرقام عن اللي حصل بعد العلامة. العلامة نفسها (فوق) محسوبة من بيانات آخر جلسة.</span></div> : <>
+      {combo ? null : small ? <div className="fx-na"><b>عينة صغيرة، مش كفاية</b><span>العلامة ظهرت {ps.signals} مرات بس في السهم ده من {ps.sinceLabel}. ده قليل، فمش هنقول إنها نفعت أو لا. مفيش أرقام ولا حكم.</span></div> : rows.length === 0 ? <div className="fx-na"><b>اختبار العلامة على تاريخ السهم ده: غير متوفر</b><span>لسه ما اتعملش اختبار على أسعار {k} القديمة، فمفيش أرقام عن اللي حصل بعد العلامة. العلامة نفسها (فوق) محسوبة من بيانات آخر جلسة.</span></div> : <>
       <div className="fx-t">هل العلامة بتفيد؟</div>
       <div className="fx-g" style={{margin:'4px 0 8px',color:'#b4bac4',lineHeight:1.7}}>نسأل: لو اشتريت من غير علامة، هتكسب نفس الكسب؟ لو أيوه، العلامة ملهاش لازمة. لو كسبت أقل، العلامة بتفيد. الأرقام دي بتقول: لو اشتريت بـ <bdi dir="ltr">100</bdi> جنيه، بقوا كام في المتوسط بعد المدة. "كسب" معناها إن سعر السهم بعد المدة بقى أعلى من يوم الشراء. (العلامة ظهرت في السهم ده {N(ps.signals)} مرة قبل كده)</div>
       {ord.map(r => <Block key={r.h} r={r} max={mx} />)}
