@@ -86,7 +86,7 @@ G={
  'SDTI':('Hotels/Resorts/Cruise lines',lambda r:r['industry']=='Hotels/Resorts/Cruise lines'),
  'SIPC':('Pharmaceuticals: Major',lambda r:r['industry']=='Pharmaceuticals: Major'),
  'ZMID':('Real Estate Development',lambda r:r['industry']=='Real Estate Development'),
- # D1 batch added 28 Nov: unavailable-study stocks that have flow data (19 of the 20; VLMR held pending the VLMR/VLMRA line pick). Group choices are by feed label only; reasons are in NOTES below.
+ # D1 batch added 28 Nov: unavailable-study stocks that have flow data (19 of the 20; VLMR left out, removed from the app 28 Nov after the user picked VLMRA, the EGP line). Group choices are by feed label only; reasons are in NOTES below.
  'AIH':('Financial Conglomerates',lambda r:r['industry']=='Financial Conglomerates'),
  'AMIA':('Finance/Rental/Leasing',lambda r:r['industry']=='Finance/Rental/Leasing'),
  'ASPI':('Investment Banks/Brokers',lambda r:r['industry']=='Investment Banks/Brokers'),
@@ -482,6 +482,13 @@ def make_note(c,res):
         elif r=='no_peers': parts.append('Fewer than 3 peers with a %s in the feed group, so no %s comparison.'%(lab,lab))
     return ' '.join(parts) or None
 REVIEWED_BVPS={'CNFN':3.68}  # CNFN has no studies_rest page; BVPS from its reviewed study in guide.tsx (reviewed 2026-11-25): parent equity 4,400.1m / 1,196.3m shares
+# Peer ratios from the reviewed study when the feed's figures contradict it. VLMRA (Valmore Holding, reviewed 2026-11-25, 9M2026 consolidated
+# statements in USD, EY limited review unqualified, as of 30 Sep 2026): BVPS 21.94 EGP (parent equity $496.7m / 1,177.1m shares, converted at
+# 51.9854 EGP/USD), adjusted full-year EPS 4.00 EGP. The feed carries BVPS 26.90 and EPS 5.21 for both Valmore lines, which disagree with the
+# filed statements, so the study figures win. Ratios are computed at the peer's own session close, same as the own-figure fallback.
+# REMINDER: these BVPS/EPS are hard-coded until the 12M2026 statements land and the study is updated; keep scripts/fundamentals.py
+# STUDY_DERIVED in sync.
+STUDY_PEER={'VLMRA':{'bvps':21.94,'eps':4.00}}
 def reviewed_bvps(c):
     # Book value per share from the stock's reviewed study page (9M 2026 statements, as of 30 Sep 2026). Only positive values count.
     # BONY excluded: its study book value is a valuer's upper bound (asset revaluation), not the reported equity,
@@ -494,7 +501,8 @@ def reviewed_bvps(c):
         return REVIEWED_BVPS.get(c)
 BANK_INDUSTRIES={'Regional Banks','Major Banks'}
 # Second share line of the same company (identical market cap in the feed). Excluded as a peer so one company is not counted twice.
-DUP={'VLMRA','FAITA'}
+# VLMR is Valmore's USD line, removed from the app 28 Nov (user picked VLMRA, the EGP line), so Valmore is counted once, as VLMRA. FAITA is FAIT's USD line.
+DUP={'VLMR','FAITA'}
 # Stocks the feed does not carry at all (no price, no industry, no figures). They get an empty entry, not a job failure.
 NOFEED={'AIHC','EEPM','EGS220N1C016','EGS73M81C012','FCMD','HALN','SEIGA','SIDC'}
 def post(b):
@@ -539,7 +547,7 @@ out={'price_session':sd,'generated_utc':datetime.datetime.now(datetime.timezone.
  'source':'TradingView scanner egypt/scan (single source, not cross-checked, reuse terms unverified)',
  'expected_session':expected_session(),'up_to_date':sd==expected_session(),'note':'Peer groups are the feed\'s own labels, not EGX official sectors. Medians exclude the stock itself. Hint only, not fair value.','stocks':{}}
 for c,(label,f) in G.items():
-    me=rows.get(c);peers=[r for k,r in rows.items() if k!=c and k not in DUP and f(r)]
+    me=rows.get(c);peers=[(k,r) for k,r in rows.items() if k!=c and k not in DUP and f(r)]
     rd=lambda v:round(v,2) if v else None
     res={'group':label,'feed_industry':me['industry'] if me else None,'price_session':sess(me) if me else None,'price':me['close'] if me else None,'pb':rd(pos(me['price_book_fq'])) if me else None,'pe':rd(pos(me['price_earnings_ttm'])) if me else None}
     # Own-figure fallback when the feed's ratio fields are null: compute from feed components (same source, same session), then from the reviewed study's book value per share.
@@ -553,7 +561,14 @@ for c,(label,f) in G.items():
         eps=pos(me.get('earnings_per_share_basic_ttm'))
         if eps and res['price']: res['pe']=rd(res['price']/eps);res['pe_src']='feed:earnings_per_share_basic_ttm'
     for key,fld in (('pb','price_book_fq'),('pe','price_earnings_ttm')):
-        v=sorted(x for x in (pos(r[fld]) for r in peers) if x is not None)
+        def pval(kr,key=key,fld=fld):
+            k,r=kr;o=STUDY_PEER.get(k)
+            if o and r['close']:
+                base=o['bvps'] if key=='pb' else o['eps']
+                pv=r['close']/base
+                return pv if pv>0 else None
+            return pos(r[fld])
+        v=sorted(x for x in (pval(kr) for kr in peers) if x is not None)
         n=len(v);res['n_'+key]=n;res['median_'+key]=med(v) if n>=3 else None
         if res[key] is not None and n>=3: res['vs_'+key]='cheaper' if res[key]<res['median_'+key] else 'dearer' if res[key]>res['median_'+key] else 'same'
         else: res['vs_'+key]=None
