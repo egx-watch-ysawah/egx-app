@@ -4179,64 +4179,11 @@
    "source": "TradingView scanner (غير رسمي)",
    "template": "standard"
   },
-  "VLMR": {
-   "derived": {
-    "bvps": 26.9,
-    "pb": 0.02,
-    "pe": 0.12,
-    "roe_ttm_pct": 20.0
-   },
-   "fair_value": {
-    "basis": "P/B",
-    "low_base_high": [
-     16.14,
-     24.21,
-     32.28
-    ],
-    "multiples": [
-     0.6,
-     0.9,
-     1.2
-    ],
-    "note": "مضاعفات عامة افتراضية، مش سعر مستهدف",
-    "reason": null,
-    "status": "تقدير آلي"
-   },
-   "fields": {
-    "book_value_per_share_fq": 26.8979,
-    "cash_f_operating_activities_ttm": 11985879993.9569,
-    "earnings_per_share_basic_ttm": 5.2091,
-    "free_cash_flow_ttm": 9879418778.375,
-    "gross_margin_ttm": 36.2194,
-    "net_income_fq": 253822307.1113,
-    "net_income_fy": 6223002831.8149,
-    "net_income_ttm": 6060898561.0811,
-    "net_margin_ttm": 19.4805,
-    "operating_margin_ttm": 33.0939,
-    "total_debt_fq": 19975861704.6229,
-    "total_equity_fq": 30311067540.4354,
-    "total_revenue_fq": 625627212.3503,
-    "total_revenue_fy": 33313737686.5626,
-    "total_revenue_ttm": 29497558232.4266
-   },
-   "industry": "Financial Conglomerates",
-   "label": "آلي، غير مراجَع",
-   "market_cap": 30030933466.072853,
-   "name": "Valmore Holding",
-   "period": "2026-Q1",
-   "price": 0.64,
-   "release_date": 1787054400,
-   "reviewed": false,
-   "sector": "Finance",
-   "shares": 830840000,
-   "source": "TradingView scanner (غير رسمي)",
-   "template": "holding"
-  },
   "VLMRA": {
    "derived": {
-    "bvps": 26.9,
-    "pb": 0.96,
-    "pe": 4.97,
+    "bvps": 21.94,
+    "pb": 1.18,
+    "pe": 6.5,
     "roe_ttm_pct": 20.0
    },
    "fair_value": {
