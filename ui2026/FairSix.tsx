@@ -4,7 +4,9 @@ import { DATA } from '../data';
 import { FlowSignal } from './FlowSignal';
 import { Peers } from './Peers';
 // Six-stock page: flow signal + peer comparison. The old fair-value cards are cancelled for these stocks.
-export const FAIR6: string[] = ['MASR', 'ORHD', 'HRHO', 'PHAR', 'BONY', 'UNIP', 'COMI', 'ETEL', 'TMGH', 'SWDY', 'EAST'];
+export const FAIR6: string[] = ['MASR', 'ORHD', 'HRHO', 'PHAR', 'BONY', 'UNIP'];
+// The /fair page lists these 11. FAIR6 (the six whose fair-value card is cancelled) still drives the stock-page tab, fair block and valuation chip.
+export const PANEL11: string[] = [...FAIR6, 'COMI', 'ETEL', 'TMGH', 'SWDY', 'EAST'];
 const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
 const arD = (iso: string) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? Number(m[3]) + ' ' + M[Number(m[2]) - 1] + ' ' + m[1] : ''; };
 const lj = (u: string) => fetch(u + '?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
@@ -13,7 +15,7 @@ function useHeads() {
   const [h, setH] = React.useState<Record<string, { px: number; dt: string }> | undefined>(undefined);
   React.useEffect(() => { Promise.all([lj('flow_signal.json'), lj('peer_compare.json')]).then(([f, p]) => {
     const o: Record<string, { px: number; dt: string }> = {};
-    for (const k of FAIR6) {
+    for (const k of PANEL11) {
       const a = f && f.stocks && f.stocks[k], b = p && p.stocks && p.stocks[k];
       if (a && typeof a.close === 'number' && typeof a.date === 'string') o[k] = { px: a.close, dt: a.date };
       else if (b && typeof b.price === 'number' && typeof b.price_session === 'string') o[k] = { px: b.price, dt: b.price_session };
@@ -41,7 +43,7 @@ export function FairInline({ code }: { code: string }) {
 export function FairSix() {
   const h = useHeads();
   return <div className="eg-pad fs"><h1 className="fs-h">تحليل الأسهم دي: علامة التجميع والمقارنة</h1><span className="fs-tag">تجريبي</span>
-    {h === undefined ? null : FAIR6.map(k => <React.Fragment key={k}><Head k={k} h={h[k]} /><FlowSignal k={k} /><Peers code={k} /></React.Fragment>)}
+    {h === undefined ? null : PANEL11.map(k => <React.Fragment key={k}><Head k={k} h={h[k]} /><FlowSignal k={k} /><Peers code={k} /></React.Fragment>)}
   </div>;
 }
 export function FairLink() {
