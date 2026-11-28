@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlowLive } from './FlowLive';
-import { FlowCombo } from './FlowCombo';
+import { FlowCombo, useCombo } from './FlowCombo';
+import { BlockNone, useStatus } from './StockStatus';
 // HRHO-only panel: "علامة تجميع". pound verdicts. Numbers come from flow_signal.json (daily) and flow_stats.json (history test, dated).
 type Cond = { value: { x: number; ok: boolean }; close: { pos: number; ok: boolean }; flow: { share: number; aboveAvg: boolean | null; ok: boolean } };
 type Sig = { asof: string; stocks: Record<string, { date: string; fired: boolean; deduped?: boolean; conditions: Cond }> };
@@ -23,14 +24,16 @@ export const loadHolidays = () => HP || (HP = fetch('egx_holidays.json?t=' + Dat
 export const staleBySession = (iso: string, hol?: Set<string>) => { const f = new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()); const g = (t: string) => f.find(x => x.type === t)!.value; const today = g('year') + '-' + g('month') + '-' + g('day'); const hr = Number(g('hour'));
   const d = new Date(iso.slice(0, 10) + 'T00:00:00Z'); do { d.setUTCDate(d.getUTCDate() + 1); } while (d.getUTCDay() === 5 || d.getUTCDay() === 6 || (hol && hol.has(d.toISOString().slice(0, 10)))); const nx = d.toISOString().slice(0, 10); return today > nx || (today === nx && hr >= 15); };
 export const useHolidays = () => { const [h, setH] = React.useState<Set<string> | undefined>(undefined); React.useEffect(() => { let on = true; loadHolidays().then(x => on && setH(x)); return () => { on = false; }; }, []); return h; };
+function ComboGate({ k, one, children }: { k: string; one: React.ReactNode; children: React.ReactNode }) { const cb = useCombo(k); return cb === undefined ? null : cb === null ? <>{one}</> : <>{children}</>; }
 export function FlowSignal({ k }: { k: string }) {
   const [sig, setSig] = React.useState<Sig | null | undefined>(undefined);
-  const hol = useHolidays();
+  const hol = useHolidays(); const st = useStatus(k);
   React.useEffect(() => { let on = true; loadSig().then(x => on && setSig(x)); return () => { on = false; }; }, []);
+  if (st) return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div><BlockNone k={k} /></>;
   if (sig === undefined || hol === undefined) return null;
   if (sig === null) return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div><div className="sm-card fx"><style>{FX_CSS}</style><div className="fx-na"><b>غير متوفر</b><span>ملف العلامة اليومية مش متاح دلوقتي، فمعرضناش حاجة.</span></div></div><FlowCombo k={k} /></>;
   const me = sig && sig.stocks[k]; const stale = !me || staleBySession(me.date, hol);
-  return <><div className="sm-sec">علامة تجميع (سعر وحجم)</div>
+  const main = <><div className="sm-sec">علامة تجميع (سعر وحجم)</div>
     <div className="sm-card fx"><style>{FX_CSS}</style>
       {stale ? <div className="fx-na"><b>غير متوفر</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة اليومية مش بتغطي السهم ده'}</span></div> : me && <>
         <div className={'fx-v ' + (me.fired ? 'y' : 'g')}><span className="fx-vi">{me.fired ? '▲' : '—'}</span><div><b>{me.fired ? 'فيه علامة تجميع على السهم في آخر جلسة' : 'مفيش علامة تجميع في آخر جلسة'}</b><small>جلسة {arD(me.date)}{me.deduped ? ' · جت بعد علامة قريبة (أقل من 5 جلسات)، فمش بتتعد مرة تانية في الاختبار' : ''}</small><small style={{display:"block"}}>ده وصف للي حصل، مش توقع.</small></div></div>
@@ -48,6 +51,7 @@ export function FlowSignal({ k }: { k: string }) {
       <small className="fx-g">مش نصيحة</small>
       </details>
     </div></>;
+  return stale ? <ComboGate k={k} one={<><div className="sm-sec">علامة تجميع (سعر وحجم)</div><div className="sm-card fx"><style>{FX_CSS}</style><div className="fx-na"><b>مفيش مقارنة للسهم ده</b><span>{me ? 'العلامة قديمة: آخر جلسة عندنا ' + arD(me.date) + ' وفيه جلسة أحدث' : 'العلامة اليومية مش بتغطي السهم ده'}، والتاريخ لسه ما اتحسبش.</span></div></div></>}>{main}</ComboGate> : main;
 }
 const FX_CSS = `.fx-bn{margin-top:8px;font-size:13.5px;line-height:1.8;color:#b4bac4}.fx-bn b{color:#25b896}.fx-hn{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0b0f12;font-size:12.5px;line-height:1.8;color:#b4bac4}.fx-hn b{display:block;color:#edeef0;font-size:13px}.fx-hn span{display:block}.fx-v{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;margin-bottom:10px}.fx-v.y{background:#25b89622}.fx-v.g{background:#1e252f}.fx-vi{font-size:22px;font-weight:700;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}.fx-v.y .fx-vi{background:#25b896;color:#0b0f12}.fx-v.g .fx-vi{background:#3a4350;color:#edeef0}
 .fx-v b{display:block;font-size:16px;color:#edeef0;line-height:1.4}.fx-v small{color:#b4bac4;font-size:12px}
