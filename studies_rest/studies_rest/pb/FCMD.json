@@ -1,0 +1,65 @@
+{
+ "method": "pb_peers",
+ "rung": 4,
+ "method_ar": "نطاق من مضاعف P/B للشركات المشابهة من نفس القطاع (الصناعة فيها شركتين بس)",
+ "currency": "EGP",
+ "price": 8.81,
+ "peer_level": "sector",
+ "n_peers": 8,
+ "range": {
+  "low": 1.22,
+  "base": 1.74,
+  "high": 2.22
+ },
+ "multiples": {
+  "low": 2.18,
+  "median": 3.11,
+  "high": 3.96
+ },
+ "peers": [
+  {
+   "code": "GBCO",
+   "pb": 0.7787328670608329
+  },
+  {
+   "code": "SMFR",
+   "pb": 0.9855789342187148
+  },
+  {
+   "code": "BIGP",
+   "pb": 2.5764690950628255
+  },
+  {
+   "code": "MTIE",
+   "pb": 2.9651261746289115
+  },
+  {
+   "code": "ISPH",
+   "pb": 3.2451050321618826
+  },
+  {
+   "code": "IBCT",
+   "pb": 3.5751226995994476
+  },
+  {
+   "code": "MBEG",
+   "pb": 5.129855969428551
+  },
+  {
+   "code": "BIOC",
+   "pb": 14.29255125677202
+  }
+ ],
+ "price_marker": "above_all",
+ "confidence": "low",
+ "confidence_ar": "ثقة منخفضة: الشركة خسرانة (ربح السهم آخر 12 شهر -0.038) والقيمة الدفترية صغيرة (0.56 جنيه)، السعر أعلى من النطاق 4 مرات تقريبا",
+ "review_flags": [
+  "loss-making, own P/B 15.75, price about 4x above the top of the range",
+  "52-week low/high in feed: 4.52 to 10.91 (TradingView, 28 Nov pull)"
+ ],
+ "code": "FCMD",
+ "name_ar": null,
+ "app_batch": "B4",
+ "as_of": "2026-11-26",
+ "source": "TradingView scanner (free), pulled 28 Nov 2026, 26 Nov bar"
+}
