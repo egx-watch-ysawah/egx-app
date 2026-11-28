@@ -695,6 +695,36 @@
    "newest_status_source": "Inside the window; no later news found.",
    "status_ar_old": "مقيد مؤقتًا ولسه ماتداولش",
    "also_checked_not_trading": "EGX Hub/FoudaLens page 2026-11-28 and TradingView volume 0 (2026-11-28)"
+  },
+  {
+   "code": "HALN",
+   "name": "MNT-Halan",
+   "status": "new_listing",
+   "status_ar": "سهم مدرج جديد. مفيش سعر مؤكد من مصدر بياناتنا، فمش بنعرض سعر ولا إشارة.",
+   "last_traded": null,
+   "last_close": null,
+   "currency": "EGP",
+   "status_note": "IPO; trading began on EGX 2026-10-20 under HALN.CA (Arab Finance 2026-10-21, Zawya, Gibson Dunn 2026-10-20). Not on the EGX register dated 2026-09-05 used by Starta (listed after it). No second price source found (not in the TradingView scan), so no price shown.",
+   "source_status": "https://www.arabfinance.com/en/news/newdetails/mnt-halan-begins-trading-on-egx-after-strong-ipo-demand ; https://www.zawya.com/en/press-release/companies-news/mnt-halan-commences-trading-on-the-egyptian-exchange-1794098 ; https://startamarkets.com/symbol/HALN",
+   "source_timestamp": "2026-11-28",
+   "status_block_ar": "لأن السهم إدراج جديد ومفيش عندنا سعر أو تاريخ مؤكد",
+   "status_ar_old": "إدراج جديد"
+  },
+  {
+   "code": "BQDC",
+   "name": "Banque du Caire",
+   "status": "new_listing",
+   "status_ar": "سهم مدرج جديد. مفيش سعر مؤكد من مصدر بياناتنا، فمش بنعرض سعر ولا إشارة.",
+   "last_traded": null,
+   "last_close": null,
+   "currency": "EGP",
+   "status_note": "IPO; shares began trading on EGX 2026-11-02 (bank announcement, FRA bell-ringing, Forbes Middle East: IPO price EGP 5.30, +6.3% on debut). TradingView scan 2026-11-28 shows close 5.33, volume 22,121,034 (reference only, not shown). Not on the 2026-09-05 register used by Starta. No price claim made.",
+   "tv_reference_close": 5.33,
+   "tv_reference_volume": 22121034,
+   "source_status": "https://www.bdc.com.eg/bdcwebsite/dam/jcr:fc921334-2840-4924-b95b-f0f21d7443dc/Start_of_Trading_Announcement_EN.pdf ; https://analytics.forbesmiddleeast.com/money/markets/cairo-bank-shares-rise-63-in-egx-debut-following-%24655-million-ipo",
+   "source_timestamp": "2026-11-28",
+   "status_block_ar": "لأن السهم إدراج جديد ومفيش عندنا سعر أو تاريخ مؤكد",
+   "status_ar_old": "إدراج جديد"
   }
  ],
  "scan_zero_volume_no_history": {
