@@ -1,0 +1,57 @@
+{
+ "code": "GGRN",
+ "name_ar": null,
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 3 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من قوائم مراجعة بتاريخ 30 سبتمبر 2026، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 0.954,
+ "price_date": "2026-11-26",
+ "own_bvps": 0.27,
+ "own_bvps_source": "reviewed statements",
+ "own_bvps_date": "بتاريخ 30 سبتمبر 2026",
+ "own_pb_at_price": 3.53,
+ "peer_level": "industry_small",
+ "peer_group_feed_label": "Miscellaneous Commercial Services",
+ "n_peers": 3,
+ "peers": [
+  {
+   "code": "MOED",
+   "name_ar": "المصرية لنظم التعليم الحديثة",
+   "pb": 0.11795658172083268,
+   "price": 0.46
+  },
+  {
+   "code": "RACC",
+   "name_ar": null,
+   "pb": 1.0141803212611202,
+   "price": 7.8
+  },
+  {
+   "code": "SCTS",
+   "name_ar": null,
+   "pb": 10.383210085230251,
+   "price": 450.62
+  }
+ ],
+ "multiples": {
+  "low": 0.118,
+  "median": 1.014,
+  "high": 10.383,
+  "min": 0.11795658172083268,
+  "max": 10.383210085230251
+ },
+ "range": {
+  "low": 0.032,
+  "base": 0.274,
+  "high": 2.803
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "peer P/B spread very wide (min 0.12, max 10.38, median 1.01)",
+  "feed drift: peer P/B changed vs 12:21 file: MOED"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B4"
+}
