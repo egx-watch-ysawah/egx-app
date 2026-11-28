@@ -1,0 +1,51 @@
+{
+ "code": "CSAG",
+ "name_ar": "القناة للتوكيلات الملاحية",
+ "tier": 3,
+ "confidence_ar": "ثقة ضعيفة جدا: P/B بس، 2 شركات بس، النطاق من أقل رقم لأعلى رقم بينهم، قيمة الدفاتر من آخر ربع في بيانات السوق (تاريخه مش معروف)، سوق 26 نوفمبر.",
+ "basis": "P/B only",
+ "as_of": "2026-11-26",
+ "price": 38.18,
+ "price_date": "2026-11-26",
+ "own_bvps": 7.5972,
+ "own_bvps_source": "feed price_book_fq (implied)",
+ "own_bvps_date": "last quarter in feed, date not given",
+ "own_pb_at_price": 5.03,
+ "peer_level": "industry_small",
+ "peer_group_feed_label": "Other Transportation",
+ "n_peers": 2,
+ "peers": [
+  {
+   "code": "ETRS",
+   "name_ar": "إيجيترانس",
+   "pb": 2.0580815619775494,
+   "price": 11.03
+  },
+  {
+   "code": "ALCN",
+   "name_ar": "الاسكندرية لتداول الحاويات",
+   "pb": 11.350808749719631,
+   "price": 30.87
+  }
+ ],
+ "multiples": {
+  "low": 2.058,
+  "median": 6.704,
+  "high": 11.351,
+  "min": 2.0580815619775494,
+  "max": 11.350808749719631
+ },
+ "range": {
+  "low": 15.636,
+  "base": null,
+  "high": 86.234
+ },
+ "price_marker": "inside",
+ "review_flags": [
+  "peer P/B spread very wide (min 2.06, max 11.35, median 11.35)",
+  "feed drift: own P/B moved 5.16 (12:21 file) -> 5.03 (28 Nov pull)"
+ ],
+ "source": "TradingView scanner egypt/scan, pulled 2026-11-28 (26 Nov bar), single source; book value as stated",
+ "status": "range",
+ "app_batch": "B3"
+}
