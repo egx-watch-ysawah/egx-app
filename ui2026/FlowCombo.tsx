@@ -1,5 +1,6 @@
 import React from 'react';
 import { staleBySession, useHolidays } from './FlowSignal';
+import { BlockNone, useStatus } from './StockStatus';
 // Per-stock "same state in the past" block. Data: flow_combo_<CODE>.json (data engineer). Only stocks with a file get the block.
 const nn = (v: any) => typeof v === 'number' && isFinite(v);
 const M = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
@@ -11,6 +12,16 @@ const cache: Record<string, Promise<any>> = {};
 export const loadCombo = (k: string): Promise<any> => cache[k] || (cache[k] = fetch('flow_combo_' + k + '.json?t=' + Date.now(), { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null).then((j: any) => { const ok = j && j.symbol === k && j.today && j.combos && j.history ? j : null; if (!ok) delete cache[k]; return ok; }));
 export const useCombo = (k: string) => { const [c, setC] = React.useState<any>(undefined); React.useEffect(() => { let on = true; loadCombo(k).then(x => on && setC(x)); return () => { on = false; }; }, [k]); return c; };
 const countLine = (n: number, hist: any) => n === 0 ? <>الحالة دي ما حصلتش قبل كده في تاريخ السهم المتاح ({arD(hist.from)} إلى {arD(hist.to)})، فمفيش نتيجة نعرضها.</> : n === 1 ? 'حصلت مرة واحدة بس في تاريخ السهم المتاح. دي حالة واحدة، مش كفاية نستنتج منها.' : n === 2 ? 'حصلت مرتين بس.' : n <= 10 ? <>حصلت {L(n)} مرات بس، عينة صغيرة جدًا.</> : n < 30 ? <>حصلت {L(n)} مرة، عينة صغيرة.</> : <>حصلت {L(n)} مرة.</>;
+const dayW = (n: number) => n === 1 ? 'يوم واحد' : n === 2 ? 'يومين' : <>{L(n)} {n <= 10 ? 'أيام' : 'يوم'}</>;
+const timeW = (n: number) => n === 1 ? 'مرة واحدة' : n === 2 ? 'مرتين' : <>{L(n)} {n <= 10 ? 'مرات' : 'مرة'}</>;
+// Waiting state: per single condition, exact sums over the file's combos that contain that letter (rawDays = days met, n = separate times). No file field is added or estimated.
+function CondCounts({ combos }: { combos: any }) {
+  return <div className="fc-cc"><div className="fc-cch">كام مرة كان كل شرط متحقق في تاريخ السهم نفسه:</div>{['A', 'B', 'C'].map(x => {
+    const ks = Object.keys(combos || {}).filter(q => q.includes(x)); const ok = ks.length > 0 && ks.every(q => nn(combos[q] && combos[q].rawDays) && nn(combos[q] && combos[q].n));
+    const d = ok ? ks.reduce((a, q) => a + combos[q].rawDays, 0) : 0; const n = ok ? ks.reduce((a, q) => a + combos[q].n, 0) : 0;
+    return <div key={x} className="fc-ccr"><b>{NAMES[x]}</b>{ok ? <span>اتحقق {dayW(d)}، على {timeW(n)} منفصلة</span> : <span className="fc-na">غير متوفر: العدد مش موجود في ملف السهم.</span>}</div>;
+  })}</div>;
+}
 function Row({ h, x, base }: { h: number; x: any; base: any }) {
   if (!x || !nn(x.n) || x.n === 0 || !nn(x.up)) return <div className="fcb"><b>بعد {L(h)} {h <= 10 ? 'جلسات' : 'جلسة'}</b><div className="fc-na">غير متوفر: مفيش حالة مدتها خلصت.</div></div>;
   const big = x.n >= 30; const u = x.n === 1 ? 'مرة' : x.n === 2 ? 'مرتين' : x.n <= 10 ? 'مرات' : 'مرة';
@@ -21,8 +32,10 @@ function Row({ h, x, base }: { h: number; x: any; base: any }) {
 }
 // Lazy: the file is fetched only when the block is near the screen (the /fair list has many stocks). A missing/invalid file is not cached, so the next mount retries.
 export function FlowCombo({ k }: { k: string }) {
+  const st = useStatus(k);
   const ref = React.useRef<HTMLDivElement>(null); const [on, setOn] = React.useState(typeof IntersectionObserver === 'undefined');
   React.useEffect(() => { if (on || !ref.current) return; const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { setOn(true); io.disconnect(); } }, { rootMargin: '800px 0px' }); io.observe(ref.current); return () => io.disconnect(); }, [on]);
+  if (st) return <><div className="sm-sec" style={{ marginTop: 18 }}>لما نفس الحالة دي حصلت قبل كده في السهم ده، حصل إيه؟</div><BlockNone k={k} /></>;
   return on ? <FlowComboBody k={k} /> : <div ref={ref} style={{ minHeight: 1 }} aria-hidden="true" />;
 }
 function FlowComboBody({ k }: { k: string }) {
@@ -40,6 +53,7 @@ function FlowComboBody({ k }: { k: string }) {
     <div className="fc-hist">ده تاريخ أيام فاتت كانت فيها نفس الحالة. مش توقع ومش توصية.</div>
     <div className="fc-td"><b>حالة النهارده ({arD(t.date)}):</b> {cnt === 0 ? 'مفيش شرط اتحقق.' : <>اتحقق {L(cnt)} من {L(3)} شروط: {s.split('').map(x => NAMES[x]).join(' و')}.</>}</div>
     <div className="fx-cs">{['A', 'B', 'C'].map(x => <span key={x} className={'fx-c ' + (s.includes(x) ? 'y' : 'n')}>{s.includes(x) ? '✓' : '✗'} {NAMES[x]}</span>)}</div>
+    {cnt === 0 ? <CondCounts combos={c.combos} /> : null}
     {cnt === 0 || !b ? <div className="fx-na"><b>الصفحة بتستنى</b><span>النهارده مفيش شرط اتحقق، فمفيش حساب. الصفحة بتستنى لحد ما يتحقق شرط.</span></div> : <>
       <div className="fc-n"><b>{countLine(b.n, hs)}</b></div>
       {b.n > 0 ? <>
@@ -58,4 +72,4 @@ function FlowComboBody({ k }: { k: string }) {
     <small className="fx-g">{hs.firstDayIsListing === true ? 'من أول يوم تداول للسهم' : (hs.startLabelAr ? String(hs.startLabelAr) : 'من أول يوم في البيانات المتاحة')} ({arD(hs.firstDate || hs.from)}) إلى {arD(hs.to)} ({L(hs.sessions)} جلسة){hs.statsFrom ? <>، والحساب بيبدأ من {arD(hs.statsFrom)}</> : null} · أسعار يومية مجانية من Starta Markets · مش نصيحة</small>
   </div></>;
 }
-const CSS = `.fc .fc-hist{font-size:12.5px;color:#b4bac4;line-height:1.7}.fc-td{margin:8px 0;font-size:14px;line-height:1.8;color:#edeef0}.fc-n{margin:10px 0 2px;font-size:15px;line-height:1.7;color:#edeef0}.fcb{background:#0b0f12;border-radius:12px;padding:12px;margin-top:10px}.fcb>b{font-size:14px;color:#edeef0}.fc-l{margin:6px 0 8px;font-size:13.5px;line-height:1.7;color:#edeef0}.fc-l b.up,.fc-b b.up,.fc-e b.up{color:#25b896}.fc-l b.dn,.fc-b b.dn,.fc-e b.dn{color:#de575b}.fc-b{margin-top:8px;font-size:12.5px;line-height:1.7;color:#b4bac4}.fc-na{font-size:12.5px;color:#a5aab2;margin-top:6px}.fc-d{margin-top:8px;font-size:12.5px;line-height:1.8;color:#b4bac4}.fc-ev{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px}.fc-e{display:inline-block}.fc summary{min-height:44px;display:flex;align-items:center;gap:8px;padding:6px 0;list-style:none}.fc summary::-webkit-details-marker{display:none}.fc summary::after{content:'\\25C0';font-size:12px}.fc details[open]>summary::after{content:'\\25BC'}.fc-test{background:#de575b;color:#0b0f12;font-weight:700;font-size:13px;padding:6px 10px;border-radius:8px;margin-bottom:8px;text-align:center}.fc .fx-dots{display:flex;gap:4px}.fc .fx-dots i{flex:1;max-width:18px;aspect-ratio:1;border-radius:50%;background:#de575b88}.fc .fx-dots i.u{background:#25b896}.fc .fx-bar{height:16px;background:#de575b88;border-radius:8px;overflow:hidden}.fc .fx-bar i{display:block;height:100%}.fc .fx-cs{display:flex;flex-wrap:wrap;gap:6px}.fc .fx-c{font-size:12px;padding:5px 9px;border-radius:999px;min-height:28px;display:inline-flex;align-items:center}.fc .fx-c.y{background:#25b89622;color:#25b896}.fc .fx-c.n{background:#1e252f;color:#b4bac4}.fc .fx-g{display:block;color:#a5aab2;font-size:12px;line-height:1.5;margin-top:10px}.fc .fx-na{border:1px dashed #3a4350;border-radius:10px;padding:12px;text-align:center;display:flex;flex-direction:column;gap:4px;margin:8px 0}.fc .fx-na b{font-size:17px;color:#b4bac4}.fc .fx-na span{font-size:12px;color:#a5aab2}`;
+const CSS = `.fc-cc{margin:10px 0}.fc-cch{font-size:13px;color:#b4bac4;margin-bottom:6px}.fc-ccr{padding:8px 0;border-top:1px solid #1e252f;font-size:13.5px;line-height:1.8}.fc-ccr b{display:block;color:#e6e9ee}.fc-ccr span{color:#b4bac4}.fc .fc-hist{font-size:12.5px;color:#b4bac4;line-height:1.7}.fc-td{margin:8px 0;font-size:14px;line-height:1.8;color:#edeef0}.fc-n{margin:10px 0 2px;font-size:15px;line-height:1.7;color:#edeef0}.fcb{background:#0b0f12;border-radius:12px;padding:12px;margin-top:10px}.fcb>b{font-size:14px;color:#edeef0}.fc-l{margin:6px 0 8px;font-size:13.5px;line-height:1.7;color:#edeef0}.fc-l b.up,.fc-b b.up,.fc-e b.up{color:#25b896}.fc-l b.dn,.fc-b b.dn,.fc-e b.dn{color:#de575b}.fc-b{margin-top:8px;font-size:12.5px;line-height:1.7;color:#b4bac4}.fc-na{font-size:12.5px;color:#a5aab2;margin-top:6px}.fc-d{margin-top:8px;font-size:12.5px;line-height:1.8;color:#b4bac4}.fc-ev{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px}.fc-e{display:inline-block}.fc summary{min-height:44px;display:flex;align-items:center;gap:8px;padding:6px 0;list-style:none}.fc summary::-webkit-details-marker{display:none}.fc summary::after{content:'\\25C0';font-size:12px}.fc details[open]>summary::after{content:'\\25BC'}.fc-test{background:#de575b;color:#0b0f12;font-weight:700;font-size:13px;padding:6px 10px;border-radius:8px;margin-bottom:8px;text-align:center}.fc .fx-dots{display:flex;gap:4px}.fc .fx-dots i{flex:1;max-width:18px;aspect-ratio:1;border-radius:50%;background:#de575b88}.fc .fx-dots i.u{background:#25b896}.fc .fx-bar{height:16px;background:#de575b88;border-radius:8px;overflow:hidden}.fc .fx-bar i{display:block;height:100%}.fc .fx-cs{display:flex;flex-wrap:wrap;gap:6px}.fc .fx-c{font-size:12px;padding:5px 9px;border-radius:999px;min-height:28px;display:inline-flex;align-items:center}.fc .fx-c.y{background:#25b89622;color:#25b896}.fc .fx-c.n{background:#1e252f;color:#b4bac4}.fc .fx-g{display:block;color:#a5aab2;font-size:12px;line-height:1.5;margin-top:10px}.fc .fx-na{border:1px dashed #3a4350;border-radius:10px;padding:12px;text-align:center;display:flex;flex-direction:column;gap:4px;margin:8px 0}.fc .fx-na b{font-size:17px;color:#b4bac4}.fc .fx-na span{font-size:12px;color:#a5aab2}`;
