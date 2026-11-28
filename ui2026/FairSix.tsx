@@ -28,7 +28,7 @@ let NP: Promise<Record<string, string>> | null = null;
 const loadNames = () => NP || (NP = lj('idx/index.json').then((j: any) => { const o: Record<string, string> = {}; if (j && Array.isArray(j.rows)) for (const r of j.rows) if (r && typeof r.code === 'string' && typeof r.name === 'string') o[r.code] = r.name; return o; }));
 function useNames() { const [n, setN] = React.useState<Record<string, string>>({}); React.useEffect(() => { let on = true; loadNames().then(x => on && setN(x)); return () => { on = false; }; }, []); return n; }
 const Head = ({ k, h }: { k: string; h: any }) => { const nm = useNames(); const cw = useCur(k).word; const sst = useStatus(k); const dn = (DATA as any).stocks && (DATA as any).stocks[k] ? (DATA as any).stocks[k].name : ''; return <section className="fs-c" aria-label={k}><header><b>{k}</b><span>{dn || nm[k] || ''}</span></header>
-  <p className="fs-dt">{h ? sst ? <>السعر من المصدر: <bdi dir="ltr">{h.px.toFixed(h.px < 1 ? 3 : 2)}</bdi> {cw}</> : <>سعر الإقفال: <bdi dir="ltr">{h.px.toFixed(h.px < 1 ? 3 : 2)}</bdi> {cw}، جلسة {arD(h.dt)}</> : 'سعر الإقفال: غير متوفر (ملف الأسعار مش متاح دلوقتي)'}</p></section>; };
+  <p className="fs-dt">{sst && sst.status === 'new_listing' ? <>سهم مدرج جديد. مفيش سعر مؤكد من مصدر بياناتنا، فمش بنعرض سعر ولا إشارة.</> : h ? sst ? <>السعر من المصدر: <bdi dir="ltr">{h.px.toFixed(h.px < 1 ? 3 : 2)}</bdi> {cw}</> : <>سعر الإقفال: <bdi dir="ltr">{h.px.toFixed(h.px < 1 ? 3 : 2)}</bdi> {cw}، جلسة {arD(h.dt)}</> : 'سعر الإقفال: غير متوفر (ملف الأسعار مش متاح دلوقتي)'}</p></section>; };
 // Inside the stock page's السعر العادل tab: no duplicate panel, only the way to the new page.
 export function FairCard({ code }: { code: string }) {
   if (!FAIR6.includes(code)) return null;
